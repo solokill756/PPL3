@@ -1,0 +1,1337 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="amenities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_id" Type="int" />
+    <Property Name="amenity_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="amenity_status" Type="tinyint" />
+    <Property Name="description" Type="nvarchar(max)" />
+    <Property Name="icon_image" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="booking_guests">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="booking_id" Type="int" />
+    <Property Name="guest_type_id" Type="int" />
+    <Property Name="num_guests" Type="int" />
+  </EntityType>
+  <EntityType Name="bookings">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="userId" Type="int" />
+    <Property Name="check_in_date" Type="datetime" />
+    <Property Name="check_out_date" Type="datetime" />
+    <Property Name="price_per_day" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="price_for_stay" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="tax_paid" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="site_fees" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="amount_paid" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="is_refund" Type="tinyint" />
+    <Property Name="cancel_date" Type="datetime" />
+    <Property Name="refund_paid" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="transaction_id" Type="int" />
+    <Property Name="effective_amount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="booking_date" Type="datetime" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="booking_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="categories">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="category_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="category_description" Type="text" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="category_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="cities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="state_id" Type="int" />
+    <Property Name="city_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="city_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="cms_page_languages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cms_page_id" Type="int" />
+    <Property Name="language_id" Type="int" />
+    <Property Name="title" Type="nvarchar" MaxLength="255" />
+    <Property Name="cpl_description" Type="text" />
+  </EntityType>
+  <EntityType Name="cms_pages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="unique_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="cp_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="component_rating">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="review_id" Type="int" />
+    <Property Name="component_id" Type="int" />
+    <Property Name="rating" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="countries">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ct_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="code" Type="nvarchar" MaxLength="5" />
+    <Property Name="status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="currencies">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="currency_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="icon_image" Type="image" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="currency_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="disputes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userId" Type="int" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="booking_id" Type="int" />
+    <Property Name="title" Type="nvarchar" MaxLength="255" />
+    <Property Name="disputes_description" Type="text" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="disputes_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="email_content_languages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email_content_id" Type="int" />
+    <Property Name="language_id" Type="int" />
+    <Property Name="title" Type="nvarchar" MaxLength="255" />
+    <Property Name="ecl_message" Type="text" />
+  </EntityType>
+  <EntityType Name="email_contents">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="sender_id" Type="int" />
+    <Property Name="receiver_id" Type="int" />
+    <Property Name="title" Type="nvarchar" MaxLength="255" />
+    <Property Name="content" Type="text" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="ec_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="favourite">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="added_date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="governmentID">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="driver_license" Type="image" />
+    <Property Name="passport" Type="image" />
+    <Property Name="identity_card" Type="image" />
+  </EntityType>
+  <EntityType Name="guest_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="type_name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="languages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="language_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="code" Type="nvarchar" MaxLength="5" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="language_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="listLanguage">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="language_name" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="neighbourhood">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="neighbour_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="neighbour_description" Type="text" />
+    <Property Name="latitude" Type="nvarchar" MaxLength="50" />
+    <Property Name="longitude" Type="nvarchar" MaxLength="50" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="neighbour_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="phone_number">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="phone" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="promo_codes">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="nvarchar" MaxLength="255" />
+    <Property Name="pc_description" Type="text" />
+    <Property Name="code" Type="nvarchar" MaxLength="255" />
+    <Property Name="discount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="pc_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="properties">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="p_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="p_description" Type="text" />
+    <Property Name="userId" Type="int" />
+    <Property Name="is_guest_favourite" Type="tinyint" />
+    <Property Name="property_type_id" Type="int" />
+    <Property Name="room_type_id" Type="int" />
+    <Property Name="country_id" Type="int" />
+    <Property Name="state_id" Type="int" />
+    <Property Name="city_id" Type="int" />
+    <Property Name="p_address" Type="text" />
+    <Property Name="bedroom_count" Type="nvarchar" MaxLength="10" />
+    <Property Name="bed_count" Type="nvarchar" MaxLength="10" />
+    <Property Name="bathroom_count" Type="nvarchar" MaxLength="10" />
+    <Property Name="accomodates_count" Type="nvarchar" MaxLength="10" />
+    <Property Name="max_pets" Type="nvarchar" MaxLength="10" />
+    <Property Name="availability_type" Type="tinyint" />
+    <Property Name="startDate" Type="date" />
+    <Property Name="end_date" Type="date" />
+    <Property Name="price" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="currency_id" Type="int" />
+    <Property Name="price_type" Type="tinyint" />
+    <Property Name="minimum_stay" Type="nvarchar" MaxLength="5" />
+    <Property Name="minimum_stay_type" Type="tinyint" />
+    <Property Name="refund_type" Type="tinyint" />
+    <Property Name="booking_confirmation_method" Type="tinyint" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="p_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="property_amenities">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="amenity_id" Type="int" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="pa_status" Type="tinyint" />
+    <Property Name="pa_description" Type="text" />
+  </EntityType>
+  <EntityType Name="property_images">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="added_by_user" Type="int" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="pi_status" Type="tinyint" />
+    <Property Name="pi_image" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="property_reviews">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="review_by_user" Type="int" />
+    <Property Name="booking_id" Type="int" />
+    <Property Name="comment" Type="text" />
+    <Property Name="overall_rating" Type="varchar" MaxLength="10" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="pr_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="property_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="pt_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="pt_status" Type="tinyint" />
+    <Property Name="icon_image" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="review_component">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="component_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="component_icon" Type="image" />
+    <Property Name="component_description" Type="text" />
+  </EntityType>
+  <EntityType Name="room_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rt_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="rt_status" Type="tinyint" />
+    <Property Name="icon_image" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="states">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="country_id" Type="int" />
+    <Property Name="state_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="code" Type="nvarchar" MaxLength="5" />
+    <Property Name="state_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="transactions">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="receiver_id" Type="int" />
+    <Property Name="payer_id" Type="int" />
+    <Property Name="booking_id" Type="int" />
+    <Property Name="site_fees" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="amount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="transfer_on" Type="datetime" />
+    <Property Name="currency_id" Type="int" />
+    <Property Name="promo_code_id" Type="int" />
+    <Property Name="discount_amt" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="transaction_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="user_personalInfor">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="legal_name" Type="nvarchar" MaxLength="40" />
+    <Property Name="email_address" Type="varchar" MaxLength="255" />
+    <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
+    <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
+    <Property Name="country_id" Type="int" />
+    <Property Name="street_address" Type="nvarchar" MaxLength="255" />
+    <Property Name="u_state" Type="nvarchar" MaxLength="255" />
+    <Property Name="u_city" Type="nvarchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="user_profile">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="is_super_host" Type="tinyint" />
+    <Property Name="user_work" Type="nvarchar" MaxLength="20" />
+    <Property Name="user_fun_fact" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_favourite_song" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_unless_skill" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_pets" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_school" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_time_spend" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_obsessed_with" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_biography_title" Type="nvarchar" MaxLength="40" />
+    <Property Name="user_about" Type="text" />
+    <Property Name="user_avatar" Type="varchar(max)" />
+  </EntityType>
+  <EntityType Name="user_role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ur_url" Type="nvarchar" MaxLength="255" />
+    <Property Name="ur_description" Type="text" />
+    <Property Name="created_at" Type="datetime" />
+    <Property Name="update_at" Type="datetime" />
+    <Property Name="create_by" Type="int" />
+    <Property Name="update_by" Type="int" />
+  </EntityType>
+  <EntityType Name="user_type">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ut_name" Type="nvarchar" MaxLength="255" />
+    <Property Name="ut_description" Type="text" />
+  </EntityType>
+  <EntityType Name="user_type_user_role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_type_id" Type="tinyint" />
+    <Property Name="user_role_id" Type="int" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="account_name" Type="varchar" MaxLength="255" />
+    <Property Name="user_password" Type="varchar(max)" />
+    <Property Name="user_type" Type="tinyint" />
+    <Property Name="date_of_birth" Type="date" />
+    <Property Name="login_with" Type="tinyint" />
+    <Property Name="receive_coupon" Type="tinyint" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="user_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="users_languages">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userID" Type="int" />
+    <Property Name="language_id" Type="int" />
+  </EntityType>
+  <Association Name="bkg_booking_id_FK">
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+    <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bookings">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="booking_guests">
+        <PropertyRef Name="booking_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="bkg_guest_type_id_FK">
+    <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1" />
+    <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="guest_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="booking_guests">
+        <PropertyRef Name="guest_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="booking_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="bookings">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="booking_transaction_id_id_FK">
+    <End Role="transactions" Type="Self.transactions" Multiplicity="0..1" />
+    <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="transactions">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="bookings">
+        <PropertyRef Name="transaction_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="booking_userId_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="bookings">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cities_state_id_id_FK">
+    <End Role="states" Type="Self.states" Multiplicity="0..1" />
+    <End Role="cities" Type="Self.cities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="states">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cities">
+        <PropertyRef Name="state_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cpl_cms_page_id_id_FK">
+    <End Role="cms_pages" Type="Self.cms_pages" Multiplicity="0..1" />
+    <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cms_pages">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cms_page_languages">
+        <PropertyRef Name="cms_page_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cpl_language_id_id_FK">
+    <End Role="languages" Type="Self.languages" Multiplicity="0..1" />
+    <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="languages">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="cms_page_languages">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cr_component_id_id_FK">
+    <End Role="review_component" Type="Self.review_component" Multiplicity="0..1" />
+    <End Role="component_rating" Type="Self.component_rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="review_component">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="component_rating">
+        <PropertyRef Name="component_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="cr_review_id_id_FK">
+    <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="0..1" />
+    <End Role="component_rating" Type="Self.component_rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="property_reviews">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="component_rating">
+        <PropertyRef Name="review_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="disputes_booking_id_id_FK">
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+    <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bookings">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="disputes">
+        <PropertyRef Name="booking_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="disputes_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="disputes">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="disputes_userId_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="disputes">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ecl_email_content_id_id_FK">
+    <End Role="email_contents" Type="Self.email_contents" Multiplicity="0..1" />
+    <End Role="email_content_languages" Type="Self.email_content_languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="email_contents">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="email_content_languages">
+        <PropertyRef Name="email_content_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ecl_language_id_id_FK">
+    <End Role="languages" Type="Self.languages" Multiplicity="0..1" />
+    <End Role="email_content_languages" Type="Self.email_content_languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="languages">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="email_content_languages">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="emct_receiver_id_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="email_contents" Type="Self.email_contents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="email_contents">
+        <PropertyRef Name="receiver_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="emct_sender_id_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="email_contents" Type="Self.email_contents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="email_contents">
+        <PropertyRef Name="sender_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="favourite_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="favourite">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="favourite_userID_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="favourite">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_amenities_categories">
+    <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+    <End Role="amenities" Type="Self.amenities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="amenities">
+        <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="gid_userID_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="governmentID" Type="Self.governmentID" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="governmentID">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="neighbourhood_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="neighbourhood" Type="Self.neighbourhood" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="neighbourhood">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pa_amenity_id_id_FK">
+    <End Role="amenities" Type="Self.amenities" Multiplicity="0..1" />
+    <End Role="property_amenities" Type="Self.property_amenities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="amenities">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="property_amenities">
+        <PropertyRef Name="amenity_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pa_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="property_amenities" Type="Self.property_amenities" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="property_amenities">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pi_added_by_user_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="property_images" Type="Self.property_images" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="property_images">
+        <PropertyRef Name="added_by_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pi_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="property_images" Type="Self.property_images" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="property_images">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pn_userID_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="phone_number" Type="Self.phone_number" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="phone_number">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pr_booking_id_id_FK">
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+    <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bookings">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="property_reviews">
+        <PropertyRef Name="booking_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pr_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="property_reviews">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pr_reviews_by_user_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="property_reviews">
+        <PropertyRef Name="review_by_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pro_city_id_id_FK">
+    <End Role="cities" Type="Self.cities" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="cities">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pro_country_id_id_FK">
+    <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countries">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pro_currency_id_id_FK">
+    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="currencies">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="currency_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pro_property_type_id_id_FK">
+    <End Role="property_type" Type="Self.property_type" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="property_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="property_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pro_room_type_id_id_FK">
+    <End Role="room_type" Type="Self.room_type" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="room_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="room_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pro_state_id_id_FK">
+    <End Role="states" Type="Self.states" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="states">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="state_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="states_country_id_id_FK">
+    <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
+    <End Role="states" Type="Self.states" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countries">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="states">
+        <PropertyRef Name="country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="transaction_booking_id_id_FK">
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="bookings">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transactions">
+        <PropertyRef Name="booking_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="transaction_currency_id_id_FK">
+    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
+    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="currencies">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transactions">
+        <PropertyRef Name="currency_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="transaction_payer_id_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transactions">
+        <PropertyRef Name="payer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="transaction_promo_code_id_id_FK">
+    <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1" />
+    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="promo_codes">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transactions">
+        <PropertyRef Name="promo_code_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="transaction_property_id_id_FK">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transactions">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="transaction_receiver_id_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="transactions">
+        <PropertyRef Name="receiver_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ul_language_id_FK">
+    <End Role="listLanguage" Type="Self.listLanguage" Multiplicity="0..1" />
+    <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="listLanguage">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="users_languages">
+        <PropertyRef Name="language_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ul_userID_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="users_languages">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="up_country_id_id_FK">
+    <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
+    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="countries">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_personalInfor">
+        <PropertyRef Name="country_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="up_userID_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_personalInfor">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="upp_userID_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="user_profile" Type="Self.user_profile" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_profile">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ur_create_by_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_role">
+        <PropertyRef Name="create_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ur_update_by_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_role">
+        <PropertyRef Name="update_by" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="users_user_type_id_FK">
+    <End Role="user_type" Type="Self.user_type" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="users">
+        <PropertyRef Name="user_type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="utur_user_role_id_id_FK">
+    <End Role="user_role" Type="Self.user_role" Multiplicity="0..1" />
+    <End Role="user_type_user_role" Type="Self.user_type_user_role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_type_user_role">
+        <PropertyRef Name="user_role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="utur_user_type_id_id_FK">
+    <End Role="user_type" Type="Self.user_type" Multiplicity="0..1" />
+    <End Role="user_type_user_role" Type="Self.user_type_user_role" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_type">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_type_user_role">
+        <PropertyRef Name="user_type_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PPL3ModelStoreContainer">
+    <EntitySet Name="amenities" EntityType="Self.amenities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="booking_guests" EntityType="Self.booking_guests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="bookings" EntityType="Self.bookings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cms_page_languages" EntityType="Self.cms_page_languages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="cms_pages" EntityType="Self.cms_pages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="component_rating" EntityType="Self.component_rating" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="countries" EntityType="Self.countries" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="currencies" EntityType="Self.currencies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="disputes" EntityType="Self.disputes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="email_content_languages" EntityType="Self.email_content_languages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="email_contents" EntityType="Self.email_contents" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="favourite" EntityType="Self.favourite" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="governmentID" EntityType="Self.governmentID" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="languages" EntityType="Self.languages" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="listLanguage" EntityType="Self.listLanguage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="neighbourhood" EntityType="Self.neighbourhood" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="phone_number" EntityType="Self.phone_number" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="promo_codes" EntityType="Self.promo_codes" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="properties" EntityType="Self.properties" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="property_amenities" EntityType="Self.property_amenities" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="property_images" EntityType="Self.property_images" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="property_reviews" EntityType="Self.property_reviews" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="property_type" EntityType="Self.property_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="review_component" EntityType="Self.review_component" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="room_type" EntityType="Self.room_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_profile" EntityType="Self.user_profile" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_role" EntityType="Self.user_role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_type" EntityType="Self.user_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_type_user_role" EntityType="Self.user_type_user_role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users_languages" EntityType="Self.users_languages" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="bkg_booking_id_FK" Association="Self.bkg_booking_id_FK">
+      <End Role="bookings" EntitySet="bookings" />
+      <End Role="booking_guests" EntitySet="booking_guests" />
+    </AssociationSet>
+    <AssociationSet Name="bkg_guest_type_id_FK" Association="Self.bkg_guest_type_id_FK">
+      <End Role="guest_type" EntitySet="guest_type" />
+      <End Role="booking_guests" EntitySet="booking_guests" />
+    </AssociationSet>
+    <AssociationSet Name="booking_property_id_id_FK" Association="Self.booking_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="bookings" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="booking_transaction_id_id_FK" Association="Self.booking_transaction_id_id_FK">
+      <End Role="transactions" EntitySet="transactions" />
+      <End Role="bookings" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="booking_userId_id_FK" Association="Self.booking_userId_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="bookings" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="cities_state_id_id_FK" Association="Self.cities_state_id_id_FK">
+      <End Role="states" EntitySet="states" />
+      <End Role="cities" EntitySet="cities" />
+    </AssociationSet>
+    <AssociationSet Name="cpl_cms_page_id_id_FK" Association="Self.cpl_cms_page_id_id_FK">
+      <End Role="cms_pages" EntitySet="cms_pages" />
+      <End Role="cms_page_languages" EntitySet="cms_page_languages" />
+    </AssociationSet>
+    <AssociationSet Name="cpl_language_id_id_FK" Association="Self.cpl_language_id_id_FK">
+      <End Role="languages" EntitySet="languages" />
+      <End Role="cms_page_languages" EntitySet="cms_page_languages" />
+    </AssociationSet>
+    <AssociationSet Name="cr_component_id_id_FK" Association="Self.cr_component_id_id_FK">
+      <End Role="review_component" EntitySet="review_component" />
+      <End Role="component_rating" EntitySet="component_rating" />
+    </AssociationSet>
+    <AssociationSet Name="cr_review_id_id_FK" Association="Self.cr_review_id_id_FK">
+      <End Role="property_reviews" EntitySet="property_reviews" />
+      <End Role="component_rating" EntitySet="component_rating" />
+    </AssociationSet>
+    <AssociationSet Name="disputes_booking_id_id_FK" Association="Self.disputes_booking_id_id_FK">
+      <End Role="bookings" EntitySet="bookings" />
+      <End Role="disputes" EntitySet="disputes" />
+    </AssociationSet>
+    <AssociationSet Name="disputes_property_id_id_FK" Association="Self.disputes_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="disputes" EntitySet="disputes" />
+    </AssociationSet>
+    <AssociationSet Name="disputes_userId_id_FK" Association="Self.disputes_userId_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="disputes" EntitySet="disputes" />
+    </AssociationSet>
+    <AssociationSet Name="ecl_email_content_id_id_FK" Association="Self.ecl_email_content_id_id_FK">
+      <End Role="email_contents" EntitySet="email_contents" />
+      <End Role="email_content_languages" EntitySet="email_content_languages" />
+    </AssociationSet>
+    <AssociationSet Name="ecl_language_id_id_FK" Association="Self.ecl_language_id_id_FK">
+      <End Role="languages" EntitySet="languages" />
+      <End Role="email_content_languages" EntitySet="email_content_languages" />
+    </AssociationSet>
+    <AssociationSet Name="emct_receiver_id_id_FK" Association="Self.emct_receiver_id_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="email_contents" EntitySet="email_contents" />
+    </AssociationSet>
+    <AssociationSet Name="emct_sender_id_id_FK" Association="Self.emct_sender_id_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="email_contents" EntitySet="email_contents" />
+    </AssociationSet>
+    <AssociationSet Name="favourite_property_id_id_FK" Association="Self.favourite_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="favourite" EntitySet="favourite" />
+    </AssociationSet>
+    <AssociationSet Name="favourite_userID_id_FK" Association="Self.favourite_userID_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="favourite" EntitySet="favourite" />
+    </AssociationSet>
+    <AssociationSet Name="FK_amenities_categories" Association="Self.FK_amenities_categories">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="amenities" EntitySet="amenities" />
+    </AssociationSet>
+    <AssociationSet Name="gid_userID_id_FK" Association="Self.gid_userID_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="governmentID" EntitySet="governmentID" />
+    </AssociationSet>
+    <AssociationSet Name="neighbourhood_property_id_id_FK" Association="Self.neighbourhood_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="neighbourhood" EntitySet="neighbourhood" />
+    </AssociationSet>
+    <AssociationSet Name="pa_amenity_id_id_FK" Association="Self.pa_amenity_id_id_FK">
+      <End Role="amenities" EntitySet="amenities" />
+      <End Role="property_amenities" EntitySet="property_amenities" />
+    </AssociationSet>
+    <AssociationSet Name="pa_property_id_id_FK" Association="Self.pa_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="property_amenities" EntitySet="property_amenities" />
+    </AssociationSet>
+    <AssociationSet Name="pi_added_by_user_id_FK" Association="Self.pi_added_by_user_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="property_images" EntitySet="property_images" />
+    </AssociationSet>
+    <AssociationSet Name="pi_property_id_id_FK" Association="Self.pi_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="property_images" EntitySet="property_images" />
+    </AssociationSet>
+    <AssociationSet Name="pn_userID_id_FK" Association="Self.pn_userID_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="phone_number" EntitySet="phone_number" />
+    </AssociationSet>
+    <AssociationSet Name="pr_booking_id_id_FK" Association="Self.pr_booking_id_id_FK">
+      <End Role="bookings" EntitySet="bookings" />
+      <End Role="property_reviews" EntitySet="property_reviews" />
+    </AssociationSet>
+    <AssociationSet Name="pr_property_id_id_FK" Association="Self.pr_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="property_reviews" EntitySet="property_reviews" />
+    </AssociationSet>
+    <AssociationSet Name="pr_reviews_by_user_id_FK" Association="Self.pr_reviews_by_user_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="property_reviews" EntitySet="property_reviews" />
+    </AssociationSet>
+    <AssociationSet Name="pro_city_id_id_FK" Association="Self.pro_city_id_id_FK">
+      <End Role="cities" EntitySet="cities" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
+    <AssociationSet Name="pro_country_id_id_FK" Association="Self.pro_country_id_id_FK">
+      <End Role="countries" EntitySet="countries" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
+    <AssociationSet Name="pro_currency_id_id_FK" Association="Self.pro_currency_id_id_FK">
+      <End Role="currencies" EntitySet="currencies" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
+    <AssociationSet Name="pro_property_type_id_id_FK" Association="Self.pro_property_type_id_id_FK">
+      <End Role="property_type" EntitySet="property_type" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
+    <AssociationSet Name="pro_room_type_id_id_FK" Association="Self.pro_room_type_id_id_FK">
+      <End Role="room_type" EntitySet="room_type" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
+    <AssociationSet Name="pro_state_id_id_FK" Association="Self.pro_state_id_id_FK">
+      <End Role="states" EntitySet="states" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
+    <AssociationSet Name="states_country_id_id_FK" Association="Self.states_country_id_id_FK">
+      <End Role="countries" EntitySet="countries" />
+      <End Role="states" EntitySet="states" />
+    </AssociationSet>
+    <AssociationSet Name="transaction_booking_id_id_FK" Association="Self.transaction_booking_id_id_FK">
+      <End Role="bookings" EntitySet="bookings" />
+      <End Role="transactions" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="transaction_currency_id_id_FK" Association="Self.transaction_currency_id_id_FK">
+      <End Role="currencies" EntitySet="currencies" />
+      <End Role="transactions" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="transaction_payer_id_id_FK" Association="Self.transaction_payer_id_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="transactions" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="transaction_promo_code_id_id_FK" Association="Self.transaction_promo_code_id_id_FK">
+      <End Role="promo_codes" EntitySet="promo_codes" />
+      <End Role="transactions" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="transaction_property_id_id_FK" Association="Self.transaction_property_id_id_FK">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="transactions" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="transaction_receiver_id_id_FK" Association="Self.transaction_receiver_id_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="transactions" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="ul_language_id_FK" Association="Self.ul_language_id_FK">
+      <End Role="listLanguage" EntitySet="listLanguage" />
+      <End Role="users_languages" EntitySet="users_languages" />
+    </AssociationSet>
+    <AssociationSet Name="ul_userID_id_FK" Association="Self.ul_userID_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="users_languages" EntitySet="users_languages" />
+    </AssociationSet>
+    <AssociationSet Name="up_country_id_id_FK" Association="Self.up_country_id_id_FK">
+      <End Role="countries" EntitySet="countries" />
+      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
+    </AssociationSet>
+    <AssociationSet Name="up_userID_id_FK" Association="Self.up_userID_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
+    </AssociationSet>
+    <AssociationSet Name="upp_userID_id_FK" Association="Self.upp_userID_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="user_profile" EntitySet="user_profile" />
+    </AssociationSet>
+    <AssociationSet Name="ur_create_by_id_FK" Association="Self.ur_create_by_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="user_role" EntitySet="user_role" />
+    </AssociationSet>
+    <AssociationSet Name="ur_update_by_id_FK" Association="Self.ur_update_by_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="user_role" EntitySet="user_role" />
+    </AssociationSet>
+    <AssociationSet Name="users_user_type_id_FK" Association="Self.users_user_type_id_FK">
+      <End Role="user_type" EntitySet="user_type" />
+      <End Role="users" EntitySet="users" />
+    </AssociationSet>
+    <AssociationSet Name="utur_user_role_id_id_FK" Association="Self.utur_user_role_id_id_FK">
+      <End Role="user_role" EntitySet="user_role" />
+      <End Role="user_type_user_role" EntitySet="user_type_user_role" />
+    </AssociationSet>
+    <AssociationSet Name="utur_user_type_id_id_FK" Association="Self.utur_user_type_id_id_FK">
+      <End Role="user_type" EntitySet="user_type" />
+      <End Role="user_type_user_role" EntitySet="user_type_user_role" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

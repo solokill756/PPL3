@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities">
+    <EntitySetMapping Name="amenities">
+      <EntityTypeMapping TypeName="PPL3Model.amenity">
+        <MappingFragment StoreEntitySet="amenities">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="amenity_name" ColumnName="amenity_name" />
+          <ScalarProperty Name="icon_image" ColumnName="icon_image" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="amenity_status" ColumnName="amenity_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="bookings">
+      <EntityTypeMapping TypeName="PPL3Model.booking">
+        <MappingFragment StoreEntitySet="bookings">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="check_in_date" ColumnName="check_in_date" />
+          <ScalarProperty Name="check_out_date" ColumnName="check_out_date" />
+          <ScalarProperty Name="price_per_day" ColumnName="price_per_day" />
+          <ScalarProperty Name="price_for_stay" ColumnName="price_for_stay" />
+          <ScalarProperty Name="tax_paid" ColumnName="tax_paid" />
+          <ScalarProperty Name="site_fees" ColumnName="site_fees" />
+          <ScalarProperty Name="amount_paid" ColumnName="amount_paid" />
+          <ScalarProperty Name="is_refund" ColumnName="is_refund" />
+          <ScalarProperty Name="cancel_date" ColumnName="cancel_date" />
+          <ScalarProperty Name="refund_paid" ColumnName="refund_paid" />
+          <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
+          <ScalarProperty Name="effective_amount" ColumnName="effective_amount" />
+          <ScalarProperty Name="booking_date" ColumnName="booking_date" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="booking_status" ColumnName="booking_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="categories">
+      <EntityTypeMapping TypeName="PPL3Model.category">
+        <MappingFragment StoreEntitySet="categories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="category_name" ColumnName="category_name" />
+          <ScalarProperty Name="category_description" ColumnName="category_description" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="category_status" ColumnName="category_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cities">
+      <EntityTypeMapping TypeName="PPL3Model.city">
+        <MappingFragment StoreEntitySet="cities">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="state_id" ColumnName="state_id" />
+          <ScalarProperty Name="city_name" ColumnName="city_name" />
+          <ScalarProperty Name="city_status" ColumnName="city_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cms_page_languages">
+      <EntityTypeMapping TypeName="PPL3Model.cms_page_languages">
+        <MappingFragment StoreEntitySet="cms_page_languages">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="cms_page_id" ColumnName="cms_page_id" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="cpl_description" ColumnName="cpl_description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="cms_pages">
+      <EntityTypeMapping TypeName="PPL3Model.cms_pages">
+        <MappingFragment StoreEntitySet="cms_pages">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="unique_name" ColumnName="unique_name" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="cp_status" ColumnName="cp_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="countries">
+      <EntityTypeMapping TypeName="PPL3Model.country">
+        <MappingFragment StoreEntitySet="countries">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ct_name" ColumnName="ct_name" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="status" ColumnName="status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="currencies">
+      <EntityTypeMapping TypeName="PPL3Model.currency">
+        <MappingFragment StoreEntitySet="currencies">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="currency_name" ColumnName="currency_name" />
+          <ScalarProperty Name="icon_image" ColumnName="icon_image" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="currency_status" ColumnName="currency_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="disputes">
+      <EntityTypeMapping TypeName="PPL3Model.dispute">
+        <MappingFragment StoreEntitySet="disputes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="disputes_description" ColumnName="disputes_description" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="disputes_status" ColumnName="disputes_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="email_content_languages">
+      <EntityTypeMapping TypeName="PPL3Model.email_content_languages">
+        <MappingFragment StoreEntitySet="email_content_languages">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email_content_id" ColumnName="email_content_id" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="ecl_subject" ColumnName="ecl_subject" />
+          <ScalarProperty Name="ecl_message" ColumnName="ecl_message" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="email_contents">
+      <EntityTypeMapping TypeName="PPL3Model.email_contents">
+        <MappingFragment StoreEntitySet="email_contents">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="unique_name" ColumnName="unique_name" />
+          <ScalarProperty Name="keywords" ColumnName="keywords" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="ec_status" ColumnName="ec_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="favourites">
+      <EntityTypeMapping TypeName="PPL3Model.favourite">
+        <MappingFragment StoreEntitySet="favourite">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="added_date" ColumnName="added_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="languages">
+      <EntityTypeMapping TypeName="PPL3Model.language">
+        <MappingFragment StoreEntitySet="languages">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="language_name" ColumnName="language_name" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="language_status" ColumnName="language_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="neighbour_type">
+      <EntityTypeMapping TypeName="PPL3Model.neighbour_type">
+        <MappingFragment StoreEntitySet="neighbour_type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="nt_name" ColumnName="nt_name" />
+          <ScalarProperty Name="nt_description" ColumnName="nt_description" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="nt_status" ColumnName="nt_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="neighbourhoods">
+      <EntityTypeMapping TypeName="PPL3Model.neighbourhood">
+        <MappingFragment StoreEntitySet="neighbourhood">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="neighbour_name" ColumnName="neighbour_name" />
+          <ScalarProperty Name="neighbour_description" ColumnName="neighbour_description" />
+          <ScalarProperty Name="neighbour_type" ColumnName="neighbour_type" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="tags" ColumnName="tags" />
+          <ScalarProperty Name="added_by_user" ColumnName="added_by_user" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="neighbour_status" ColumnName="neighbour_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="promo_codes">
+      <EntityTypeMapping TypeName="PPL3Model.promo_codes">
+        <MappingFragment StoreEntitySet="promo_codes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="pc_description" ColumnName="pc_description" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="discount" ColumnName="discount" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="pc_status" ColumnName="pc_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="properties">
+      <EntityTypeMapping TypeName="PPL3Model.property">
+        <MappingFragment StoreEntitySet="properties">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="p_name" ColumnName="p_name" />
+          <ScalarProperty Name="p_description" ColumnName="p_description" />
+          <ScalarProperty Name="userId" ColumnName="userId" />
+          <ScalarProperty Name="property_type_id" ColumnName="property_type_id" />
+          <ScalarProperty Name="room_type_id" ColumnName="room_type_id" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="subcategory_id" ColumnName="subcategory_id" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="state_id" ColumnName="state_id" />
+          <ScalarProperty Name="city_id" ColumnName="city_id" />
+          <ScalarProperty Name="p_address" ColumnName="p_address" />
+          <ScalarProperty Name="latitude" ColumnName="latitude" />
+          <ScalarProperty Name="longitude" ColumnName="longitude" />
+          <ScalarProperty Name="bedroom_count" ColumnName="bedroom_count" />
+          <ScalarProperty Name="bed_count" ColumnName="bed_count" />
+          <ScalarProperty Name="bathroom_count" ColumnName="bathroom_count" />
+          <ScalarProperty Name="accomodates_count" ColumnName="accomodates_count" />
+          <ScalarProperty Name="availability_type" ColumnName="availability_type" />
+          <ScalarProperty Name="startDate" ColumnName="startDate" />
+          <ScalarProperty Name="end_date" ColumnName="end_date" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="currency_id" ColumnName="currency_id" />
+          <ScalarProperty Name="price_type" ColumnName="price_type" />
+          <ScalarProperty Name="minimum_stay" ColumnName="minimum_stay" />
+          <ScalarProperty Name="minimum_stay_type" ColumnName="minimum_stay_type" />
+          <ScalarProperty Name="refund_type" ColumnName="refund_type" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="p_status" ColumnName="p_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="property_amenities">
+      <EntityTypeMapping TypeName="PPL3Model.property_amenities">
+        <MappingFragment StoreEntitySet="property_amenities">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="amenity_id" ColumnName="amenity_id" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="pa_status" ColumnName="pa_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="property_images">
+      <EntityTypeMapping TypeName="PPL3Model.property_images">
+        <MappingFragment StoreEntitySet="property_images">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="added_by_user" ColumnName="added_by_user" />
+          <ScalarProperty Name="pi_image" ColumnName="pi_image" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="pi_status" ColumnName="pi_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="property_reviews">
+      <EntityTypeMapping TypeName="PPL3Model.property_reviews">
+        <MappingFragment StoreEntitySet="property_reviews">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
+          <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="pr_status" ColumnName="pr_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="property_type">
+      <EntityTypeMapping TypeName="PPL3Model.property_type">
+        <MappingFragment StoreEntitySet="property_type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="pt_name" ColumnName="pt_name" />
+          <ScalarProperty Name="icon_image" ColumnName="icon_image" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="pt_status" ColumnName="pt_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="room_type">
+      <EntityTypeMapping TypeName="PPL3Model.room_type">
+        <MappingFragment StoreEntitySet="room_type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="rt_name" ColumnName="rt_name" />
+          <ScalarProperty Name="icon_image" ColumnName="icon_image" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="rt_status" ColumnName="rt_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="states">
+      <EntityTypeMapping TypeName="PPL3Model.state">
+        <MappingFragment StoreEntitySet="states">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="country_id" ColumnName="country_id" />
+          <ScalarProperty Name="state_name" ColumnName="state_name" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="state_status" ColumnName="state_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="subcategories">
+      <EntityTypeMapping TypeName="PPL3Model.subcategory">
+        <MappingFragment StoreEntitySet="subcategories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="category_id" ColumnName="category_id" />
+          <ScalarProperty Name="sub_name" ColumnName="sub_name" />
+          <ScalarProperty Name="sub_description" ColumnName="sub_description" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="sub_status" ColumnName="sub_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="PPL3Model.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="transactions">
+      <EntityTypeMapping TypeName="PPL3Model.transaction">
+        <MappingFragment StoreEntitySet="transactions">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="receiver_id" ColumnName="receiver_id" />
+          <ScalarProperty Name="payer_id" ColumnName="payer_id" />
+          <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+          <ScalarProperty Name="site_fees" ColumnName="site_fees" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+          <ScalarProperty Name="transfer_on" ColumnName="transfer_on" />
+          <ScalarProperty Name="currency_id" ColumnName="currency_id" />
+          <ScalarProperty Name="promo_code_id" ColumnName="promo_code_id" />
+          <ScalarProperty Name="discount_amt" ColumnName="discount_amt" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="transaction_status" ColumnName="transaction_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_profile">
+      <EntityTypeMapping TypeName="PPL3Model.user_profile">
+        <MappingFragment StoreEntitySet="user_profile">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="user_avatar" ColumnName="user_avatar" />
+          <ScalarProperty Name="is_super_host" ColumnName="is_super_host" />
+          <ScalarProperty Name="user_work" ColumnName="user_work" />
+          <ScalarProperty Name="user_fun_fact" ColumnName="user_fun_fact" />
+          <ScalarProperty Name="user_favourite_song" ColumnName="user_favourite_song" />
+          <ScalarProperty Name="user_unless_skill" ColumnName="user_unless_skill" />
+          <ScalarProperty Name="user_pets" ColumnName="user_pets" />
+          <ScalarProperty Name="user_school" ColumnName="user_school" />
+          <ScalarProperty Name="user_time_spend" ColumnName="user_time_spend" />
+          <ScalarProperty Name="user_obsessed_with" ColumnName="user_obsessed_with" />
+          <ScalarProperty Name="user_biography_title" ColumnName="user_biography_title" />
+          <ScalarProperty Name="user_about" ColumnName="user_about" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_role">
+      <EntityTypeMapping TypeName="PPL3Model.user_role">
+        <MappingFragment StoreEntitySet="user_role">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ur_url" ColumnName="ur_url" />
+          <ScalarProperty Name="ur_description" ColumnName="ur_description" />
+          <ScalarProperty Name="created_at" ColumnName="created_at" />
+          <ScalarProperty Name="update_at" ColumnName="update_at" />
+          <ScalarProperty Name="create_by" ColumnName="create_by" />
+          <ScalarProperty Name="update_by" ColumnName="update_by" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_type">
+      <EntityTypeMapping TypeName="PPL3Model.user_type">
+        <MappingFragment StoreEntitySet="user_type">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="ut_name" ColumnName="ut_name" />
+          <ScalarProperty Name="ut_description" ColumnName="ut_description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_type_user_role">
+      <EntityTypeMapping TypeName="PPL3Model.user_type_user_role">
+        <MappingFragment StoreEntitySet="user_type_user_role">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
+          <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="PPL3Model.user">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+          <ScalarProperty Name="user_phone" ColumnName="user_phone" />
+          <ScalarProperty Name="user_type" ColumnName="user_type" />
+          <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+          <ScalarProperty Name="login_with" ColumnName="login_with" />
+          <ScalarProperty Name="facebook_id" ColumnName="facebook_id" />
+          <ScalarProperty Name="twitter_id" ColumnName="twitter_id" />
+          <ScalarProperty Name="receive_coupon" ColumnName="receive_coupon" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="user_status" ColumnName="user_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users_languages">
+      <EntityTypeMapping TypeName="PPL3Model.users_languages">
+        <MappingFragment StoreEntitySet="users_languages">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="language_id" ColumnName="language_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,81 @@
+﻿@model PPl3.Models.user
+@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@section SideBar {
+    <div id="body_sign_log" class="open">
+        <div class="container active" id="container">
+            <div class="form-container sign-up">
+                <form method="post" action="/user/homeUser/SignUp">
+                    <h1>Create Account</h1>
+                    @*<div class="social-icons">
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>*@
+                    <span class="content">or use your email for registeration</span>
+                    <input type="text" required placeholder="Account Name" name="account_name">
+                    <input type="email" required placeholder="Email" name="email_address">
+                    @Html.ValidationMessage("Gmail", new { @class = "error-message" })
+                    <input type="password" required placeholder="Password" name="user_password">
+                    <button>Sign Up</button>
+                </form>
+            </div>
+            <div class="form-container sign-in">
+                <form method="post" action="/user/homeUser/login">
+                    <h1>Sign In</h1>
+                    @*<div class="social-icons">
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>*@
+                    <span class="content">or use your email password</span>
+                    <input type="email" required placeholder="Email" name="email_address">
+                    @Html.ValidationMessage("CheckGmail", new { @class = "error-message" })
+                    <input type="password" required placeholder="Password" name="user_password">
+                    @Html.ValidationMessage("Password", new { @class = "error-message" })
+                    <a href="#">Forget Your Password?</a>
+                    <button>Sign In</button>
+                </form>
+            </div>
+            <div class="toggle-container">
+                <div class="toggle">
+                    <div class="toggle-panel toggle-left">
+                        <h1>Welcome Back!</h1>
+                        <p>Enter your personal details to use all of site features</p>
+                        <button class="hidden" id="login">Sign In</button>
+                    </div>
+                    <div class="toggle-panel toggle-right">
+                        <h1>Hello, Friend!</h1>
+                        <p>Register with your personal details to use all of site features</p>
+                        <button class="hidden" id="register">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Menu {
+    <div class="sub_nav sub_nav_guest js_sub_nav_guest">
+        <ul class="menu_user js_menu_user">
+            <li class="js_signUp_btn">
+                <button>
+                    <a href="#">Sign In</a>
+                </button>
+            </li>
+            <li class="js_logIn_btn">
+                <button>
+                    <a href="#">Sign Up</a>
+                </button>
+            </li>
+            <li><a href="#">Gift Cards</a></li>
+            <li><a href="#">Airbnb your home</a></li>
+            <li><a href="#">Help Center</a></li>
+        </ul>
+    </div>
+}

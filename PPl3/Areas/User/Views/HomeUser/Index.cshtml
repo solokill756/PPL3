@@ -1,0 +1,42 @@
+﻿@model PPl3.Areas.User.Controllers.MyViewModelPageUser
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@section Menu {
+    <div class="sub_nav sub_nav_guest js_sub_nav_guest">
+        <ul class="menu_user js_menu_user">
+            <li class=""><button>Messages</button></li>
+            <li class=""><button>Notifications</button></li>
+            <li class=""><button>Trips</button></li>
+            <li class=""><button>Wishlist</button></li>
+            <li><a href="#">Manage listings</a></li>
+            <li><a href="#">Account</a></li>
+            <li><a href="#">Gift Cards</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li class="user_log_out">Log out</li>
+        </ul>
+    </div>
+    <div class="alert_complete">
+        <i class="fa-solid fa-check"></i>
+        <p>Welcome back @Model.InforUser.account_name !</p>
+    </div>
+
+}
+
+@section ListMainAmenity {
+    @foreach (var item in Model.Model1Data)
+    {
+        if (item.amenity_status == 1)
+        {
+            <div class="room_classifi_item room_classifi_item_@item.id" src ="/user/homeuser/">
+                <div class="box_room_classifi">
+                    <img src="@item.icon_image" />
+                    <span>@item.amenity_name</span>
+                </div>
+            </div>
+        }
+    }
+}
