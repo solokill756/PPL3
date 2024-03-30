@@ -31,7 +31,7 @@
     {
         if (item.amenity_status == 1)
         {
-            <div class="room_classifi_item room_classifi_item_@item.id" >
+            <div class="room_classifi_item room_classifi_item_@item.id">
                 <div class="box_room_classifi">
                     <img src="@item.icon_image" />
                     <span>@item.amenity_name</span>
@@ -39,4 +39,91 @@
             </div>
         }
     }
+}
+
+@section ListHotel{
+    @{ 
+        int position = 0;
+    }
+    @foreach (var item in Model.Model2Data)
+    {
+        <div class="col l-3 m-4 c-6 content_container">
+            <div class="content_item content_item_@position">
+                <div class="list_img list_img_@position">
+                    @foreach (var pic in item.property_images)
+                    {
+                        <img class="img_@position" src="@pic.pi_image" alt="">
+                    }
+                    @*<img class="img_0" src="" alt="">
+                        <img class="img_0" src="" alt="">
+                        <img class="img_0" src="" alt="">
+                        <img class="img_0" src="" alt="">
+                        <img class="img_0" src="" alt="">
+                        <img class="img_0" src="" alt="">*@
+                </div>
+                <div class="img_btns">
+                    <div class="btn_left btn_left_@position img_btn"><i class="fa-solid fa-angle-left"></i></div>
+                    <div class="btn_right btn_right_@position img_btn"><i class="fa-solid fa-angle-right"></i></div>
+                </div>
+
+                <div class="index_imgs">
+                    @{
+                        int pos_pic = 0;
+                        int check = 0;
+                    }
+                    @foreach (var pic in item.property_images)
+                    {
+                        if (check == 0)
+                        {
+                            <div class="index_item index-item-@(pos_pic)_@position active_@position"></div>
+                            check = 1;
+                        }
+                        else
+                        {
+                            <div class="index_item index-item-@(pos_pic)_@position"></div>
+                        }
+                        pos_pic++;
+                    }
+                    @*<div class="index_item index-item-0_0 active_0"></div>
+                    <div class="index_item index-item-1_0"></div>
+                    <div class="index_item index-item-2_0"></div>
+                    <div class="index_item index-item-3_0"></div>
+                    <div class="index_item index-item-4_0"></div>
+                    <div class="index_item index-item-5_0"></div>*@
+                </div>
+
+                <div class="heart_icon heart_icon_0">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+
+                <div class="profile_seller profile_seller_0">
+                    <div class="img_profile">
+                        <div class="img_seller img_seller_0">
+                        </div>
+                    </div>
+                    <div class="profile_behind">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="name_hotel name_hotel_@position">
+                <p>@item.p_address</p>
+                <span><i class="fa-solid fa-star"></i>3.6</span>
+            </div>
+
+            <div class="review_hotel review_hotel_@position">
+                <p>@item.p_name</p>
+                <p>
+                    @item.startDate - @item.end_date
+                </p>
+            </div>
+
+            <div class="price_hotel price_hotel_@position">
+                <span>$@item.price/ đêm</span>
+            </div>
+        </div>
+        position++;
+    }
+
 }

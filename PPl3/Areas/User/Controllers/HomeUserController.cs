@@ -25,16 +25,12 @@ namespace PPl3.Areas.User.Controllers
     public class HomeUserController : Controller
     {
         // GET: User/HomeUser
-        public ActionResult Index(string id = "")
+        public ActionResult Index(int id = -1)
         {
             user inforUser = TempData["inforUser"] as user;
             if (Session["user"] != null && inforUser != null)
             {
-                int search = 0;
-                if (id != "")
-                {
-                    search = Convert.ToInt32(id);
-                }
+               
                 var myView = new MyViewModelPageUser();
                 PPL3Entitie1  db = new PPL3Entitie1 ();
                 category main_cate = db.categories.Where(row => row.category_name.Equals("Main") == true).FirstOrDefault();
@@ -42,19 +38,15 @@ namespace PPl3.Areas.User.Controllers
                                     where item.category_id == main_cate.id
                                     select item;
                 myView.Model1Data = list_amenites.ToList();
-                if (id == "")
+                if (id == -1)
                 {
-                    var property_anmentitie = from item in db.property_amenities.ToList()
-                                              select item;
-                    var list_property = from item in db.properties.ToList()
-                                        where property_anmentitie.ToList().Find(value => value.property_id == item.id) != null
-                                        select item;
-                    myView.Model2Data = list_property.ToList();
+                    List<property> list_property = db.properties.ToList();
+                    myView.Model2Data = list_property;
                 }
                 else
                 {
                    var property_anmentitie = from item in db.property_amenities.ToList()
-                                          where item.amenity_id == search
+                                          where item.amenity_id == id
                                           select item;
                     var list_property = from item in db.properties.ToList()
                                         where property_anmentitie.ToList().Find(value => value.property_id == item.id) != null
