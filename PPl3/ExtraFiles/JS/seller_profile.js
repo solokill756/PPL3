@@ -4,6 +4,7 @@ const seller = document.querySelector('.seller')
 const containerLeft = document.querySelector('.seller_profile_container_left')
 const profileLeft = document.querySelector('.profile_left')
 const pageWhite = document.querySelector('.page_white')
+
 for (var profileBtn of profileBtns) {
     profileBtn.addEventListener('click', () =>{
         sellerProfile.classList.add('open1')

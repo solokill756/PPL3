@@ -123,7 +123,7 @@ namespace PPl3.Areas.User.Controllers
         {
             user_personalInfor user_PersonalInfor = new user_personalInfor();
             PPL3Entitie1  db = new PPL3Entitie1 ();
-
+    
             if (IsGmailExists(email_address))
 
             {
@@ -134,25 +134,20 @@ namespace PPl3.Areas.User.Controllers
 
             }
             else
-
             {
-                Session["user"] = "user";
-                var id_user = db.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
-                var userInfor = (db.users.Where(item => item.id == id_user).FirstOrDefault());
-                TempData["inforUser"] = userInfor;
+                
                 user_PersonalInfor.email_address = email_address;
                 user_PersonalInfor.userID = model.id;
                 db.user_personalInfor.Add(user_PersonalInfor);
                 db.users.Add(model);
                 db.SaveChanges();
+                Session["user"] = "user";
+                var id_user = db.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
+                var userInfor = (db.users.Where(item => item.id == id_user).FirstOrDefault());
+                TempData["inforUser"] = userInfor;
                 return RedirectToAction("Index");
-
-
-
             }
         }
-
-
 
 
         //Function

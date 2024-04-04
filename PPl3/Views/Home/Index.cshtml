@@ -7,6 +7,7 @@
 @{
     int index = 0;
 }
+
 @section Menu {
     <div class="sub_nav sub_nav_guest js_sub_nav_guest">
         <ul class="menu_user js_menu_user">
@@ -42,7 +43,8 @@
 }
 
 @section ListHotel{
-    @{ 
+
+    @{
         int position = 0;
     }
     @foreach (var item in Model.Model2Data)
@@ -85,21 +87,34 @@
                         pos_pic++;
                     }
                     @*<div class="index_item index-item-0_0 active_0"></div>
-                    <div class="index_item index-item-1_0"></div>
-                    <div class="index_item index-item-2_0"></div>
-                    <div class="index_item index-item-3_0"></div>
-                    <div class="index_item index-item-4_0"></div>
-                    <div class="index_item index-item-5_0"></div>*@
+                        <div class="index_item index-item-1_0"></div>
+                        <div class="index_item index-item-2_0"></div>
+                        <div class="index_item index-item-3_0"></div>
+                        <div class="index_item index-item-4_0"></div>
+                        <div class="index_item index-item-5_0"></div>*@
                 </div>
 
-                <div class="heart_icon heart_icon_0">
+                <div class="heart_icon heart_icon_@position">
                     <i class="fa-solid fa-heart"></i>
                 </div>
 
-                <div class="profile_seller profile_seller_0">
+                @{ 
+                    PPl3.Models.user_profile p_user = null;
+                }
+                @{  foreach(var u in Model.Model4Data)
+                    {
+                        if(u.userID == item.userId)
+                        {
+                            p_user = u;
+                            break;
+                        }
+                    }
+                }
+
+                <div class="profile_seller profile_seller_@position">
+
                     <div class="img_profile">
-                        <div class="img_seller img_seller_0">
-                        </div>
+                        <img class="img_seller" src="@p_user.user_avatar" alt="">
                     </div>
                     <div class="profile_behind">
                     </div>
@@ -115,7 +130,7 @@
             <div class="review_hotel review_hotel_@position">
                 <p>@item.p_name</p>
                 <p>
-                    @item.startDate - @item.end_date
+                    @item.startDate.Value.ToString("dd/MM/yyyy") - @item.end_date.Value.ToString("dd/MM/yyyy")
                 </p>
             </div>
 
@@ -125,5 +140,69 @@
         </div>
         position++;
     }
+}
 
+@section SideBar {
+    <div id="seller_profile">
+        <div class="seller">
+            <div class="seller_profile_container seller_profile_container_left">
+                <div class="logo_company">
+                    <i class="fa-brands fa-airbnb"></i>
+                    <h1>T|.|N|.|T</h1>
+                </div>
+
+                <div class="profile_left">
+                    <div class="profile_left_box">
+                        <div class="img_seller_profile"></div>
+                        <div class="logo_shield"><i class="fa-solid fa-shield"></i></i></div>
+                        <span class="name_seller">Thomas</span>
+                        <div class="contact_seller">
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
+
+                        <div class="page_arrow">
+                            <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                            <p>1</p>
+                            <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="seller_profile_container seller_profile_container_right">
+                <div class="profile_right">
+                    <div class="profile_right_box">
+                        <div class="about_seller">
+                            <p>i am  a vietnamese woman, my lovely job is take care of my family , my husband is an architecter, he made my homestay, so i proud of this, i want to take care of my homestay like take care of my daughter (i have two son now) :)), i alway help my guests , i want them comfortable in my home, like their house, i want them come back to my homestay and we  welcome them like friend visit my house....thanks so much to read ...</p>
+                        </div>
+
+                        <div class="page_arrow">
+                            <button class="page_left_2_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                            <p>2</p>
+                            <button class="page_right_2_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div>
+
+                        <!-- <div class="img_seller_profile"></div>
+                        <div class="logo_shield"><i class="fa-solid fa-shield"></i></i></div>
+                        <span class="name_seller">Thomas Henrry</span>
+                        <div class="contact_seller">
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
+
+                        <div class="page_arrow">
+                            <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                            <p>1</p>
+                            <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 }

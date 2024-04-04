@@ -17,6 +17,10 @@ namespace PPl3.Controllers
 
         public List<property> Model2Data { get; set; }
 
+        public List<user> Model3Data { get; set; }
+
+        public List<user_profile> Model4Data { get; set; }
+
         //Thêm các thuộc tính khác tương ứng với các model khác nếu cần
 
     }
@@ -46,6 +50,11 @@ namespace PPl3.Controllers
                                     select item;
                 myView.Model2Data = list_property.ToList();
             }
+            var list_user = db.users.ToList();
+            myView.Model3Data = list_user.ToList();
+
+            var list_user_pro = db.user_profile.ToList();
+            myView.Model4Data = list_user_pro.ToList();
             //Console.WriteLine(inforUser);
             return View(myView);
 
