@@ -17,7 +17,7 @@ loginBtn.addEventListener('click',() =>{
 
 bodySignlog.addEventListener('click', (e) => {
   
-    e.target.classList.remove('open')
+    //e.target.classList.remove('open')
     error_messages.forEach(function (error_message) {
         error_message.textContent = "";
     });
@@ -26,8 +26,8 @@ bodySignlog.addEventListener('click', (e) => {
 
 for (var menuUserBtn of menuUserBtns) {
     menuUserBtn.addEventListener('click', function (e) {
-        e.stopPropagation(); // Ngăn chặn sự kiện click từ việc phát tán ra ngoài
-        bodySignlog.classList.remove('open') // Hiển thị menu
+        //e.stopPropagation();  // Ngăn chặn sự kiện click từ việc phát tán ra ngoài
+        //bodySignlog.classList.remove('open') // Hiển thị menu
         error_messages.forEach(function (error_message) {
             error_message.textContent = "";
         });
@@ -41,7 +41,7 @@ if (signUpBtnOfMenu) {
     signUpBtnOfMenu.addEventListener('click', () => {
     bodySignlog.classList.add('open');
     container.classList.remove('active');
-    subNavGuest.classList.remove('open');
+    //subNavGuest.classList.remove('open');
     current = 0;
     });
 }
@@ -49,6 +49,6 @@ if (signUpBtnOfMenu) {
 loginBtnOfMenu.addEventListener('click', () => {
      bodySignlog.classList.add('open');
      container.classList.add('active');
-     subNavGuest.classList.remove('open');
+     //subNavGuest.classList.remove('open');
      current = 0;
 });

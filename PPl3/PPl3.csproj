@@ -239,9 +239,6 @@
     <Compile Include="Models\state.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\transaction.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -422,6 +419,7 @@
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\SellerProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

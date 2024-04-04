@@ -32,7 +32,7 @@ namespace PPl3.Areas.User.Controllers
             {
                
                 var myView = new MyViewModelPageUser();
-                PPL3Entitie1  db = new PPL3Entitie1 ();
+                PPL3Entities db = new PPL3Entities();
                 category main_cate = db.categories.Where(row => row.category_name.Equals("Main") == true).FirstOrDefault();
                 var list_amenites = from item in db.amenities.ToList()
                                     where item.category_id == main_cate.id
@@ -72,7 +72,7 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public ActionResult Login(user model , string email_address)
         {
-            PPL3Entitie1 entities = new PPL3Entitie1 ();
+            PPL3Entities entities = new PPL3Entities();
             if (!IsGmailExists(email_address))
 
             {
@@ -122,7 +122,7 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult SignUp(user model , string email_address)
         {
             user_personalInfor user_PersonalInfor = new user_personalInfor();
-            PPL3Entitie1  db = new PPL3Entitie1 ();
+            PPL3Entities db = new PPL3Entities();
     
             if (IsGmailExists(email_address))
 
@@ -155,7 +155,7 @@ namespace PPl3.Areas.User.Controllers
 
         {
 
-            PPL3Entitie1  db = new PPL3Entitie1 ();
+            PPL3Entities db = new PPL3Entities();
 
             return db.user_personalInfor.Any(u => u.email_address== email_address);
 
@@ -164,7 +164,7 @@ namespace PPl3.Areas.User.Controllers
 
         {
 
-            PPL3Entitie1  db = new PPL3Entitie1 ();
+            PPL3Entities db = new PPL3Entities();
 
             return db.users.Any(u => u.user_password == password);
 

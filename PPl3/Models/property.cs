@@ -30,7 +30,7 @@ namespace PPl3.Models
         public int id { get; set; }
         public string p_name { get; set; }
         public string p_description { get; set; }
-        public int userId { get; set; }
+        public Nullable<int> userId { get; set; }
         public Nullable<byte> is_guest_favourite { get; set; }
         public Nullable<int> property_type_id { get; set; }
         public Nullable<int> room_type_id { get; set; }

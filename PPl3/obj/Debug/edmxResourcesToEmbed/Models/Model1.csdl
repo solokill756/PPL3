@@ -413,16 +413,6 @@
     <NavigationProperty Name="country" Relationship="Self.states_country_id_id_FK" FromRole="states" ToRole="countries" />
     <NavigationProperty Name="properties" Relationship="Self.pro_state_id_id_FK" FromRole="states" ToRole="properties" />
   </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="transaction">
     <Key>
       <PropertyRef Name="id" />
@@ -1199,7 +1189,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="PPL3Entitie1" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="PPL3Entities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="amenities" EntityType="Self.amenity" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" />
     <EntitySet Name="bookings" EntityType="Self.booking" />
@@ -1229,7 +1219,6 @@
     <EntitySet Name="review_component" EntityType="Self.review_component" />
     <EntitySet Name="room_type" EntityType="Self.room_type" />
     <EntitySet Name="states" EntityType="Self.state" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="transactions" EntityType="Self.transaction" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" />
     <EntitySet Name="user_profile" EntityType="Self.user_profile" />

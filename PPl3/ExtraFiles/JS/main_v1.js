@@ -68,5 +68,45 @@ if (alertOut) {
 
 }
 
+// Cách để tránh reload lại Index sau khi thực hiện action
+
+if (typeof jQuery == 'undefined') {
+
+    console.log('jQuery is not loaded');
+
+} else {
+
+    console.log('jQuery is loaded');
+
+}
+
+$(document).ready(function () {
+
+
+    $('.profile_seller').click(function () {
+
+        var userId = $(this).data('userid');
+
+
+
+        $.ajax({
+
+            url: '@Url.Action("FindHost", "Home")',
+
+            type: 'GET',
+
+            data: { userId: userId },
+
+            success: function (data) {
+
+                $('#seller_profile').html(data);
+
+            }
+
+        });
+
+    });
+
+});
 
 

@@ -6,6 +6,8 @@
 }
 @{
     int index = 0;
+    PPl3.Models.user_profile p_host = new PPl3.Models.user_profile();
+
 }
 
 @section Menu {
@@ -32,12 +34,24 @@
     {
         if (item.amenity_status == 1)
         {
-            <div class="room_classifi_item room_classifi_item_@item.id">
-                <div class="box_room_classifi">
-                    <img src="@item.icon_image" />
-                    <span>@item.amenity_name</span>
+            if (item.id == ViewBag.AmenityId)
+            {
+                <div class="room_classifi_item room_classifi_item_@item.id activeListRoom" onclick="window.location.href='/home/index?id=@item.id'">
+                    <div class="box_room_classifi">
+                        <img src="@item.icon_image" />
+                        <span>@item.amenity_name</span>
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="room_classifi_item room_classifi_item_@item.id" onclick="window.location.href='/home/index?id=@item.id'">
+                    <div class="box_room_classifi">
+                        <img src="@item.icon_image" />
+                        <span>@item.amenity_name</span>
+                    </div>
+                </div>
+            }
         }
     }
 }
@@ -98,12 +112,12 @@
                     <i class="fa-solid fa-heart"></i>
                 </div>
 
-                @{ 
+                @{
                     PPl3.Models.user_profile p_user = null;
                 }
-                @{  foreach(var u in Model.Model4Data)
+                @{ foreach (var u in Model.Model4Data)
                     {
-                        if(u.userID == item.userId)
+                        if (u.userID == item.userId)
                         {
                             p_user = u;
                             break;
@@ -111,8 +125,7 @@
                     }
                 }
 
-                <div class="profile_seller profile_seller_@position">
-
+                <div class="profile_seller profile_seller_@position" data-userid="@item.userId">
                     <div class="img_profile">
                         <img class="img_seller" src="@p_user.user_avatar" alt="">
                     </div>
@@ -143,7 +156,7 @@
 }
 
 @section SideBar {
-    <div id="seller_profile">
+    <<div id="seller_profile">
         <div class="seller">
             <div class="seller_profile_container seller_profile_container_left">
                 <div class="logo_company">
@@ -155,7 +168,7 @@
                     <div class="profile_left_box">
                         <div class="img_seller_profile"></div>
                         <div class="logo_shield"><i class="fa-solid fa-shield"></i></i></div>
-                        <span class="name_seller">Thomas</span>
+                        <span class="name_seller"></span>
                         <div class="contact_seller">
                             <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                             <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
@@ -206,3 +219,4 @@
         </div>
     </div>
 }
+
