@@ -19,9 +19,7 @@ namespace PPl3.Controllers
 
         public List<user> Model3Data { get; set; }
 
-        public List<user_profile> Model4Data { get; set; }
 
-        public user hostUser { get; set; }
 
         //Thêm các thuộc tính khác tương ứng với các model khác nếu cần
 
@@ -31,8 +29,14 @@ namespace PPl3.Controllers
         MyViewModel myView = new MyViewModel();
         public ActionResult Index(int id = -1) 
         {
+            if (TempData["checkHost"] == null) TempData["checkHost"] = false;
+            else
+            {
+                ViewBag.checkHost = TempData["checkHost"];
+                ViewBag.hostUser = TempData["hostUser"];
+            }
             PPL3Entities db = new PPL3Entities();
-            category main_cate = db.categories.Where(row => row.category_name.Equals("Main") == true).FirstOrDefault();
+            category main_cate = db.categories.Where(row => row.category_name.Equals("Main")).FirstOrDefault();
             var list_amenites = from item in db.amenities.ToList()
                                 where item.category_id == main_cate.id
                                 select item;
@@ -57,19 +61,8 @@ namespace PPl3.Controllers
             myView.Model3Data = list_user.ToList();
 
             var list_user_pro = db.user_profile.ToList();
-            myView.Model4Data = list_user_pro.ToList();
-            //Console.WriteLine(inforUser);
             return View(myView);
-
         }
 
-
-        public ActionResult FindHost(int userId)
-        {
-            PPL3Entities db = new PPL3Entities();
-            myView.hostUser = db.users.Where(row => row.id == userId).FirstOrDefault();
-            return PartialView("SellerProfile", myView);
-
-        }
     }
 }

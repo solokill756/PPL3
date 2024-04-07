@@ -1,28 +1,34 @@
 const profileBtns = document.querySelectorAll('.profile_seller')
-const sellerProfile = document.getElementById('seller_profile')
-const seller = document.querySelector('.seller')
-const containerLeft = document.querySelector('.seller_profile_container_left')
-const profileLeft = document.querySelector('.profile_left')
 const pageWhite = document.querySelector('.page_white')
 
-for (var profileBtn of profileBtns) {
-    profileBtn.addEventListener('click', () =>{
-        sellerProfile.classList.add('open1')
-        setTimeout(()=>{
-            containerLeft.classList.add('openProfile')
-        },500)
-        setTimeout(()=>{
-            profileLeft.classList.add('turn')
-        },1170)
+for (let i = 0; i < profileBtns.length; ++i) {
+    //console.log(document.querySelector('.seller_profile_' + i));
+    document.querySelector('.profile_seller_' + i).addEventListener('click', () => {
+        document.querySelector('.seller_profile_' + i).classList.add('open1')
+        setTimeout(() => {
+            document.querySelector('.seller_profile_container_left_' + i).classList.add('openProfile')
+        }, 500)
+        setTimeout(() => {
+            document.querySelector('.profile_left_' + i).classList.add('turn')
+        }, 1170)
     });
 }
 
-sellerProfile.addEventListener('click',() =>{
-    sellerProfile.classList.remove('open1')
-    containerLeft.classList.remove('openProfile')
-    profileLeft.classList.remove('turn')
-})
+for (let i = 0; i < profileBtns.length; ++i) {
+    document.querySelector('.profile_seller_' + i).addEventListener('click', () => {
+        document.querySelector('.seller_profile_' + i).addEventListener('click', () => {
+            document.querySelector('.seller_profile_' + i).classList.remove('open1')
+            document.querySelector('.seller_profile_container_left_' + i).classList.remove('openProfile')
+            document.querySelector('.profile_left_' + i).classList.remove('turn')
+        });
+    });
+}
 
-seller.addEventListener('click', (e)=>{
-    e.stopPropagation();
-})
+
+for (let i = 0; i < profilebtns.length; ++i) {
+    document.querySelector('.profile_seller_' + i).addEventListener('click', () => {
+        document.querySelector('.seller_' + i).addEventListener('click', (e) => {
+            e.stoppropagation();
+        });
+    });
+}

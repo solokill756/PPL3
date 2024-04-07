@@ -655,7 +655,7 @@ html {
 
 .room_classifi_item {
     padding: 10px 10px;
-    width: 65px;
+    width: 100px;
 }
 
 .box_room_classifi {
@@ -665,6 +665,7 @@ html {
     align-items: center;
     cursor: pointer;
     color: #999;
+    width : 145px;
 }
 
     .box_room_classifi span {
@@ -782,4 +783,15 @@ html {
 
     max-height: 100%/* Chiều cao của vùng chứa ảnh */
    
+}
+
+
+.img_seller_profile img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.img_seller_profile img {
+    object-fit: cover;
 }

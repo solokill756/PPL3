@@ -9,6 +9,7 @@ using System.Web.Security;
 using PPl3.Models;
 namespace PPl3.Areas.User.Controllers
 {
+
     public class MyViewModelPageUser
 
     {
@@ -16,6 +17,9 @@ namespace PPl3.Areas.User.Controllers
         public List<amenity> Model1Data { get; set; }
 
         public List<property> Model2Data { get; set; }
+
+        public List<user> Model3Data { get; set; }
+        public List<user_profile> Model4Data { get; set; }
 
         public user InforUser { get; set; }
 
@@ -25,26 +29,27 @@ namespace PPl3.Areas.User.Controllers
     public class HomeUserController : Controller
     {
         // GET: User/HomeUser
+        MyViewModelPageUser myView = new MyViewModelPageUser();
         public ActionResult Index(int id = -1)
         {
-            user inforUser = TempData["inforUser"] as user;
-            if (Session["user"] != null && inforUser != null)
+            if (Session["user"] != null && Session["inForUser"] != null)
             {
-               
-                var myView = new MyViewModelPageUser();
+                myView.InforUser = (user)Session["InforUser"];
                 PPL3Entities db = new PPL3Entities();
-                category main_cate = db.categories.Where(row => row.category_name.Equals("Main") == true).FirstOrDefault();
+                category main_cate = db.categories.Where(row => row.category_name.Equals("Main")).FirstOrDefault();
                 var list_amenites = from item in db.amenities.ToList()
                                     where item.category_id == main_cate.id
                                     select item;
                 myView.Model1Data = list_amenites.ToList();
                 if (id == -1)
                 {
+                    ViewBag.Check = false;
                     List<property> list_property = db.properties.ToList();
                     myView.Model2Data = list_property;
                 }
                 else
                 {
+                   ViewBag.Check = true;
                    var property_anmentitie = from item in db.property_amenities.ToList()
                                           where item.amenity_id == id
                                           select item;
@@ -53,7 +58,12 @@ namespace PPl3.Areas.User.Controllers
                                         select item;
                     myView.Model2Data = list_property.ToList();
                 }
-                myView.InforUser = inforUser;
+
+                var list_user = db.users.ToList();
+                myView.Model3Data = list_user.ToList();
+
+                var list_user_pro = db.user_profile.ToList();
+                myView.Model4Data = list_user_pro.ToList();
                 //Console.WriteLine(inforUser);
                 return View(myView);
             }
@@ -97,8 +107,8 @@ namespace PPl3.Areas.User.Controllers
                 Session["user"] = "user";
                 var id_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (entities.users.Where(item => item.id ==  id_user).FirstOrDefault());
-                TempData["inforUser"] = userInfor;
-                return RedirectToAction("Index");
+                Session["inForUser"] = userInfor;
+                return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1 });
 
 
 
@@ -109,6 +119,7 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult LogOut()
         {
             Session.Remove("user");
+            Session.Remove("inForUser");
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "home", new { area = "" });
         }
@@ -144,10 +155,14 @@ namespace PPl3.Areas.User.Controllers
                 Session["user"] = "user";
                 var id_user = db.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (db.users.Where(item => item.id == id_user).FirstOrDefault());
-                TempData["inforUser"] = userInfor;
-                return RedirectToAction("Index");
+                Session["inForUser"] = userInfor;
+                return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1 });
+
             }
         }
+
+
+
 
 
         //Function

@@ -6,7 +6,6 @@
 }
 @{
     int index = 0;
-    PPl3.Models.user_profile p_host = new PPl3.Models.user_profile();
 
 }
 
@@ -70,12 +69,6 @@
                     {
                         <img class="img_@position" src="@pic.pi_image" alt="">
                     }
-                    @*<img class="img_0" src="" alt="">
-                        <img class="img_0" src="" alt="">
-                        <img class="img_0" src="" alt="">
-                        <img class="img_0" src="" alt="">
-                        <img class="img_0" src="" alt="">
-                        <img class="img_0" src="" alt="">*@
                 </div>
                 <div class="img_btns">
                     <div class="btn_left btn_left_@position img_btn"><i class="fa-solid fa-angle-left"></i></div>
@@ -100,12 +93,6 @@
                         }
                         pos_pic++;
                     }
-                    @*<div class="index_item index-item-0_0 active_0"></div>
-                        <div class="index_item index-item-1_0"></div>
-                        <div class="index_item index-item-2_0"></div>
-                        <div class="index_item index-item-3_0"></div>
-                        <div class="index_item index-item-4_0"></div>
-                        <div class="index_item index-item-5_0"></div>*@
                 </div>
 
                 <div class="heart_icon heart_icon_@position">
@@ -113,11 +100,11 @@
                 </div>
 
                 @{
-                    PPl3.Models.user_profile p_user = null;
+                    PPl3.Models.user p_user = null;
                 }
-                @{ foreach (var u in Model.Model4Data)
+                @{ foreach (var u in Model.Model3Data)
                     {
-                        if (u.userID == item.userId)
+                        if (u.id == item.userId)
                         {
                             p_user = u;
                             break;
@@ -125,9 +112,9 @@
                     }
                 }
 
-                <div class="profile_seller profile_seller_@position" data-userid="@item.userId">
+                <div class="profile_seller profile_seller_@position" @*onclick="window.location.href='/Home/findHost?id=@item.userId&choseIdAmenity=@ViewBag.choseIdAmenity'"*@>
                     <div class="img_profile">
-                        <img class="img_seller" src="@p_user.user_avatar" alt="">
+                        <img class="img_seller" src="@p_user.user_profile.FirstOrDefault().user_avatar" alt="">
                     </div>
                     <div class="profile_behind">
                     </div>
@@ -151,72 +138,50 @@
                 <span>$@item.price/ đêm</span>
             </div>
         </div>
-        position++;
-    }
-}
-
-@section SideBar {
-    <<div id="seller_profile">
-        <div class="seller">
-            <div class="seller_profile_container seller_profile_container_left">
-                <div class="logo_company">
-                    <i class="fa-brands fa-airbnb"></i>
-                    <h1>T|.|N|.|T</h1>
-                </div>
-
-                <div class="profile_left">
-                    <div class="profile_left_box">
-                        <div class="img_seller_profile"></div>
-                        <div class="logo_shield"><i class="fa-solid fa-shield"></i></i></div>
-                        <span class="name_seller"></span>
-                        <div class="contact_seller">
-                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                        </div>
-
-                        <div class="page_arrow">
-                            <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
-                            <p>1</p>
-                            <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+        <div id="seller_profile" class="seller_profile_@position" >
+            <div class="seller seller_@position">
+                <div class="seller_profile_container seller_profile_container_left seller_profile_container_left_@position">
+                    <div class="logo_company">
+                        <i class="fa-brands fa-airbnb"></i>
+                        <h1>T|.|N|.|T</h1>
+                    </div>
+                    <div class="profile_left profile_left_@position">
+                        <div class="profile_left_box">
+                            <div class="img_seller_profile" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                            </div>
+                            <span class="logo_shield"><i class="fa-solid fa-shield"></i></span>
+                            <span class="name_seller">@p_user.account_name</span>
+                            <div class="contact_seller">
+                                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                            </div>
+                            <div class="page_arrow">
+                                <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                                <p>1</p>
+                                <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <div class="seller_profile_container seller_profile_container_right">
+                    <div class="profile_right">
+                        <div class="profile_right_box">
+                            <div class="about_seller">
+                                <p>@p_user.user_profile.FirstOrDefault().user_about</p>
+                            </div>
 
-            <div class="seller_profile_container seller_profile_container_right">
-                <div class="profile_right">
-                    <div class="profile_right_box">
-                        <div class="about_seller">
-                            <p>i am  a vietnamese woman, my lovely job is take care of my family , my husband is an architecter, he made my homestay, so i proud of this, i want to take care of my homestay like take care of my daughter (i have two son now) :)), i alway help my guests , i want them comfortable in my home, like their house, i want them come back to my homestay and we  welcome them like friend visit my house....thanks so much to read ...</p>
+                            <div class="page_arrow">
+                                <button class="page_left_2_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                                <p>2</p>
+                                <button class="page_right_2_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
                         </div>
-
-                        <div class="page_arrow">
-                            <button class="page_left_2_btn"><i class="fa-solid fa-chevron-left"></i></button>
-                            <p>2</p>
-                            <button class="page_right_2_btn"><i class="fa-solid fa-chevron-right"></i></button>
-                        </div>
-
-                        <!-- <div class="img_seller_profile"></div>
-                        <div class="logo_shield"><i class="fa-solid fa-shield"></i></i></div>
-                        <span class="name_seller">Thomas Henrry</span>
-                        <div class="contact_seller">
-                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                        </div>
-
-                        <div class="page_arrow">
-                            <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
-                            <p>1</p>
-                            <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
-                        </div> -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        position++;
+    }
 }
-
