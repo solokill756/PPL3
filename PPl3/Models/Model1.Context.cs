@@ -13,10 +13,10 @@ namespace PPl3.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class PPL3Entities : DbContext
+    public partial class PPL3Entities2 : DbContext
     {
-        public PPL3Entities()
-            : base("name=PPL3Entities")
+        public PPL3Entities2()
+            : base("name=PPL3Entities2")
         {
         }
     
@@ -62,5 +62,6 @@ namespace PPl3.Models
         public virtual DbSet<user_type_user_role> user_type_user_role { get; set; }
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<users_languages> users_languages { get; set; }
+        public virtual DbSet<host_reviews> host_reviews { get; set; }
     }
 }

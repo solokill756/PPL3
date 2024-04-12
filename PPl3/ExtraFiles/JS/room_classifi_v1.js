@@ -29,14 +29,14 @@ btnLeftRoom.addEventListener('click', () =>{
 })
 
 var temp = 0;
-for (let i = 0; i < roomClassifiItem.length; i++){
+for (let i = 1; i < roomClassifiItem.length; i++){
     document.querySelector('.room_classifi_item_' + (i + 1)).addEventListener('click', () =>{
         temp++;
         if (temp == 1){
-            document.querySelector('.room_classifi_item_' + (i + 1)).classList.add('activeListRoom')
+            document.querySelector('.room_classifi_item_' + (i + 1) + ' span').classList.add('activeListRoom')
         }else{
             document.querySelector('.activeListRoom').classList.remove('activeListRoom')
-            document.querySelector('.room_classifi_item_' + (i + 1)).classList.add('activeListRoom')
+            document.querySelector('.room_classifi_item_' + (i + 1) + ' span').classList.add('activeListRoom')
         }
     })
 }

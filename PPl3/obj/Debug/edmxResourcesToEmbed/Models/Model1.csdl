@@ -132,10 +132,10 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="currency_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="icon_image" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="created" Type="DateTime" Precision="3" />
     <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="currency_status" Type="Byte" />
+    <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="properties" Relationship="Self.pro_currency_id_id_FK" FromRole="currencies" ToRole="properties" />
     <NavigationProperty Name="transactions" Relationship="Self.transaction_currency_id_id_FK" FromRole="currencies" ToRole="transactions" />
   </EntityType>
@@ -201,9 +201,9 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="userID" Type="Int32" />
-    <Property Name="driver_license" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <Property Name="passport" Type="Binary" MaxLength="Max" FixedLength="false" />
-    <Property Name="identity_card" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="driver_license" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="passport" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="identity_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="user" Relationship="Self.gid_userID_id_FK" FromRole="governmentID" ToRole="users" />
   </EntityType>
   <EntityType Name="guest_type">
@@ -319,6 +319,7 @@
     <NavigationProperty Name="property_type" Relationship="Self.pro_property_type_id_id_FK" FromRole="properties" ToRole="property_type" />
     <NavigationProperty Name="room_type" Relationship="Self.pro_room_type_id_id_FK" FromRole="properties" ToRole="room_type" />
     <NavigationProperty Name="state" Relationship="Self.pro_state_id_id_FK" FromRole="properties" ToRole="states" />
+    <NavigationProperty Name="user" Relationship="Self.pro_userId_id_FK" FromRole="properties" ToRole="users" />
     <NavigationProperty Name="transactions" Relationship="Self.transaction_property_id_id_FK" FromRole="properties" ToRole="transactions" />
   </EntityType>
   <EntityType Name="property_amenities">
@@ -384,8 +385,8 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="component_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="component_icon" Type="Binary" MaxLength="Max" FixedLength="false" />
     <Property Name="component_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="component_icon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="component_rating" Relationship="Self.cr_component_id_id_FK" FromRole="review_component" ToRole="component_rating" />
   </EntityType>
   <EntityType Name="room_type">
@@ -451,8 +452,8 @@
     <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="country_id" Type="Int32" />
     <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="u_state" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="u_city" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="u_state" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="u_city" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
     <NavigationProperty Name="country" Relationship="Self.up_country_id_id_FK" FromRole="user_personalInfor" ToRole="countries" />
     <NavigationProperty Name="user" Relationship="Self.up_userID_id_FK" FromRole="user_personalInfor" ToRole="users" />
   </EntityType>
@@ -481,8 +482,8 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ur_url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="ur_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="ur_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="ur_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <Property Name="update_at" Type="DateTime" Precision="3" />
     <Property Name="create_by" Type="Int32" />
@@ -532,6 +533,7 @@
     <NavigationProperty Name="favourites" Relationship="Self.favourite_userID_id_FK" FromRole="users" ToRole="favourite" />
     <NavigationProperty Name="governmentIDs" Relationship="Self.gid_userID_id_FK" FromRole="users" ToRole="governmentID" />
     <NavigationProperty Name="phone_number" Relationship="Self.pn_userID_id_FK" FromRole="users" ToRole="phone_number" />
+    <NavigationProperty Name="properties" Relationship="Self.pro_userId_id_FK" FromRole="users" ToRole="properties" />
     <NavigationProperty Name="property_images" Relationship="Self.pi_added_by_user_id_FK" FromRole="users" ToRole="property_images" />
     <NavigationProperty Name="property_reviews" Relationship="Self.pr_reviews_by_user_id_FK" FromRole="users" ToRole="property_reviews" />
     <NavigationProperty Name="transactions" Relationship="Self.transaction_payer_id_id_FK" FromRole="users" ToRole="transactions" />
@@ -542,6 +544,8 @@
     <NavigationProperty Name="user_role1" Relationship="Self.ur_update_by_id_FK" FromRole="users" ToRole="user_role" />
     <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
     <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
+    <NavigationProperty Name="host_reviews" Relationship="PPL3Model.hr_hostid_id_FK" FromRole="user" ToRole="host_reviews" />
+    <NavigationProperty Name="host_reviews1" Relationship="PPL3Model.hr_rvbuser_id_FK" FromRole="user" ToRole="host_reviews" />
   </EntityType>
   <EntityType Name="users_languages">
     <Key>
@@ -1033,6 +1037,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="pro_userId_id_FK">
+    <End Role="users" Type="Self.user" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.property" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="userId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="transaction_property_id_id_FK">
     <End Role="properties" Type="Self.property" Multiplicity="0..1" />
     <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
@@ -1189,7 +1205,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="PPL3Entities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="PPL3Entities2" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="amenities" EntityType="Self.amenity" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" />
     <EntitySet Name="bookings" EntityType="Self.booking" />
@@ -1387,6 +1403,10 @@
       <End Role="states" EntitySet="states" />
       <End Role="properties" EntitySet="properties" />
     </AssociationSet>
+    <AssociationSet Name="pro_userId_id_FK" Association="Self.pro_userId_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
     <AssociationSet Name="transaction_property_id_id_FK" Association="Self.transaction_property_id_id_FK">
       <End Role="properties" EntitySet="properties" />
       <End Role="transactions" EntitySet="transactions" />
@@ -1439,5 +1459,52 @@
       <End Role="users" EntitySet="users" />
       <End Role="users_languages" EntitySet="users_languages" />
     </AssociationSet>
+    <EntitySet Name="host_reviews" EntityType="PPL3Model.host_reviews" />
+    <AssociationSet Name="hr_hostid_id_FK" Association="PPL3Model.hr_hostid_id_FK">
+      <End Role="user" EntitySet="users" />
+      <End Role="host_reviews" EntitySet="host_reviews" />
+    </AssociationSet>
+    <AssociationSet Name="hr_rvbuser_id_FK" Association="PPL3Model.hr_rvbuser_id_FK">
+      <End Role="user" EntitySet="users" />
+      <End Role="host_reviews" EntitySet="host_reviews" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="host_reviews">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hostid" Type="Int32" />
+    <Property Name="review_by_user" Type="Int32" />
+    <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="modified" Type="DateTime" Precision="3" />
+    <Property Name="hr_status" Type="Byte" />
+    <NavigationProperty Name="user" Relationship="PPL3Model.hr_hostid_id_FK" FromRole="host_reviews" ToRole="user" />
+    <NavigationProperty Name="user1" Relationship="PPL3Model.hr_rvbuser_id_FK" FromRole="host_reviews" ToRole="user" />
+  </EntityType>
+  <Association Name="hr_hostid_id_FK">
+    <End Type="PPL3Model.user" Role="user" Multiplicity="0..1" />
+    <End Type="PPL3Model.host_reviews" Role="host_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="host_reviews">
+        <PropertyRef Name="hostid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="hr_rvbuser_id_FK">
+    <End Type="PPL3Model.user" Role="user" Multiplicity="0..1" />
+    <End Type="PPL3Model.host_reviews" Role="host_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="host_reviews">
+        <PropertyRef Name="review_by_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

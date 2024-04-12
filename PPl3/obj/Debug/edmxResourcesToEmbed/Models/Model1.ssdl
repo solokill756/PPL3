@@ -110,10 +110,10 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="currency_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="icon_image" Type="image" />
     <Property Name="created" Type="datetime" />
     <Property Name="modified" Type="datetime" />
     <Property Name="currency_status" Type="tinyint" />
+    <Property Name="icon_image" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="disputes">
     <Key>
@@ -167,9 +167,9 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="userID" Type="int" />
-    <Property Name="driver_license" Type="image" />
-    <Property Name="passport" Type="image" />
-    <Property Name="identity_card" Type="image" />
+    <Property Name="driver_license" Type="varchar(max)" />
+    <Property Name="passport" Type="varchar(max)" />
+    <Property Name="identity_card" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="guest_type">
     <Key>
@@ -177,6 +177,18 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="type_name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="host_reviews">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="hostid" Type="int" />
+    <Property Name="review_by_user" Type="int" />
+    <Property Name="comment" Type="nvarchar" MaxLength="255" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="modified" Type="datetime" />
+    <Property Name="hr_status" Type="tinyint" />
   </EntityType>
   <EntityType Name="languages">
     <Key>
@@ -319,8 +331,8 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="component_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="component_icon" Type="image" />
     <Property Name="component_description" Type="text" />
+    <Property Name="component_icon" Type="varchar(max)" />
   </EntityType>
   <EntityType Name="room_type">
     <Key>
@@ -374,8 +386,8 @@
     <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
     <Property Name="country_id" Type="int" />
     <Property Name="street_address" Type="nvarchar" MaxLength="255" />
-    <Property Name="u_state" Type="nvarchar" MaxLength="255" />
-    <Property Name="u_city" Type="nvarchar" MaxLength="255" />
+    <Property Name="u_state" Type="nvarchar" MaxLength="50" />
+    <Property Name="u_city" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="user_profile">
     <Key>
@@ -401,8 +413,8 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ur_url" Type="nvarchar" MaxLength="255" />
-    <Property Name="ur_description" Type="text" />
+    <Property Name="ur_url" Type="varchar" MaxLength="255" />
+    <Property Name="ur_description" Type="nvarchar(max)" />
     <Property Name="created_at" Type="datetime" />
     <Property Name="update_at" Type="datetime" />
     <Property Name="create_by" Type="int" />
@@ -699,6 +711,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="hr_hostid_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="host_reviews">
+        <PropertyRef Name="hostid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="hr_rvbuser_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="host_reviews">
+        <PropertyRef Name="review_by_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="neighbourhood_property_id_id_FK">
     <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
     <End Role="neighbourhood" Type="Self.neighbourhood" Multiplicity="*" />
@@ -876,6 +912,18 @@
       </Principal>
       <Dependent Role="properties">
         <PropertyRef Name="state_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="pro_userId_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties">
+        <PropertyRef Name="userId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1100,6 +1148,7 @@
     <EntitySet Name="favourite" EntityType="Self.favourite" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="governmentID" EntityType="Self.governmentID" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="host_reviews" EntityType="Self.host_reviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="languages" EntityType="Self.languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="listLanguage" EntityType="Self.listLanguage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="neighbourhood" EntityType="Self.neighbourhood" Schema="dbo" store:Type="Tables" />
@@ -1205,6 +1254,14 @@
       <End Role="users" EntitySet="users" />
       <End Role="governmentID" EntitySet="governmentID" />
     </AssociationSet>
+    <AssociationSet Name="hr_hostid_id_FK" Association="Self.hr_hostid_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="host_reviews" EntitySet="host_reviews" />
+    </AssociationSet>
+    <AssociationSet Name="hr_rvbuser_id_FK" Association="Self.hr_rvbuser_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="host_reviews" EntitySet="host_reviews" />
+    </AssociationSet>
     <AssociationSet Name="neighbourhood_property_id_id_FK" Association="Self.neighbourhood_property_id_id_FK">
       <End Role="properties" EntitySet="properties" />
       <End Role="neighbourhood" EntitySet="neighbourhood" />
@@ -1263,6 +1320,10 @@
     </AssociationSet>
     <AssociationSet Name="pro_state_id_id_FK" Association="Self.pro_state_id_id_FK">
       <End Role="states" EntitySet="states" />
+      <End Role="properties" EntitySet="properties" />
+    </AssociationSet>
+    <AssociationSet Name="pro_userId_id_FK" Association="Self.pro_userId_id_FK">
+      <End Role="users" EntitySet="users" />
       <End Role="properties" EntitySet="properties" />
     </AssociationSet>
     <AssociationSet Name="states_country_id_id_FK" Association="Self.states_country_id_id_FK">

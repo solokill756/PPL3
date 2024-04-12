@@ -22,8 +22,8 @@ namespace PPl3.Models
     
         public int id { get; set; }
         public string component_name { get; set; }
-        public byte[] component_icon { get; set; }
         public string component_description { get; set; }
+        public string component_icon { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<component_rating> component_rating { get; set; }

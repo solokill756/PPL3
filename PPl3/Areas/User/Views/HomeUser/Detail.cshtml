@@ -1,0 +1,796 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@{
+    Layout = null;
+}
+
+@{
+    PPl3.Models.property property = ViewBag.propertyFind;
+    int i = 0;
+    PPl3.Models.property_images[] list_images = property.property_images.ToArray();
+    PPl3.Models.PPL3Entities2 db = new PPl3.Models.PPL3Entities2();
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T|.|N|.|T | Product Detail</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/book_room.css?v=1" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=7" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="main">
+        <div id="headerProduct">
+            <div class="gird wide">
+                <div class="row sm-gutter nav">
+                    <div class="col l-2 m-2 c-2">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col l-6 m-6 c-4">
+                        <div class="experience_list">
+                            <button class="place_btn">Anywhere</button>
+                            <span>|</span>
+                            <button class="date_btn_in">Any week</button>
+                            <span>|</span>
+                            <button class="people_btn">Add Guests</button>
+                            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="col l-4 m-4 c-6 nav_menuUser">
+                        <div class="nav_languages">
+                            <a href="">Airbnb your home</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @if (p_user.user_profile.FirstOrDefault() != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                            }
+                        </div>
+                        <div class="sub_nav sub_nav_guest js_sub_nav_guest">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><button>Trips</button></li>
+                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                                <li><a href="Content">Manage listings</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="slider">
+            <div class="gird wide">
+                <div class="row no-gutter review_product">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="name_product">
+                            <h1>@property.p_name</h1>
+                            <div class="btn_interact">
+                                <button><i class="fa-solid fa-share"></i>Share</button>
+                                <button><i class="fa-regular fa-heart"></i>Save</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l-12 m-12 c-12">
+                        <div class="container_review">
+                            <div class="img_product">
+                                <div class="img_product_big" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                </div>
+                                @{
+                                    i++;
+                                }
+                                <div class="list_img_small">
+                                    <div class="img_product_small img_product_1" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
+                                    <div class="img_product_small img_product_2" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
+                                </div>
+                                <div class="list_img_small">
+                                    <div class="img_product_small img_product_3" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
+                                    <div class="img_product_small img_product_4" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
+                                </div>
+                            </div>
+                            <button class="show_more">Show More</button>
+                        </div>
+                    </div>
+                    <div class="col l-8 m-8 c-12">
+                        <div class="infor_hotel">
+                            <div style="background : url(@property.property_type.icon_image) top center /cover no-repeat"></div>
+                            <h1>@property.property_type.pt_name in @property.p_address</h1>
+                            <span>@property.accomodates_count guests</span> - <span>@property.bedroom_count bedroom</span> - <span>@property.bed_count bed</span> - <span>@property.bathroom_count bathroom</span>
+                            <!-- No Comment -->
+                            <!-- <p><i class="fa-solid fa-star"></i>No reviews yet</p> -->
+                            <!-- Comment -->
+                            @{
+                                double sum = 0;
+                                foreach (var item in property.property_reviews)
+                                {
+                                    sum = sum + double.Parse(item.overall_rating);
+                                }
+                                sum = sum / property.property_reviews.ToArray().Length;
+                            }
+                            <p><i class="fa-solid fa-star"></i>@sum - <a>@property.property_reviews.ToArray().Length</a></p>
+                        </div>
+
+                        <div class="seller_infor">
+                            <div class="gird wide">
+                                <div class="row no-gutter">
+                                    <div class="col l-8 m-8 c-12 seller_infor_container">
+                                        <div class="img_seller" style="background : url(@property.user.user_profile.ToList().FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                        </div>
+                                        <div class="infor">
+                                            <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
+                                            <p>6 years hosting</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="endow_hotel">
+                            <div class="gird wide">
+                                <div class="row no-gutter">
+                                    @foreach (var item in property.property_amenities.ToList().Where(item => item.amenity.category_id == 3).ToList())
+                                    {
+                                        <div class="col l-12 m-12 c-12 endow_item endow_check_in">
+                                            <i style="background : url(@item.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i>
+                                            <div class="endow_describe">
+                                                <span>@item.amenity.amenity_name</span>
+                                                <p>@item.amenity.description</p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="about_hotel">
+                            <div class="gird wide">
+                                <div class="row no-gutter">
+                                    <div class="col l-8 m-8 c-12 about_container">
+                                        <span>@property.p_description.Substring(0, 50)</span>
+                                        @*<div class="first_about">
+                                                <p>@property.p_description.Substring(0 , 50)</p>
+                                            </div>
+                                            <div class="article_body">
+                                                <span>...............</span>
+                                                <p>@property.p_description</p>
+                                            </div>
+                                            <div class="other">
+                                                <span>Other things to note</span>
+                                                <p>-We strictly DO NOT allow a group of more than 8 people. In case of a group of 4 or more, you might be purposefully allotted different dorm rooms. Further, if the group behaviour is deemed unfit at the property, the Zostel Property Manager, upon subjective evaluation, retains the full right to take required action which may also result in an on-spot cancellation without refunds.</p>
+                                                <p>- Children below 18 years of age are not permitted entry/stay at any of our hostels, with or without guardians. We do not recommend families.</p>
+                                                <p>- Our standard check-in time is 12 PM and the standard check-out time is 10 AM.</p>
+                                                <p>- We only accept a government ID as valid identification proof. No local IDs shall be accepted at the time of check-in.</p>
+                                                <p>- Guests are not permitted to bring outsiders inside the hostel campus.</p>
+                                                <p>- We believe in self-help and do not provide luggage assistance or room services.</p>
+                                                <p>- Drugs and any substance abuse is strictly banned inside and around the property.</p>
+                                                <p>- Alcohol consumption is strictly prohibited in and around the property premises.</p>
+                                                <p>- Right to admission reserved. </p>
+                                            </div>*@
+
+                                        @*<div class="note">
+                                                <span>NOTE:</span>
+                                                <p>Online maps are hardly reliable in the valley. Don’t hesitate to call the property for directions. You will receive the relevant contact details and detailed directions along with your booking confirmation voucher.</p>
+                                            </div>*@
+                                    </div>
+                                    <div class="col l-12 m-12 c-12 show_more_about">
+                                        <button>Show more<i class="fa-solid fa-chevron-right"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="review_room">
+                            <div class="gird wide">
+                                <div class="row no-gutter room_container">
+                                    <div class="col l-12 m-12 c-12 room_tittle">
+                                        <h2>Where you'll sleep</h2>
+                                    </div>
+                                    @foreach (var item in property.property_amenities.Where(row => row.amenity.category_id == 38))
+                                    {
+                                        <div class="col l-4 m-8 c-12">
+                                            <div class="img_bedroom" style="background : url(@item.pa_description) top center /cover no-repeat">
+                                            </div>
+                                            <span>@item.amenity.amenity_name</span>
+                                            @*<p>@item.</p>*@
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="place_offer">
+                            <div class="gird wide">
+                                <div class="row no-gutter offer_container">
+                                    <div class="col l-12 m-12 c-12 offer_tittle">
+                                        <h2>What this place offers</h2>
+                                    </div>
+                                    <div class="col l-4 m-12 c-12 offer_list">
+                                        @{
+                                            int count = 1;
+                                        }
+                                        @foreach (var item in property.property_amenities.ToList())
+                                        {
+                                            if (count <= 3)
+                                            {
+                                                <div class="offer_item">
+                                                    <i style="background : url(@item.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i>
+                                                    <span>@item.amenity.amenity_name</span>
+                                                </div>
+                                            }
+                                            count++;
+                                        }
+                                        @*<div class="offer_item">
+                                                <i class="fa-solid fa-car"></i>
+                                                <span>Free parking on premises</span>
+                                            </div>
+                                            <div class="offer_item">
+                                                <i class="fa-solid fa-smoking"></i>
+                                                <span>Smoking allowed</span>
+                                            </div>*@
+                                    </div>
+                                    <div class="col l-4 m-12 c-12 offer_list">
+                                        @{
+                                            count = 1;
+                                        }
+                                        @foreach (var item in property.property_amenities.ToList())
+                                        {
+                                            if (count > 3 && count <= 6)
+                                            {
+                                                <div class="offer_item">
+                                                    <i style="background : url(@item.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i>
+                                                    <span>@item.amenity.amenity_name</span>
+                                                </div>
+                                            }
+                                            count++;
+                                        }
+                                    </div>
+                                    <div class="col l-12 m-12 c-12 show_all">
+                                        <button>Show all 19 amenities</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="date_check">
+                            <div class="gird wide">
+                                <div class="row no-gutter">
+                                    <div class="col l-12 m-12 c-12 date_title">
+                                        <h2>Select checkout date</h2>
+                                        <p>Add your travel dates for exact pricing</p>
+                                    </div>
+                                    <div class="col l-12 m-12 c-12 light">
+                                        <div class="calendar">
+                                            <div class="calendar-header">
+                                                <span class="month-picker" id="month-picker">February</span>
+                                                <div class="year-picker">
+                                                    <span class="year-change" id="prev-year">
+                                                        <pre><</pre>
+                                                    </span>
+                                                    <span id="year">2024</span>
+                                                    <span class="year-change" id="next-year">
+                                                        <pre>></pre>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="calendar-body">
+                                                <div class="calendar-week-day">
+                                                    <div>Sun</div>
+                                                    <div>Mon</div>
+                                                    <div>Tue</div>
+                                                    <div>Wed</div>
+                                                    <div>Thu</div>
+                                                    <div>Fri</div>
+                                                    <div>Sat</div>
+                                                </div>
+                                                <div class="calendar-days"></div>
+                                            </div>
+                                            <div class="calendar-footer">
+                                                <div class="toggle clear_date_btn">
+                                                    <a>Clear Date</a>
+                                                </div>
+                                            </div>
+                                            <div class="month-list"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col l-4 m-4">
+                        <div class="pay">
+                            <div class="pay_container">
+                                <div class="pay_header">
+                                    <h1>Add dates for prices</h1>
+                                </div>
+                                <div class="pay_body">
+                                    <div class="check_in_out">
+                                        <div class="check_in check_item">
+                                            <button>Check In</button>
+                                            <span>3/22/2024</span>
+                                        </div>
+                                        <div class="check_out check_item">
+                                            <button>Check Out</button>
+                                            <span>Add date</span>
+                                        </div>
+                                    </div>
+                                    <div class="guest_number">
+                                        <div class="guest_btn">
+                                            <div class="guest_item">
+                                                <button>Guests</button>
+                                                <p>1 guest</p>
+                                            </div>
+                                            <div class="chevron">
+                                                <i class="fa-solid fa-chevron-down"></i>
+                                            </div>
+                                        </div>
+                                        <div class="guest_box">
+                                            <div class="guest_box_item adult">
+                                                <span>Adults<p>Age 13+</p></span>
+                                                <div class="quantity_guest">
+                                                    <button class="minus_btn minus_adults_btn"><i class="fa-solid fa-minus"></i></button>
+                                                    <span class="number_adult">1</span>
+                                                    <button class="plus_adults_btn"><i class="fa-solid fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="guest_box_item child">
+                                                <span>Children<p>Ages 2–12</p></span>
+                                                <div class="quantity_guest">
+                                                    <button class="minus_btn minus_child_btn"><i class="fa-solid fa-minus"></i></button>
+                                                    <span class="number_child">0</span>
+                                                    <button class="plus_child_btn"><i class="fa-solid fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div class="guest_box_item infants">
+                                                <span>Infants<p>Under 2</p></span>
+                                                <div class="quantity_guest">
+                                                    <button class="minus_btn minus_infants_btn"><i class="fa-solid fa-minus"></i></button>
+                                                    <span class="number_infants">0</span>
+                                                    <button class="plus_infants_btn"><i class="fa-solid fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pay_footer">
+                                    <button>Check Availabitily</button>
+                                </div>
+
+                                <div class="total">
+                                    <h2>Total: </h2>
+                                    <div class="money_total">
+                                        <h2>$@property.price </h2>
+                                        <p>night</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col l-12 m-12 c-12 comment">
+                        <!-- No Comment -->
+                        <!-- <div class="review_yet">
+                            <h2>No reviews (yet)</h2>
+                            <p><i class="fa-regular fa-star"></i>This host has 1,256 reviews for other places to stay.<a href="">Show other reviews</a></p>
+                        </div> -->
+                        <!-- Comment -->
+                        <!-- Comment -->
+                        <div class="gird wide">
+                            <div class="row no-gutter comment_list">
+                                <div class="col l-12 m-12 c-12 review_yet">
+                                    <h2><i class="fa-regular fa-solid fa-star"></i> @sum · @property.property_reviews.ToArray().Length reviews</h2>
+                                </div>
+                                @foreach (var item in property.property_reviews.ToList())
+                                {
+                                    if (item.pr_status == 1)
+                                    {
+                                        <div class="comment_item_detail comment_user_@item.review_by_user">
+                                            <div class="header_comment">
+                                                <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
+
+                                                <div>
+                                                    <span>@item.user.account_name</span>
+                                                    @{
+
+                                                        string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
+                                                        string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
+                                                        string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+
+                                                    }
+                                                    <p>@uCity ,  @uState , @countryName</p>
+                                                </div>
+                                            </div>
+                                            <div class="time_comment">
+                                                <div class="star_comment">
+                                                    @{
+                                                        for (int pos = 1; pos <= (int)double.Parse(item.overall_rating); ++pos)
+                                                        {
+
+                                                            <i class="fa-regular fa-solid fa-star"></i>
+                                                        }
+                                                        for (int pos = (int)double.Parse(item.overall_rating) + 1; pos <= 5; ++pos)
+                                                        {
+                                                            <i class="far fa-star gray-star"></i>
+                                                        }
+                                                    }
+
+                                                </div>
+                                                <span>2 weeks ago</span>
+                                                <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                            </div>
+
+                                            <div class="body_comment_detail">
+                                                <p>@item.comment</p>
+                                            </div>
+                                        </div>
+
+                                    }
+
+                                }
+                                <div class="col l-12 m-12 c-12 show_comment">
+                                    <button>Show all @property.property_reviews.ToArray().Length review</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col l-12 m-12 c-12">
+                        <div class="profile_host">
+
+                            <div class="infor_host gird wide">
+                                <div class="row no-gutter">
+                                    <div class="col l-12 m-12 c-12 meet_your_host">
+                                        <h2>Meet your Host</h2>
+                                    </div>
+                                    <div class="infor_host_container">
+                                        <div class="col l-5 m-12 c-12 information">
+                                            <div class="homeowner_basics">
+                                                <div class="review_host">
+                                                    <img src="@property.user.user_profile.FirstOrDefault().user_avatar" alt="">
+                                                    <i class="fa-solid fa-shield"></i>
+                                                    <h2>@property.user.user_personalInfor.FirstOrDefault().legal_name</h2>
+                                                    <p>Host</p>
+                                                </div>
+                                                <div class="infor_basics">
+                                                    <div class="infor_basics_item">
+
+                                                        <span>@property.user.host_reviews.ToArray().Length</span>
+                                                        <p>Review</p>
+                                                    </div>
+                                                    <div class="infor_basics_item">
+                                                        <span>4.84<i class="fa-solid fa-star"></i></span>
+                                                        <p>Rating</p>
+                                                    </div>
+                                                    <div class="infor_basic">
+                                                        <span>7</span>
+                                                        <p>Years hosting</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="skill_work">
+                                                <span><i class="fa-solid fa-bag-shopping"></i>My work: @property.user.user_profile.FirstOrDefault().user_work</span>
+                                                @{
+                                                    string Languages = "";
+                                                    int size = Languages.Length - 1;
+                                                    foreach (var item in property.user.users_languages.ToList())
+                                                    {
+                                                        Languages = Languages + item.listLanguage.language_name + ",";
+                                                    }
+                                                    if (!string.IsNullOrEmpty(Languages) && Languages.EndsWith(","))
+
+                                                    {
+
+                                                        // Xóa dấu phẩy cuối cùng
+
+                                                        Languages = Languages.Substring(0, Languages.Length - 1);
+
+                                                    }
+                                                }
+                                                <span><i class="fa-solid fa-earth-europe"></i>Speaks @Languages</span>
+                                            </div>
+
+                                            <div class="describe">
+                                                <p>@property.user.user_profile.FirstOrDefault().user_about</p>
+                                            </div>
+                                            <div class="show_more_homeowner">
+                                                <button>Show more<i class="fa-solid fa-chevron-right"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="col l-7 m-12 c-12 information">
+                                            <div class="evaluate_host">
+                                                <div class="evaluate_item">
+                                                    @if (property.user.user_profile.FirstOrDefault().is_super_host == 1)
+                                                    {
+                                                        <h2>@property.user.user_personalInfor.FirstOrDefault().legal_name is a Superhost</h2>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h2>@property.user.user_personalInfor.FirstOrDefault().legal_name is not  a Superhost</h2>
+                                                    }
+                                                    <p>Superhosts are experienced, highly rated hosts who are committed to providing great stays for guests.</p>
+                                                </div>
+                                                <div class="evaluate_item">
+                                                    <h2>Host details</h2>
+                                                    <p>Response rate: 100%</p>
+                                                    <p>Responds within an hour</p>
+                                                </div>
+                                                <div class="evaluate_message_btn">
+                                                    <button>Message Host</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row no-gutter thing_list">
+                                        <div class="col l-12 m-12 c-12 thing_tittle">
+                                            <h2>Things to know</h2>
+                                        </div>
+                                        <div class="col l-4 m-6 c-12 thing_item  house_rules">
+                                            <span>House rules</span>
+                                            <p>Check-in after 4:00 PM</p>
+                                            <p>Checkout before 11:00 AM</p>
+                                            <p>4 guests maximum</p>
+                                            <a href="#">Show more<i class="fa-solid fa-chevron-right"></i></a>
+                                        </div>
+                                        <div class="col l-4 m-6 c-12 thing_item safety_property">
+                                            <span>Safety & property</span>
+                                            <p>Pool/hot tub without a gate or lock</p>
+                                            <p>May encounter potentially dangerous animal</p>
+                                            <p>Carbon monoxide alarm</p>
+                                            <a href="#">Show more<i class="fa-solid fa-chevron-right"></i></a>
+                                        </div>
+                                        <div class="col l-4 m-6 c-12 thing_item cancellation_policy">
+                                            <span>Cancellation policy</span>
+                                            <p>Free cancellation before Apr 7.</p>
+                                            <p>Review the Host’s full cancellation policy which applies even if you cancel for illness or disruptions caused by COVID-19.</p>
+                                            <a href="#">Show more<i class="fa-solid fa-chevron-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="gird wide">
+                <div class="row no-gutter infor_contact_list">
+                    <div class="col l-4 m-6 c-12 infor_contact_item support">
+                        <span>Support</span>
+                        <ul>
+                            <li><a href="">Help Center</a></li>
+                            <li><a href="">Get help with a safety issue</a></li>
+                            <li><a href="">AirCover</a></li>
+                            <li><a href="">Anti-discrimination</a></li>
+                            <li><a href="">Disability support</a></li>
+                            <li><a href="">Cancellation options</a></li>
+                            <li><a href="">Report neighborhood concern</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item hosting">
+                        <span>Hosting</span>
+                        <ul>
+                            <li><a href="">T|.|N|.|T your home</a></li>
+                            <li><a href="">AirCover for Hosts</a></li>
+                            <li><a href="">Hosting resources</a></li>
+                            <li><a href="">Community forum</a></li>
+                            <li><a href="">Hosting responsibly</a></li>
+                            <li><a href="">T|.|N|.|T-friendly apartments</a></li>
+                            <li><a href="">Join a free Hosting class</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item airbnb">
+                        <span>T|.|N|.|T</span>
+                        <ul>
+                            <li><a href="">Newsroom</a></li>
+                            <li><a href="">New features</a></li>
+                            <li><a href="">Careers</a></li>
+                            <li><a href="">Investors</a></li>
+                            <li><a href="">Gift cards</a></li>
+                            <li><a href="">T|.|N|.|T.org emergency stays</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="about_hotel_detail">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="col l-o-3 l-6 m-o-2 m-8 c-o-2 c-8 about_detail_container">
+                        <div class="about_detail_tittle">
+                            <h2>@property.p_name</h2>
+                        </div>
+                        <div class="about_box">
+                            <div class="first_about">
+                                <p>@property.p_description</p>
+                            </div>
+                            <div class="article_body">
+                                <span>Location : </span>
+                                <p>@property.p_address</p>
+                            </div>
+                            <div class="other">
+                                <span>Other things to note : </span>
+                                <p>- Country : @property.country.ct_name</p>
+                                <p>- State : @property.state.state_name</p>
+                                <p>- City : @property.city.city_name</p>
+                                <p>- BedRoom : @property.bedroom_count</p>
+                                <p>- Bed : @property.bed_count</p>
+                                <p>- Accomodates : @property.accomodates_count guests</p>
+                                <p>- Max_pet : @property.max_pets</p>
+                                <p>- Prices : $@property.price</p>
+                                <p>- Dates : @property.startDate.Value.ToString("dd/MM/yyyy") - @property.end_date.Value.ToString("dd/MM/yyyy") </p>
+                            </div>
+                            <div class="note">
+                                <span>NOTE:</span>
+                                <p>Minimum number of days for hotel rental is @property.minimum_stay days</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="offer_detail">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="col l-o-3 l-6 m-o-2 m-8 c-o-2 c-8 offer_detail_container">
+                        <div class="offer_detail_tittle">
+                            <h1>What this place offers</h1>
+                        </div>
+                        <div class="offer_box">
+                            <div class="scenic_view">
+                                <h2>Scenic views</h2>
+                                <ul>
+                                    <li>Mountain view</li>
+                                </ul>
+                            </div>
+                            @foreach (var item in db.categories.ToList())
+                            {
+                                if (property.property_amenities.Any(row => (row.amenity.category_id == item.id) && (item.id != 1 && item.id != 3)))
+                                {
+                                    <div class="BathRoom_offer @item.id">
+                                        <h2>@item.category_name</h2>
+                                        <ul class="display_anitimy">
+
+                                            @foreach (var antime in property.property_amenities.Where(row => (row.amenity.category_id == item.id)).ToList())
+                                            {
+                                                
+                                                <li>
+                                                    <i style="background : url(@antime.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i> @antime.amenity.amenity_name
+                                                </li>
+
+                                            }
+
+                                        </ul>
+                                    </div>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="comment_detail">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="col l-o-2 l-8 m-o-1 m-10 c-o-1 c-10 comment_detail_container">
+                        <div class="comment_detail_tittle">
+                            <h2><i class="fa-regular fa-solid fa-star"></i> 4.84 · 55 reviews</h2>
+                        </div>
+                        <div class="comment_box">
+                            @foreach (var item in property.property_reviews.ToList())
+                            {
+                                if (item.pr_status == 1)
+                                {
+                                    <div class="comment_item_detail comment_user_@item.review_by_user">
+                                        <div class="header_comment">
+                                            <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
+                                            <div>
+                                                <span>@item.user.account_name</span>
+                                                @{
+
+                                                    string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
+                                                    string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
+                                                    string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+
+                                                }
+                                                <p>@uCity ,  @uState , @countryName</p>
+                                            </div>
+                                        </div>
+                                        <div class="time_comment">
+                                            <div class="star_comment">
+                                                @{
+                                                    for (int pos = 1; pos <= (int)double.Parse(item.overall_rating); ++pos)
+                                                    {
+
+                                                        <i class="fa-regular fa-solid fa-star"></i>
+                                                    }
+                                                    for (int pos = (int)double.Parse(item.overall_rating) + 1; pos <= 5; ++pos)
+                                                    {
+                                                        <i class="far fa-star gray-star"></i>
+                                                    }
+                                                }
+
+                                            </div>
+                                            <span>2 weeks ago</span>
+                                            <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                        </div>
+
+                                        <div class="body_comment_detail">
+                                            <p>@item.comment</p>
+                                        </div>
+                                    </div>
+
+                                }
+
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=1"></script>
+    <script src="~/ExtraFiles/JS/calendar.js?v=1"></script>
+</body>
+</html>

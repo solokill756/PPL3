@@ -10,6 +10,10 @@
 }
 
 @section Menu {
+    <div class="nav_login">
+        <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+        <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></i></button>
+    </div>
     <div class="sub_nav sub_nav_guest js_sub_nav_guest">
         <ul class="menu_user js_menu_user">
             <li class="js_signUp_btn">
@@ -27,6 +31,13 @@
             <li><a href="#">Help Center</a></li>
         </ul>
     </div>
+    @if (ViewBag.checkLogOut == true)
+    {
+        <div class="alert_out">
+            <i class="fa-solid fa-check"></i>
+            <p>Log Out !</p>
+        </div>
+    }
 }
 @section ListMainAmenity {
     @foreach (var item in Model.Model1Data)
@@ -35,16 +46,16 @@
         {
             if (item.id == ViewBag.AmenityId)
             {
-                <div class="room_classifi_item room_classifi_item_@item.id activeListRoom" onclick="window.location.href='/home/index?id=@item.id'">
+                <div class="room_classifi_item room_classifi_item_@item.id" onclick="window.location.href='/home/index?id=@item.id&checkID=@ViewBag.checkId'">
                     <div class="box_room_classifi">
                         <img src="@item.icon_image" />
-                        <span>@item.amenity_name</span>
+                        <span class="activeListRoom">@item.amenity_name</span>
                     </div>
                 </div>
             }
             else
             {
-                <div class="room_classifi_item room_classifi_item_@item.id" onclick="window.location.href='/home/index?id=@item.id'">
+                <div class="room_classifi_item room_classifi_item_@item.id" onclick="window.location.href='/home/index?id=@item.id&checkID=@ViewBag.checkId'">
                     <div class="box_room_classifi">
                         <img src="@item.icon_image" />
                         <span>@item.amenity_name</span>
@@ -64,7 +75,7 @@
     {
         <div class="col l-3 m-4 c-6 content_container">
             <div class="content_item content_item_@position">
-                <div class="list_img list_img_@position">
+                <div class="list_img list_img_@position" onclick="window.location.href='/home/Detail?id=@item.id'">
                     @foreach (var pic in item.property_images)
                     {
                         <img class="img_@position" src="@pic.pi_image" alt="">
@@ -95,9 +106,7 @@
                     }
                 </div>
 
-                <div class="heart_icon heart_icon_@position">
-                    <i class="fa-solid fa-heart"></i>
-                </div>
+                
 
                 @{
                     PPl3.Models.user p_user = null;
@@ -124,7 +133,17 @@
 
             <div class="name_hotel name_hotel_@position">
                 <p>@item.p_address</p>
-                <span><i class="fa-solid fa-star"></i>3.6</span>
+                @{
+
+                    double sum = 0;
+                    foreach (var row in item.property_reviews)
+                    {
+                        sum = sum + double.Parse(row.overall_rating);
+                    }
+                    sum = sum / item.property_reviews.ToArray().Length;
+
+                }
+                <span><i class="fa-solid fa-star"></i>@sum</span>
             </div>
 
             <div class="review_hotel review_hotel_@position">
@@ -138,7 +157,7 @@
                 <span>$@item.price/ đêm</span>
             </div>
         </div>
-        <div id="seller_profile" class="seller_profile_@position" >
+        <div id="seller_profile" class="seller_profile_@position">
             <div class="seller seller_@position">
                 <div class="seller_profile_container seller_profile_container_left seller_profile_container_left_@position">
                     <div class="logo_company">

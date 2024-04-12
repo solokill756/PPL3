@@ -23,10 +23,10 @@ namespace PPl3.Models
     
         public int id { get; set; }
         public string currency_name { get; set; }
-        public byte[] icon_image { get; set; }
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> currency_status { get; set; }
+        public string icon_image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<property> properties { get; set; }

@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T|.|n|.|T</title>
-    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/book_room.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/gird.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/style_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/seller_profile.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/style_v1.css?v=5" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=2" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
 </head>
 <body>
@@ -19,8 +19,8 @@
                 <div class="row sm-gutter first_nav">
                     <div class="col l-2 m-1 c-2">
                         <div class="nav_logo">
-                            <a href="index.html" class="logo_link">
-                                <i class="fa-brands fa-airbnb"></i>
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
                                 <h1>T|.|n|.|T</h1>
                             </a>
                         </div>
@@ -39,10 +39,7 @@
                             <a href="">Airbnb your home</a>
                             <button><i class="fa-solid fa-globe"></i></button>
                         </div>
-                        <div class="nav_login">
-                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
-                            <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></i></button>
-                        </div>
+                        
                         @RenderSection("Menu", required: false)
                     </div>
 
@@ -143,15 +140,11 @@
             <div class="gird wide">
                 <div class="row list_content">
                     @RenderSection("ListHotel", required: false)
-
                 </div>
             </div>
         </div>
     </div>
-    <div class="alert_out">
-        <i class="fa-solid fa-check"></i>
-        <p>Log Out !</p>
-    </div>
+    
     <div>
         @RenderBody()
     </div>

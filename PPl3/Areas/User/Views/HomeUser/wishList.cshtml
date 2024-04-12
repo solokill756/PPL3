@@ -1,0 +1,127 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{ 
+    PPl3.Models.PPL3Entities2 db = new PPl3.Models.PPL3Entities2();
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T|.|n|.|T</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" /> 
+    <link href="~/ExtraFiles/assets/css/wishList.css?v=2" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @if (p_user.user_profile.FirstOrDefault() != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                            }
+                        </div>
+                        <div class="sub_nav sub_nav_guest js_sub_nav_guest">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><button>Trips</button></li>
+                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                                <li><a href="Content">Manage listings</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="tool_wish">
+                            <div class="tittle">
+                                <h1>Wishlists</h1>
+                            </div>
+                            <div class="remove_btn_general">
+                                <button><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    @foreach(var item in db.favourites.ToList()) { 
+                        <div class="col l-4 m-6 c-12 hotel_container">
+                            <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                <div style="width:100%; height: 100%" onclick="window.location.href='/user/homeuser/Detail?id=@item.property_id'"></div>
+                                <div class="remove_btn" onclick="window.location.href='/user/homeuser/DeleteWishList?id=@item.property_id'" >
+                                    <button><i class="fa-solid fa-trash-can"></i></button>
+                                </div>
+                                <div class="check_remove">
+                                    <button class="check_box"><i class="fa-solid fa-check"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="infor_hotel">
+                                <div class="name_hotel">
+                                    <span>@item.property.p_address</span>
+                                    @{
+                                        double sum = 0;
+                                        foreach (var row in item.property.property_reviews.ToList())
+                                        {
+                                            sum = sum + double.Parse(row.overall_rating);
+                                        }
+                                        sum = sum / item.property.property_reviews.ToArray().Length;
+                                    }
+                                    <p><i class="fa-solid fa-star"></i>@sum</p>
+                                </div>
+                                <div class="detail_hotel">
+                                    <p>@item.property.p_name</p>
+                                    <p>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</p>
+                                </div>
+                                <div class="price">
+                                    <span>$@item.property.price/night</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/ExtraFiles/JS/wishList.js"></script>
+</body>
+</html>

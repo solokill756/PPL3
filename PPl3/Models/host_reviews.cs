@@ -12,14 +12,17 @@ namespace PPl3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class governmentID
+    public partial class host_reviews
     {
         public int id { get; set; }
-        public Nullable<int> userID { get; set; }
-        public string driver_license { get; set; }
-        public string passport { get; set; }
-        public string identity_card { get; set; }
+        public Nullable<int> hostid { get; set; }
+        public Nullable<int> review_by_user { get; set; }
+        public string comment { get; set; }
+        public Nullable<System.DateTime> created { get; set; }
+        public Nullable<System.DateTime> modified { get; set; }
+        public Nullable<byte> hr_status { get; set; }
     
         public virtual user user { get; set; }
+        public virtual user user1 { get; set; }
     }
 }

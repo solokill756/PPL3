@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -115,10 +115,10 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="currency_name" Type="nvarchar" MaxLength="255" />
-          <Property Name="icon_image" Type="image" />
           <Property Name="created" Type="datetime" />
           <Property Name="modified" Type="datetime" />
           <Property Name="currency_status" Type="tinyint" />
+          <Property Name="icon_image" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="disputes">
           <Key>
@@ -172,9 +172,9 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userID" Type="int" />
-          <Property Name="driver_license" Type="image" />
-          <Property Name="passport" Type="image" />
-          <Property Name="identity_card" Type="image" />
+          <Property Name="driver_license" Type="varchar(max)" />
+          <Property Name="passport" Type="varchar(max)" />
+          <Property Name="identity_card" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="guest_type">
           <Key>
@@ -182,6 +182,18 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="type_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="host_reviews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="hostid" Type="int" />
+          <Property Name="review_by_user" Type="int" />
+          <Property Name="comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="created" Type="datetime" />
+          <Property Name="modified" Type="datetime" />
+          <Property Name="hr_status" Type="tinyint" />
         </EntityType>
         <EntityType Name="languages">
           <Key>
@@ -324,8 +336,8 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="component_name" Type="nvarchar" MaxLength="255" />
-          <Property Name="component_icon" Type="image" />
           <Property Name="component_description" Type="text" />
+          <Property Name="component_icon" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="room_type">
           <Key>
@@ -379,8 +391,8 @@
           <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
           <Property Name="country_id" Type="int" />
           <Property Name="street_address" Type="nvarchar" MaxLength="255" />
-          <Property Name="u_state" Type="nvarchar" MaxLength="255" />
-          <Property Name="u_city" Type="nvarchar" MaxLength="255" />
+          <Property Name="u_state" Type="nvarchar" MaxLength="50" />
+          <Property Name="u_city" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="user_profile">
           <Key>
@@ -406,8 +418,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ur_url" Type="nvarchar" MaxLength="255" />
-          <Property Name="ur_description" Type="text" />
+          <Property Name="ur_url" Type="varchar" MaxLength="255" />
+          <Property Name="ur_description" Type="nvarchar(max)" />
           <Property Name="created_at" Type="datetime" />
           <Property Name="update_at" Type="datetime" />
           <Property Name="create_by" Type="int" />
@@ -704,6 +716,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="hr_hostid_id_FK">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="host_reviews">
+              <PropertyRef Name="hostid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="hr_rvbuser_id_FK">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="host_reviews">
+              <PropertyRef Name="review_by_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="neighbourhood_property_id_id_FK">
           <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
           <End Role="neighbourhood" Type="Self.neighbourhood" Multiplicity="*" />
@@ -881,6 +917,18 @@
             </Principal>
             <Dependent Role="properties">
               <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pro_userId_id_FK">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="properties" Type="Self.properties" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="properties">
+              <PropertyRef Name="userId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1105,6 +1153,7 @@
           <EntitySet Name="favourite" EntityType="Self.favourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="governmentID" EntityType="Self.governmentID" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="host_reviews" EntityType="Self.host_reviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="languages" EntityType="Self.languages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="listLanguage" EntityType="Self.listLanguage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="neighbourhood" EntityType="Self.neighbourhood" Schema="dbo" store:Type="Tables" />
@@ -1210,6 +1259,14 @@
             <End Role="users" EntitySet="users" />
             <End Role="governmentID" EntitySet="governmentID" />
           </AssociationSet>
+          <AssociationSet Name="hr_hostid_id_FK" Association="Self.hr_hostid_id_FK">
+            <End Role="users" EntitySet="users" />
+            <End Role="host_reviews" EntitySet="host_reviews" />
+          </AssociationSet>
+          <AssociationSet Name="hr_rvbuser_id_FK" Association="Self.hr_rvbuser_id_FK">
+            <End Role="users" EntitySet="users" />
+            <End Role="host_reviews" EntitySet="host_reviews" />
+          </AssociationSet>
           <AssociationSet Name="neighbourhood_property_id_id_FK" Association="Self.neighbourhood_property_id_id_FK">
             <End Role="properties" EntitySet="properties" />
             <End Role="neighbourhood" EntitySet="neighbourhood" />
@@ -1268,6 +1325,10 @@
           </AssociationSet>
           <AssociationSet Name="pro_state_id_id_FK" Association="Self.pro_state_id_id_FK">
             <End Role="states" EntitySet="states" />
+            <End Role="properties" EntitySet="properties" />
+          </AssociationSet>
+          <AssociationSet Name="pro_userId_id_FK" Association="Self.pro_userId_id_FK">
+            <End Role="users" EntitySet="users" />
             <End Role="properties" EntitySet="properties" />
           </AssociationSet>
           <AssociationSet Name="states_country_id_id_FK" Association="Self.states_country_id_id_FK">
@@ -1339,8 +1400,7 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1476,10 +1536,10 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="currency_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="icon_image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="created" Type="DateTime" Precision="3" />
           <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="currency_status" Type="Byte" />
+          <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="properties" Relationship="Self.pro_currency_id_id_FK" FromRole="currencies" ToRole="properties" />
           <NavigationProperty Name="transactions" Relationship="Self.transaction_currency_id_id_FK" FromRole="currencies" ToRole="transactions" />
         </EntityType>
@@ -1545,9 +1605,9 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userID" Type="Int32" />
-          <Property Name="driver_license" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="passport" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="identity_card" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="driver_license" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="passport" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="identity_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="user" Relationship="Self.gid_userID_id_FK" FromRole="governmentID" ToRole="users" />
         </EntityType>
         <EntityType Name="guest_type">
@@ -1663,6 +1723,7 @@
           <NavigationProperty Name="property_type" Relationship="Self.pro_property_type_id_id_FK" FromRole="properties" ToRole="property_type" />
           <NavigationProperty Name="room_type" Relationship="Self.pro_room_type_id_id_FK" FromRole="properties" ToRole="room_type" />
           <NavigationProperty Name="state" Relationship="Self.pro_state_id_id_FK" FromRole="properties" ToRole="states" />
+          <NavigationProperty Name="user" Relationship="Self.pro_userId_id_FK" FromRole="properties" ToRole="users" />
           <NavigationProperty Name="transactions" Relationship="Self.transaction_property_id_id_FK" FromRole="properties" ToRole="transactions" />
         </EntityType>
         <EntityType Name="property_amenities">
@@ -1728,8 +1789,8 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="component_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="component_icon" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="component_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="component_icon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="component_rating" Relationship="Self.cr_component_id_id_FK" FromRole="review_component" ToRole="component_rating" />
         </EntityType>
         <EntityType Name="room_type">
@@ -1795,8 +1856,8 @@
           <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="country_id" Type="Int32" />
           <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="u_state" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="u_city" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="u_state" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="u_city" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="country" Relationship="Self.up_country_id_id_FK" FromRole="user_personalInfor" ToRole="countries" />
           <NavigationProperty Name="user" Relationship="Self.up_userID_id_FK" FromRole="user_personalInfor" ToRole="users" />
         </EntityType>
@@ -1825,8 +1886,8 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ur_url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="ur_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ur_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ur_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="created_at" Type="DateTime" Precision="3" />
           <Property Name="update_at" Type="DateTime" Precision="3" />
           <Property Name="create_by" Type="Int32" />
@@ -1876,6 +1937,7 @@
           <NavigationProperty Name="favourites" Relationship="Self.favourite_userID_id_FK" FromRole="users" ToRole="favourite" />
           <NavigationProperty Name="governmentIDs" Relationship="Self.gid_userID_id_FK" FromRole="users" ToRole="governmentID" />
           <NavigationProperty Name="phone_number" Relationship="Self.pn_userID_id_FK" FromRole="users" ToRole="phone_number" />
+          <NavigationProperty Name="properties" Relationship="Self.pro_userId_id_FK" FromRole="users" ToRole="properties" />
           <NavigationProperty Name="property_images" Relationship="Self.pi_added_by_user_id_FK" FromRole="users" ToRole="property_images" />
           <NavigationProperty Name="property_reviews" Relationship="Self.pr_reviews_by_user_id_FK" FromRole="users" ToRole="property_reviews" />
           <NavigationProperty Name="transactions" Relationship="Self.transaction_payer_id_id_FK" FromRole="users" ToRole="transactions" />
@@ -1886,6 +1948,8 @@
           <NavigationProperty Name="user_role1" Relationship="Self.ur_update_by_id_FK" FromRole="users" ToRole="user_role" />
           <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
           <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
+          <NavigationProperty Name="host_reviews" Relationship="PPL3Model.hr_hostid_id_FK" FromRole="user" ToRole="host_reviews" />
+          <NavigationProperty Name="host_reviews1" Relationship="PPL3Model.hr_rvbuser_id_FK" FromRole="user" ToRole="host_reviews" />
         </EntityType>
         <EntityType Name="users_languages">
           <Key>
@@ -2377,6 +2441,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="pro_userId_id_FK">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="properties" Type="Self.property" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="properties">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="transaction_property_id_id_FK">
           <End Role="properties" Type="Self.property" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
@@ -2533,7 +2609,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PPL3Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="PPL3Entities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="amenities" EntityType="Self.amenity" />
           <EntitySet Name="booking_guests" EntityType="Self.booking_guests" />
           <EntitySet Name="bookings" EntityType="Self.booking" />
@@ -2731,6 +2807,10 @@
             <End Role="states" EntitySet="states" />
             <End Role="properties" EntitySet="properties" />
           </AssociationSet>
+          <AssociationSet Name="pro_userId_id_FK" Association="Self.pro_userId_id_FK">
+            <End Role="users" EntitySet="users" />
+            <End Role="properties" EntitySet="properties" />
+          </AssociationSet>
           <AssociationSet Name="transaction_property_id_id_FK" Association="Self.transaction_property_id_id_FK">
             <End Role="properties" EntitySet="properties" />
             <End Role="transactions" EntitySet="transactions" />
@@ -2783,13 +2863,60 @@
             <End Role="users" EntitySet="users" />
             <End Role="users_languages" EntitySet="users_languages" />
           </AssociationSet>
+          <EntitySet Name="host_reviews" EntityType="PPL3Model.host_reviews" />
+          <AssociationSet Name="hr_hostid_id_FK" Association="PPL3Model.hr_hostid_id_FK">
+            <End Role="user" EntitySet="users" />
+            <End Role="host_reviews" EntitySet="host_reviews" />
+          </AssociationSet>
+          <AssociationSet Name="hr_rvbuser_id_FK" Association="PPL3Model.hr_rvbuser_id_FK">
+            <End Role="user" EntitySet="users" />
+            <End Role="host_reviews" EntitySet="host_reviews" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="host_reviews">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="hostid" Type="Int32" />
+          <Property Name="review_by_user" Type="Int32" />
+          <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="created" Type="DateTime" Precision="3" />
+          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="hr_status" Type="Byte" />
+          <NavigationProperty Name="user" Relationship="PPL3Model.hr_hostid_id_FK" FromRole="host_reviews" ToRole="user" />
+          <NavigationProperty Name="user1" Relationship="PPL3Model.hr_rvbuser_id_FK" FromRole="host_reviews" ToRole="user" />
+        </EntityType>
+        <Association Name="hr_hostid_id_FK">
+          <End Type="PPL3Model.user" Role="user" Multiplicity="0..1" />
+          <End Type="PPL3Model.host_reviews" Role="host_reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="host_reviews">
+              <PropertyRef Name="hostid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="hr_rvbuser_id_FK">
+          <End Type="PPL3Model.user" Role="user" Multiplicity="0..1" />
+          <End Type="PPL3Model.host_reviews" Role="host_reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="host_reviews">
+              <PropertyRef Name="review_by_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities">
+        <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities2">
           <EntitySetMapping Name="amenities">
             <EntityTypeMapping TypeName="PPL3Model.amenity">
               <MappingFragment StoreEntitySet="amenities">
@@ -2908,10 +3035,10 @@
               <MappingFragment StoreEntitySet="currencies">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="currency_name" ColumnName="currency_name" />
-                <ScalarProperty Name="icon_image" ColumnName="icon_image" />
                 <ScalarProperty Name="created" ColumnName="created" />
                 <ScalarProperty Name="modified" ColumnName="modified" />
                 <ScalarProperty Name="currency_status" ColumnName="currency_status" />
+                <ScalarProperty Name="icon_image" ColumnName="icon_image" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3134,8 +3261,8 @@
               <MappingFragment StoreEntitySet="review_component">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="component_name" ColumnName="component_name" />
-                <ScalarProperty Name="component_icon" ColumnName="component_icon" />
                 <ScalarProperty Name="component_description" ColumnName="component_description" />
+                <ScalarProperty Name="component_icon" ColumnName="component_icon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3271,6 +3398,19 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="host_reviews">
+            <EntityTypeMapping TypeName="PPL3Model.host_reviews">
+              <MappingFragment StoreEntitySet="host_reviews">
+                <ScalarProperty Name="hr_status" ColumnName="hr_status" />
+                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="created" ColumnName="created" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
+                <ScalarProperty Name="hostid" ColumnName="hostid" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

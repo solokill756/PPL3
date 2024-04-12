@@ -77,6 +77,7 @@ namespace PPl3.Models
         public virtual property_type property_type { get; set; }
         public virtual room_type room_type { get; set; }
         public virtual state state { get; set; }
+        public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transaction> transactions { get; set; }
     }

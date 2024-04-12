@@ -156,7 +156,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\UserAuthorize.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
     <Compile Include="Areas\Host\HostAreaRegistration.cs" />
     <Compile Include="Areas\User\Controllers\HomeUserController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
@@ -210,6 +212,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\guest_type.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\host_reviews.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\language.cs">
@@ -316,6 +321,7 @@
     <Content Include="ExtraFiles\assets\css\seller_profile.css" />
     <Content Include="ExtraFiles\assets\css\Sign_Log_v1.css" />
     <Content Include="ExtraFiles\assets\css\style_v1.css" />
+    <Content Include="ExtraFiles\assets\css\wishList.css" />
     <Content Include="ExtraFiles\assets\img\background_signLog\pexels-photo-984888.jpeg" />
     <Content Include="ExtraFiles\assets\img\img_profile\900_lagaleriedelamour_Robert Viglasky.jpg" />
     <Content Include="ExtraFiles\assets\img\room_classify\10ce1091-c854-40f3-a2fb-defc2995bcaf.jpg" />
@@ -345,9 +351,13 @@
     <Content Include="ExtraFiles\JS\first_header.js" />
     <Content Include="ExtraFiles\JS\imgSlide.js" />
     <Content Include="ExtraFiles\JS\main_v1.js" />
+    <Content Include="ExtraFiles\JS\product.js" />
     <Content Include="ExtraFiles\JS\room_classifi_v1.js" />
     <Content Include="ExtraFiles\JS\seller_profile.js" />
+    <Content Include="ExtraFiles\JS\showAll.js" />
     <Content Include="ExtraFiles\JS\Sign_Log_v1.js" />
+    <Content Include="ExtraFiles\JS\wishList.js" />
+    <Content Include="ExtraFiles\Product.html" />
     <Content Include="ExtraFiles\Sign_Log.html" />
     <Content Include="ExtraFiles\test.html" />
     <Content Include="favicon.ico" />
@@ -378,6 +388,16 @@
     <Content Include="Scripts\bootstrap.js.map" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\bootstrap.min.js.map" />
+    <EntityDeploy Include="Models\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+    <Content Include="Areas\User\Views\HomeUser\Detail.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\wishList.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -401,10 +421,10 @@
     <Content Include="Views\Shared\_LayoutPage1.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\SignUp.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\Login.cshtml" />
+    <Content Include="Views\Home\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Host\Controllers\" />
@@ -436,13 +456,6 @@
     <Content Include="ExtraFiles\assets\img\Where_add\7b5cf816-6c16-49f8-99e5-cbc4adfd97e2.webp" />
     <Content Include="ExtraFiles\assets\img\Where_add\924d2b73-6c65-4d04-a2ad-bbc028299658.webp" />
     <Content Include="ExtraFiles\assets\img\Where_add\c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" />
-    <EntityDeploy Include="Models\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Content>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.1.min.map" />

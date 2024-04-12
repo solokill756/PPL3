@@ -3,6 +3,7 @@ using PPl3.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Metadata.Edm;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -27,21 +28,17 @@ namespace PPl3.Controllers
     public class HomeController : Controller
     {
         MyViewModel myView = new MyViewModel();
-        public ActionResult Index(int id = -1) 
+        public ActionResult Index(int id = -1 , int checkID = -1 , bool checkLogOut = false) 
         {
-            if (TempData["checkHost"] == null) TempData["checkHost"] = false;
-            else
-            {
-                ViewBag.checkHost = TempData["checkHost"];
-                ViewBag.hostUser = TempData["hostUser"];
-            }
-            PPL3Entities db = new PPL3Entities();
+            ViewBag.checkLogOut = checkLogOut;
+            Console.WriteLine(ViewBag.checkLogOut);
+            PPL3Entities2 db = new PPL3Entities2();
             category main_cate = db.categories.Where(row => row.category_name.Equals("Main")).FirstOrDefault();
             var list_amenites = from item in db.amenities.ToList()
                                 where item.category_id == main_cate.id
                                 select item;
             myView.Model1Data = list_amenites.ToList();
-            if (id == -1)
+            if (id == -1 || checkID == id)
             {
                 List<property> list_property = db.properties.ToList();
                 myView.Model2Data = list_property;
@@ -57,12 +54,17 @@ namespace PPl3.Controllers
                 myView.Model2Data = list_property.ToList();
                 ViewBag.AmenityId = id;
             }
+            if (id != -1) ViewBag.checkId = id;
             var list_user = db.users.ToList();
             myView.Model3Data = list_user.ToList();
-
-            var list_user_pro = db.user_profile.ToList();
             return View(myView);
         }
 
+        public ActionResult Detail(int id)
+        {
+            PPL3Entities2 db = new PPL3Entities2();
+            ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
+            return View();
+        }
     }
 }
