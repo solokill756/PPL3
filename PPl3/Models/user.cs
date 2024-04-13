@@ -23,6 +23,8 @@ namespace PPl3.Models
             this.email_contents1 = new HashSet<email_contents>();
             this.favourites = new HashSet<favourite>();
             this.governmentIDs = new HashSet<governmentID>();
+            this.host_reviews = new HashSet<host_reviews>();
+            this.host_reviews1 = new HashSet<host_reviews>();
             this.phone_number = new HashSet<phone_number>();
             this.properties = new HashSet<property>();
             this.property_images = new HashSet<property_images>();
@@ -34,8 +36,6 @@ namespace PPl3.Models
             this.user_role = new HashSet<user_role>();
             this.user_role1 = new HashSet<user_role>();
             this.users_languages = new HashSet<users_languages>();
-            this.host_reviews = new HashSet<host_reviews>();
-            this.host_reviews1 = new HashSet<host_reviews>();
         }
     
         public int id { get; set; }
@@ -48,6 +48,7 @@ namespace PPl3.Models
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> user_status { get; set; }
+        public Nullable<System.DateTime> day_become_host { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<booking> bookings { get; set; }
@@ -61,6 +62,10 @@ namespace PPl3.Models
         public virtual ICollection<favourite> favourites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<governmentID> governmentIDs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<host_reviews> host_reviews { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<host_reviews> host_reviews1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<phone_number> phone_number { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -84,9 +89,5 @@ namespace PPl3.Models
         public virtual user_type user_type1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<users_languages> users_languages { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<host_reviews> host_reviews { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<host_reviews> host_reviews1 { get; set; }
     }
 }

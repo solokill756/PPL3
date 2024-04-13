@@ -22,11 +22,11 @@ namespace PPl3.Models
     
         public int id { get; set; }
         public string ur_url { get; set; }
-        public string ur_description { get; set; }
         public Nullable<System.DateTime> created_at { get; set; }
         public Nullable<System.DateTime> update_at { get; set; }
         public Nullable<int> create_by { get; set; }
         public Nullable<int> update_by { get; set; }
+        public string ur_description { get; set; }
     
         public virtual user user { get; set; }
         public virtual user user1 { get; set; }

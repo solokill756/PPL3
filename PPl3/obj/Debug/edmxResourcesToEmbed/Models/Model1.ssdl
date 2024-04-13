@@ -386,8 +386,8 @@
     <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
     <Property Name="country_id" Type="int" />
     <Property Name="street_address" Type="nvarchar" MaxLength="255" />
-    <Property Name="u_state" Type="nvarchar" MaxLength="50" />
-    <Property Name="u_city" Type="nvarchar" MaxLength="50" />
+    <Property Name="u_state" Type="int" />
+    <Property Name="u_city" Type="int" />
   </EntityType>
   <EntityType Name="user_profile">
     <Key>
@@ -413,12 +413,12 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ur_url" Type="varchar" MaxLength="255" />
-    <Property Name="ur_description" Type="nvarchar(max)" />
+    <Property Name="ur_url" Type="nvarchar" MaxLength="255" />
     <Property Name="created_at" Type="datetime" />
     <Property Name="update_at" Type="datetime" />
     <Property Name="create_by" Type="int" />
     <Property Name="update_by" Type="int" />
+    <Property Name="ur_description" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="user_type">
     <Key>
@@ -450,6 +450,7 @@
     <Property Name="created" Type="datetime" />
     <Property Name="modified" Type="datetime" />
     <Property Name="user_status" Type="tinyint" />
+    <Property Name="day_become_host" Type="datetime" />
   </EntityType>
   <EntityType Name="users_languages">
     <Key>

@@ -34,7 +34,7 @@ namespace PPl3.Areas.User.Controllers
             {
                 if (TempData["check"] == null) ViewBag.check = true;
                 else ViewBag.check = false;
-                PPL3Entities2 db = new PPL3Entities2();
+                PPL3Entities3 db = new PPL3Entities3();
                 category main_cate = db.categories.Where(row => row.category_name.Equals("Main")).FirstOrDefault();
                 var list_amenites = from item in db.amenities.ToList()
                                     where item.category_id == main_cate.id
@@ -75,7 +75,7 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public JsonResult AddWishList(int id)
         {
-            PPL3Entities2 db = new PPL3Entities2();
+            PPL3Entities3 db = new PPL3Entities3();
             user p_user = (user)Session["user"];
             favourite fa = new favourite();
             if(db.favourites.Any(item => item.property_id == id && item.userID == p_user.id) == false)
@@ -98,7 +98,7 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public JsonResult DeleteWishList(int id)
         {
-            PPL3Entities2 db = new PPL3Entities2();
+            PPL3Entities3 db = new PPL3Entities3();
             user p_user = (user)Session["user"];
             favourite find_favourite = db.favourites.Where(item => item.property_id == id && item.userID == p_user.id).FirstOrDefault();
             if(find_favourite != null)
@@ -112,7 +112,7 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public JsonResult DeleteAllWishList(List<int> list_id)
         {
-            PPL3Entities2 db = new PPL3Entities2();
+            PPL3Entities3 db = new PPL3Entities3();
             user p_user = (user)Session["user"];
             foreach (var id in list_id)
             {
@@ -135,7 +135,7 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public ActionResult Login(user model , string email_address)
         {
-            PPL3Entities2 entities = new PPL3Entities2();
+            PPL3Entities3 entities = new PPL3Entities3();
             if (!IsGmailExists(email_address))
 
             {
@@ -188,7 +188,7 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult SignUp(user model , string email_address)
         {
             user_personalInfor user_PersonalInfor = new user_personalInfor();
-            PPL3Entities2 db = new PPL3Entities2();
+            PPL3Entities3 db = new PPL3Entities3();
     
             if (IsGmailExists(email_address))
 
@@ -223,7 +223,7 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult Detail(int id)
         {
-            PPL3Entities2 db = new PPL3Entities2();
+            PPL3Entities3 db = new PPL3Entities3();
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
             return View();
         }
@@ -238,7 +238,7 @@ namespace PPl3.Areas.User.Controllers
 
         {
 
-            PPL3Entities2 db = new PPL3Entities2();
+            PPL3Entities3 db = new PPL3Entities3();
 
             return db.user_personalInfor.Any(u => u.email_address== email_address);
 
@@ -247,7 +247,7 @@ namespace PPl3.Areas.User.Controllers
 
         {
 
-            PPL3Entities2 db = new PPL3Entities2();
+            PPL3Entities3 db = new PPL3Entities3();
 
             return db.users.Any(u => u.user_password == password);
 

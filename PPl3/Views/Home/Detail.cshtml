@@ -7,7 +7,7 @@
     PPl3.Models.property property = ViewBag.propertyFind;
     int i = 0;
     PPl3.Models.property_images[] list_images = property.property_images.ToArray();
-    PPl3.Models.PPL3Entities2 db = new PPl3.Models.PPL3Entities2();
+    PPl3.Models.PPL3Entities3 db = new PPl3.Models.PPL3Entities3();
 }
 
 <!DOCTYPE html>
@@ -156,7 +156,12 @@
                                         </div>
                                         <div class="infor">
                                             <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
-                                            <p>6 years hosting</p>
+                                            @{
+                                                int count;
+                                                string currentDateTime = DateTime.Now.ToString("yyyy");
+                                                count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                            }
+                                            <p>@count years hosting</p>
                                         </div>
                                     </div>
                                 </div>
@@ -244,7 +249,7 @@
                                     </div>
                                     <div class="col l-4 m-12 c-12 offer_list">
                                         @{
-                                            int count = 1;
+                                            count = 1;
                                         }
                                         @foreach (var item in property.property_amenities.ToList())
                                         {
@@ -496,11 +501,21 @@
                                                         <p>Review</p>
                                                     </div>
                                                     <div class="infor_basics_item">
+                                                        @*@{ 
+                                                            count = 0;
+                                                            foreach(var item in property.user.host_reviews.ToList()) { 
+                                                                count = count + item.
+                                                            }
+                                                        }*@
                                                         <span>4.84<i class="fa-solid fa-star"></i></span>
                                                         <p>Rating</p>
                                                     </div>
                                                     <div class="infor_basic">
-                                                        <span>7</span>
+                                                        @{
+                                                            currentDateTime = DateTime.Now.ToString("yyyy");
+                                                            count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                        }
+                                                        <span>@count</span>
                                                         <p>Years hosting</p>
                                                     </div>
                                                 </div>

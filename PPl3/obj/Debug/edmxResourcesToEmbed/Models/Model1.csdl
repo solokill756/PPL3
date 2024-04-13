@@ -214,6 +214,20 @@
     <Property Name="type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="booking_guests" Relationship="Self.bkg_guest_type_id_FK" FromRole="guest_type" ToRole="booking_guests" />
   </EntityType>
+  <EntityType Name="host_reviews">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hostid" Type="Int32" />
+    <Property Name="review_by_user" Type="Int32" />
+    <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="modified" Type="DateTime" Precision="3" />
+    <Property Name="hr_status" Type="Byte" />
+    <NavigationProperty Name="user" Relationship="Self.hr_hostid_id_FK" FromRole="host_reviews" ToRole="users" />
+    <NavigationProperty Name="user1" Relationship="Self.hr_rvbuser_id_FK" FromRole="host_reviews" ToRole="users" />
+  </EntityType>
   <EntityType Name="language">
     <Key>
       <PropertyRef Name="id" />
@@ -452,8 +466,8 @@
     <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="country_id" Type="Int32" />
     <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="u_state" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-    <Property Name="u_city" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="u_state" Type="Int32" />
+    <Property Name="u_city" Type="Int32" />
     <NavigationProperty Name="country" Relationship="Self.up_country_id_id_FK" FromRole="user_personalInfor" ToRole="countries" />
     <NavigationProperty Name="user" Relationship="Self.up_userID_id_FK" FromRole="user_personalInfor" ToRole="users" />
   </EntityType>
@@ -482,12 +496,12 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="ur_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="ur_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ur_url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="created_at" Type="DateTime" Precision="3" />
     <Property Name="update_at" Type="DateTime" Precision="3" />
     <Property Name="create_by" Type="Int32" />
     <Property Name="update_by" Type="Int32" />
+    <Property Name="ur_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="user" Relationship="Self.ur_create_by_id_FK" FromRole="user_role" ToRole="users" />
     <NavigationProperty Name="user1" Relationship="Self.ur_update_by_id_FK" FromRole="user_role" ToRole="users" />
     <NavigationProperty Name="user_type_user_role" Relationship="Self.utur_user_role_id_id_FK" FromRole="user_role" ToRole="user_type_user_role" />
@@ -526,12 +540,15 @@
     <Property Name="created" Type="DateTime" Precision="3" />
     <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="user_status" Type="Byte" />
+    <Property Name="day_become_host" Type="DateTime" Precision="3" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_userId_id_FK" FromRole="users" ToRole="bookings" />
     <NavigationProperty Name="disputes" Relationship="Self.disputes_userId_id_FK" FromRole="users" ToRole="disputes" />
     <NavigationProperty Name="email_contents" Relationship="Self.emct_receiver_id_id_FK" FromRole="users" ToRole="email_contents" />
     <NavigationProperty Name="email_contents1" Relationship="Self.emct_sender_id_id_FK" FromRole="users" ToRole="email_contents" />
     <NavigationProperty Name="favourites" Relationship="Self.favourite_userID_id_FK" FromRole="users" ToRole="favourite" />
     <NavigationProperty Name="governmentIDs" Relationship="Self.gid_userID_id_FK" FromRole="users" ToRole="governmentID" />
+    <NavigationProperty Name="host_reviews" Relationship="Self.hr_hostid_id_FK" FromRole="users" ToRole="host_reviews" />
+    <NavigationProperty Name="host_reviews1" Relationship="Self.hr_rvbuser_id_FK" FromRole="users" ToRole="host_reviews" />
     <NavigationProperty Name="phone_number" Relationship="Self.pn_userID_id_FK" FromRole="users" ToRole="phone_number" />
     <NavigationProperty Name="properties" Relationship="Self.pro_userId_id_FK" FromRole="users" ToRole="properties" />
     <NavigationProperty Name="property_images" Relationship="Self.pi_added_by_user_id_FK" FromRole="users" ToRole="property_images" />
@@ -544,8 +561,6 @@
     <NavigationProperty Name="user_role1" Relationship="Self.ur_update_by_id_FK" FromRole="users" ToRole="user_role" />
     <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
     <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
-    <NavigationProperty Name="host_reviews" Relationship="PPL3Model.hr_hostid_id_FK" FromRole="user" ToRole="host_reviews" />
-    <NavigationProperty Name="host_reviews1" Relationship="PPL3Model.hr_rvbuser_id_FK" FromRole="user" ToRole="host_reviews" />
   </EntityType>
   <EntityType Name="users_languages">
     <Key>
@@ -917,6 +932,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="hr_hostid_id_FK">
+    <End Role="users" Type="Self.user" Multiplicity="0..1" />
+    <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="host_reviews">
+        <PropertyRef Name="hostid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="hr_rvbuser_id_FK">
+    <End Role="users" Type="Self.user" Multiplicity="0..1" />
+    <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="host_reviews">
+        <PropertyRef Name="review_by_user" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="ul_language_id_FK">
     <End Role="listLanguage" Type="Self.listLanguage" Multiplicity="0..1" />
     <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
@@ -1205,7 +1244,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="PPL3Entities2" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="PPL3Entities3" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="amenities" EntityType="Self.amenity" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" />
     <EntitySet Name="bookings" EntityType="Self.booking" />
@@ -1222,6 +1261,7 @@
     <EntitySet Name="favourites" EntityType="Self.favourite" />
     <EntitySet Name="governmentIDs" EntityType="Self.governmentID" />
     <EntitySet Name="guest_type" EntityType="Self.guest_type" />
+    <EntitySet Name="host_reviews" EntityType="Self.host_reviews" />
     <EntitySet Name="languages" EntityType="Self.language" />
     <EntitySet Name="listLanguages" EntityType="Self.listLanguage" />
     <EntitySet Name="neighbourhoods" EntityType="Self.neighbourhood" />
@@ -1363,6 +1403,14 @@
       <End Role="users" EntitySet="users" />
       <End Role="governmentID" EntitySet="governmentIDs" />
     </AssociationSet>
+    <AssociationSet Name="hr_hostid_id_FK" Association="Self.hr_hostid_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="host_reviews" EntitySet="host_reviews" />
+    </AssociationSet>
+    <AssociationSet Name="hr_rvbuser_id_FK" Association="Self.hr_rvbuser_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="host_reviews" EntitySet="host_reviews" />
+    </AssociationSet>
     <AssociationSet Name="ul_language_id_FK" Association="Self.ul_language_id_FK">
       <End Role="listLanguage" EntitySet="listLanguages" />
       <End Role="users_languages" EntitySet="users_languages" />
@@ -1459,52 +1507,5 @@
       <End Role="users" EntitySet="users" />
       <End Role="users_languages" EntitySet="users_languages" />
     </AssociationSet>
-    <EntitySet Name="host_reviews" EntityType="PPL3Model.host_reviews" />
-    <AssociationSet Name="hr_hostid_id_FK" Association="PPL3Model.hr_hostid_id_FK">
-      <End Role="user" EntitySet="users" />
-      <End Role="host_reviews" EntitySet="host_reviews" />
-    </AssociationSet>
-    <AssociationSet Name="hr_rvbuser_id_FK" Association="PPL3Model.hr_rvbuser_id_FK">
-      <End Role="user" EntitySet="users" />
-      <End Role="host_reviews" EntitySet="host_reviews" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="host_reviews">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="hostid" Type="Int32" />
-    <Property Name="review_by_user" Type="Int32" />
-    <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="hr_status" Type="Byte" />
-    <NavigationProperty Name="user" Relationship="PPL3Model.hr_hostid_id_FK" FromRole="host_reviews" ToRole="user" />
-    <NavigationProperty Name="user1" Relationship="PPL3Model.hr_rvbuser_id_FK" FromRole="host_reviews" ToRole="user" />
-  </EntityType>
-  <Association Name="hr_hostid_id_FK">
-    <End Type="PPL3Model.user" Role="user" Multiplicity="0..1" />
-    <End Type="PPL3Model.host_reviews" Role="host_reviews" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="host_reviews">
-        <PropertyRef Name="hostid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="hr_rvbuser_id_FK">
-    <End Type="PPL3Model.user" Role="user" Multiplicity="0..1" />
-    <End Type="PPL3Model.host_reviews" Role="host_reviews" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="host_reviews">
-        <PropertyRef Name="review_by_user" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

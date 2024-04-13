@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities2">
+  <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities3">
     <EntitySetMapping Name="amenities">
       <EntityTypeMapping TypeName="PPL3Model.amenity">
         <MappingFragment StoreEntitySet="amenities">
@@ -192,6 +192,19 @@
         <MappingFragment StoreEntitySet="guest_type">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="type_name" ColumnName="type_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="host_reviews">
+      <EntityTypeMapping TypeName="PPL3Model.host_reviews">
+        <MappingFragment StoreEntitySet="host_reviews">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="hostid" ColumnName="hostid" />
+          <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="hr_status" ColumnName="hr_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -434,11 +447,11 @@
         <MappingFragment StoreEntitySet="user_role">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="ur_url" ColumnName="ur_url" />
-          <ScalarProperty Name="ur_description" ColumnName="ur_description" />
           <ScalarProperty Name="created_at" ColumnName="created_at" />
           <ScalarProperty Name="update_at" ColumnName="update_at" />
           <ScalarProperty Name="create_by" ColumnName="create_by" />
           <ScalarProperty Name="update_by" ColumnName="update_by" />
+          <ScalarProperty Name="ur_description" ColumnName="ur_description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -473,6 +486,7 @@
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="user_status" ColumnName="user_status" />
+          <ScalarProperty Name="day_become_host" ColumnName="day_become_host" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -482,19 +496,6 @@
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="language_id" ColumnName="language_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="host_reviews">
-      <EntityTypeMapping TypeName="PPL3Model.host_reviews">
-        <MappingFragment StoreEntitySet="host_reviews">
-          <ScalarProperty Name="hr_status" ColumnName="hr_status" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="comment" ColumnName="comment" />
-          <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
-          <ScalarProperty Name="hostid" ColumnName="hostid" />
-          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
