@@ -127,6 +127,7 @@ namespace PPl3.Areas.User.Controllers
         }
         ///
 
+        // Login and Logout and Sign up
         public ActionResult Login()
         {
             return View();
@@ -221,6 +222,8 @@ namespace PPl3.Areas.User.Controllers
             }
         }
 
+
+        // Detail
         public ActionResult Detail(int id)
         {
             PPL3Entities3 db = new PPL3Entities3();
@@ -229,7 +232,12 @@ namespace PPl3.Areas.User.Controllers
         }
 
 
-        
+        // trip
+
+        public ActionResult Trip()
+        {
+            return View();
+        }
 
 
 

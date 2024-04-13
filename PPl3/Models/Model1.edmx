@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -194,6 +194,7 @@
           <Property Name="created" Type="datetime" />
           <Property Name="modified" Type="datetime" />
           <Property Name="hr_status" Type="tinyint" />
+          <Property Name="rating" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="languages">
           <Key>
@@ -1401,8 +1402,7 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1633,6 +1633,7 @@
           <Property Name="hr_status" Type="Byte" />
           <NavigationProperty Name="user" Relationship="Self.hr_hostid_id_FK" FromRole="host_reviews" ToRole="users" />
           <NavigationProperty Name="user1" Relationship="Self.hr_rvbuser_id_FK" FromRole="host_reviews" ToRole="users" />
+          <Property Name="rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="language">
           <Key>
@@ -3117,6 +3118,7 @@
           <EntitySetMapping Name="host_reviews">
             <EntityTypeMapping TypeName="PPL3Model.host_reviews">
               <MappingFragment StoreEntitySet="host_reviews">
+                <ScalarProperty Name="rating" ColumnName="rating" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="hostid" ColumnName="hostid" />
                 <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />

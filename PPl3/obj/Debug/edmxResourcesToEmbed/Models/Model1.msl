@@ -198,6 +198,7 @@
     <EntitySetMapping Name="host_reviews">
       <EntityTypeMapping TypeName="PPL3Model.host_reviews">
         <MappingFragment StoreEntitySet="host_reviews">
+          <ScalarProperty Name="rating" ColumnName="rating" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="hostid" ColumnName="hostid" />
           <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />

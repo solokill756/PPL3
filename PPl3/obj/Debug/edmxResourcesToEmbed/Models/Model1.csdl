@@ -227,6 +227,7 @@
     <Property Name="hr_status" Type="Byte" />
     <NavigationProperty Name="user" Relationship="Self.hr_hostid_id_FK" FromRole="host_reviews" ToRole="users" />
     <NavigationProperty Name="user1" Relationship="Self.hr_rvbuser_id_FK" FromRole="host_reviews" ToRole="users" />
+    <Property Name="rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="language">
     <Key>

@@ -21,6 +21,7 @@ namespace PPl3.Models
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> hr_status { get; set; }
+        public string rating { get; set; }
     
         public virtual user user { get; set; }
         public virtual user user1 { get; set; }

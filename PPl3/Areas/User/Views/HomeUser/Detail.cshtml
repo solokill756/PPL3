@@ -28,7 +28,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=7" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=8" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -515,7 +515,15 @@
                                                         <p>Review</p>
                                                     </div>
                                                     <div class="infor_basics_item">
-                                                        <span>4.84<i class="fa-solid fa-star"></i></span>
+                                                        @{
+                                                            sum = 0;
+                                                            foreach (var item in property.user.host_reviews.ToList())
+                                                            {
+                                                                sum = sum + double.Parse(item.rating);
+                                                            }
+                                                            sum = sum / property.user.host_reviews.ToArray().Length;
+                                                        }
+                                                        <span>@sum<i class="fa-solid fa-star"></i></span>
                                                         <p>Rating</p>
                                                     </div>
                                                     <div class="infor_basic">

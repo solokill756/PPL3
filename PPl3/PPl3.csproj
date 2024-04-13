@@ -321,6 +321,7 @@
     <Content Include="ExtraFiles\assets\css\seller_profile.css" />
     <Content Include="ExtraFiles\assets\css\Sign_Log_v1.css" />
     <Content Include="ExtraFiles\assets\css\style_v1.css" />
+    <Content Include="ExtraFiles\assets\css\Trip.css" />
     <Content Include="ExtraFiles\assets\css\wishList.css" />
     <Content Include="ExtraFiles\assets\img\background_signLog\pexels-photo-984888.jpeg" />
     <Content Include="ExtraFiles\assets\img\img_profile\900_lagaleriedelamour_Robert Viglasky.jpg" />
@@ -356,10 +357,12 @@
     <Content Include="ExtraFiles\JS\seller_profile.js" />
     <Content Include="ExtraFiles\JS\showAll.js" />
     <Content Include="ExtraFiles\JS\Sign_Log_v1.js" />
+    <Content Include="ExtraFiles\JS\Trip.js" />
     <Content Include="ExtraFiles\JS\wishList.js" />
     <Content Include="ExtraFiles\Product.html" />
     <Content Include="ExtraFiles\Sign_Log.html" />
     <Content Include="ExtraFiles\test.html" />
+    <Content Include="ExtraFiles\Trip.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -398,6 +401,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\User\Views\HomeUser\Trip.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

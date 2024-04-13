@@ -189,6 +189,7 @@
     <Property Name="created" Type="datetime" />
     <Property Name="modified" Type="datetime" />
     <Property Name="hr_status" Type="tinyint" />
+    <Property Name="rating" Type="varchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="languages">
     <Key>
