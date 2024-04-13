@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using PPl3.Models;
+
 namespace PPl3.Areas.User.Controllers
 {
 
@@ -31,7 +32,6 @@ namespace PPl3.Areas.User.Controllers
         {
             if (Session["user"] != null)
             {
-                if (TempData["checkId"] != null) id = (int)TempData["checkId"];
                 if (TempData["check"] == null) ViewBag.check = true;
                 else ViewBag.check = false;
                 PPL3Entities2 db = new PPL3Entities2();
@@ -71,18 +71,22 @@ namespace PPl3.Areas.User.Controllers
 
 
         //WishList
-        public ActionResult AddWishList(int id , int? checkId)
+
+        [HttpPost]
+        public JsonResult AddWishList(int id)
         {
             PPL3Entities2 db = new PPL3Entities2();
             user p_user = (user)Session["user"];
             favourite fa = new favourite();
-            fa.property_id = id;
-            fa.added_date = DateTime.Now;
-            fa.userID = p_user.id;
-            db.favourites.Add(fa);
-            db.SaveChanges();
-            TempData["checkId"] = checkId;
-            return RedirectToAction("index");
+            if(db.favourites.Any(item => item.property_id == id && item.userID == p_user.id) == false)
+            {
+                fa.property_id = id;
+                fa.added_date = DateTime.Now;
+                fa.userID = p_user.id;
+                db.favourites.Add(fa);
+                db.SaveChanges();
+            }
+            return Json("true", JsonRequestBehavior.AllowGet);
             
         }
 
@@ -91,13 +95,35 @@ namespace PPl3.Areas.User.Controllers
             return View();
         }
 
-        public ActionResult DeleteWishList(int id)
+        [HttpPost]
+        public JsonResult DeleteWishList(int id)
         {
             PPL3Entities2 db = new PPL3Entities2();
-            favourite find_favourite = db.favourites.Where(item => item.property_id == id).FirstOrDefault();
-            db.favourites.Remove(find_favourite);
-            db.SaveChanges();
-            return RedirectToAction("wishList");
+            user p_user = (user)Session["user"];
+            favourite find_favourite = db.favourites.Where(item => item.property_id == id && item.userID == p_user.id).FirstOrDefault();
+            if(find_favourite != null)
+            {
+                db.favourites.Remove(find_favourite);
+                db.SaveChanges();
+            }
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteAllWishList(List<int> list_id)
+        {
+            PPL3Entities2 db = new PPL3Entities2();
+            user p_user = (user)Session["user"];
+            foreach (var id in list_id)
+            {
+                favourite find_favourite = db.favourites.Where(item => item.property_id == id && item.userID == p_user.id).FirstOrDefault();
+                if (find_favourite != null)
+                {
+                    db.favourites.Remove(find_favourite);
+                    db.SaveChanges();
+                }
+            }
+            return Json("true", JsonRequestBehavior.AllowGet);
         }
         ///
 

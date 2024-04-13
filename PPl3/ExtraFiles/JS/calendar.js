@@ -126,7 +126,6 @@ month_picker.onclick = () => {
 }
 
 let currDate = new Date()
-
 let curr_month = { value: currDate.getMonth() }
 let curr_year = { value: currDate.getFullYear() }
 generateCalendar(curr_month.value, curr_year.value)
@@ -134,7 +133,7 @@ let currTemp = 0;
 
 
 document.querySelector('#prev-year').onclick = () => {
-    // currentDay = 1;
+     currentday = 0;
     if (currTemp.value > currDate.getFullYear()) {
         --curr_year.value
     }
@@ -142,7 +141,7 @@ document.querySelector('#prev-year').onclick = () => {
 }
 
 document.querySelector('#next-year').onclick = () => {
-    currentDay = 1;
+    currentDay = 0;
     ++curr_year.value
     currTemp = curr_year
     generateCalendar(curr_month.value, curr_year.value)

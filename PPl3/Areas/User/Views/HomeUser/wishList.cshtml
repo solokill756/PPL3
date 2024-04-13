@@ -3,7 +3,7 @@
     Layout = null;
 }
 
-@{ 
+@{
     PPl3.Models.PPL3Entities2 db = new PPl3.Models.PPL3Entities2();
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
 }
@@ -15,7 +15,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>T|.|n|.|T</title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
-    <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" /> 
+    <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/wishList.css?v=2" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 </head>
@@ -77,51 +77,104 @@
                             <div class="tittle">
                                 <h1>Wishlists</h1>
                             </div>
-                            <div class="remove_btn_general">
+                            <div class="remove_btn_general" onclick="DeleteAllWishHotel()">
                                 <button><i class="fa-solid fa-trash-can"></i></button>
                             </div>
                         </div>
                     </div>
-                    @foreach(var item in db.favourites.ToList()) { 
-                        <div class="col l-4 m-6 c-12 hotel_container">
-                            <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
-                                <div style="width:100%; height: 100%" onclick="window.location.href='/user/homeuser/Detail?id=@item.property_id'"></div>
-                                <div class="remove_btn" onclick="window.location.href='/user/homeuser/DeleteWishList?id=@item.property_id'" >
-                                    <button><i class="fa-solid fa-trash-can"></i></button>
+                    @foreach (var item in db.favourites.ToList())
+                    {
+                        if (item.userID == p_user.id)
+                        {
+                            <div class="col l-4 m-6 c-12 hotel_container">
+                                <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                    <div style="width:100%; height: 100%" onclick="window.location.href='/user/homeuser/Detail?id=@item.property_id'"></div>
+                                    <div class="remove_btn" onclick="DeleteWishHotel('@item.property_id')">
+                                        <button><i class="fa-solid fa-trash-can"></i></button>
+                                    </div>
+                                    <div class="check_remove">
+                                        <button class="check_box  @item.property_id"><i class="fa-solid fa-check"></i></button>
+                                    </div>
                                 </div>
-                                <div class="check_remove">
-                                    <button class="check_box"><i class="fa-solid fa-check"></i></button>
+
+                                <div class="infor_hotel">
+                                    <div class="name_hotel">
+                                        <span>@item.property.p_address</span>
+                                        @{
+                                            double sum = 0;
+                                            foreach (var row in item.property.property_reviews.ToList())
+                                            {
+                                                sum = sum + double.Parse(row.overall_rating);
+                                            }
+                                            sum = sum / item.property.property_reviews.ToArray().Length;
+                                        }
+                                        <p><i class="fa-solid fa-star"></i>@sum</p>
+                                    </div>
+                                    <div class="detail_hotel">
+                                        <p>@item.property.p_name</p>
+                                        <p>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</p>
+                                    </div>
+                                    <div class="price">
+                                        <span>$@item.property.price/night</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="infor_hotel">
-                                <div class="name_hotel">
-                                    <span>@item.property.p_address</span>
-                                    @{
-                                        double sum = 0;
-                                        foreach (var row in item.property.property_reviews.ToList())
-                                        {
-                                            sum = sum + double.Parse(row.overall_rating);
-                                        }
-                                        sum = sum / item.property.property_reviews.ToArray().Length;
-                                    }
-                                    <p><i class="fa-solid fa-star"></i>@sum</p>
-                                </div>
-                                <div class="detail_hotel">
-                                    <p>@item.property.p_name</p>
-                                    <p>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</p>
-                                </div>
-                                <div class="price">
-                                    <span>$@item.property.price/night</span>
-                                </div>
-                            </div>
-                        </div>
+                        }
+
                     }
                 </div>
             </div>
         </div>
     </div>
-
     <script src="~/ExtraFiles/JS/wishList.js"></script>
 </body>
 </html>
+
+
+
+
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+
+    function DeleteAllWishHotel() {
+        var array_id = [];
+        $(document).ready(function () {
+            $('button.check_box.checked').each(function () {
+                var className = $(this).attr('class');
+                var classArray = className.split(' ');
+                array_id.push(classArray[1]);
+            });
+            if (array_id.length > 0) {
+                $.ajax({
+                    url: "/user/homeuser/DeleteAllWishList",
+                    type: "POST",
+                    data: { list_id: array_id },
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            }
+        });
+        
+        
+    }
+
+    function DeleteWishHotel(hotelId) {
+        $.ajax({
+            url: "/User/HomeUser/DeleteWishList",
+            type: "POST",
+            data: { id: hotelId },
+            success: function (data) {
+                console.log(data)
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+</script>  
