@@ -185,6 +185,7 @@ html {
 
 .sub_nav_guest.open {
     display: block;
+    
 }
 
 /* .sub_nav_guest{
@@ -865,6 +866,7 @@ html {
 
 .open {
     display: block;
+    z-index: 1;
 }
 
 .guest_box_item {
@@ -1413,3 +1415,23 @@ html {
 .clear_date_btn{
     cursor : pointer;
 }
+
+.pay_btn {
+    color:white;
+    text-decoration:none;
+}
+
+
+.disapear {
+    opacity: 0.5;  
+    pointer-events: none;  
+    cursor: not-allowed;  
+}
+
+.disapearForever {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed!important;
+}
+
+

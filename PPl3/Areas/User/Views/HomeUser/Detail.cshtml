@@ -28,7 +28,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=8" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=12" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -79,7 +79,7 @@
                             <ul class="menu_user js_menu_user">
                                 <li class=""><button>Messages</button></li>
                                 <li class=""><button>Notifications</button></li>
-                                <li class=""><button>Trips</button></li>
+                                <li class=""><a href="/user/homeuser/trip">Trips</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="Content">Manage listings</a></li>
                                 <li><a href="#">Account</a></li>
@@ -362,25 +362,66 @@
                                 </div>
                                 <div class="pay_body">
                                     <div class="check_in_out">
-                                        <div class="check_in check_item">
-                                            <button>Check In</button>
-                                            <span>3/22/2024</span>
-                                        </div>
-                                        <div class="check_out check_item">
-                                            <button>Check Out</button>
-                                            <span>Add date</span>
-                                        </div>
+                                        @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
+                                        {
+                                            <div class="check_in check_item">
+                                                <button id="hasCheckInButton">Check In</button>
+                                                <span id="checkInDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id).FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy")</span>
+
+                                            </div>
+                                            <div class="check_out check_item">
+                                                <button id="hasCheckOutButton">Check Out</button>
+                                                <span id="checkOutDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id).FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="check_in check_item">
+                                                <button id="checkInButton">Check In</button>
+                                                <span id="checkInDate">Add date</span>
+                                            </div>
+                                            <div class="check_out check_item">
+                                                <button id="checkOutButton">Check Out</button>
+                                                <span id="checkOutDate">Add date</span>
+                                            </div>
+
+                                        }
                                     </div>
                                     <div class="guest_number">
-                                        <div class="guest_btn">
-                                            <div class="guest_item">
-                                                <button>Guests</button>
-                                                <p>1 guest</p>
+                                        @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
+                                        {
+                                            <div class="guest_btn" style="pointer-events: none; cursor: not-allowed!important;">
+                                                <div class="guest_item">
+                                                    <button>Guests</button>
+                                                    @{
+
+                                                        string list_guests = "";
+                                                        foreach (var item in db.booking_guests.Where(row => row.booking.property_id == property.id && row.booking.userId == p_user.id))
+                                                        {
+                                                            list_guests = list_guests + +item.num_guests + " " + item.guest_type.type_name + " " + "," + " ";
+                                                        }
+                                                        list_guests = list_guests.Substring(0, list_guests.Length - 2);
+                                                        <p>@list_guests</p>
+
+                                                    }
+                                                </div>
+                                                <div class="chevron">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </div>
                                             </div>
-                                            <div class="chevron">
-                                                <i class="fa-solid fa-chevron-down"></i>
-                                            </div>
-                                        </div>
+                                        }
+                                        else { 
+                                            <div class="guest_btn">
+                                                <div class="guest_item">
+                                                    <button>Guests</button>
+                                                    <p>1 guest</p>
+                                                </div>
+                                                <div class="chevron">
+                                                    <i class="fa-solid fa-chevron-down"></i>
+                                                </div>
+                                            </div>      
+                                        }
+
                                         <div class="guest_box">
                                             <div class="guest_box_item adult">
                                                 <span>Adults<p>Age 13+</p></span>
@@ -409,9 +450,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="pay_footer">
-                                    <button>Check Availabitily</button>
-                                </div>
+                                @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
+                                {
+                                    <div class="pay_footer disapearForever">
+                                        <button id="checkAvailabilityButton">Check Availabitily</button>
+                                    </div>
+                                }
+                                else { 
+                                    <div class="pay_footer disapear">
+                                        <button id="checkAvailabilityButton" onclick="bookingHotel('@property.id')">Check Availabitily</button>
+                                    </div>
+                                
+                                }
+
 
                                 <div class="total">
                                     <h2>Total: </h2>
@@ -527,7 +578,7 @@
                                                         <p>Rating</p>
                                                     </div>
                                                     <div class="infor_basic">
-                                                        @{ 
+                                                        @{
                                                             currentDateTime = DateTime.Now.ToString("yyyy");
                                                             count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
                                                         }
@@ -727,7 +778,7 @@
 
                                             @foreach (var antime in property.property_amenities.Where(row => (row.amenity.category_id == item.id)).ToList())
                                             {
-                                                
+
                                                 <li>
                                                     <i style="background : url(@antime.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i> @antime.amenity.amenity_name
                                                 </li>
@@ -807,7 +858,76 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/product.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/calendar.js?v=1"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=5"></script>
+    <script src="~/ExtraFiles/JS/calendar.js?v=2"></script>
 </body>
 </html>
+
+
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+
+<script>
+
+    
+
+    function bookingHotel(hotelId) {
+        $(document).ready(function () {
+            function isValidDate(dateString) {
+                var regEx = /^\d{4}-\d{2}-\d{2}$/;
+                if (!dateString.match(regEx)) return false;  // Kiểm tra định dạng ngày-tháng (YYYY-MM-DD)
+                var d = new Date(dateString);
+                var dNum = d.getTime();
+                if (!dNum && dNum !== 0) return false; // Kiểm tra có phải là ngày hợp lệ không
+                return d.toISOString().slice(0, 10) === dateString;
+            }
+            var guest_count1 = [];
+            var numberGuest = $('.guest_item p').text();
+            var checkInDate1 = $('#checkInDate').text();
+            var checkOutDate1 = $('#checkOutDate').text();
+            var correctFormDateIn = "";
+            var correctFormDateOut = "";
+            checkInDate1.split("/").forEach(function (item) {
+                correctFormDateIn = item + "-" + correctFormDateIn;
+            })
+            checkOutDate1.split("/").forEach(function (item) {
+                correctFormDateOut = item + "-" + correctFormDateOut;
+            })
+            correctFormDateIn = correctFormDateIn.substring(0, correctFormDateIn.length - 1);
+            correctFormDateOut = correctFormDateOut.substring(0, correctFormDateOut.length - 1);
+            numberGuest.toString().split(",").forEach(function (item) {
+                guest_count1.push(item.trim().split(" ")[0]);
+            })
+            console.log(correctFormDateIn);
+            console.log(correctFormDateOut);
+            if (isValidDate(correctFormDateIn) && isValidDate(correctFormDateOut)) {
+                console.log(1);
+                var data = {
+                    id: hotelId,
+                    checkBook: true,
+                    checkInDate: correctFormDateIn,
+                    checkOutDate: correctFormDateOut,
+                    guest_count: guest_count1
+                };
+                $.ajax({
+                    url: "/user/homeuser/payHotel",
+                    type: "POST",
+                    data: data,
+                    success: function (data) {
+                        if (data.success) {
+                            console.log(data);
+                            window.location.href = data.redirectUrl;
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                })
+            }
+            else {
+                console.log(0);
+            }
+        })
+
+    }
+</script>

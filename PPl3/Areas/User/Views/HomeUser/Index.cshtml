@@ -49,6 +49,16 @@
             <i class="fa-solid fa-check"></i>
             <p>Welcome @p_user.account_name !</p>
         </div>
+        ViewBag.check = true;
+    }
+
+    @if (ViewBag.checkBook == true)
+    {
+        <div class="alert_complete">
+            <i class="fa-solid fa-check"></i>
+            <p>You have successfully booked your room !</p>
+        </div>
+        ViewBag.checkBook = false;
     }
 
 }

@@ -55,7 +55,24 @@ generateCalendar = (month, year) => {
                         dayCheckIn = Number.parseInt(day.outerText);
                         monthCheckIn = month + 1;
                         yearCheckIn = year;
-                        checkIn.innerHTML = `${day.outerText}/${month + 1}/${year}`
+                        if (day.outerText >= 10) {
+                            if (month + 1 >= 10) {
+                                checkIn.innerHTML = `${day.outerText}/${month + 1}/${year}`
+                            }
+                            else {
+                                checkIn.innerHTML = `${day.outerText}/0${month + 1}/${year}`
+                            }
+                        }
+                        else {
+                            if (month + 1 >= 10) {
+                                checkIn.innerHTML = `0${day.outerText}/${month + 1}/${year}`
+                            }
+                            else {
+                                checkIn.innerHTML = `0${day.outerText}/0${month + 1}/${year}`
+                            }
+                        }
+                        
+                        
                         let daysBeforeCheckIn = calendar.querySelectorAll('.calendar-days div');
                         for (let j = 0; j < i; j++) {
                             daysBeforeCheckIn[j].classList.add('before-check-in');
@@ -70,7 +87,23 @@ generateCalendar = (month, year) => {
                         yearCheckOut = year;
                         if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
                             day.classList.add('curr-date')
-                            checkOut.innerHTML = `${day.outerText}/${month + 1}/${year}`
+                            if (day.outerText >= 10) {
+                                if (month + 1 >= 10) {
+                                    checkOut.innerHTML = `${day.outerText}/${month + 1}/${year}`
+                                }
+                                else {
+                                    checkOut.innerHTML = `${day.outerText}/0${month + 1}/${year}`
+                                }
+                            }
+                            else {
+                                if (month + 1 >= 10) {
+                                    checkOut.innerHTML = `0${day.outerText}/${month + 1}/${year}`
+                                }
+                                else {
+                                    checkOut.innerHTML = `0${day.outerText}/0${month + 1}/${year}`
+                                }
+                            }
+                            
                         }
                         else {
                             currentDay = 1;
@@ -86,6 +119,7 @@ generateCalendar = (month, year) => {
                     }
                     currentDay = 0;
                     checkOut.innerHTML = 'Add date'
+                    checkIn.innerHTML = 'Add date'
                 }
             })
         }
@@ -103,6 +137,7 @@ generateCalendar = (month, year) => {
         }
         currentDay = 0;
         checkOut.innerHTML = 'Add date'
+        checkIn.innerHTML = 'Add date'
     })
 }
 

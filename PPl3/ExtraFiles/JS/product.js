@@ -314,3 +314,34 @@ plusInfantsBtn.addEventListener('click', () => {
         }
     }
 })
+
+
+// Tạo một MutationObserver
+var observer = new MutationObserver(function () {
+    togglePayFooterButton();
+});
+// Thuộc tính và cài đặt cho MutationObserver
+var config = { childList: true, subtree: true };
+// Đăng ký MutationObserver cho #checkInDate và #checkOutDate
+if (document.getElementById("checkInDate") != null && document.getElementById("checkOutDate") != null) {
+    observer.observe(document.getElementById("checkInDate"), config);
+    observer.observe(document.getElementById("checkOutDate"), config);
+    function togglePayFooterButton() {
+        var checkInDateValue = document.getElementById("checkInDate").textContent;
+        var checkOutDateValue = document.getElementById("checkOutDate").textContent;
+        var payFooterButton = document.getElementById("checkAvailabilityButton");
+        if (checkInDateValue !== "Add date" && checkOutDateValue !== "Add date") {
+            document.querySelector(".pay_footer").classList.remove("disapear");
+            payFooterButton.addEventListener("click", function () {
+                //window.location.href = '/user/homeuser/payhotel?checkBook=true';
+            });
+        } else {
+            document.querySelector(".pay_footer").classList.add("disapear");
+            payFooterButton.removeEventListener("click", function () {
+                //window.location.href = '/user/homeuser/payhotel?checkBook=true';
+            });
+        }
+    }
+}
+
+

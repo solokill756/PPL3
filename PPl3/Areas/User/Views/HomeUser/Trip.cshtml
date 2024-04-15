@@ -80,32 +80,39 @@
                                 </div>
                             </div>
                         </div>
-                        @foreach (var item in p_user.properties.ToList())
+                        @foreach (var item in p_user.bookings.ToList())
                         {
                             <div class="col l-12 m-12 c-12">
-                                <div class="hotel_container">
-                                    <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault()) top center /cover no-repeat">
+                                <div class="hotel_container" onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id'">
+                                    <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
 
                                     </div>
                                     <div class="infor_hotel">
                                         <div class="name_hotel">
-                                            <span>@item.p_name , @item.p_address</span>
+                                            <span>@item.property.p_name , @item.property.p_address</span>
                                             @{
                                                 double sum = 0;
-                                                foreach (var row in item.property_reviews.ToList())
+                                                foreach (var row in item.property.property_reviews.ToList())
                                                 {
                                                     sum = sum + double.Parse(row.overall_rating);
                                                 }
-                                                sum = sum / item.property_reviews.ToArray().Length;
+                                                sum = sum / item.property.property_reviews.ToArray().Length;
                                             }
                                             <p><i class="fa-solid fa-star"></i>@sum</p>
                                         </div>
                                         <div class="date_check">
-                                            <p><i class="fa-solid fa-circle" style="color: greenyellow; margin-right: 5px; font-size: 10px;"></i>Check-In: <span class="check_in">@item.startDate.Value.ToString("dd/MM/yyyy")</span></p>
-                                            <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.end_date.Value.ToString("dd/MM/yyyyy")</span></p>
+                                            <p><i class="fa-solid fa-circle" style="color: greenyellow; margin-right: 5px; font-size: 10px;"></i>Check-In: <span class="check_in">@item.check_in_date.Value.ToString("dd/MM/yyyy")</span></p>
+                                            <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyyy")</span></p>
                                         </div>
                                         <div class="price">
-                                            <p>Price: <span>$@item.price</span></p>
+                                            @{ 
+                                                TimeSpan difference = (item.check_out_date.Value - item.check_in_date.Value);
+                                                int daysDifference = (int)difference.TotalDays;
+                                   
+                                                sum = daysDifference * (double)item.property.price;
+
+                                            }
+                                            <p>Price: <span>$@sum</span></p>
                                         </div>
                                     </div>
                                 </div>
