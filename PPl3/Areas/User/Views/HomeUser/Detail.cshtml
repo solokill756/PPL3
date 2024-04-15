@@ -365,14 +365,14 @@
                                         @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
                                         {
                                             <div class="check_in check_item">
-                                                <button id="hasCheckInButton">Check In</button>
+                                                <button id="checkInButton">Check In</button>
                                                 <span id="checkInDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id).FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy")</span>
-
                                             </div>
                                             <div class="check_out check_item">
-                                                <button id="hasCheckOutButton">Check Out</button>
+                                                <button id="checkOutButton">Check Out</button>
                                                 <span id="checkOutDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id).FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</span>
                                             </div>
+
                                         }
                                         else
                                         {
@@ -384,13 +384,14 @@
                                                 <button id="checkOutButton">Check Out</button>
                                                 <span id="checkOutDate">Add date</span>
                                             </div>
-
                                         }
+                                       
+
                                     </div>
                                     <div class="guest_number">
                                         @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
                                         {
-                                            <div class="guest_btn" style="pointer-events: none; cursor: not-allowed!important;">
+                                            <div class="guest_btn">
                                                 <div class="guest_item">
                                                     <button>Guests</button>
                                                     @{
@@ -450,20 +451,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
-                                {
-                                    <div class="pay_footer disapearForever">
-                                        <button id="checkAvailabilityButton">Check Availabitily</button>
-                                    </div>
-                                }
-                                else { 
-                                    <div class="pay_footer disapear">
-                                        <button id="checkAvailabilityButton" onclick="bookingHotel('@property.id')">Check Availabitily</button>
-                                    </div>
-                                
-                                }
-
-
+                                <div class="pay_footer disapear">
+                                    <button id="checkAvailabilityButton" onclick="bookingHotel('@property.id')">Check Availabitily</button>
+                                </div>
                                 <div class="total">
                                     <h2>Total: </h2>
                                     <div class="money_total">
@@ -476,13 +466,7 @@
                     </div>
 
                     <div class="col l-12 m-12 c-12 comment">
-                        <!-- No Comment -->
-                        <!-- <div class="review_yet">
-                            <h2>No reviews (yet)</h2>
-                            <p><i class="fa-regular fa-star"></i>This host has 1,256 reviews for other places to stay.<a href="">Show other reviews</a></p>
-                        </div> -->
-                        <!-- Comment -->
-                        <!-- Comment -->
+                       
                         <div class="gird wide">
                             <div class="row no-gutter comment_list">
                                 <div class="col l-12 m-12 c-12 review_yet">
@@ -914,9 +898,12 @@
                     type: "POST",
                     data: data,
                     success: function (data) {
-                        if (data.success) {
+                        if (data.success == true) {
                             console.log(data);
                             window.location.href = data.redirectUrl;
+                        }
+                        else {
+                            console.log("Đặt phòng thất bại");
                         }
                     },
                     error: function (err) {

@@ -250,37 +250,48 @@ namespace PPl3.Areas.User.Controllers
         {
             PPL3Entities3 db = new PPL3Entities3();
             user p_user = (user)Session["user"];
-            TempData["checkBook"] = checkBook;
-            property findHotel = db.properties.Where(item => item.id == id).FirstOrDefault();
-            booking userBooking = new booking();
-            userBooking.property_id = id;
-            userBooking.userId = p_user.id;
-            userBooking.check_in_date = checkInDate;
-            userBooking.check_out_date = checkOutDate;
-            userBooking.price_per_day = findHotel.price;
-            TimeSpan difference = (userBooking.check_out_date.Value - userBooking.check_in_date.Value);
-            int daysDifference = (int)difference.TotalDays;
+            if(db.bookings.Any(item => item.check_in_date != checkInDate && item.check_out_date != checkOutDate && item.userId ==  p_user.id && item.property_id == id) && checkOutDate >= DateTime.Now)
+            {
+                TempData["checkBook"] = checkBook;
+                property findHotel = db.properties.Where(item => item.id == id).FirstOrDefault();
+                booking userBooking = new booking();
+                userBooking.property_id = id;
+                userBooking.userId = p_user.id;
+                userBooking.check_in_date = checkInDate;
+                userBooking.check_out_date = checkOutDate;
+                userBooking.price_per_day = findHotel.price;
+                TimeSpan difference = (userBooking.check_out_date.Value - userBooking.check_in_date.Value);
+                int daysDifference = (int)difference.TotalDays;
 
-            double sum = daysDifference * (double)userBooking.price_per_day;
-            userBooking.amount_paid = (decimal)sum;
-            userBooking.booking_date = DateTime.Now;
-            userBooking.is_refund = 1;
-            userBooking.booking_status = 1;
-            db.bookings.Add(userBooking);
-            for (int i = 0; i <= guest_count.Length - 1; ++i)
-            {
-                booking_guests booking_Guests = new booking_guests();
-                booking_Guests.booking_id = userBooking.id;
-                booking_Guests.guest_type_id = i + 1;
-                booking_Guests.num_guests = guest_count[i];
-                db.booking_guests.Add(booking_Guests);
+                double sum = daysDifference * (double)userBooking.price_per_day;
+                userBooking.amount_paid = (decimal)sum;
+                userBooking.booking_date = DateTime.Now;
+                userBooking.is_refund = 1;
+                userBooking.booking_status = 1;
+                db.bookings.Add(userBooking);
+                for (int i = 0; i <= guest_count.Length - 1; ++i)
+                {
+                    booking_guests booking_Guests = new booking_guests();
+                    booking_Guests.booking_id = userBooking.id;
+                    booking_Guests.guest_type_id = i + 1;
+                    booking_Guests.num_guests = guest_count[i];
+                    db.booking_guests.Add(booking_Guests);
+                }
+                db.SaveChanges();
+                return Json(new
+                {
+                    success = true,
+                    redirectUrl = Url.Action("Index", "Homeuser", new { area = "user" })
+                }, JsonRequestBehavior.AllowGet);
             }
-            db.SaveChanges();
-            return Json(new
+            else
             {
-                success = true,
-                redirectUrl = Url.Action("Index", "Homeuser", new { area = "user" })
-            } , JsonRequestBehavior.AllowGet);
+                return Json(new
+                {
+                    success = false
+                }, JsonRequestBehavior.AllowGet);
+
+            }
         }
 
 

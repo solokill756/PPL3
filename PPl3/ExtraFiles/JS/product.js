@@ -331,15 +331,16 @@ if (document.getElementById("checkInDate") != null && document.getElementById("c
         var checkOutDateValue = document.getElementById("checkOutDate").textContent;
         var payFooterButton = document.getElementById("checkAvailabilityButton");
         if (checkInDateValue !== "Add date" && checkOutDateValue !== "Add date") {
+
             document.querySelector(".pay_footer").classList.remove("disapear");
-            payFooterButton.addEventListener("click", function () {
-                //window.location.href = '/user/homeuser/payhotel?checkBook=true';
-            });
+            //payFooterButton.addEventListener("click", function () {
+            //    //window.location.href = '/user/homeuser/payhotel?checkBook=true';
+            //});
         } else {
             document.querySelector(".pay_footer").classList.add("disapear");
-            payFooterButton.removeEventListener("click", function () {
-                //window.location.href = '/user/homeuser/payhotel?checkBook=true';
-            });
+            //payFooterButton.removeEventListener("click", function () {
+            //    //window.location.href = '/user/homeuser/payhotel?checkBook=true';
+            //});
         }
     }
 }
