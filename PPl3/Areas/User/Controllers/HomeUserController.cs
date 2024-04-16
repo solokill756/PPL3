@@ -141,6 +141,7 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult Login(user model , string email_address)
         {
             PPL3Entities3 entities = new PPL3Entities3();
+            user_personalInfor find_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault();
             if (!IsGmailExists(email_address))
 
             {
@@ -150,7 +151,7 @@ namespace PPl3.Areas.User.Controllers
                 return View(model);
 
             }
-            else if (!IsPasswordExists(model.user_password))
+            else if (!IsPasswordExists(model.user_password , (int)find_user.userID))
 
             {
 
@@ -194,7 +195,7 @@ namespace PPl3.Areas.User.Controllers
         {
             user_personalInfor user_PersonalInfor = new user_personalInfor();
             PPL3Entities3 db = new PPL3Entities3();
-    
+            
             if (IsGmailExists(email_address))
 
             {
@@ -228,8 +229,9 @@ namespace PPl3.Areas.User.Controllers
 
 
         // Detail
-        public ActionResult Detail(int id)
+        public ActionResult Detail(int id , int bookingId = -1)
         {
+            if(bookingId != -1) ViewBag.bookingId = bookingId;
             PPL3Entities3 db = new PPL3Entities3();
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
             return View();
@@ -240,9 +242,11 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult Trip()
         {
-            return View();
+            user p_user = (user)Session["user"];
+            PPL3Entities3 db = new PPL3Entities3();
+            var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.property_id).ThenBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ToList();
+            return View(list_booking_hotel) ;
         }
-
 
         //Pay Hotel
         [HttpPost]
@@ -250,7 +254,7 @@ namespace PPl3.Areas.User.Controllers
         {
             PPL3Entities3 db = new PPL3Entities3();
             user p_user = (user)Session["user"];
-            if(db.bookings.Any(item => item.check_in_date != checkInDate && item.check_out_date != checkOutDate && item.userId ==  p_user.id && item.property_id == id) && checkOutDate >= DateTime.Now)
+            if(db.bookings.Any(item => !(item.check_in_date <= checkInDate && item.check_out_date >= checkOutDate && item.userId ==  p_user.id && item.property_id == id)) && checkOutDate >= DateTime.Now)
             {
                 TempData["checkBook"] = checkBook;
                 property findHotel = db.properties.Where(item => item.id == id).FirstOrDefault();
@@ -301,17 +305,16 @@ namespace PPl3.Areas.User.Controllers
         {
 
             PPL3Entities3 db = new PPL3Entities3();
-
             return db.user_personalInfor.Any(u => u.email_address== email_address);
 
         }
-        public bool IsPasswordExists(string password)
+        public bool IsPasswordExists(string password , int id)
 
         {
 
             PPL3Entities3 db = new PPL3Entities3();
 
-            return db.users.Any(u => u.user_password == password);
+            return db.users.Any(u => u.user_password == password && u.id == id);
 
         }
 

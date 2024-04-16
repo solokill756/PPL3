@@ -5,15 +5,15 @@
 
 
 @{
-    Layout = null;
-}
-
-@{
     PPl3.Models.property property = ViewBag.propertyFind;
     int i = 0;
     PPl3.Models.property_images[] list_images = property.property_images.ToArray();
     PPl3.Models.PPL3Entities3 db = new PPl3.Models.PPL3Entities3();
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    int booking_id = -1;
+    if (ViewBag.bookingId != null) {
+        booking_id = ViewBag.bookingId;
+    }
 }
 
 <!DOCTYPE html>
@@ -362,15 +362,15 @@
                                 </div>
                                 <div class="pay_body">
                                     <div class="check_in_out">
-                                        @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
+                                        @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                         {
                                             <div class="check_in check_item">
                                                 <button id="checkInButton">Check In</button>
-                                                <span id="checkInDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id).FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy")</span>
+                                                <span id="checkInDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id && item.id == booking_id).FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy")</span>
                                             </div>
                                             <div class="check_out check_item">
                                                 <button id="checkOutButton">Check Out</button>
-                                                <span id="checkOutDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id).FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</span>
+                                                <span id="checkOutDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id && item.id == booking_id).FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</span>
                                             </div>
 
                                         }
@@ -389,7 +389,7 @@
 
                                     </div>
                                     <div class="guest_number">
-                                        @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id))
+                                        @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                         {
                                             <div class="guest_btn">
                                                 <div class="guest_item">
@@ -397,7 +397,8 @@
                                                     @{
 
                                                         string list_guests = "";
-                                                        foreach (var item in db.booking_guests.Where(row => row.booking.property_id == property.id && row.booking.userId == p_user.id))
+                                                     
+                                                        foreach (var item in db.booking_guests.Where(row => row.booking_id == booking_id)) 
                                                         {
                                                             list_guests = list_guests + +item.num_guests + " " + item.guest_type.type_name + " " + "," + " ";
                                                         }
