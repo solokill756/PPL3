@@ -8,6 +8,7 @@
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
     int pos = 0;
     string tmpBD;
+    PPl3.Models.user_profile profile = new PPl3.Models.user_profile();
 }
 
 <!DOCTYPE html>
@@ -43,7 +44,7 @@
                             @if (p_user.user_profile.FirstOrDefault() != null)
                             {
                                 <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
-
+                                profile = p_user.user_profile.FirstOrDefault();
                             }
                             else
                             {
@@ -75,17 +76,34 @@
                 <div class="gird wide">
                     <div class="row no-gutter">
                         <div class="col l-4 m-12 c-12 center">
-                            <div class="img_profile"
-                                 style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
-                                <div class="add_img">
-                                    <input type="file"
-                                           accept=".jpg, .png"
-                                           id="file_upload"
-                                           name="user_profile.user_avatar"
-                                           hidden>
-                                    <button type="button" class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
+                            @if (profile.user_avatar != null)
+                            {
+                                <div class="img_profile"
+                                     style="background : url(@profile.user_avatar) top center /cover no-repeat">
+                                    <div class="add_img">
+                                        <input type="file"
+                                               accept=".jpg, .png"
+                                               id="file_upload"
+                                               name="user_profile.user_avatar"
+                                               hidden>
+                                        <button type="button" class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <div class="img_profile">
+                                    <div class="add_img">
+                                        <input type="file"
+                                               accept=".jpg, .png"
+                                               id="file_upload"
+                                               name="user_profile.user_avatar"
+                                               hidden>
+                                        <button type="button" class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
+                                    </div>
+                                </div>
+                            }
+
                         </div>
                         <div class="col l-8 m-12 c-12">
                             <div class="tittle">
@@ -100,7 +118,7 @@
                                                id="user_school"
                                                name="user_profile.user_school"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_school">
+                                               value="@profile.user_school">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-earth-europe"></i>Where I live:</p>
@@ -111,9 +129,9 @@
                                         <p><i class="fa-solid fa-golf-ball-tee"></i>BirthDay:</p>
                                         @{
                                             tmpBD = "";
-                                            if (p_user.user_profile.FirstOrDefault().user_birthday != null)
+                                            if (profile.user_birthday != null)
                                             {
-                                                tmpBD = p_user.user_profile.FirstOrDefault().user_birthday.Value.ToString("yyyy-MM-dd");
+                                                tmpBD = profile.user_birthday.Value.ToString("yyyy-MM-dd");
                                             }
                                         }
                                         <input type="date"
@@ -128,7 +146,7 @@
                                                id="user_obsessed_with"
                                                name="user_profile.user_obsessed_with"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_obsessed_with">
+                                               value="@profile.user_obsessed_with">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-wand-magic-sparkles"></i>My most useless skill:</p>
@@ -136,7 +154,7 @@
                                                id="user_unless_skill"
                                                name="user_profile.user_unless_skill"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_unless_skill">
+                                               value="@profile.user_unless_skill">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-regular fa-clock"></i>I spend too much time:</p>
@@ -144,7 +162,7 @@
                                                id="user_time_spend"
                                                name="user_profile.user_time_spend"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_time_spend">
+                                               value="@profile.user_time_spend">
                                     </div>
                                 </div>
                                 <div class="infor_container">
@@ -154,7 +172,7 @@
                                                id="user_work"
                                                name="user_profile.user_work"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_work">
+                                               value="@profile.user_work">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-globe"></i>Languages I speak:</p>
@@ -184,7 +202,7 @@
                                                id="user_favourite_song"
                                                name="user_profile.user_favourite_song"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_favourite_song">
+                                               value="@profile.user_favourite_song">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-regular fa-lightbulb"></i>My fun fact:</p>
@@ -192,7 +210,7 @@
                                                id="user_fun_fact"
                                                name="user_profile.user_fun_fact"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_fun_fact">
+                                               value="@profile.user_fun_fact">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-book-open"></i>My biography title would be:</p>
@@ -200,7 +218,7 @@
                                                id="user_biography_title"
                                                name="user_profile.user_biography_title"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_biography_title">
+                                               value="@profile.user_biography_title">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-paw"></i>Pets:</p>
@@ -208,7 +226,7 @@
                                                id="user_pets"
                                                name="user_profile.user_pets"
                                                placeholder="Write something..."
-                                               value="@p_user.user_profile.FirstOrDefault().user_pets">
+                                               value="@profile.user_pets">
                                     </div>
                                 </div>
                             </div>
@@ -219,9 +237,9 @@
                                 <div class="add_intro">
                                     @{
                                         tmpBD = "";
-                                        if (p_user.user_profile.FirstOrDefault().user_about != null)
+                                        if (profile.user_about != null)
                                         {
-                                            tmpBD = p_user.user_profile.FirstOrDefault().user_about;
+                                            tmpBD = profile.user_about;
                                         }
                                         else
                                         {

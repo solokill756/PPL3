@@ -66,5 +66,7 @@ namespace PPl3.Controllers
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
             return View();
         }
+
+
     }
 }
