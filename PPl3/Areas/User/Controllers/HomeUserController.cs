@@ -131,6 +131,47 @@ namespace PPl3.Areas.User.Controllers
         }
         ///
 
+        // edit user profile
+        public class CreateViewModel
+        {
+            public user_profile user_profile { get; set; }
+        }
+
+        public ActionResult editProfile()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult editProfile(CreateViewModel viewModel)
+        {
+            PPL3Entities3 db = new PPL3Entities3();
+            user p_user = (user)Session["user"];
+            user_profile up = db.user_profile.Where(item => item.userID == p_user.id).FirstOrDefault();
+
+            up.user_fun_fact = viewModel.user_profile.user_fun_fact;
+            up.user_about = viewModel.user_profile.user_about;
+            up.user_time_spend = viewModel.user_profile.user_time_spend;
+            up.user_biography_title = viewModel.user_profile.user_biography_title;
+            up.user_birthday = viewModel.user_profile.user_birthday;
+            up.user_obsessed_with = viewModel.user_profile.user_obsessed_with;
+            up.user_favourite_song = viewModel.user_profile.user_favourite_song;
+            up.user_pets = viewModel.user_profile.user_pets;
+            up.user_unless_skill = viewModel.user_profile.user_unless_skill;
+            up.user_work = viewModel.user_profile.user_work;
+            up.user_school = viewModel.user_profile.user_school;
+            if (viewModel.user_profile.user_avatar != null)
+            {
+                up.user_avatar = viewModel.user_profile.user_avatar;
+            }
+
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
         // Login and Logout and Sign up
         public ActionResult Login()
         {

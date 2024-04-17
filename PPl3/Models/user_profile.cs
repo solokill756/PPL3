@@ -28,6 +28,7 @@ namespace PPl3.Models
         public string user_biography_title { get; set; }
         public string user_about { get; set; }
         public string user_avatar { get; set; }
+        public Nullable<System.DateTime> user_birthday { get; set; }
     
         public virtual user user { get; set; }
     }

@@ -198,7 +198,6 @@
     <EntitySetMapping Name="host_reviews">
       <EntityTypeMapping TypeName="PPL3Model.host_reviews">
         <MappingFragment StoreEntitySet="host_reviews">
-          <ScalarProperty Name="rating" ColumnName="rating" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="hostid" ColumnName="hostid" />
           <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
@@ -206,6 +205,7 @@
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="hr_status" ColumnName="hr_status" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -387,6 +387,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="PPL3Model.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="transactions">
       <EntityTypeMapping TypeName="PPL3Model.transaction">
         <MappingFragment StoreEntitySet="transactions">
@@ -440,6 +451,7 @@
           <ScalarProperty Name="user_biography_title" ColumnName="user_biography_title" />
           <ScalarProperty Name="user_about" ColumnName="user_about" />
           <ScalarProperty Name="user_avatar" ColumnName="user_avatar" />
+          <ScalarProperty Name="user_birthday" ColumnName="user_birthday" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
