@@ -32,7 +32,7 @@ namespace PPl3.Controllers
         {
             ViewBag.checkLogOut = checkLogOut;
             Console.WriteLine(ViewBag.checkLogOut);
-            PPL3Entities3 db = new PPL3Entities3();
+            PPL3Entities db = new PPL3Entities();
             category main_cate = db.categories.Where(row => row.category_name.Equals("Main")).FirstOrDefault();
             var list_amenites = from item in db.amenities.ToList()
                                 where item.category_id == main_cate.id
@@ -62,9 +62,11 @@ namespace PPl3.Controllers
 
         public ActionResult Detail(int id)
         {
-            PPL3Entities3 db = new PPL3Entities3();
+            PPL3Entities db = new PPL3Entities();
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
             return View();
         }
+
+
     }
 }

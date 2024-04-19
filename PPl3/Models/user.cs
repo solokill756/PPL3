@@ -36,6 +36,7 @@ namespace PPl3.Models
             this.user_role = new HashSet<user_role>();
             this.user_role1 = new HashSet<user_role>();
             this.users_languages = new HashSet<users_languages>();
+            this.users_interests = new HashSet<users_interests>();
         }
     
         public int id { get; set; }
@@ -89,5 +90,7 @@ namespace PPl3.Models
         public virtual user_type user_type1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<users_languages> users_languages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<users_interests> users_interests { get; set; }
     }
 }

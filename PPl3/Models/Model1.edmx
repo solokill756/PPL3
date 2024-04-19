@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -195,6 +195,26 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="hr_status" Type="tinyint" />
           <Property Name="rating" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="interest_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cate_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="cate_description" Type="nvarchar" MaxLength="255" />
+          <Property Name="ic_status" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="interests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="interest_cate_id" Type="int" />
+          <Property Name="interest_name" Type="nvarchar" MaxLength="20" />
+          <Property Name="icon" Type="varchar(max)" />
+          <Property Name="itr_description" Type="nvarchar" MaxLength="255" />
+          <Property Name="itr_status" Type="tinyint" />
         </EntityType>
         <EntityType Name="languages">
           <Key>
@@ -413,6 +433,8 @@
           <Property Name="user_biography_title" Type="nvarchar" MaxLength="40" />
           <Property Name="user_about" Type="text" />
           <Property Name="user_avatar" Type="varchar(max)" />
+          <Property Name="user_birthday" Type="date" />
+          <Property Name="user_address" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="user_role">
           <Key>
@@ -457,6 +479,15 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="user_status" Type="tinyint" />
           <Property Name="day_become_host" Type="datetime" />
+        </EntityType>
+        <EntityType Name="users_interests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" />
+          <Property Name="interest_id" Type="int" />
+          <Property Name="uitr_status" Type="tinyint" />
         </EntityType>
         <EntityType Name="users_languages">
           <Key>
@@ -739,6 +770,30 @@
             </Principal>
             <Dependent Role="host_reviews">
               <PropertyRef Name="review_by_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="interest_cate_id_id_FK">
+          <End Role="interest_categories" Type="Self.interest_categories" Multiplicity="0..1" />
+          <End Role="interests" Type="Self.interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="interest_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="interests">
+              <PropertyRef Name="interest_cate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="interest_idd_id_FK">
+          <End Role="interests" Type="Self.interests" Multiplicity="0..1" />
+          <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="interests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users_interests">
+              <PropertyRef Name="interest_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1102,6 +1157,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="useridddd_id_id_FK">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users_interests">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="users_user_type_id_FK">
           <End Role="user_type" Type="Self.user_type" Multiplicity="0..1" />
           <End Role="users" Type="Self.users" Multiplicity="*" />
@@ -1156,6 +1223,8 @@
           <EntitySet Name="governmentID" EntityType="Self.governmentID" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="host_reviews" EntityType="Self.host_reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="interest_categories" EntityType="Self.interest_categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="interests" EntityType="Self.interests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="languages" EntityType="Self.languages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="listLanguage" EntityType="Self.listLanguage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="neighbourhood" EntityType="Self.neighbourhood" Schema="dbo" store:Type="Tables" />
@@ -1176,6 +1245,7 @@
           <EntitySet Name="user_type" EntityType="Self.user_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_type_user_role" EntityType="Self.user_type_user_role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users_interests" EntityType="Self.users_interests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="users_languages" EntityType="Self.users_languages" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="bkg_booking_id_FK" Association="Self.bkg_booking_id_FK">
             <End Role="bookings" EntitySet="bookings" />
@@ -1268,6 +1338,14 @@
           <AssociationSet Name="hr_rvbuser_id_FK" Association="Self.hr_rvbuser_id_FK">
             <End Role="users" EntitySet="users" />
             <End Role="host_reviews" EntitySet="host_reviews" />
+          </AssociationSet>
+          <AssociationSet Name="interest_cate_id_id_FK" Association="Self.interest_cate_id_id_FK">
+            <End Role="interest_categories" EntitySet="interest_categories" />
+            <End Role="interests" EntitySet="interests" />
+          </AssociationSet>
+          <AssociationSet Name="interest_idd_id_FK" Association="Self.interest_idd_id_FK">
+            <End Role="interests" EntitySet="interests" />
+            <End Role="users_interests" EntitySet="users_interests" />
           </AssociationSet>
           <AssociationSet Name="neighbourhood_property_id_id_FK" Association="Self.neighbourhood_property_id_id_FK">
             <End Role="properties" EntitySet="properties" />
@@ -1389,6 +1467,10 @@
             <End Role="users" EntitySet="users" />
             <End Role="user_role" EntitySet="user_role" />
           </AssociationSet>
+          <AssociationSet Name="useridddd_id_id_FK" Association="Self.useridddd_id_id_FK">
+            <End Role="users" EntitySet="users" />
+            <End Role="users_interests" EntitySet="users_interests" />
+          </AssociationSet>
           <AssociationSet Name="users_user_type_id_FK" Association="Self.users_user_type_id_FK">
             <End Role="user_type" EntitySet="user_type" />
             <End Role="users" EntitySet="users" />
@@ -1402,7 +1484,8 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1631,9 +1714,32 @@
           <Property Name="created" Type="DateTime" Precision="3" />
           <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="hr_status" Type="Byte" />
+          <Property Name="rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="user" Relationship="Self.hr_hostid_id_FK" FromRole="host_reviews" ToRole="users" />
           <NavigationProperty Name="user1" Relationship="Self.hr_rvbuser_id_FK" FromRole="host_reviews" ToRole="users" />
-          <Property Name="rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="interest_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cate_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="cate_description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ic_status" Type="Byte" />
+          <NavigationProperty Name="interests" Relationship="Self.interest_cate_id_id_FK" FromRole="interest_categories" ToRole="interests" />
+        </EntityType>
+        <EntityType Name="interest">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="interest_cate_id" Type="Int32" />
+          <Property Name="interest_name" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="icon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="itr_description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="itr_status" Type="Byte" />
+          <NavigationProperty Name="interest_categories" Relationship="Self.interest_cate_id_id_FK" FromRole="interests" ToRole="interest_categories" />
+          <NavigationProperty Name="users_interests" Relationship="Self.interest_idd_id_FK" FromRole="interests" ToRole="users_interests" />
         </EntityType>
         <EntityType Name="language">
           <Key>
@@ -1896,6 +2002,8 @@
           <Property Name="user_biography_title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="user_about" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="user_avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="user_birthday" Type="DateTime" Precision="0" />
+          <Property Name="user_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="user" Relationship="Self.upp_userID_id_FK" FromRole="user_profile" ToRole="users" />
         </EntityType>
         <EntityType Name="user_role">
@@ -1968,6 +2076,18 @@
           <NavigationProperty Name="user_role1" Relationship="Self.ur_update_by_id_FK" FromRole="users" ToRole="user_role" />
           <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
           <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
+          <NavigationProperty Name="users_interests" Relationship="Self.useridddd_id_id_FK" FromRole="users" ToRole="users_interests" />
+        </EntityType>
+        <EntityType Name="users_interests">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="interest_id" Type="Int32" />
+          <Property Name="uitr_status" Type="Byte" />
+          <NavigationProperty Name="interest" Relationship="Self.interest_idd_id_FK" FromRole="users_interests" ToRole="interests" />
+          <NavigationProperty Name="user" Relationship="Self.useridddd_id_id_FK" FromRole="users_interests" ToRole="users" />
         </EntityType>
         <EntityType Name="users_languages">
           <Key>
@@ -2363,6 +2483,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="interest_cate_id_id_FK">
+          <End Role="interest_categories" Type="Self.interest_categories" Multiplicity="0..1" />
+          <End Role="interests" Type="Self.interest" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="interest_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="interests">
+              <PropertyRef Name="interest_cate_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="interest_idd_id_FK">
+          <End Role="interests" Type="Self.interest" Multiplicity="0..1" />
+          <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="interests">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users_interests">
+              <PropertyRef Name="interest_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ul_language_id_FK">
           <End Role="listLanguage" Type="Self.listLanguage" Multiplicity="0..1" />
           <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
@@ -2651,7 +2795,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="PPL3Entities3" annotation:LazyLoadingEnabled="true">
+        <Association Name="useridddd_id_id_FK">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="users_interests">
+              <PropertyRef Name="userid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PPL3Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="amenities" EntityType="Self.amenity" />
           <EntitySet Name="booking_guests" EntityType="Self.booking_guests" />
           <EntitySet Name="bookings" EntityType="Self.booking" />
@@ -2669,6 +2825,8 @@
           <EntitySet Name="governmentIDs" EntityType="Self.governmentID" />
           <EntitySet Name="guest_type" EntityType="Self.guest_type" />
           <EntitySet Name="host_reviews" EntityType="Self.host_reviews" />
+          <EntitySet Name="interest_categories" EntityType="Self.interest_categories" />
+          <EntitySet Name="interests" EntityType="Self.interest" />
           <EntitySet Name="languages" EntityType="Self.language" />
           <EntitySet Name="listLanguages" EntityType="Self.listLanguage" />
           <EntitySet Name="neighbourhoods" EntityType="Self.neighbourhood" />
@@ -2689,6 +2847,7 @@
           <EntitySet Name="user_type" EntityType="Self.user_type" />
           <EntitySet Name="user_type_user_role" EntityType="Self.user_type_user_role" />
           <EntitySet Name="users" EntityType="Self.user" />
+          <EntitySet Name="users_interests" EntityType="Self.users_interests" />
           <EntitySet Name="users_languages" EntityType="Self.users_languages" />
           <AssociationSet Name="FK_amenities_categories" Association="Self.FK_amenities_categories">
             <End Role="categories" EntitySet="categories" />
@@ -2818,6 +2977,14 @@
             <End Role="users" EntitySet="users" />
             <End Role="host_reviews" EntitySet="host_reviews" />
           </AssociationSet>
+          <AssociationSet Name="interest_cate_id_id_FK" Association="Self.interest_cate_id_id_FK">
+            <End Role="interest_categories" EntitySet="interest_categories" />
+            <End Role="interests" EntitySet="interests" />
+          </AssociationSet>
+          <AssociationSet Name="interest_idd_id_FK" Association="Self.interest_idd_id_FK">
+            <End Role="interests" EntitySet="interests" />
+            <End Role="users_interests" EntitySet="users_interests" />
+          </AssociationSet>
           <AssociationSet Name="ul_language_id_FK" Association="Self.ul_language_id_FK">
             <End Role="listLanguage" EntitySet="listLanguages" />
             <End Role="users_languages" EntitySet="users_languages" />
@@ -2914,13 +3081,17 @@
             <End Role="users" EntitySet="users" />
             <End Role="users_languages" EntitySet="users_languages" />
           </AssociationSet>
+          <AssociationSet Name="useridddd_id_id_FK" Association="Self.useridddd_id_id_FK">
+            <End Role="users" EntitySet="users" />
+            <End Role="users_interests" EntitySet="users_interests" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities3">
+        <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities">
           <EntitySetMapping Name="amenities">
             <EntityTypeMapping TypeName="PPL3Model.amenity">
               <MappingFragment StoreEntitySet="amenities">
@@ -3118,7 +3289,6 @@
           <EntitySetMapping Name="host_reviews">
             <EntityTypeMapping TypeName="PPL3Model.host_reviews">
               <MappingFragment StoreEntitySet="host_reviews">
-                <ScalarProperty Name="rating" ColumnName="rating" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="hostid" ColumnName="hostid" />
                 <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
@@ -3126,6 +3296,29 @@
                 <ScalarProperty Name="created" ColumnName="created" />
                 <ScalarProperty Name="modified" ColumnName="modified" />
                 <ScalarProperty Name="hr_status" ColumnName="hr_status" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="interest_categories">
+            <EntityTypeMapping TypeName="PPL3Model.interest_categories">
+              <MappingFragment StoreEntitySet="interest_categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="cate_name" ColumnName="cate_name" />
+                <ScalarProperty Name="cate_description" ColumnName="cate_description" />
+                <ScalarProperty Name="ic_status" ColumnName="ic_status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="interests">
+            <EntityTypeMapping TypeName="PPL3Model.interest">
+              <MappingFragment StoreEntitySet="interests">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="interest_cate_id" ColumnName="interest_cate_id" />
+                <ScalarProperty Name="interest_name" ColumnName="interest_name" />
+                <ScalarProperty Name="icon" ColumnName="icon" />
+                <ScalarProperty Name="itr_description" ColumnName="itr_description" />
+                <ScalarProperty Name="itr_status" ColumnName="itr_status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3360,6 +3553,8 @@
                 <ScalarProperty Name="user_biography_title" ColumnName="user_biography_title" />
                 <ScalarProperty Name="user_about" ColumnName="user_about" />
                 <ScalarProperty Name="user_avatar" ColumnName="user_avatar" />
+                <ScalarProperty Name="user_birthday" ColumnName="user_birthday" />
+                <ScalarProperty Name="user_address" ColumnName="user_address" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3408,6 +3603,16 @@
                 <ScalarProperty Name="modified" ColumnName="modified" />
                 <ScalarProperty Name="user_status" ColumnName="user_status" />
                 <ScalarProperty Name="day_become_host" ColumnName="day_become_host" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users_interests">
+            <EntityTypeMapping TypeName="PPL3Model.users_interests">
+              <MappingFragment StoreEntitySet="users_interests">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="interest_id" ColumnName="interest_id" />
+                <ScalarProperty Name="uitr_status" ColumnName="uitr_status" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -217,6 +217,12 @@
     <Compile Include="Models\host_reviews.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\interest.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\interest_categories.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\language.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -277,6 +283,9 @@
     <Compile Include="Models\user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\users_interests.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\users_languages.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -316,6 +325,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="ExtraFiles\assets\css\book_room.css" />
+    <Content Include="ExtraFiles\assets\css\editProfile.css" />
     <Content Include="ExtraFiles\assets\css\gird.css" />
     <Content Include="ExtraFiles\assets\css\product.css" />
     <Content Include="ExtraFiles\assets\css\seller_profile.css" />
@@ -347,8 +357,10 @@
     <Content Include="ExtraFiles\assets\img\room_classify\f0c5ca0f-5aa0-4fe5-b38d-654264bacddf.jpg" />
     <Content Include="ExtraFiles\assets\img\Room_type\home.png" />
     <Content Include="ExtraFiles\assets\img\Where_add\f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" />
+    <Content Include="ExtraFiles\editProfile.html" />
     <Content Include="ExtraFiles\index.html" />
     <Content Include="ExtraFiles\JS\calendar.js" />
+    <Content Include="ExtraFiles\JS\editProfile.js" />
     <Content Include="ExtraFiles\JS\first_header.js" />
     <Content Include="ExtraFiles\JS\imgSlide.js" />
     <Content Include="ExtraFiles\JS\main_v1.js" />
@@ -358,6 +370,7 @@
     <Content Include="ExtraFiles\JS\showAll.js" />
     <Content Include="ExtraFiles\JS\Sign_Log_v1.js" />
     <Content Include="ExtraFiles\JS\Trip.js" />
+    <Content Include="ExtraFiles\JS\upLoadImg.js" />
     <Content Include="ExtraFiles\JS\wishList.js" />
     <Content Include="ExtraFiles\Product.html" />
     <Content Include="ExtraFiles\Sign_Log.html" />
@@ -394,6 +407,8 @@
     <Content Include="Areas\User\Views\HomeUser\Detail.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\wishList.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\Trip.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\editProfile.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -401,7 +416,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\User\Views\HomeUser\Trip.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

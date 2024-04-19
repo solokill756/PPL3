@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities3">
+  <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities">
     <EntitySetMapping Name="amenities">
       <EntityTypeMapping TypeName="PPL3Model.amenity">
         <MappingFragment StoreEntitySet="amenities">
@@ -198,7 +198,6 @@
     <EntitySetMapping Name="host_reviews">
       <EntityTypeMapping TypeName="PPL3Model.host_reviews">
         <MappingFragment StoreEntitySet="host_reviews">
-          <ScalarProperty Name="rating" ColumnName="rating" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="hostid" ColumnName="hostid" />
           <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
@@ -206,6 +205,29 @@
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="hr_status" ColumnName="hr_status" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="interest_categories">
+      <EntityTypeMapping TypeName="PPL3Model.interest_categories">
+        <MappingFragment StoreEntitySet="interest_categories">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="cate_name" ColumnName="cate_name" />
+          <ScalarProperty Name="cate_description" ColumnName="cate_description" />
+          <ScalarProperty Name="ic_status" ColumnName="ic_status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="interests">
+      <EntityTypeMapping TypeName="PPL3Model.interest">
+        <MappingFragment StoreEntitySet="interests">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="interest_cate_id" ColumnName="interest_cate_id" />
+          <ScalarProperty Name="interest_name" ColumnName="interest_name" />
+          <ScalarProperty Name="icon" ColumnName="icon" />
+          <ScalarProperty Name="itr_description" ColumnName="itr_description" />
+          <ScalarProperty Name="itr_status" ColumnName="itr_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -440,6 +462,8 @@
           <ScalarProperty Name="user_biography_title" ColumnName="user_biography_title" />
           <ScalarProperty Name="user_about" ColumnName="user_about" />
           <ScalarProperty Name="user_avatar" ColumnName="user_avatar" />
+          <ScalarProperty Name="user_birthday" ColumnName="user_birthday" />
+          <ScalarProperty Name="user_address" ColumnName="user_address" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -488,6 +512,16 @@
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="user_status" ColumnName="user_status" />
           <ScalarProperty Name="day_become_host" ColumnName="day_become_host" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users_interests">
+      <EntityTypeMapping TypeName="PPL3Model.users_interests">
+        <MappingFragment StoreEntitySet="users_interests">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="interest_id" ColumnName="interest_id" />
+          <ScalarProperty Name="uitr_status" ColumnName="uitr_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

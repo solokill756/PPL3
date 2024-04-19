@@ -7,7 +7,7 @@
     PPl3.Models.property property = ViewBag.propertyFind;
     int i = 0;
     PPl3.Models.property_images[] list_images = property.property_images.ToArray();
-    PPl3.Models.PPL3Entities3 db = new PPl3.Models.PPL3Entities3();
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
     int booking_id = -1;
     if (ViewBag.bookingId != null)
@@ -82,10 +82,10 @@
                             <ul class="menu_user js_menu_user">
                                 <li class=""><button>Messages</button></li>
                                 <li class=""><button>Notifications</button></li>
-                                <li class=""><a href="/user/homeuser/trip">Trips</a></li>
+                                <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="Content">Manage listings</a></li>
-                                <li><a href="#">Account</a></li>
+                                <li><a href="/user/homeuser/editprofile">Account</a></li>
                                 <li><a href="#">Gift Cards</a></li>
                                 <li><a href="#">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
