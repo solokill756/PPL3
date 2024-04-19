@@ -32,7 +32,7 @@
                 <div class="row sm-gutter nav">
                     <div class="col l-2 m-2 c-2">
                         <div class="nav_logo">
-                            <a href="/user/homeuser/index" class="logo_link">
+                            <a href="/home/index" class="logo_link">
                                 <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
                                 <h1>T|.|N|.|T</h1>
                             </a>
@@ -153,7 +153,7 @@
                             <div class="gird wide">
                                 <div class="row no-gutter">
                                     <div class="col l-8 m-8 c-12 seller_infor_container">
-                                        <div class="img_seller" style="background : url(@property.user.user_profile.ToList().FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                        <div class="img_seller" style="background : url(@property.user.user_profile.ToList().FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/home/profile?id=@property.userId'">
                                         </div>
                                         <div class="infor">
                                             <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
@@ -396,7 +396,7 @@
                                         <div class="comment_item_detail comment_user_@item.review_by_user">
                                             <div class="header_comment">
                                                 <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
-
+                                                
                                                 <div>
                                                     <span>@item.user.account_name</span>
                                                     @{
@@ -455,7 +455,7 @@
                                         <div class="col l-5 m-12 c-12 information">
                                             <div class="homeowner_basics">
                                                 <div class="review_host">
-                                                    <img src="@property.user.user_profile.FirstOrDefault().user_avatar" alt="">
+                                                    <img src="@property.user.user_profile.FirstOrDefault().user_avatar" alt="" onclick="window.location.href='/home/profile?id=@property.userId'">
                                                     <i class="fa-solid fa-shield"></i>
                                                     <h2>@property.user.user_personalInfor.FirstOrDefault().legal_name</h2>
                                                     <p>Host</p>
@@ -711,7 +711,7 @@
                                 {
                                     <div class="comment_item_detail comment_user_@item.review_by_user">
                                         <div class="header_comment">
-                                            <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
+                                            <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/home/profile?id=@item.user.id'"></div>
                                             <div>
                                                 <span>@item.user.account_name</span>
                                                 @{

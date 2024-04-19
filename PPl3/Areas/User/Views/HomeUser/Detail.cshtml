@@ -85,7 +85,7 @@
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="Content">Manage listings</a></li>
-                                <li><a href="/user/homeuser/editprofile">Account</a></li>
+                                <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
                                 <li><a href="#">Gift Cards</a></li>
                                 <li><a href="#">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
@@ -167,7 +167,7 @@
                             <div class="gird wide">
                                 <div class="row no-gutter">
                                     <div class="col l-8 m-8 c-12 seller_infor_container">
-                                        <div class="img_seller" style="background : url(@property.user.user_profile.ToList().FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                        <div class="img_seller" style="background : url(@property.user.user_profile.ToList().FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/user/homeuser/profile?id=@property.user.id'">
                                         </div>
                                         <div class="infor">
                                             <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
@@ -520,7 +520,7 @@
                                     {
                                         <div class="comment_item_detail comment_user_@item.review_by_user">
                                             <div class="header_comment">
-                                                <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
+                                                <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/user/homeuser/profile?id=@item.user.id'"></div>
 
                                                 <div>
                                                     <span>@item.user.account_name</span>
@@ -580,7 +580,7 @@
                                         <div class="col l-5 m-12 c-12 information">
                                             <div class="homeowner_basics">
                                                 <div class="review_host">
-                                                    <img src="@property.user.user_profile.FirstOrDefault().user_avatar" alt="">
+                                                    <img src="@property.user.user_profile.FirstOrDefault().user_avatar" alt="" onclick="window.location.href='/user/homeuser/profile?id=@property.user.id'">
                                                     <i class="fa-solid fa-shield"></i>
                                                     <h2>@property.user.user_personalInfor.FirstOrDefault().legal_name</h2>
                                                     <p>Host</p>
@@ -836,7 +836,7 @@
                                 {
                                     <div class="comment_item_detail comment_user_@item.review_by_user">
                                         <div class="header_comment">
-                                            <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
+                                            <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/user/homeuser/profile?id=@item.user.id'"></div>
                                             <div>
                                                 <span>@item.user.account_name</span>
                                                 @{

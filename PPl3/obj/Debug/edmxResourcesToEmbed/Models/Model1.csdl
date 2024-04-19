@@ -587,7 +587,6 @@
     <NavigationProperty Name="user_role1" Relationship="Self.ur_update_by_id_FK" FromRole="users" ToRole="user_role" />
     <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
     <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
-    <NavigationProperty Name="users_interests" Relationship="Self.useridddd_id_id_FK" FromRole="users" ToRole="users_interests" />
   </EntityType>
   <EntityType Name="users_interests">
     <Key>
@@ -1306,19 +1305,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="useridddd_id_id_FK">
-    <End Role="users" Type="Self.user" Multiplicity="0..1" />
-    <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="users_interests">
-        <PropertyRef Name="userid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <EntityContainer Name="PPL3Entities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="PPL3Entities3" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="amenities" EntityType="Self.amenity" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" />
     <EntitySet Name="bookings" EntityType="Self.booking" />

@@ -66,7 +66,11 @@ namespace PPl3.Controllers
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
             return View();
         }
-
-
+        public ActionResult profile(int id)
+        {
+            PPL3Entities3 db = new PPL3Entities3();
+            ViewBag.userfind = db.users.Where(item => item.id == id).FirstOrDefault();
+            return View();
+        }
     }
 }

@@ -1,0 +1,354 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    PPl3.Models.PPL3Entities3 db = new PPl3.Models.PPL3Entities3();
+    PPl3.Models.user p_user = ViewBag.userfind;
+    int pos = 0;
+    string tmpBD;
+    bool is_host = false;
+    if (p_user.user_type1.ut_name == "host")
+    {
+        is_host = true;
+    }
+    double sum = 0;
+    string currentDateTime = "";
+    int count = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest profile - T|.|N|.|T</title>
+    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/headerGuest.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="/home/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            <button class="js_menuUser_btn">
+                                <i class="fa-solid fa-user"></i>
+                            </button>
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class="js_signUp_btn">
+                                    <button>
+                                        <a href="/user/homeuser/login">Sign In</a>
+                                    </button>
+                                </li>
+                                <li class="js_logIn_btn">
+                                    <button>
+                                        <a href="/user/homeuser/signup">Sign Up</a>
+                                    </button>
+                                </li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Airbnb your home</a></li>
+                                <li><a href="#">Help Center</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="col l-4 m-12 c-12">
+                        <div class="information">
+                            <div class="infor_container">
+                                <div class="review_guest">
+                                    @{
+                                        if (p_user.user_profile.FirstOrDefault().user_avatar != null)
+                                        {
+                                            <div class="avatar" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                                <i class="fa-solid fa-shield"></i>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="avatar">
+                                                <i class="fa-solid fa-shield"></i>
+                                            </div>
+                                        }
+                                    }
+                                    @*<div class="avatar">
+                                            <i class="fa-solid fa-shield"></i>
+                                        </div>*@
+                                    <h2>@p_user.user_personalInfor.FirstOrDefault().legal_name</h2>
+                                    @{
+                                        if (is_host)
+                                        {
+                                            <p>Host</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Guest</p>
+                                        }
+                                    }
+                                </div>
+                                <div class="infor_basics">
+                                    @{
+                                        if (is_host)
+                                        {
+                                            <div class="infor_basics_item">
+                                                <span>@p_user.host_reviews.ToArray().Length</span>
+                                                <p>Review</p>
+                                            </div>
+                                            <div class="infor_basics_item">
+                                                @{
+                                                    sum = 0;
+                                                    foreach (var item in p_user.host_reviews.ToList())
+                                                    {
+                                                        sum = sum + double.Parse(item.rating);
+                                                    }
+                                                    if (p_user.host_reviews.ToArray().Length != 0)
+                                                    { sum = sum / p_user.host_reviews.ToArray().Length; }
+                                                    else { sum = 0; }
+                                                }
+                                                <span>@sum<i class="fa-solid fa-star"></i></span>
+                                                <p>Rating</p>
+                                            </div>
+                                            <div class="infor_basic">
+                                                @{
+                                                    count = 0;
+                                                    if (DateTime.Now.ToString("yyyy") != p_user.day_become_host.Value.ToString("yyyy"))
+                                                    {
+
+                                                        count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(p_user.day_become_host.Value.ToString("yyyy"));
+                                                        <span>@count</span>
+                                                        <p>Years hosting</p>
+                                                    }
+                                                    else if (DateTime.Now.ToString("MM") != p_user.day_become_host.Value.ToString("MM"))
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(p_user.day_become_host.Value.ToString("MM"));
+                                                        <span>@count</span>
+                                                        <p>Months hosting</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(p_user.day_become_host.Value.ToString("dd"));
+                                                        <span>@count</span>
+                                                        <p>Days hosting</p>
+                                                    }
+                                                }
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="infor_basics_item">
+                                                @{
+                                                    count = 0;
+                                                    count = p_user.property_reviews.Where(item => item.review_by_user == p_user.id).ToArray().Length;
+                                                    count += p_user.host_reviews.Where(item => (item.review_by_user == p_user.id)).ToArray().Length;
+                                                }
+                                                <span>@count</span>
+                                                <p>Comment</p>
+                                            </div>
+                                            <div class="infor_basics_item">
+                                                <span><i class="fa-solid fa-star"></i></span>
+                                                <p>Newbie</p>
+                                            </div>
+                                            <div class="infor_basic">
+
+                                                @{
+                                                    count = 0;
+                                                    if (DateTime.Now.ToString("yyyy") != p_user.created.Value.ToString("yyyy"))
+                                                    {
+
+                                                        count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(p_user.created.Value.ToString("yyyy"));
+                                                        <span>@count</span>
+                                                        <p>Years on Airbnb</p>
+                                                    }
+                                                    else if (DateTime.Now.ToString("MM") != p_user.created.Value.ToString("MM"))
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(p_user.created.Value.ToString("MM"));
+                                                        <span>@count</span>
+                                                        <p>Months on Airbnb</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(p_user.created.Value.ToString("dd"));
+                                                        <span>@count</span>
+                                                        <p>Days on Airbnb</p>
+                                                    }
+                                                }
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="verify_guest">
+                            <div class="verify_container">
+                                <div class="confirmed_information">
+                                    <div class="tittle">
+                                        <span>@p_user.user_personalInfor.FirstOrDefault().legal_name's confirmed information</span>
+                                    </div>
+                                    <ul class="confirmed_list">
+                                        <li><i class="fa-solid fa-check"></i>Email address</li>
+                                    </ul>
+                                </div>
+                                @*<div class="get_verify">
+                                    <div class="tittle">
+                                        <span>Verify your identity</span>
+                                    </div>
+                                    <p>Before you book or host on Airbnb, you’ll need to complete this step.</p>
+                                    <button class="get_verify_btn"><a href="">Get verified</a></button>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l-o-1 l-7 m-12 c-12">
+                        <div class="about_you">
+                            <div class="about_container">
+                                <h1>About @p_user.user_personalInfor.FirstOrDefault().legal_name</h1>
+                                @*<div class="edit_btn">
+                                    <button><a href="/user/homeuser/editprofile">Edit profile</a></button>
+                                </div>*@
+                                <div class="about_content">
+                                    <div class="infor_box">
+                                        <ul class="infor_list">
+                                            <li><i class="fa-solid fa-briefcase"></i>My work: @p_user.user_profile.FirstOrDefault().user_work</li>
+                                            <li><i class="fa-solid fa-earth-europe"></i>Lives in @p_user.user_profile.FirstOrDefault().user_address</li>
+                                            @{
+                                                tmpBD = "";
+                                                if (p_user.user_profile.FirstOrDefault().user_birthday != null)
+                                                {
+                                                    tmpBD = p_user.user_profile.FirstOrDefault().user_birthday.Value.ToString("yyyy-MM-dd");
+                                                }
+                                            }
+                                            <li><i class="fa-solid fa-golf-ball-tee"></i>BirthDay: @tmpBD</li>
+                                            <li><i class="fa-regular fa-heart"></i>I'm obsessed with: @p_user.user_profile.FirstOrDefault().user_obsessed_with</li>
+                                            <li><i class="fa-solid fa-wand-magic-sparkles"></i>Most useless skill: @p_user.user_profile.FirstOrDefault().user_unless_skill</li>
+                                            <li><i class="fa-regular fa-clock"></i>I spend too much time: @p_user.user_profile.FirstOrDefault().user_time_spend</li>
+                                        </ul>
+                                        <ul class="infor_list">
+                                            <li><i class="fa-solid fa-graduation-cap"></i>Where I went to school: @p_user.user_profile.FirstOrDefault().user_school</li>
+                                            @{
+                                                tmpBD = "";
+                                                pos = 0;
+                                                foreach (var item in p_user.users_languages.ToList())
+                                                {
+                                                    if (pos == 0)
+                                                    {
+                                                        tmpBD = tmpBD + item.listLanguage.language_name;
+                                                    }
+                                                    else
+                                                    {
+                                                        tmpBD = tmpBD + ", " + item.listLanguage.language_name;
+                                                    }
+                                                    pos++;
+                                                }
+                                            }
+                                            <li><i class="fa-solid fa-globe"></i>Speaks @tmpBD</li>
+                                            <li><i class="fa-solid fa-music"></i>Favorite song in high school: @p_user.user_profile.FirstOrDefault().user_favourite_song</li>
+                                            <li><i class="fa-regular fa-lightbulb"></i>Fun fact: @p_user.user_profile.FirstOrDefault().user_fun_fact</li>
+                                            <li><i class="fa-solid fa-book-open"></i>My biography title: @p_user.user_profile.FirstOrDefault().user_biography_title</li>
+                                            <li><i class="fa-solid fa-paw"></i>Pets: @p_user.user_profile.FirstOrDefault().user_pets</li>
+                                            <video src=""></video>
+                                        </ul>
+                                    </div>
+                                    <div class="about_text">
+                                        <p>@p_user.user_profile.FirstOrDefault().user_about</p>
+                                    </div>
+                                </div>
+
+                                <div class="ask_guest">
+                                    <div class="tittle">
+                                        <span>Ask @p_user.user_personalInfor.FirstOrDefault().legal_name about</span>
+                                    </div>
+                                    <ul class="interest_list">
+                                        @{
+                                            foreach (var item in p_user.users_interests.ToList())
+                                            {
+                                                <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
+                                            }
+                                        }
+                                        @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
+                                            <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
+                                            <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
+                                            <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
+                                            <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
+                                            <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
+                                            <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="gird wide">
+                <div class="row no-gutter infor_contact_list">
+                    <div class="col l-4 m-6 c-12 infor_contact_item support">
+                        <span>Support</span>
+                        <ul>
+                            <li><a href="">Help Center</a></li>
+                            <li><a href="">Get help with a safety issue</a></li>
+                            <li><a href="">AirCover</a></li>
+                            <li><a href="">Anti-discrimination</a></li>
+                            <li><a href="">Disability support</a></li>
+                            <li><a href="">Cancellation options</a></li>
+                            <li><a href="">Report neighborhood concern</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item hosting">
+                        <span>Hosting</span>
+                        <ul>
+                            <li><a href="">T|.|N|.|T your home</a></li>
+                            <li><a href="">AirCover for Hosts</a></li>
+                            <li><a href="">Hosting resources</a></li>
+                            <li><a href="">Community forum</a></li>
+                            <li><a href="">Hosting responsibly</a></li>
+                            <li><a href="">T|.|N|.|T-friendly apartments</a></li>
+                            <li><a href="">Join a free Hosting class</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item airbnb">
+                        <span>T|.|N|.|T</span>
+                        <ul>
+                            <li><a href="">Newsroom</a></li>
+                            <li><a href="">New features</a></li>
+                            <li><a href="">Careers</a></li>
+                            <li><a href="">Investors</a></li>
+                            <li><a href="">Gift cards</a></li>
+                            <li><a href="">T|.|N|.|T.org emergency stays</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/ExtraFiles/JS/menuGuest.js"></script>
+</body>
+</html>
