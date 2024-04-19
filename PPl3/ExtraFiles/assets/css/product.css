@@ -1435,3 +1435,29 @@ html {
 }
 
 
+.alert_complete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 0 10px #8f8d8d;
+    border-radius: 10px 0 0 0;
+    border: 1px solid #999;
+    padding: 10px 50px;
+    animation: AlertChange ease-in-out 2s;
+}
+
+    .alert_complete.offActive {
+        display: none !important;
+    }
+
+    .alert_complete i {
+        padding: 5px;
+        border-radius: 50%;
+        color: #fff;
+        margin-right: 10px;
+        background-color: chartreuse;
+    }

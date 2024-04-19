@@ -73,9 +73,13 @@ const numberAdults = document.querySelector('.number_adult')
 const numberChild = document.querySelector('.number_child')
 const numberInfants = document.querySelector('.number_infants')
 const numberGuest = document.querySelector('.guest_item p')
-let numberGuest1 = 1;
-let numberGuest2 = 0;
-let numberGuest3 = 0;
+let numberGuest1 = parseInt(numberAdults.textContent);
+let numberGuest2 = parseInt(numberChild.textContent);
+let numberGuest3 = parseInt(numberInfants.textContent);
+
+console.log(numberGuest1);
+console.log(numberGuest2);
+console.log(numberGuest3);
 
 function minusBtn(minus, plus, number, numberG) {
     Object.assign(plus.style, {
@@ -127,16 +131,16 @@ minusAdultsBtn.addEventListener('click', () => {
         numberAdults.innerHTML = `${numberGuest1}`
     }
     if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-        numberGuest.innerHTML = `${numberGuest1} guests`;
+        numberGuest.innerHTML = `${numberGuest1} Adults`;
     }
     else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-        numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+        numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
     }
     else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-        numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+        numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
     }
     else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-        numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+        numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
     }
 })
 
@@ -147,29 +151,29 @@ plusAdultsBtn.addEventListener('click', () => {
         if (numberGuest1 == 6) {
             numberGuest1 = 5;
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         } else {
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         }
     }
@@ -182,29 +186,29 @@ minusChildBtn.addEventListener('click', () => {
         if (numberGuest2 == 0) {
             numberGuest2 = 0;
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         } else {
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         }
     }
@@ -217,29 +221,29 @@ plusChildBtn.addEventListener('click', () => {
         if (numberGuest2 == 6) {
             numberGuest2 = 5;
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         } else {
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         }
     }
@@ -252,29 +256,29 @@ minusInfantsBtn.addEventListener('click', () => {
         if (numberGuest3 == 0) {
             numberGuest3 = 0;
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         } else {
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         }
     }
@@ -287,29 +291,29 @@ plusInfantsBtn.addEventListener('click', () => {
         if (numberGuest3 == 6) {
             numberGuest3 = 5;
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         } else {
             if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests`;
+                numberGuest.innerHTML = `${numberGuest1} Adults`;
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 == 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs`
             }
             else if (numberGuest1 >= 1 && numberGuest2 > 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest2} childs, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest2} childs, ${numberGuest3} infants`
             }
             else if (numberGuest1 >= 1 && numberGuest2 == 0 && numberGuest3 > 0) {
-                numberGuest.innerHTML = `${numberGuest1} guests, ${numberGuest3} infants`
+                numberGuest.innerHTML = `${numberGuest1} Adults, ${numberGuest3} infants`
             }
         }
     }
@@ -344,5 +348,7 @@ if (document.getElementById("checkInDate") != null && document.getElementById("c
         }
     }
 }
+
+
 
 

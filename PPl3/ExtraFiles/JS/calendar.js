@@ -4,6 +4,8 @@ let checkOut = document.querySelector('.check_out span')
 let currentDay = 0;
 const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
+
+
 isLeapYear = (year) => {
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)
 }

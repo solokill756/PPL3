@@ -40,14 +40,17 @@ for (let index = 0; index < contentContainer.length; index++) {
         }
     })
     let heartCurrent = 0;
-    heartIcon.addEventListener('click', (e) => {
-        heartCurrent++
-        if (heartCurrent % 2 != 0) {
-            e.target.classList.add('loved');
-        } else {
-            e.target.classList.remove('loved');
-        }
-    })
+    if (heartIcon) {
+        heartIcon.addEventListener('click', (e) => {
+            heartCurrent++
+            if (heartCurrent % 2 != 0) {
+                e.target.classList.add('loved');
+            } else {
+                e.target.classList.remove('loved');
+            }
+        })
+    }
+    
 }
 
 

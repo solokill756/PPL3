@@ -76,7 +76,7 @@
                                 <li><a href="#">Help Center</a></li>
                             </ul>
                         </div>
-                 
+
                     </div>
                 </div>
             </div>
@@ -99,33 +99,33 @@
                             <div class="img_product">
                                 <div class="img_product_big" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
                                 </div>
-                                @{ 
-                                    i++;
-                                }
-                            <div class="list_img_small">
-                                <div class="img_product_small img_product_1" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
-                                </div>
                                 @{
                                     i++;
                                 }
-                                <div class="img_product_small img_product_2" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                <div class="list_img_small">
+                                    <div class="img_product_small img_product_1" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
+                                    <div class="img_product_small img_product_2" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
                                 </div>
-                                @{
-                                    i++;
-                                }
-                            </div>
-                            <div class="list_img_small">
-                                <div class="img_product_small img_product_3" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                <div class="list_img_small">
+                                    <div class="img_product_small img_product_3" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
+                                    <div class="img_product_small img_product_4" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
+                                    </div>
+                                    @{
+                                        i++;
+                                    }
                                 </div>
-                                @{
-                                    i++;
-                                }
-                                <div class="img_product_small img_product_4" style="background : url(@list_images[i].pi_image) top center /cover no-repeat">
-                                </div>
-                                @{
-                                    i++;
-                                }
-                            </div>
                             </div>
                             <button class="show_more">Show More</button>
                         </div>
@@ -138,9 +138,10 @@
                             <!-- No Comment -->
                             <!-- <p><i class="fa-solid fa-star"></i>No reviews yet</p> -->
                             <!-- Comment -->
-                            @{ 
+                            @{
                                 double sum = 0;
-                                foreach(var item in property.property_reviews) {
+                                foreach (var item in property.property_reviews)
+                                {
                                     sum = sum + double.Parse(item.overall_rating);
                                 }
                                 sum = sum / property.property_reviews.ToArray().Length;
@@ -171,14 +172,15 @@
                         <div class="endow_hotel">
                             <div class="gird wide">
                                 <div class="row no-gutter">
-                                    @foreach(var item in property.property_amenities.ToList().Where(item => item.amenity.category_id == 3).ToList()) { 
+                                    @foreach (var item in property.property_amenities.ToList().Where(item => item.amenity.category_id == 3).ToList())
+                                    {
                                         <div class="col l-12 m-12 c-12 endow_item endow_check_in">
-                                            <i style="background : url(@item.amenity.icon_image) top center /cover no-repeat" class="icon_style" ></i>
+                                            <i style="background : url(@item.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i>
                                             <div class="endow_describe">
                                                 <span>@item.amenity.amenity_name</span>
                                                 <p>@item.amenity.description</p>
                                             </div>
-                                        </div>   
+                                        </div>
                                     }
                                 </div>
                             </div>
@@ -189,7 +191,7 @@
                                 <div class="row no-gutter">
                                     <div class="col l-8 m-8 c-12 about_container">
                                         <span>@property.p_description.Substring(0, 50)</span>
-                                       
+
                                     </div>
                                     <div class="col l-12 m-12 c-12 show_more_about">
                                         <button>Show more<i class="fa-solid fa-chevron-right"></i></button>
@@ -210,7 +212,7 @@
                                             <div class="img_bedroom" style="background : url(@item.pa_description) top center /cover no-repeat">
                                             </div>
                                             <span>@item.amenity.amenity_name</span>
-                                           
+
                                         </div>
 
                                     }
@@ -239,15 +241,15 @@
                                             }
                                             count++;
                                         }
-                                        
+
                                     </div>
                                     <div class="col l-4 m-12 c-12 offer_list">
-                                        @{ 
+                                        @{
                                             count = 1;
                                         }
                                         @foreach (var item in property.property_amenities.ToList())
                                         {
-                                            if (count > 3 && count <=6)
+                                            if (count > 3 && count <= 6)
                                             {
                                                 <div class="offer_item">
                                                     <i style="background : url(@item.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i>
@@ -331,7 +333,7 @@
                                         <div class="guest_btn">
                                             <div class="guest_item">
                                                 <button>Guests</button>
-                                                <p>1 guest</p>
+                                                <p>1 Adults</p>
                                             </div>
                                             <div class="chevron">
                                                 <i class="fa-solid fa-chevron-down"></i>
@@ -366,7 +368,7 @@
                                     </div>
                                 </div>
                                 <div class="pay_footer">
-                                    <button><a href="/user/homeuser/login" class="pay_btn">Check Availabitily</a></button>
+                                    <button onclick="window.location.href = '/user/homeuser/login'">Login To Booking Hotel</button>
                                 </div>
 
                                 <div class="total">
@@ -381,7 +383,7 @@
                     </div>
 
                     <div class="col l-12 m-12 c-12 comment">
-                       
+
                         <div class="gird wide">
                             <div class="row no-gutter comment_list">
                                 <div class="col l-12 m-12 c-12 review_yet">
@@ -394,7 +396,7 @@
                                         <div class="comment_item_detail comment_user_@item.review_by_user">
                                             <div class="header_comment">
                                                 <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
-                                                
+
                                                 <div>
                                                     <span>@item.user.account_name</span>
                                                     @{
@@ -420,7 +422,7 @@
                                                             <i class="far fa-star gray-star"></i>
                                                         }
                                                     }
-                                                    
+
                                                 </div>
                                                 <span>2 weeks ago</span>
                                                 <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
@@ -460,14 +462,15 @@
                                                 </div>
                                                 <div class="infor_basics">
                                                     <div class="infor_basics_item">
-                                                        
+
                                                         <span>@property.user.host_reviews.ToArray().Length</span>
                                                         <p>Review</p>
                                                     </div>
                                                     <div class="infor_basics_item">
-                                                        @{ 
+                                                        @{
                                                             sum = 0;
-                                                            foreach(var item in property.user.host_reviews.ToList()) {
+                                                            foreach (var item in property.user.host_reviews.ToList())
+                                                            {
                                                                 sum = sum + double.Parse(item.rating);
                                                             }
                                                             sum = sum / property.user.host_reviews.ToArray().Length;
@@ -491,7 +494,8 @@
                                                 @{
                                                     string Languages = "";
                                                     int size = Languages.Length - 1;
-                                                    foreach (var item in property.user.users_languages.ToList()) {
+                                                    foreach (var item in property.user.users_languages.ToList())
+                                                    {
                                                         Languages = Languages + item.listLanguage.language_name + ",";
                                                     }
                                                     if (!string.IsNullOrEmpty(Languages) && Languages.EndsWith(","))
@@ -669,24 +673,24 @@
                             {
                                 if (property.property_amenities.Any(row => (row.amenity.category_id == item.id) && (item.id != 1 && item.id != 3)))
                                 {
-                                    <div class="BathRoom_offer @item.id" >
+                                    <div class="BathRoom_offer @item.id">
                                         <h2>@item.category_name</h2>
                                         <ul class="display_anitimy">
 
                                             @foreach (var antime in property.property_amenities.Where(row => (row.amenity.category_id == item.id)).ToList())
                                             {
-                                               
+
                                                 <li>
                                                     <i style="background : url(@antime.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i>@antime.amenity.amenity_name
                                                 </li>
-                                                
+
                                             }
-                                  
-                                        </ul> 
+
+                                        </ul>
                                     </div>
                                 }
                             }
-                            
+
                         </div>
                     </div>
                 </div>
@@ -701,8 +705,10 @@
                             <h2><i class="fa-regular fa-solid fa-star"></i> 4.84 · 55 reviews</h2>
                         </div>
                         <div class="comment_box">
-                            @foreach(var item in property.property_reviews.ToList()) { 
-                                if(item.pr_status == 1) { 
+                            @foreach (var item in property.property_reviews.ToList())
+                            {
+                                if (item.pr_status == 1)
+                                {
                                     <div class="comment_item_detail comment_user_@item.review_by_user">
                                         <div class="header_comment">
                                             <div class="avatar" style="background : url(@item.user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></div>
@@ -731,7 +737,7 @@
                                                         <i class="far fa-star gray-star"></i>
                                                     }
                                                 }
-                                             
+
                                             </div>
                                             <span>2 weeks ago</span>
                                             <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
@@ -741,11 +747,11 @@
                                             <p>@item.comment</p>
                                         </div>
                                     </div>
-                                
+
                                 }
-                                
+
                             }
-                            
+
                         </div>
                     </div>
                 </div>
@@ -757,7 +763,6 @@
     <script src="~/ExtraFiles/JS/calendar.js?v=1"></script>
 </body>
 </html>
-
 
 
 

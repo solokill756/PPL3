@@ -24,6 +24,8 @@ namespace PPl3.Areas.User.Controllers
         //Thêm các thuộc tính khác tương ứng với các model khác nếu cần
 
     }
+
+    
     public class HomeUserController : Controller
     {
         // GET: User/HomeUser
@@ -244,8 +246,61 @@ namespace PPl3.Areas.User.Controllers
         {
             user p_user = (user)Session["user"];
             PPL3Entities3 db = new PPL3Entities3();
-            var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.property_id).ThenBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ToList();
+            var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ThenBy(item => item.id).ToList();
             return View(list_booking_hotel) ;
+        }
+
+        [HttpPost]
+        public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId)
+        {
+            PPL3Entities3 db = new PPL3Entities3();
+            user p_user = (user)Session["user"];
+            booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
+            if ((db.bookings.Any(item => ((item.check_in_date <= check_in_date && item.check_out_date >= check_in_date) || (item.check_out_date >= check_out_date && item.check_in_date <= check_out_date)) && item.userId == p_user.id && item.property_id == hotelId) == false && check_in_date >= DateTime.Now) || (find_hotel.check_in_date == check_in_date && find_hotel.check_out_date == check_out_date)) { 
+                find_hotel.check_in_date = check_in_date;
+                find_hotel.check_out_date = check_out_date;
+                db.SaveChanges();
+                while (db.booking_guests.Any(item => item.booking_id == bookingId))
+                {
+                    booking_guests find_booking_guest = db.booking_guests.Where(item => item.booking_id == bookingId).FirstOrDefault();
+                    db.booking_guests.Remove(find_booking_guest);
+                    db.SaveChanges();
+                }
+                for (int i = 0; i <= guest_count.Length - 1; ++i)
+                {
+                    booking_guests booking_Guests = new booking_guests();
+                    booking_Guests.booking_id = find_hotel.id;
+                    booking_Guests.guest_type_id = i + 1;
+                    booking_Guests.num_guests = guest_count[i];
+                    db.booking_guests.Add(booking_Guests);
+                }
+                db.SaveChanges();
+                return Json("true", JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("false", JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+
+        // BookingDate
+        
+        public JsonResult BookingDate(int hotelId)
+        {
+            PPL3Entities3 db = new PPL3Entities3();
+            List<booking> bookings = db.bookings.Where(item => item.property_id == hotelId).ToList();
+            List<string> booking_Dates = new List<string>();
+            
+            foreach (var item in bookings)
+            {
+                string date = "";
+                date = item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy");
+                booking_Dates.Add(date);
+            }
+            return Json(booking_Dates, JsonRequestBehavior.AllowGet);
+            
         }
 
         //Pay Hotel
@@ -254,7 +309,7 @@ namespace PPl3.Areas.User.Controllers
         {
             PPL3Entities3 db = new PPL3Entities3();
             user p_user = (user)Session["user"];
-            if(db.bookings.Any(item => !(item.check_in_date <= checkInDate && item.check_out_date >= checkOutDate && item.userId ==  p_user.id && item.property_id == id)) && checkOutDate >= DateTime.Now)
+            if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate)) && item.userId ==  p_user.id && item.property_id == id) == false && checkInDate >= DateTime.Now)
             {
                 TempData["checkBook"] = checkBook;
                 property findHotel = db.properties.Where(item => item.id == id).FirstOrDefault();
