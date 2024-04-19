@@ -1,4 +1,5 @@
-﻿using PPl3.Areas.User.Controllers;
+﻿using Newtonsoft.Json;
+using PPl3.Areas.User.Controllers;
 using PPl3.Models;
 using System;
 using System.Collections.Generic;
@@ -64,11 +65,19 @@ namespace PPl3.Controllers
         {
             PPL3Entities db = new PPL3Entities();
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
+            List<booking> bookings = db.bookings.Where(item => item.property_id == id).ToList();
+            string date = "";
+            foreach (var item in bookings)
+            {
+                date = date + item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy") + ",";
+            }
+            date = date.Substring(0, date.Length - 1);
+            ViewBag.dataJson = JsonConvert.SerializeObject(date);
             return View();
         }
         public ActionResult profile(int id)
         {
-            PPL3Entities3 db = new PPL3Entities3();
+            PPL3Entities db = new PPL3Entities();
             ViewBag.userfind = db.users.Where(item => item.id == id).FirstOrDefault();
             return View();
         }

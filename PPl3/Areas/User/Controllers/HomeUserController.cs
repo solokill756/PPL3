@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using Newtonsoft.Json;
 using PPl3.Models;
 
 namespace PPl3.Areas.User.Controllers
@@ -136,7 +137,7 @@ namespace PPl3.Areas.User.Controllers
         //user profile
         public ActionResult profile(int id)
         {
-            PPL3Entities3 db = new PPL3Entities3();
+            PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             if (!(db.user_profile.Any(item => item.userID == p_user.id)))
             {
@@ -198,7 +199,7 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public JsonResult addUserLanguages(List<int> list_id)
         {
-            PPL3Entities3 db = new PPL3Entities3();
+            PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
 
             if(list_id != null)
@@ -236,7 +237,7 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public JsonResult addUserInterests(List<int> list_id)
         {
-            PPL3Entities3 db = new PPL3Entities3();
+            PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             if(list_id != null)
             {
@@ -374,6 +375,14 @@ namespace PPl3.Areas.User.Controllers
             if(bookingId != -1) ViewBag.bookingId = bookingId;
             PPL3Entities db = new PPL3Entities();
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
+            List<booking> bookings = db.bookings.Where(item => item.property_id == id).ToList();
+            string date = "";
+            foreach (var item in bookings)
+            {
+                date = date + item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy") + ",";
+            }
+            date = date.Substring(0, date.Length - 1);
+            ViewBag.dataJson = JsonConvert.SerializeObject(date);
             return View();
         }
 
@@ -425,21 +434,21 @@ namespace PPl3.Areas.User.Controllers
 
         // BookingDate
         
-        public JsonResult BookingDate(int hotelId)
-        {
-            PPL3Entities db = new PPL3Entities();
-            List<booking> bookings = db.bookings.Where(item => item.property_id == hotelId).ToList();
-            List<string> booking_Dates = new List<string>();
+        //public JsonResult BookingDate(int hotelId)
+        //{
+        //    PPL3Entities db = new PPL3Entities();
+        //    List<booking> bookings = db.bookings.Where(item => item.property_id == hotelId).ToList();
+        //    List<string> booking_Dates = new List<string>();
             
-            foreach (var item in bookings)
-            {
-                string date = "";
-                date = item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy");
-                booking_Dates.Add(date);
-            }
-            return Json(booking_Dates, JsonRequestBehavior.AllowGet);
+        //    foreach (var item in bookings)
+        //    {
+        //        string date = "";
+        //        date = item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy");
+        //        booking_Dates.Add(date);
+        //    }
+        //    return Json(booking_Dates, JsonRequestBehavior.AllowGet);
             
-        }
+        //}
 
         //Pay Hotel
         [HttpPost]

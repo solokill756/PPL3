@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     Layout = null;
 }
 
@@ -28,7 +29,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=14" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=16" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -885,7 +886,7 @@
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
     <script src="~/ExtraFiles/JS/product.js?v=7"></script>
-    <script src="~/ExtraFiles/JS/calendar.js?v=2"></script>
+    @*<script src="~/ExtraFiles/JS/calendar.js?v=2"></script>*@
 
 </body>
 </html>
@@ -1019,222 +1020,21 @@
                     console.log(err);
                 }
             })
-            $.ajax({
-                url: "/user/homeuser/BookingDate",
-                type: "GET",
-                data: { hotelId: id },
-                success: function (data) {
-                    var results = $.map(data, function (value) {
-                        return value;
-                    });
-                    for (var i = 0; i < results.length; ++i) {
-                        console.log("NT: ", results[i].split("-")[0]);
-                        var date = results[i].split("-")[0];
-                        var dateCheckIn = date.split('/')
-                        var dayCheckIn1 = Number.parseInt( dateCheckIn[0])
-                        var monthCheckIn1 = Number.parseInt(dateCheckIn[1])
-                        var yearCheckIn1 = Number.parseInt(dateCheckIn[2])
-                        date = results[i].split("-")[1];
-                        var dateCheckOut = date.split('/')
-                        var dayCheckOut1 = Number.parseInt(dateCheckOut[0])
-                        var monthCheckOut1 = Number.parseInt(dateCheckOut[1])
-                        var yearCheckOut1 = Number.parseInt(dateCheckOut[2])
-                        let calendar = document.querySelector('.calendar')
-                        let checkIn = document.querySelector('.check_in span')
-                        let checkOut = document.querySelector('.check_out span')
-                    //    let currentDay = 0;
-                    //    const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+            //$.ajax({
+            //    url: "/user/homeuser/BookingDate",
+            //    type: "GET",
+            //    data: { hotelId: id },
+            //    success: function (data) {
+            //        var dayChecked = $.map(data, function (value) {
+            //            return value;
+            //        });
+                    
 
-
-
-                    //    isLeapYear = (year) => {
-                    //        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)
-                    //    }
-
-                    //    getFebDays = (year) => {
-                    //        return isLeapYear(year) ? 29 : 28
-                    //    }
-
-                    //    generateCalendar = (month, year) => {
-
-                    //        let calendar_days = calendar.querySelector('.calendar-days')
-                    //        let calendar_header_year = calendar.querySelector('#year')
-
-                    //        let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-
-                    //        calendar_days.innerHTML = ''
-
-                    //        let currDate = new Date()
-                    //        if (!year) year = currDate.getFullYear()
-
-                    //        let curr_month = `${month_names[month]}`
-                    //        month_picker.innerHTML = curr_month
-                    //        calendar_header_year.innerHTML = year
-
-                    //        // get first day of month
-                    //        let first_day = new Date(year, month, 1)
-
-                    //        let dayCheckIn = 0;
-                    //        let monthCheckIn = 0;
-                    //        let yearCheckIn = 0;
-                    //        let dayCheckOut = 0;
-                    //        let monthCheckOut = 0;
-                    //        let yearCheckOut = 0;
-                    //        for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
-                    //            let day = document.createElement('div')
-                    //            if (i >= first_day.getDay()) {
-                    //                day.classList.add('calendar-day-hover')
-                    //                day.innerHTML = i - first_day.getDay() + 1
-                    //                day.innerHTML += `<span></span>
-                    //                               <span></span>
-                    //                               <span></span>
-                    //                               <span></span>`
-
-                    //                day.addEventListener('click', () => {
-                    //                    currentDay++;
-                    //                    if (currentDay <= 2) {
-                    //                        if (currentDay == 1) {
-                    //                            day.classList.add('curr-date')
-                    //                            dayCheckIn1 = Number.parseInt(day.outerText);
-                    //                            monthCheckIn1 = month + 1;
-                    //                            yearCheckIn1 = year;
-                    //                            if (day.outerText >= 10) {
-                    //                                if (month + 1 >= 10) {
-                    //                                    checkIn.innerHTML = `${day.outerText}/${month + 1}/${year}`
-                    //                                }
-                    //                                else {
-                    //                                    checkIn.innerHTML = `${day.outerText}/0${month + 1}/${year}`
-                    //                                }
-                    //                            }
-                    //                            else {
-                    //                                if (month + 1 >= 10) {
-                    //                                    checkIn.innerHTML = `0${day.outerText}/${month + 1}/${year}`
-                    //                                }
-                    //                                else {
-                    //                                    checkIn.innerHTML = `0${day.outerText}/0${month + 1}/${year}`
-                    //                                }
-                    //                            }
-
-
-                    //                            let daysBeforeCheckIn = calendar.querySelectorAll('.calendar-days div');
-                    //                            for (let j = 0; j < i; j++) {
-                    //                                daysBeforeCheckIn[j].classList.add('before-check-in');
-                    //                            }
-                    //                            for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                    //                                daysBeforeCheckIn[j].classList.add('before-check-in');
-                    //                            }
-                    //                            for (let j = 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                    //                                console.log(daysBeforeCheckIn[j])
-                    //                                daysBeforeCheckIn[j].classList.add('before-check-in');
-                    //                            }
-
-                    //                        } else if (currentDay == 2) {
-                    //                            dayCheckOut1 = Number.parseInt(day.outerText);
-                    //                            monthCheckOut1 = month + 1;
-                    //                            yearCheckOut1 = year;
-                    //                            if ((yearCheckIn1 <= yearCheckOut1 && monthCheckIn1 < monthCheckOut1) || (yearCheckIn1 <= yearCheckOut1 && monthCheckIn1 == monthCheckOut1 && dayCheckIn1 < dayCheckOut1) && (yearCheckIn1 <= yearCheckOut1 && monthCheckIn1 == monthCheckOut1 && (dayCheckOut1 - dayCheckIn1) <= 10)) {
-                    //                                day.classList.add('curr-date')
-                    //                                if (day.outerText >= 10) {
-                    //                                    if (month + 1 >= 10) {
-                    //                                        checkOut.innerHTML = `${day.outerText}/${month + 1}/${year}`
-                    //                                    }
-                    //                                    else {
-                    //                                        checkOut.innerHTML = `${day.outerText}/0${month + 1}/${year}`
-                    //                                    }
-                    //                                }
-                    //                                else {
-                    //                                    if (month + 1 >= 10) {
-                    //                                        checkOut.innerHTML = `0${day.outerText}/${month + 1}/${year}`
-                    //                                    }
-                    //                                    else {
-                    //                                        checkOut.innerHTML = `0${day.outerText}/0${month + 1}/${year}`
-                    //                                    }
-                    //                                }
-
-                    //                            }
-                    //                            else {
-                    //                                currentDay = 1;
-                    //                            }
-                    //                        }
-                    //                    } else {
-                    //                        calendar.querySelectorAll('.calendar-days div').forEach(day => {
-                    //                            day.classList.remove('curr-date'); // Xóa lớp 'curr-date' cho tất cả các ngày
-                    //                        });
-                    //                        let daysBeforeCheckIn = calendar.querySelectorAll('.calendar-days div');
-                    //                        for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                    //                            daysBeforeCheckIn[j].classList.remove('before-check-in');
-                    //                        }
-                    //                        currentDay = 0;
-                    //                        checkOut.innerHTML = 'Add date'
-                    //                        checkIn.innerHTML = 'Add date'
-                    //                    }
-                    //                })
-                    //            }
-                    //            calendar_days.appendChild(day)
-                    //        }
-                    //        let clearDate = document.querySelector('.clear_date_btn')
-
-                    //        clearDate.addEventListener('click', () => {
-                    //            calendar.querySelectorAll('.calendar-days div').forEach(day => {
-                    //                day.classList.remove('curr-date'); // Xóa lớp 'curr-date' cho tất cả các ngày
-                    //            });
-                    //            let daysBeforeCheckIn = calendar.querySelectorAll('.calendar-days div');
-                    //            for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                    //                daysBeforeCheckIn[j].classList.remove('before-check-in');
-                    //            }
-                    //            currentDay = 0;
-                    //            checkOut.innerHTML = 'Add date'
-                    //            checkIn.innerHTML = 'Add date'
-                    //        })
-                    //    }
-
-                    //    let month_list = calendar.querySelector('.month-list')
-
-                    //    month_names.forEach((e, index) => {
-                    //        let month = document.createElement('div')
-                    //        month.innerHTML = `<div data-month="${index}">${e}</div>`
-                    //        month.querySelector('div').onclick = () => {
-                    //            month_list.classList.remove('show')
-                    //            curr_month.value = index; // Cập nhật giá trị của curr_month.value
-                    //            generateCalendar(index, curr_year.value)
-                    //        }
-                    //        month_list.appendChild(month)
-                    //    })
-
-                    //    let month_picker = calendar.querySelector('#month-picker')
-
-                    //    month_picker.onclick = () => {
-                    //        month_list.classList.add('show')
-                    //    }
-
-                    //    let currDate = new Date()
-                    //    let curr_month = { value: currDate.getMonth() }
-                    //    let curr_year = { value: currDate.getFullYear() }
-                    //    generateCalendar(curr_month.value, curr_year.value)
-                    //    let currTemp = 0;
-
-
-                    //    document.querySelector('#prev-year').onclick = () => {
-                    //        currentday = 0;
-                    //        if (currTemp.value > currDate.getFullYear()) {
-                    //            --curr_year.value
-                    //        }
-                    //        generateCalendar(curr_month.value, curr_year.value)
-                    //    }
-
-                    //    document.querySelector('#next-year').onclick = () => {
-                    //        currentDay = 0;
-                    //        ++curr_year.value
-                    //        currTemp = curr_year
-                    //        generateCalendar(curr_month.value, curr_year.value)
-                    //    }
-                    }
-
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            })
+            //    },
+            //    error: function (err) {
+            //        console.log(err);
+            //    }
+            //})
         }
         else {
             console.log(0);
@@ -1242,6 +1042,203 @@
           })
 
     }
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+        let calendar = $('.calendar');
+        let checkIn = $('.check_in span');
+        let checkOut = $('.check_out span');
+        const monthPicker = calendar.find('#month-picker');
+        let currentDay = 0;
+        var data = @Html.Raw(Json.Encode(ViewBag.dataJson).Replace("'", "\'"));
+        data = data.substring(1, data.length - 1);
+        let dayChecked = [];
+        $.each(data.split(","), function (index, value) {
+            dayChecked.push(value);
+        });
+        console.log(dayChecked);
+        
+        const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+        isLeapYear = (year) => {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        };
+
+        getFebDays = (year) => {
+            return isLeapYear(year) ? 29 : 28;
+        };
+
+        generateCalendar = (month, year) => {
+            let calendar_days = calendar.find('.calendar-days');
+            let calendar_header_year = calendar.find('#year');
+            let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+            calendar_days.html('');
+
+            let currDate = new Date();
+            if (!year) year = currDate.getFullYear();
+
+            let curr_month = month_names[month];
+            monthPicker.html(curr_month);
+            calendar_header_year.html(year);
+
+            let first_day = new Date(year, month, 1);
+
+            let dayCheckIn = 0;
+            let monthCheckIn = 0;
+            let yearCheckIn = 0;
+            let dayCheckOut = 0;
+            let monthCheckOut = 0;
+            let yearCheckOut = 0;
+
+            for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+                const day = $('<div></div>');
+                if (i >= first_day.getDay()) {
+                    day.addClass('calendar-day-hover');
+                    day.html(i - first_day.getDay() + 1);
+                    day.append('<span></span><span></span><span></span><span></span>');
+
+                    day.on('click', () => {
+                        currentDay++;
+                        if (currentDay <= 2) {
+                            if (currentDay == 1) {
+                                day.addClass('curr-date');
+                                dayCheckIn = parseInt(day.text());
+                                monthCheckIn = month + 1;
+                                yearCheckIn = year;
+                                if (month + 1 >= 10)
+                                    checkIn.html(`${day.text()}/${month + 1}/${year}`);
+                                else checkIn.html(`${day.text()}/0${month + 1}/${year}`);
+                                let daysBeforeCheckIn = calendar.find('.calendar-days div');
+                                for (let j = 0; j < i; j++) {
+                                    daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                                }
+                                for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                                    daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                                }
+                            } else if (currentDay == 2) {
+                                dayCheckOut = parseInt(day.text());
+                                monthCheckOut = month + 1;
+                                yearCheckOut = year;
+                                if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
+                                    day.addClass('curr-date');
+                                    if (month + 1 >= 10) checkOut.html(`${day.text()}/${month + 1}/${year}`);
+                                    else checkOut.html(`${day.text()}/0${month + 1}/${year}`);
+                                } else {
+                                    currentDay = 1;
+                                }
+                            }
+                        } else {
+                            calendar.find('.calendar-days div').removeClass('curr-date');
+                            let daysBeforeCheckIn = calendar.find('.calendar-days div');
+                            for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                                daysBeforeCheckIn.eq(j).removeClass('before-check-in');
+                            }
+                            currentDay = 0;
+                            checkOut.html('Add date');
+                        }
+                    });
+                }
+                calendar_days.append(day);
+            }
+            $.each(dayChecked, function (index, range) {
+                let [start, end] = range.split('-');
+                let [startDay, startMonth, startYear] = start.split('/').map(Number);
+                let [endDay, endMonth, endYear] = end.split('/').map(Number);
+                console.log(startMonth + "-" + month + "," + startYear + "-" + year);
+                if ((startMonth - 1 === month && startYear === year) || (endMonth - 1 === month && endYear === year)) {
+                    const startDate = new Date(startYear, startMonth - 1, startDay);
+                    const endDate = new Date(endYear, endMonth - 1, endDay);
+                 
+                    if (startMonth === endMonth) {
+                      
+                        for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+                            let dayIndex = date.getDate() + first_day.getDay() - 1;
+
+                            if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay()) {
+                               
+                                calendar_days.children().eq(dayIndex).addClass('checked');
+                            }
+                        }
+                    } else if (startMonth !== endMonth) {
+                        let nextMonthFirstDay = new Date(startYear, startMonth, 1);
+                        let lastDayOfMonth = new Date(nextMonthFirstDay - 1);
+
+                        for (let date = startDate; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
+                            let dayIndex = date.getDate() + first_day.getDay() - 1;
+
+                            if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay() && startMonth === month + 1) {
+                                calendar_days.children().eq(dayIndex).addClass('checked');
+                            }
+                        }
+
+                        for (let date = nextMonthFirstDay; date <= endDate; date.setDate(date.getDate() + 1)) {
+                            let dayIndex = date.getDate() + first_day.getDay() - 1;
+
+                            if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay() && endMonth === month + 1) {
+                                calendar_days.children().eq(dayIndex).addClass('checked');
+                            }
+                        }
+                    }
+                }
+            });
+            let clearDate = $('.clear_date_btn');
+
+            clearDate.on('click', () => {
+                calendar.find('.calendar-days div').removeClass('curr-date');
+                let daysBeforeCheckIn = calendar.find('.calendar-days div');
+                for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                    daysBeforeCheckIn.eq(j).removeClass('before-check-in');
+                }
+                currentDay = 0;
+                checkOut.html('Add date');
+            });
+        }
+
+            let month_list = calendar.find('.month-list');
+
+            month_names.forEach((e, index) => {
+                let month = $('<div></div>');
+                month.html(`<div data-month="${index}">${e}</div>`);
+                month.find('div').on('click', () => {
+                    month_list.removeClass('show');
+                    curr_month.value = index;
+                    generateCalendar(index, curr_year.value);
+                });
+                month_list.append(month);
+            });
+
+            let month_picker = calendar.find('#month-picker');
+
+            month_picker.on('click', () => {
+                month_list.addClass('show');
+            });
+
+            let currDate = new Date();
+
+            let curr_month = { value: currDate.getMonth() };
+            let curr_year = { value: currDate.getFullYear() };
+            generateCalendar(curr_month.value, curr_year.value);
+            let currTemp = { value: 0 };
+
+            $('#prev-year').on('click', () => {
+                if (currTemp.value > currDate.getFullYear()) {
+                    --curr_year.value;
+                }
+                generateCalendar(curr_month.value, curr_year.value);
+            });
+
+            $('#next-year').on('click', () => {
+                currentDay = 1;
+                ++curr_year.value;
+                currTemp.value = curr_year.value;
+                generateCalendar(curr_month.value, curr_year.value);
+            });
+    })
+
 </script>
 
 

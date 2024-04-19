@@ -626,6 +626,12 @@ html {
     text-decoration: line-through;
 }
 
+.checked {
+    color: #ccc; /* Màu chữ của ngày trước ngày check-in */
+    pointer-events: none; /* Ngăn chặn hover và sự kiện click cho các ngày trước ngày check-in */
+    text-decoration: line-through;
+}
+
 .calendar-days div span {
     position: absolute;
 }
