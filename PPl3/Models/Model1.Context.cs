@@ -42,6 +42,8 @@ namespace PPl3.Models
         public virtual DbSet<governmentID> governmentIDs { get; set; }
         public virtual DbSet<guest_type> guest_type { get; set; }
         public virtual DbSet<host_reviews> host_reviews { get; set; }
+        public virtual DbSet<interest_categories> interest_categories { get; set; }
+        public virtual DbSet<interest> interests { get; set; }
         public virtual DbSet<language> languages { get; set; }
         public virtual DbSet<listLanguage> listLanguages { get; set; }
         public virtual DbSet<neighbourhood> neighbourhoods { get; set; }
@@ -63,6 +65,7 @@ namespace PPl3.Models
         public virtual DbSet<user_type> user_type { get; set; }
         public virtual DbSet<user_type_user_role> user_type_user_role { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<users_interests> users_interests { get; set; }
         public virtual DbSet<users_languages> users_languages { get; set; }
     }
 }

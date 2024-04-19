@@ -131,6 +131,20 @@ namespace PPl3.Areas.User.Controllers
         }
         ///
 
+        //user profile
+        public ActionResult profile(int id)
+        {
+            PPL3Entities3 db = new PPL3Entities3();
+            user p_user = (user)Session["user"];
+            if (!(db.user_profile.Any(item => item.userID == p_user.id)))
+            {
+                return RedirectToAction("editProfile");
+            }
+            ViewBag.is_user_id = id;
+            return View();
+        }
+        //
+
         // edit user profile
         public class CreateViewModel
         {
@@ -139,6 +153,7 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult editProfile()
         {
+            
             return View();
         }
         [HttpPost]
@@ -161,6 +176,7 @@ namespace PPl3.Areas.User.Controllers
                 up.user_unless_skill = viewModel.user_profile.user_unless_skill;
                 up.user_work = viewModel.user_profile.user_work;
                 up.user_school = viewModel.user_profile.user_school;
+                up.user_address = viewModel.user_profile.user_address;
                 if (viewModel.user_profile.user_avatar != null)
                 {
                     up.user_avatar = viewModel.user_profile.user_avatar;
@@ -175,10 +191,84 @@ namespace PPl3.Areas.User.Controllers
             Session["user"] = userInfor;
 
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("profile", "HomeUser", new { id = p_user.id });
         }
+        [HttpPost]
+        public JsonResult addUserLanguages(List<int> list_id)
+        {
+            PPL3Entities3 db = new PPL3Entities3();
+            user p_user = (user)Session["user"];
 
-
+            if(list_id != null)
+            {
+                var selectedLanguages = db.users_languages.Where(item => item.userID == p_user.id).ToList();
+                foreach (var language in selectedLanguages)
+                {
+                    if (!list_id.Contains((int)language.language_id))
+                    {
+                        db.users_languages.Remove(language);
+                    }
+                }
+                foreach (var id in list_id)
+                {
+                    var findUserLanguage = db.users_languages.FirstOrDefault(item => item.userID == p_user.id && item.language_id == id);
+                    if (findUserLanguage == null)
+                    {
+                        findUserLanguage = new users_languages
+                        {
+                            userID = p_user.id,
+                            language_id = id
+                        };
+                        db.users_languages.Add(findUserLanguage);
+                    }
+                }
+            }
+            else
+            {
+                var tLanguage = db.users_languages.Where(item => item.userID == p_user.id).ToList();
+                db.users_languages.RemoveRange(tLanguage);
+            }
+            db.SaveChanges();
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult addUserInterests(List<int> list_id)
+        {
+            PPL3Entities3 db = new PPL3Entities3();
+            user p_user = (user)Session["user"];
+            if(list_id != null)
+            {
+                var selectedInterests = db.users_interests.Where(item => item.userid == p_user.id).ToList();
+                foreach (var interest in selectedInterests)
+                {
+                    if (!list_id.Contains((int)interest.interest_id))
+                    {
+                        db.users_interests.Remove(interest);
+                    }
+                }
+                foreach (var id in list_id)
+                {
+                    var findUserInterest = db.users_interests.FirstOrDefault(item => item.userid == p_user.id && item.interest_id == id);
+                    if (findUserInterest == null)
+                    {
+                        findUserInterest = new users_interests
+                        {
+                            userid = p_user.id,
+                            interest_id = id,
+                            uitr_status = 1,
+                        };
+                        db.users_interests.Add(findUserInterest);
+                    }
+                }
+            }
+            else
+            {
+                var tInterests = db.users_interests.Where(item => item.userid == p_user.id).ToList();
+                db.users_interests.RemoveRange(tInterests);
+            }
+            db.SaveChanges();
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
         // Login and Logout and Sign up
         public ActionResult Login()
         {

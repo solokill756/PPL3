@@ -217,6 +217,12 @@
     <Compile Include="Models\host_reviews.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\interest.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\interest_categories.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\language.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -280,6 +286,9 @@
     <Compile Include="Models\user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\users_interests.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\users_languages.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -321,7 +330,9 @@
     <Content Include="ExtraFiles\assets\css\book_room.css" />
     <Content Include="ExtraFiles\assets\css\editProfile.css" />
     <Content Include="ExtraFiles\assets\css\gird.css" />
+    <Content Include="ExtraFiles\assets\css\headerGuest.css" />
     <Content Include="ExtraFiles\assets\css\product.css" />
+    <Content Include="ExtraFiles\assets\css\profile.css" />
     <Content Include="ExtraFiles\assets\css\seller_profile.css" />
     <Content Include="ExtraFiles\assets\css\Sign_Log_v1.css" />
     <Content Include="ExtraFiles\assets\css\style_v1.css" />
@@ -358,6 +369,7 @@
     <Content Include="ExtraFiles\JS\first_header.js" />
     <Content Include="ExtraFiles\JS\imgSlide.js" />
     <Content Include="ExtraFiles\JS\main_v1.js" />
+    <Content Include="ExtraFiles\JS\menuGuest.js" />
     <Content Include="ExtraFiles\JS\product.js" />
     <Content Include="ExtraFiles\JS\room_classifi_v1.js" />
     <Content Include="ExtraFiles\JS\seller_profile.js" />
@@ -402,6 +414,8 @@
     <Content Include="Areas\User\Views\HomeUser\wishList.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\Trip.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\editProfile.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\profile.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -409,7 +423,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\User\Views\HomeUser\editProfile.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -434,6 +447,7 @@
     <Content Include="Areas\User\Views\HomeUser\SignUp.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\Login.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
+    <Content Include="Views\Home\profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -85,11 +85,47 @@ let number = parseInt(parts[0], 10);
 let currentCheck = 0;
 let selectedButtons = [];
 let addBtns = document.querySelectorAll('.add_inter_btn');
+
+const inButtons = document.querySelectorAll('.interest-button');
+
 for (var addBtn of addBtns) {
     addBtn.addEventListener('click', () => {
         interestMenu.classList.add('active')
     })
 }
+
+inButtons.forEach((button, index) => {
+    if (button.getAttribute('data-selected') === 'true') {
+        button.classList.add('focus');
+        number++; 
+        currentCheck++;
+        quantity.textContent = `${currentCheck}/7 selected`;
+        if (currentCheck >= 3) {
+            listAdd.innerHTML += '<button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>';
+        }
+        addBtns = document.querySelectorAll('.add_inter_btn');
+        var temp = button.innerHTML;
+        addBtns[currentCheck - 1].innerHTML = temp;
+        Object.assign(addBtns[currentCheck - 1].style, {
+            border: '2px solid #000',
+            color: '#000'
+        });
+        addBtns.forEach((addBtn) => {
+            addBtn.addEventListener('click', () => {
+                interestMenu.classList.add('active');
+            });
+        });
+    }
+});
+
+if (number === 7) {
+    for (let i = 0; i < interestBtns.length; i++) {
+        if (!interestBtns[i].classList.contains('focus')) {
+            interestBtns[i].style.opacity = 0.3;
+        }
+    }
+}
+
 for (let index = 0; index < interestBtns.length; index++) {
     interestBtns[index].addEventListener('click', (e) => {
         if (currentCheck < 7) {
@@ -98,7 +134,7 @@ for (let index = 0; index < interestBtns.length; index++) {
                 interestBtns[index].classList.add('focus')
                 quantity.textContent = `${number}/7 selected`
                 if (currentCheck >= 3)
-                    listAdd.innerHTML += '<button class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>'
+                    listAdd.innerHTML += '<button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>'
                 addBtns = document.querySelectorAll('.add_inter_btn');
                 var temp = interestBtns[index].innerHTML;
                 addBtns[currentCheck].innerHTML = temp
@@ -173,9 +209,18 @@ for (let index = 0; index < interestBtns.length; index++) {
 }
 
 
+
+
+
 const interestMenu = document.querySelector('.interest_menu')
 const interestBox = document.querySelector('.interest_box')
 const interestContainer = document.querySelector('.interest_container')
+const saveeBtn = document.getElementById('saveButton');
+
+saveBtn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    interestMenu.classList.remove('active');
+});
 
 interestMenu.addEventListener('click', (event) => {
     event.target.classList.remove('active')

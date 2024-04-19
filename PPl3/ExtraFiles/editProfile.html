@@ -6,7 +6,88 @@
     <link rel="stylesheet" href="./assets/css/editProfile.css">
     <link rel="stylesheet" href="./assets/css/gird.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <title>Edit Profile</title>
+    <style>
+
+        :root {
+            --gray-color: hsla(0, 0%, 80%, 1);
+            --black-color: #000000;
+        }
+
+        .open-mod-btn {
+            padding: 20px 40px;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 25px;
+        }
+
+        .mod {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .mod__inner {
+            width: 400px;
+            /* position: relative; */
+            /* top: 50%; */
+            /* margin: auto; */
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .mod__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--black-color);
+            color: white;
+        }
+
+        .mod__body {
+            padding: 15px;
+        }
+
+            .mod__body h2 {
+                color: var(--black-color);
+            }
+
+        .mod__footer {
+            padding: 15px;
+            text-align: right;
+        }
+
+            .mod__footer button {
+                padding: 10px 20px;
+                color: white;
+                background: var(--black-color);
+                border-radius: 5px;
+                border: none;
+                outline: none;
+            }
+
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="main">
@@ -98,7 +179,24 @@
                                 </div>
                                 <div class="infor_item">
                                     <p><i class="fa-solid fa-globe"></i>Languages I speak:</p>
-                                    <input type="text" placeholder="Where....">
+                                    <div class="mod hide">
+                                        <div class="mod__inner">
+                                            <div class="mod__header">
+
+                                                <i class="far fa-window-close"></i>
+                                            </div>
+                                            <div class="mod__body">
+                                                <h2>Languages you speak</h2>
+                                                <ul class="dropdown-menu dropdown-menu-form">
+                                                    <li><label class="checkbox"><input type="checkbox">One</label></li>
+                                                    <li><label class="checkbox"><input type="checkbox">Two</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="mod__footer">
+                                                <button>Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="infor_item">
                                     <p><i class="fa-solid fa-music"></i>My favorite song in hight school:</p>
@@ -133,9 +231,9 @@
                                 <p>Find common ground with other guests and Hosts by adding interests to your profile.</p>
                             </div>
                             <div class="list_button_add">
-                                <button class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
-                                <button class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
-                                <button class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
                             </div>
                         </div>
 

@@ -19,7 +19,101 @@
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/editProfile.css">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <title>Edit Profile</title>
+    <style>
+
+        :root {
+            --gray-color: hsla(0, 0%, 80%, 1);
+            --black-color: #000000;
+        }
+
+        .open-mod-btn {
+            padding: 20px 10px;
+            border: 1px solid #ccc;
+            width: 350px;
+            outline: none;
+            border-radius: 10px;
+            position: relative;
+            font-size: 17px;
+        }
+
+        .mod {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            z-index: 9999;
+        }
+
+        .mod__inner {
+            width: 400px;
+            position: relative;
+            top: 38%;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mod__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--black-color);
+            color: white;
+        }
+
+        .mod__body {
+            padding: 15px;
+            overflow-y: scroll; 
+            max-height: 200px;
+        }
+
+            .mod__body h2 {
+                color: var(--black-color);
+            }
+
+        .mod__footer {
+            padding: 15px;
+            text-align: right;
+        }
+
+            .mod__footer button {
+                padding: 10px 20px;
+                color: white;
+                background: var(--black-color);
+                border-radius: 5px;
+                border: none;
+                outline: none;
+            }
+
+        .hide {
+            display: none;
+        }
+        .check-item {
+            list-style: none;
+            padding: 5px;
+        }
+
+            .check-item input[type="checkbox"] {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .check-item label {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+
+    </style>
 </head>
 <body>
     <div class="main">
@@ -61,7 +155,7 @@
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="Content">Manage listings</a></li>
-                                <li><a href="/user/homeuser/editprofile">Account</a></li>
+                                <li><a href="/user/homeuser/profile">Account</a></li>
                                 <li><a href="#">Gift Cards</a></li>
                                 <li><a href="#">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
@@ -123,7 +217,10 @@
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-earth-europe"></i>Where I live:</p>
                                         <input type="text"
-                                               placeholder="Write something...">
+                                               id="user_address"
+                                               name="user_profile.user_address"
+                                               placeholder="Write something..."
+                                               value="@profile.user_address">
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-golf-ball-tee"></i>BirthDay:</p>
@@ -192,9 +289,8 @@
                                                 pos++;
                                             }
                                         }
-                                        <input type="text"
-                                               placeholder="Write something..."
-                                               value="@tmpBD">
+                                        <button type="button" class="open-mod-btn">Select your languages</button>
+
                                     </div>
                                     <div class="infor_item">
                                         <p><i class="fa-solid fa-music"></i>My favorite song in hight school:</p>
@@ -261,9 +357,7 @@
                                     <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
                                     <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
                                     <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
-                                    <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
-                                    <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
-                                    <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                    @*<button class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>*@
                                 </div>
                             </div>
 
@@ -292,7 +386,7 @@
                             </div>
 
                             <div class="done_btn">
-                                <button type="submit">Done</button>
+                                <button id="donee_button" type="submit">Done</button>
                             </div>
                         </div>
                     </div>
@@ -341,65 +435,82 @@
                 </div>
             </div>
         </div>
+        <div class="mod hide">
+            <div class="mod__inner">
+                <div class="mod__header">
+                    <p>Languages you speak</p>
+                    <i class="far fa-window-close"></i>
+                </div>
+                <div class="mod__body">
+
+                    <ul class="dropdown-menu">
+                        @{
+                            foreach (var item in db.listLanguages.ToList())
+                            {
+                                bool isChecked = false;
+                                if (p_user.users_languages.FirstOrDefault() != null)
+                                {
+                                    if (p_user.users_languages.Any(itmc => itmc.language_id == item.id))
+                                    {
+                                        isChecked = true;
+                                    }
+                                }
+                                <li class="check-item">
+                                    <input type="checkbox" value="@item.id" @if (isChecked) { <text> checked</text> }>@item.language_name
+                                </li>
+                            }
+                        }
+                        @*<li class="check-item"><input type="checkbox">One</li>
+                            <li class="check-item"><input type="checkbox">One</li>
+                            <li class="check-item"><input type="checkbox">One</li>
+                            <li class="check-item"><input type="checkbox">One</li>*@
+                    </ul>
+                </div>
+                <div class="mod__footer">
+                    <button onclick="addUserLanguages()">Save</button>
+                </div>
+            </div>
+        </div>
         <div class="interest_menu">
             <div class="gird wide">
                 <div class="row no-gutter interest_box">
                     <div class="col l-8 m-8 c-8">
                         <div class="interest_container">
                             <div class="list_box">
-
                                 <div class="tittle_inter">
                                     <h2>What are you into?</h2>
                                     <p>Pick up to 7 interests or sports you enjoy that you want to show on your profile.</p>
                                 </div>
-
-                                <div class="tittle_sub_inter">
-                                    <p>Interests</p>
-                                </div>
-                                <ul class="interest_list">
-                                    <li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
-                                    <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
-                                    <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
-                                    <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
-                                    <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
-                                    <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
-                                    <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>
-                                    <li><button><i class="fa-solid fa-clapperboard"></i>Movies</button></li>
-                                    <li><button><i class="fa-solid fa-suitcase"></i>Travel</button></li>
-                                    <li><button><i class="fa-solid fa-chess"></i>Board game</button></li>
-                                    <li><button><i class="fa-solid fa-person-walking"></i>Walking</button></li>
-                                    <li><button><i class="fa-solid fa-microchip"></i>Technology</button></li>
-                                    <li><button><i class="fa-solid fa-spa"></i>Spa</button></li>
-                                    <li><button><i class="fa-solid fa-basket-shopping"></i>Shopping</button></li>
-                                    <li><button><i class="fa-solid fa-camera-retro"></i>Photography</button></li>
-                                    <li><button><i class="fa-solid fa-microphone"></i>Podcasts</button></li>
-                                    <li><button><i class="fa-solid fa-headphones"></i>Music</button></li>
-                                    <li><button><i class="fa-solid fa-palette"></i>Art</button></li>
-                                </ul>
-
-                                <div class="tittle_sub_inter">
-                                    <p>Sports</p>
-                                </div>
-                                <ul class="interest_list">
-                                    <li><button><i class="fa-solid fa-baseball"></i>Baseball</button></li>
-                                    <li><button><i class="fa-solid fa-bicycle"></i>Cycling</button></li>
-                                    <li><button><i class="fa-solid fa-dumbbell"></i>Weight lifting</button></li>
-                                    <li><button><i class="fa-solid fa-person-snowboarding"></i>Figue skating</button></li>
-                                    <li><button><i class="fa-solid fa-futbol"></i>Football</button></li>
-                                    <li><button><i class="fa-solid fa-football"></i>America football</button></li>
-                                    <li><button><i class="fa-solid fa-motorcycle"></i>Motor sporting</button></li>
-                                    <li><button><i class="fa-solid fa-bowling-ball"></i>Bowling</button></li>
-                                    <li><button><i class="fa-solid fa-volleyball"></i>Volleyball</button></li>
-                                    <li><button><i class="fa-solid fa-table-tennis-paddle-ball"></i>Table tennis</button></li>
-                                    <li><button><i class="fa-solid fa-golf-ball-tee"></i>Golf</button></li>
-                                    <li><button><i class="fa-solid fa-fish"></i>Fishing</button></li>
-                                    <li><button><i class="fa-solid fa-hockey-puck"></i>Hockey</button></li>
-                                    <li><button><i class="fa-solid fa-horse"></i>Horse racing</button></li>
-                                    <li><button><i class="fa-solid fa-person-running"></i>Running</button></li>
-                                    <li><button><i class="fa-solid fa-person-swimming"></i>Swimming</button></li>
-                                    <li><button><i class="fa-solid fa-person-skiing"></i>Skiing</button></li>
-                                    <li><button><i class="fa-solid fa-person-hiking"></i>Hiking</button></li>
-                                </ul>
+                                @{
+                                    List<int> interIdSelected = new List<int>();
+                                    if (p_user.users_interests != null)
+                                    {
+                                        foreach(var item in p_user.users_interests)
+                                        {
+                                            interIdSelected.Add((int)item.interest_id);
+                                        }
+                                    }
+                                    foreach (var item in db.interest_categories.ToList())
+                                    {
+                                        <div class="tittle_sub_inter">
+                                            <p>@item.cate_name</p>
+                                        </div>
+                                        <ul class="interest_list">
+                                            @foreach (var interest in db.interests.Where(row => (row.interest_cate_id == item.id)).ToList())
+                                            {
+                                                if (interIdSelected.Contains(interest.id))
+                                                {
+                                                    <li><button class="interest-button" data-interest-id="@interest.id" data-selected="true"><i class="@interest.icon"></i>@interest.interest_name</button></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><button class="interest-button" data-interest-id="@interest.id" data-selected="false"><i class="@interest.icon"></i>@interest.interest_name</button></li>
+                                                }
+                                                @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>*@
+                                            }
+                                        </ul>
+                                    }
+                                }
                             </div>
                             <div class="save">
                                 <div class="quantity">
@@ -407,7 +518,7 @@
                                     <p>Your selections will appear here</p>
                                 </div>
                                 <div class="save_btn">
-                                    <button>Save</button>
+                                    <button id="saveButton" onclick="addUserInterests()">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -417,7 +528,95 @@
         </div>
     </div>
 
+
     <script src="~/ExtraFiles/JS/editProfile.js"></script>
     <script src="~/ExtraFiles/JS/upLoadImg.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        var btnOpen = document.querySelector('.open-mod-btn')
+        var mod = document.querySelector('.mod')
+        var iconClose = document.querySelector('.mod__header i')
+        var btnClose = document.querySelector('.mod__footer button')
+
+        function toggleMod(e) {
+            mod.classList.toggle('hide')
+        }
+        btnOpen.addEventListener('click', toggleMod)
+        btnClose.addEventListener('click', toggleMod)
+        iconClose.addEventListener('click', toggleMod)
+        mod.addEventListener('click', function (e) {
+            if (e.target == e.currentTarget) {
+                toggleMod()
+            }
+        })
+    </script>
+    <script>
+        function addUserLanguages() {
+            var checkboxes = document.querySelectorAll('.mod__body input[type="checkbox"]');
+            var selectedIds = [];
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selectedIds.push(parseInt(checkbox.value)); 
+                }
+            });
+
+            $.ajax({
+                url: '/user/homeuser/addUserLanguages',
+                type: 'POST',
+                dataType: 'json',
+                data: { list_id: selectedIds }, 
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    @*Sự kiện nút chon interest*@
+    <script>
+        const interButtons = document.querySelectorAll('.interest-button');
+
+        interButtons.forEach((button, index) => {
+            let isEvenClick = button.getAttribute('data-selected') === 'true';
+            button.addEventListener('click', (e) => {
+                isEvenClick = !isEvenClick;
+                button.setAttribute('data-selected', isEvenClick ? 'true' : 'false');
+            });
+        });
+    </script>
+    <script>
+        function addUserInterests() {
+            var selectedInterests = [];
+            var interestButtons = document.querySelectorAll('.interest-button');
+            interestButtons.forEach(function (button) {
+                if (button.getAttribute('data-selected') === 'true') {
+                    selectedInterests.push(parseInt(button.getAttribute('data-interest-id')));
+                }
+            });
+            $.ajax({
+                url: '/user/homeuser/addUserInterests',
+                type: 'POST',
+                dataType: 'json',
+                data: { list_id: selectedInterests },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    @*Thiết lập lấy dữ liệu từ nút Done*@
+    <script>
+        const donee_button = document.getElementById('donee_button'); 
+        donee_button.addEventListener('click', () => {
+            addUserLanguages();
+            addUserInterests();
+        });
+    </script>
 </body>
 </html>
