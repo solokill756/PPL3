@@ -943,7 +943,7 @@
                         }
                         else {
                             console.log(data.success);
-                            alert("Đặt phòng thất bại");
+                            alert("Ngày bạn đặt không hợp lệ");
                         }
                     },
                     error: function (err) {
@@ -1002,7 +1002,7 @@
                 data: data,
                 success: function (data) {
                     if (data == "false") {
-                        alert("Ngày đó khách sạn đã được đặt");
+                        alert("Ngày bạn đặt không hợp lệ");
                     }
                     else {
                         $('.success').html('<div class="alert_complete"><i class="fa-solid fa-check"></i><p>You have edited your booking !</p></div>');
@@ -1020,21 +1020,6 @@
                     console.log(err);
                 }
             })
-            //$.ajax({
-            //    url: "/user/homeuser/BookingDate",
-            //    type: "GET",
-            //    data: { hotelId: id },
-            //    success: function (data) {
-            //        var dayChecked = $.map(data, function (value) {
-            //            return value;
-            //        });
-                    
-
-            //    },
-            //    error: function (err) {
-            //        console.log(err);
-            //    }
-            //})
         }
         else {
             console.log(0);
@@ -1109,9 +1094,22 @@
                                 dayCheckIn = parseInt(day.text());
                                 monthCheckIn = month + 1;
                                 yearCheckIn = year;
-                                if (month + 1 >= 10)
-                                    checkIn.html(`${day.text()}/${month + 1}/${year}`);
-                                else checkIn.html(`${day.text()}/0${month + 1}/${year}`);
+                                if (month + 1 >= 10) {
+                                    if (day.text() >= 10) {
+                                        checkIn.html(`${day.text()}/${month + 1}/${year}`);
+                                    }
+                                    else {
+                                        checkIn.html(`0${day.text()}/${month + 1}/${year}`);
+                                    }
+                                }
+                                else {
+                                    if (day.text() >= 10) {
+                                        checkIn.html(`${day.text()}/0${month + 1}/${year}`);
+                                    }
+                                    else {
+                                        checkIn.html(`0${day.text()}/0${month + 1}/${year}`);
+                                    }
+                                }
                                 let daysBeforeCheckIn = calendar.find('.calendar-days div');
                                 for (let j = 0; j < i; j++) {
                                     daysBeforeCheckIn.eq(j).addClass('before-check-in');
@@ -1125,8 +1123,22 @@
                                 yearCheckOut = year;
                                 if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
                                     day.addClass('curr-date');
-                                    if (month + 1 >= 10) checkOut.html(`${day.text()}/${month + 1}/${year}`);
-                                    else checkOut.html(`${day.text()}/0${month + 1}/${year}`);
+                                    if (month + 1 >= 10) {
+                                        if (day.text() >= 10) {
+                                            checkOut.html(`${day.text()}/${month + 1}/${year}`);
+                                        }
+                                        else {
+                                            checkOut.html(`0${day.text()}/${month + 1}/${year}`);
+                                        }
+                                    }
+                                    else {
+                                        if (day.text() >= 10) {
+                                            checkOut.html(`${day.text()}/0${month + 1}/${year}`);
+                                        }
+                                        else {
+                                            checkOut.html(`0${day.text()}/0${month + 1}/${year}`);
+                                        }
+                                    }
                                 } else {
                                     currentDay = 1;
                                 }

@@ -9,6 +9,7 @@
     int pos = 0;
     string tmpBD;
     PPl3.Models.user_profile profile = new PPl3.Models.user_profile();
+    
 }
 
 <!DOCTYPE html>
@@ -16,7 +17,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/ExtraFiles/assets/css/editProfile.css">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/editProfile.css?v=3">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -165,7 +166,7 @@
                 </div>
             </div>
         </div>
-        <form action="/user/homeuser/editprofile" method="post">
+        <form action="/user/homeuser/editprofile" method="post" enctype="multipart/form-data">
             <div id="content">
                 <div class="gird wide">
                     <div class="row no-gutter">
@@ -178,7 +179,7 @@
                                         <input type="file"
                                                accept=".jpg, .png"
                                                id="file_upload"
-                                               name="user_profile.user_avatar"
+                                               name="userAvatar"
                                                hidden>
                                         <button type="button" class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
                                     </div>
@@ -191,7 +192,7 @@
                                         <input type="file"
                                                accept=".jpg, .png"
                                                id="file_upload"
-                                               name="user_profile.user_avatar"
+                                               name="userAvatar"
                                                hidden>
                                         <button type="button" class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
                                     </div>

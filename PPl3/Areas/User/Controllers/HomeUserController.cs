@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -154,13 +155,28 @@ namespace PPl3.Areas.User.Controllers
             public user_profile user_profile { get; set; }
         }
 
+        private string SaveImage(HttpPostedFileBase imageFile)
+        {
+            if (imageFile != null && imageFile.ContentLength > 0)
+            {
+                string fileName = Path.GetFileName(imageFile.FileName);
+                string uploadsFolder = "~/Uploads/";
+                string filePath = Path.Combine(Server.MapPath(uploadsFolder), fileName);
+                imageFile.SaveAs(filePath);
+                // Trả về đường dẫn URL của ảnh trên môi trường web
+                return VirtualPathUtility.ToAbsolute(Path.Combine(uploadsFolder, fileName));
+            }
+            return null;
+        }
+
+
         public ActionResult editProfile()
         {
             
             return View();
         }
         [HttpPost]
-        public ActionResult editProfile(CreateViewModel viewModel)
+        public ActionResult editProfile(CreateViewModel viewModel , HttpPostedFileBase userAvatar)
         {
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
@@ -180,15 +196,24 @@ namespace PPl3.Areas.User.Controllers
                 up.user_work = viewModel.user_profile.user_work;
                 up.user_school = viewModel.user_profile.user_school;
                 up.user_address = viewModel.user_profile.user_address;
-                if (viewModel.user_profile.user_avatar != null)
+                if (userAvatar != null && userAvatar.ContentLength > 0)
                 {
-                    up.user_avatar = viewModel.user_profile.user_avatar;
+                    // Lưu ảnh đã tải lên vào thư mục hoặc cơ sở dữ liệu
+                   
+                    up.user_avatar = SaveImage(userAvatar);
                 }
             }
             else
             {
                 viewModel.user_profile.userID = p_user.id;
+                if (userAvatar != null && userAvatar.ContentLength > 0)
+                {
+                    // Lưu ảnh đã tải lên vào thư mục hoặc cơ sở dữ liệu
+                   
+                    viewModel.user_profile.user_avatar = SaveImage(userAvatar);
+                }
                 db.user_profile.Add(viewModel.user_profile);
+
             }
             var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
             Session["user"] = userInfor;
@@ -374,8 +399,10 @@ namespace PPl3.Areas.User.Controllers
         {
             if(bookingId != -1) ViewBag.bookingId = bookingId;
             PPL3Entities db = new PPL3Entities();
+            List<booking> bookings = new List<booking>();
             ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
-            List<booking> bookings = db.bookings.Where(item => item.property_id == id).ToList();
+            if(bookingId != -1)  bookings = db.bookings.Where(item => item.property_id == id && item.id != bookingId).ToList();
+            else bookings = db.bookings.Where(item => item.property_id == id).ToList();
             string date = "";
             foreach (var item in bookings)
             {
@@ -400,10 +427,13 @@ namespace PPl3.Areas.User.Controllers
         [HttpPost]
         public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId)
         {
+            
+            if (check_in_date > check_out_date) return  Json("false", JsonRequestBehavior.AllowGet); 
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
-            if ((db.bookings.Any(item => ((item.check_in_date <= check_in_date && item.check_out_date >= check_in_date) || (item.check_out_date >= check_out_date && item.check_in_date <= check_out_date)) && item.userId == p_user.id && item.property_id == hotelId) == false && check_in_date >= DateTime.Now) || (find_hotel.check_in_date == check_in_date && find_hotel.check_out_date == check_out_date)) { 
+            List<booking> list_booking = db.bookings.Where(item => item.id != bookingId).ToList();
+            if ((list_booking.Any(item => ((item.check_in_date <= check_in_date && item.check_out_date >= check_in_date) || (item.check_out_date >= check_out_date && item.check_in_date <= check_out_date) ||(check_in_date < item.check_in_date && check_out_date > item.check_out_date)) && item.userId == p_user.id && item.property_id == hotelId) == false && check_in_date >= DateTime.Now) || (find_hotel.check_in_date == check_in_date && find_hotel.check_out_date == check_out_date)) { 
                 find_hotel.check_in_date = check_in_date;
                 find_hotel.check_out_date = check_out_date;
                 db.SaveChanges();
@@ -432,31 +462,17 @@ namespace PPl3.Areas.User.Controllers
         }
 
 
-        // BookingDate
-        
-        //public JsonResult BookingDate(int hotelId)
-        //{
-        //    PPL3Entities db = new PPL3Entities();
-        //    List<booking> bookings = db.bookings.Where(item => item.property_id == hotelId).ToList();
-        //    List<string> booking_Dates = new List<string>();
-            
-        //    foreach (var item in bookings)
-        //    {
-        //        string date = "";
-        //        date = item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy");
-        //        booking_Dates.Add(date);
-        //    }
-        //    return Json(booking_Dates, JsonRequestBehavior.AllowGet);
-            
-        //}
+       
 
         //Pay Hotel
         [HttpPost]
         public JsonResult PayHotel(bool checkBook , int id , DateTime checkInDate , DateTime checkOutDate , int[] guest_count)
         {
+            
+            if (checkInDate > checkOutDate) return Json("false", JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
-            if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate)) && item.userId ==  p_user.id && item.property_id == id) == false && checkInDate >= DateTime.Now)
+            if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate) || (checkInDate < item.check_in_date && checkOutDate > item.check_out_date)) && item.userId ==  p_user.id && item.property_id == id) == false && checkInDate >= DateTime.Now)
             {
                 TempData["checkBook"] = checkBook;
                 property findHotel = db.properties.Where(item => item.id == id).FirstOrDefault();
