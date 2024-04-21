@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -498,7 +498,9 @@
           <Property Name="language_id" Type="int" />
         </EntityType>
         <Association Name="bkg_booking_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -510,7 +512,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="bkg_guest_type_id_FK">
-          <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1" />
+          <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="guest_type">
@@ -522,7 +526,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="booking_property_id_id_FK">
-          <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+          <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="properties">
@@ -618,7 +624,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="disputes_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -714,7 +722,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="favourite_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -750,7 +760,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="hr_hostid_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -834,7 +846,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pi_added_by_user_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="property_images" Type="Self.property_images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -858,7 +872,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pn_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="phone_number" Type="Self.phone_number" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -870,7 +886,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pr_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -894,7 +912,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pr_reviews_by_user_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1002,7 +1022,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -1014,7 +1036,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_currency_id_id_FK">
-          <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
+          <End Role="currencies" Type="Self.currencies" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="currencies">
@@ -1038,7 +1062,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_promo_code_id_id_FK">
-          <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1" />
+          <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="promo_codes">
@@ -1086,7 +1112,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ul_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1110,7 +1138,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="up_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1122,7 +1152,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="upp_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="user_profile" Type="Self.user_profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1134,7 +1166,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ur_create_by_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1158,7 +1192,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="useridddd_id_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1484,8 +1520,7 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
