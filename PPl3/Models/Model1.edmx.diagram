@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="bd5297e77c124789b1ded1ecd4abedca" Name="Diagram1">
+      <Diagram DiagramId="fc56856741f44e5680c2d357188fbd29" Name="Diagram1">
         <EntityTypeShape EntityType="PPL3Model.amenity" Width="1.5" PointX="14.25" PointY="44" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.booking_guests" Width="1.5" PointX="13.5" PointY="29.375" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.booking" Width="1.5" PointX="8.25" PointY="31.5" IsExpanded="true" />
@@ -37,7 +37,6 @@
         <EntityTypeShape EntityType="PPL3Model.review_component" Width="1.5" PointX="16.5" PointY="41.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.room_type" Width="1.5" PointX="9" PointY="53.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.state" Width="1.5" PointX="6.75" PointY="15.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.transaction" Width="1.5" PointX="16.5" PointY="27" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.user_personalInfor" Width="1.5" PointX="5.25" PointY="25.875" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.user_profile" Width="1.5" PointX="5.25" PointY="61" IsExpanded="true" />

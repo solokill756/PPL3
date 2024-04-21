@@ -30,8 +30,8 @@ namespace PPl3.App_Start
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                     {
                         Controller = "Home",
-                        aciton = "Error",
-                        area = "",
+                        Aciton = "Error",
+                        Area = "",
                         returnUrl = returnUrl.ToString()
 
                     }));
@@ -40,11 +40,17 @@ namespace PPl3.App_Start
             else
             {
                 var returnUrl = filterContext.RequestContext.HttpContext.Request.RawUrl;
+
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
+
                 {
-                    Controller = "HonmeUser",
-                    aciton = "Login",
-                    area = "User",
+
+                    Controller = "HomeUser",
+
+                    Action = "Login",
+
+                    Area = "User",
+
                     returnUrl = returnUrl.ToString()
 
                 }));
