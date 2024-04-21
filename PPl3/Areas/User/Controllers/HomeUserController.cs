@@ -9,6 +9,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using Newtonsoft.Json;
 using PPl3.Models;
+using PPl3.App_Start;
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -72,7 +73,7 @@ namespace PPl3.Areas.User.Controllers
             }
             else
             {
-                return RedirectToAction("Index" , "home" , new {area = ""});
+                return RedirectToAction("login");
 
             }
         }
@@ -81,6 +82,9 @@ namespace PPl3.Areas.User.Controllers
         //WishList
 
         [HttpPost]
+
+        [UserAuthorize(idChucNang = 6)]
+
         public JsonResult AddWishList(int id)
         {
             PPL3Entities db = new PPL3Entities();
@@ -100,10 +104,12 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult wishList()
         {
-            return View();
+            if (Session["user"] != null) return View();
+            else return RedirectToAction("login");
         }
 
         [HttpPost]
+        [UserAuthorize(idChucNang = 9)]
         public JsonResult DeleteWishList(int id)
         {
             PPL3Entities db = new PPL3Entities();
@@ -118,6 +124,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize(idChucNang = 9)]
         public JsonResult DeleteAllWishList(List<int> list_id)
         {
             PPL3Entities db = new PPL3Entities();
@@ -138,14 +145,18 @@ namespace PPl3.Areas.User.Controllers
         //user profile
         public ActionResult profile(int id)
         {
-            PPL3Entities db = new PPL3Entities();
-            user p_user = (user)Session["user"];
-            if (!(db.user_profile.Any(item => item.userID == p_user.id)))
+            if (Session["user"] != null)
             {
-                return RedirectToAction("editProfile");
+                PPL3Entities db = new PPL3Entities();
+                user p_user = (user)Session["user"];
+                if (!(db.user_profile.Any(item => item.userID == p_user.id)))
+                {
+                    return RedirectToAction("editProfile");
+                }
+                ViewBag.is_user_id = id;
+                return View();
             }
-            ViewBag.is_user_id = id;
-            return View();
+            else return RedirectToAction("login");
         }
         //
 
@@ -172,10 +183,12 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult editProfile()
         {
-            
-            return View();
+            if (Session["user"] != null)
+                return View();
+            else return RedirectToAction("login");
         }
         [HttpPost]
+        [UserAuthorize(idChucNang = 10)]
         public ActionResult editProfile(CreateViewModel viewModel , HttpPostedFileBase userAvatar)
         {
             PPL3Entities db = new PPL3Entities();
@@ -222,6 +235,7 @@ namespace PPl3.Areas.User.Controllers
             return RedirectToAction("profile", "HomeUser", new { id = p_user.id });
         }
         [HttpPost]
+        [UserAuthorize(idChucNang = 10)]
         public JsonResult addUserLanguages(List<int> list_id)
         {
             PPL3Entities db = new PPL3Entities();
@@ -260,6 +274,7 @@ namespace PPl3.Areas.User.Controllers
             return Json("true", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        [UserAuthorize(idChucNang = 10)]
         public JsonResult addUserInterests(List<int> list_id)
         {
             PPL3Entities db = new PPL3Entities();
@@ -397,20 +412,25 @@ namespace PPl3.Areas.User.Controllers
         // Detail
         public ActionResult Detail(int id , int bookingId = -1)
         {
-            if(bookingId != -1) ViewBag.bookingId = bookingId;
-            PPL3Entities db = new PPL3Entities();
-            List<booking> bookings = new List<booking>();
-            ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
-            if(bookingId != -1)  bookings = db.bookings.Where(item => item.property_id == id && item.id != bookingId).ToList();
-            else bookings = db.bookings.Where(item => item.property_id == id).ToList();
-            string date = "";
-            foreach (var item in bookings)
+            if (Session["user"] != null)
             {
-                date = date + item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy") + ",";
+                if (bookingId != -1) ViewBag.bookingId = bookingId;
+                PPL3Entities db = new PPL3Entities();
+                List<booking> bookings = new List<booking>();
+                ViewBag.propertyFind = db.properties.Where(item => item.id == id).FirstOrDefault();
+                if (bookingId != -1) bookings = db.bookings.Where(item => item.property_id == id && item.id != bookingId).ToList();
+                else bookings = db.bookings.Where(item => item.property_id == id).ToList();
+                string date = "";
+                foreach (var item in bookings)
+                {
+                    date = date + item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy") + ",";
+                }
+                date = date.Substring(0, date.Length - 1);
+                ViewBag.dataJson = JsonConvert.SerializeObject(date);
+                return View();
             }
-            date = date.Substring(0, date.Length - 1);
-            ViewBag.dataJson = JsonConvert.SerializeObject(date);
-            return View();
+            else return RedirectToAction("login");
+           
         }
 
 
@@ -418,13 +438,18 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult Trip()
         {
-            user p_user = (user)Session["user"];
-            PPL3Entities db = new PPL3Entities();
-            var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ThenBy(item => item.id).ToList();
-            return View(list_booking_hotel) ;
+            if (Session["user"] != null)
+            {
+                user p_user = (user)Session["user"];
+                PPL3Entities db = new PPL3Entities();
+                var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ThenBy(item => item.id).ToList();
+                return View(list_booking_hotel);
+            }
+            else return RedirectToAction("login");
         }
 
         [HttpPost]
+        [UserAuthorize(idChucNang = 11)]
         public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId)
         {
             
@@ -466,6 +491,7 @@ namespace PPl3.Areas.User.Controllers
 
         //Pay Hotel
         [HttpPost]
+        [UserAuthorize(idChucNang = 3)]
         public JsonResult PayHotel(bool checkBook , int id , DateTime checkInDate , DateTime checkOutDate , int[] guest_count)
         {
             
