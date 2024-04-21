@@ -410,7 +410,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Uploads\HỒ SỸ THẢO.JPG" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -435,6 +434,7 @@
     <Folder Include="Areas\Host\Views\Shared\" />
     <Folder Include="Areas\User\Data\" />
     <Folder Include="Areas\User\Views\Shared\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />

@@ -142,6 +142,12 @@ namespace PPl3.Areas.User.Controllers
             user p_user = (user)Session["user"];
             if (!(db.user_profile.Any(item => item.userID == p_user.id)))
             {
+                user_profile new_profile = new user_profile();
+                new_profile.userID = p_user.id;
+                db.user_profile.Add(new_profile);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
                 return RedirectToAction("editProfile");
             }
             ViewBag.is_user_id = id;
@@ -159,7 +165,9 @@ namespace PPl3.Areas.User.Controllers
         {
             if (imageFile != null && imageFile.ContentLength > 0)
             {
-                string fileName = Path.GetFileName(imageFile.FileName);
+                string newFileName = Guid.NewGuid().ToString(); 
+                string fileExtension = Path.GetExtension(imageFile.FileName);
+                string fileName = newFileName + fileExtension;
                 string uploadsFolder = "~/Uploads/";
                 string filePath = Path.Combine(Server.MapPath(uploadsFolder), fileName);
                 imageFile.SaveAs(filePath);
@@ -169,6 +177,14 @@ namespace PPl3.Areas.User.Controllers
             return null;
         }
 
+        private void DeleteImage(string imagePath)
+        {
+            string physicalPath = ControllerContext.HttpContext.Server.MapPath(imagePath);
+            if (System.IO.File.Exists(physicalPath))
+            {
+                System.IO.File.Delete(physicalPath);
+            }
+        }
 
         public ActionResult editProfile()
         {
@@ -180,45 +196,34 @@ namespace PPl3.Areas.User.Controllers
         {
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
-            if (db.user_profile.Any(item => item.userID == p_user.id))
-            {
-                user_profile up = db.user_profile.Where(item => item.userID == p_user.id).FirstOrDefault();
 
-                up.user_fun_fact = viewModel.user_profile.user_fun_fact;
-                up.user_about = viewModel.user_profile.user_about;
-                up.user_time_spend = viewModel.user_profile.user_time_spend;
-                up.user_biography_title = viewModel.user_profile.user_biography_title;
-                up.user_birthday = viewModel.user_profile.user_birthday;
-                up.user_obsessed_with = viewModel.user_profile.user_obsessed_with;
-                up.user_favourite_song = viewModel.user_profile.user_favourite_song;
-                up.user_pets = viewModel.user_profile.user_pets;
-                up.user_unless_skill = viewModel.user_profile.user_unless_skill;
-                up.user_work = viewModel.user_profile.user_work;
-                up.user_school = viewModel.user_profile.user_school;
-                up.user_address = viewModel.user_profile.user_address;
-                if (userAvatar != null && userAvatar.ContentLength > 0)
-                {
-                    // Lưu ảnh đã tải lên vào thư mục hoặc cơ sở dữ liệu
-                   
-                    up.user_avatar = SaveImage(userAvatar);
-                }
-            }
-            else
-            {
-                viewModel.user_profile.userID = p_user.id;
-                if (userAvatar != null && userAvatar.ContentLength > 0)
-                {
-                    // Lưu ảnh đã tải lên vào thư mục hoặc cơ sở dữ liệu
-                   
-                    viewModel.user_profile.user_avatar = SaveImage(userAvatar);
-                }
-                db.user_profile.Add(viewModel.user_profile);
+            user_profile up = db.user_profile.Where(item => item.userID == p_user.id).FirstOrDefault();
 
+            up.user_fun_fact = viewModel.user_profile.user_fun_fact;
+            up.user_about = viewModel.user_profile.user_about;
+            up.user_time_spend = viewModel.user_profile.user_time_spend;
+            up.user_biography_title = viewModel.user_profile.user_biography_title;
+            up.user_birthday = viewModel.user_profile.user_birthday;
+            up.user_obsessed_with = viewModel.user_profile.user_obsessed_with;
+            up.user_favourite_song = viewModel.user_profile.user_favourite_song;
+            up.user_pets = viewModel.user_profile.user_pets;
+            up.user_unless_skill = viewModel.user_profile.user_unless_skill;
+            up.user_work = viewModel.user_profile.user_work;
+            up.user_school = viewModel.user_profile.user_school;
+            up.user_address = viewModel.user_profile.user_address;
+            if (userAvatar != null && userAvatar.ContentLength > 0)
+            {
+                // Lưu ảnh đã tải lên vào thư mục hoặc cơ sở dữ liệu
+                if(up.user_avatar != null)
+                {
+                    DeleteImage(up.user_avatar);
+                }
+                up.user_avatar = SaveImage(userAvatar);
             }
+            db.SaveChanges();
             var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
             Session["user"] = userInfor;
 
-            db.SaveChanges();
             return RedirectToAction("profile", "HomeUser", new { id = p_user.id });
         }
         [HttpPost]
@@ -257,6 +262,8 @@ namespace PPl3.Areas.User.Controllers
                 db.users_languages.RemoveRange(tLanguage);
             }
             db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
             return Json("true", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -295,6 +302,8 @@ namespace PPl3.Areas.User.Controllers
                 db.users_interests.RemoveRange(tInterests);
             }
             db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
             return Json("true", JsonRequestBehavior.AllowGet);
         }
         // Login and Logout and Sign up

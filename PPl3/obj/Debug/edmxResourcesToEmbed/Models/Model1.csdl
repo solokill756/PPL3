@@ -522,7 +522,7 @@
     <Property Name="user_obsessed_with" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="user_biography_title" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
     <Property Name="user_about" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="user_avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="user_avatar" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="user_birthday" Type="DateTime" Precision="0" />
     <Property Name="user_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="user" Relationship="Self.upp_userID_id_FK" FromRole="user_profile" ToRole="users" />

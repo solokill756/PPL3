@@ -437,7 +437,7 @@
     <Property Name="user_obsessed_with" Type="nvarchar" MaxLength="40" />
     <Property Name="user_biography_title" Type="nvarchar" MaxLength="40" />
     <Property Name="user_about" Type="text" />
-    <Property Name="user_avatar" Type="nvarchar(max)" />
+    <Property Name="user_avatar" Type="varchar(max)" />
     <Property Name="user_birthday" Type="date" />
     <Property Name="user_address" Type="nvarchar" MaxLength="255" />
   </EntityType>
