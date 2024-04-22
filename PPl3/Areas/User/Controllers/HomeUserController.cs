@@ -469,8 +469,8 @@ namespace PPl3.Areas.User.Controllers
         [UserAuthorize(idChucNang = 11)]
         public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId)
         {
-            
-            if (check_in_date > check_out_date) return  Json("false", JsonRequestBehavior.AllowGet); 
+            if (check_in_date > check_out_date) return  Json("error1", JsonRequestBehavior.AllowGet);
+            if ((check_out_date.Month - check_in_date.Month) >= 2) return Json("error2", JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
@@ -498,7 +498,7 @@ namespace PPl3.Areas.User.Controllers
             }
             else
             {
-                return Json("false", JsonRequestBehavior.AllowGet);
+                return Json("error1", JsonRequestBehavior.AllowGet);
             }
 
         }
@@ -511,8 +511,12 @@ namespace PPl3.Areas.User.Controllers
         [UserAuthorize(idChucNang = 3)]
         public JsonResult PayHotel(bool checkBook , int id , DateTime checkInDate , DateTime checkOutDate , int[] guest_count)
         {
-            
-            if (checkInDate > checkOutDate) return Json("false", JsonRequestBehavior.AllowGet);
+
+            if (checkInDate > checkOutDate) return Json(new
+            {
+                success = "error1"
+            }, JsonRequestBehavior.AllowGet);
+            if ((checkOutDate.Month - checkInDate.Month) >= 2) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             while (db.bookings.Any(item => item.check_out_date < DateTime.Now))
@@ -551,7 +555,7 @@ namespace PPl3.Areas.User.Controllers
                 db.SaveChanges();
                 return Json(new
                 {
-                    success = true,
+                    success = "true",
                     redirectUrl = Url.Action("Index", "Homeuser", new { area = "user" })
                 }, JsonRequestBehavior.AllowGet);
             }
@@ -559,7 +563,7 @@ namespace PPl3.Areas.User.Controllers
             {
                 return Json(new
                 {
-                    success = false
+                    success = "error1"
                 }, JsonRequestBehavior.AllowGet);
 
             }
