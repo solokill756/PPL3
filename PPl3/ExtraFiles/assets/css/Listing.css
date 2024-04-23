@@ -1,0 +1,352 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#header {
+    height: 70px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+.header_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.page_listing {
+    display: none;
+}
+
+.open {
+    display: block !important;
+}
+
+.close {
+    display: none !important;
+}
+
+.start_nav {
+    font-size: 35px;
+}
+
+.nav {
+    display: flex;
+    list-style: none;
+}
+
+    .nav li:hover {
+        background-color: rgba( 245, 245, 245, 1 );
+        color: #000;
+        font-weight: 600;
+    }
+
+    .nav li {
+        position: relative;
+        padding: 15px;
+        color: rgb(113, 113, 113);
+        font-weight: 500;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+
+.subnav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: -162%;
+    min-width: 160px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.subnav {
+    list-style: none;
+}
+
+.begin_nav {
+    display: flex;
+    align-self: center;
+}
+
+.alert_icon button {
+    padding: 10px 14px;
+    font-size: 18px;
+    border-radius: 50%;
+    background-color: transparent;
+    margin-right: 30px;
+    border: 1px solid #ccc;
+}
+
+.avatar {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+}
+
+#content {
+    margin-top: 60px;
+}
+
+.tool_listing {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.tool_btn button {
+    padding: 18px;
+    border-radius: 30px;
+    border: none;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+    .tool_btn button:hover {
+        background-color: #dddada;
+    }
+
+.list_hotel_1 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.hotel_item {
+    cursor: pointer;
+}
+
+.img_hotel {
+    position: relative;
+    width: 100%;
+    height: 362px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+}
+
+.in_progress button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 20px;
+    margin: 10px;
+    font-weight: 500;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.btn_listing {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    z-index: 0;
+}
+
+.img_hotel:hover .btn_listing {
+    display: block;
+}
+
+.check-room-1 {
+    color: chartreuse;
+}
+
+.check-room-2 {
+    color: rgb(255, 38, 0);
+}
+
+.check-room-3 {
+    color: rgb(255, 166, 0);
+}
+
+.edit_btn {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+    .edit_btn button {
+        width: 225px;
+        padding: 15px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #ccc;
+        background-color: #000;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+.remove_btn {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+    .remove_btn button {
+        width: 225px;
+        padding: 15px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #000;
+        background-color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+        .remove_btn button i {
+            margin-right: 5px;
+            font-size: 18px;
+        }
+
+
+.infor_hotel span {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.infor_hotel p {
+    color: #acaaaa;
+    margin-top: 5px;
+}
+
+.tool_btn {
+    display: flex;
+    align-items: center;
+}
+
+.search {
+    position: relative;
+    display: none;
+    transition: all ease-in-out 1s;
+}
+
+
+    .search input {
+        padding: 15px 30px;
+        width: 800px;
+        border-radius: 20px;
+        border: 1px solid #ccc;
+    }
+
+    .search .fa-magnifying-glass {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        padding: 10px;
+    }
+
+    .search .fa-circle-xmark {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        transform: translateY(-50%);
+        padding: 10px;
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+.list_hotel_2 {
+    display: none;
+}
+
+.hotel_item_2 {
+    display: flex;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.img_hotel_2 {
+    width: 10%;
+    height: 85px;
+    margin-left: 10px;
+}
+
+.edit_btn_2 button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 7px;
+    border-radius: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.remove_btn_2 {
+    position: absolute;
+    top: 50%;
+    right: 0;
+}
+
+    .remove_btn_2 button {
+        padding: 8px;
+        border-radius: 10px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+
+.infor_hotel_2 {
+    display: flex;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.changeLayout {
+    display: block;
+}
+
+.infor_hotel_2 button {
+    padding: 10px;
+    font-size: 17px;
+    border: none;
+    color: #8b8888;
+    background-color: transparent;
+}
+
+.infor_hotel_2 span {
+    margin-left: 20px;
+}
+
+.infor_hotel_2 .fa-chevron-right {
+    margin-right: 20px;
+    font-size: 17px;
+    color: #fff;
+}
+
+.hotel_item_2:hover {
+    background-color: #e4e1e1;
+    .infor_hotel_2 .fa-chevron-right
+
+{
+    color: #000;
+}
+}

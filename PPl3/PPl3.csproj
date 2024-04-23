@@ -159,6 +159,7 @@
     <Compile Include="App_Start\UserAuthorize.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeAdminController.cs" />
+    <Compile Include="Areas\Host\Controllers\HomeHostController.cs" />
     <Compile Include="Areas\Host\HostAreaRegistration.cs" />
     <Compile Include="Areas\User\Controllers\HomeUserController.cs" />
     <Compile Include="Areas\User\UserAreaRegistration.cs" />
@@ -328,6 +329,7 @@
     <Content Include="ExtraFiles\assets\css\editProfile.css" />
     <Content Include="ExtraFiles\assets\css\gird.css" />
     <Content Include="ExtraFiles\assets\css\headerGuest.css" />
+    <Content Include="ExtraFiles\assets\css\Listing.css" />
     <Content Include="ExtraFiles\assets\css\product.css" />
     <Content Include="ExtraFiles\assets\css\profile.css" />
     <Content Include="ExtraFiles\assets\css\seller_profile.css" />
@@ -336,11 +338,13 @@
     <Content Include="ExtraFiles\assets\css\Trip.css" />
     <Content Include="ExtraFiles\assets\css\wishList.css" />
     <Content Include="ExtraFiles\editProfile.html" />
+    <Content Include="ExtraFiles\hotel.html" />
     <Content Include="ExtraFiles\index.html" />
     <Content Include="ExtraFiles\JS\calendar.js" />
     <Content Include="ExtraFiles\JS\editProfile.js" />
     <Content Include="ExtraFiles\JS\first_header.js" />
     <Content Include="ExtraFiles\JS\imgSlide.js" />
+    <Content Include="ExtraFiles\JS\Listing.js" />
     <Content Include="ExtraFiles\JS\main_v1.js" />
     <Content Include="ExtraFiles\JS\menuGuest.js" />
     <Content Include="ExtraFiles\JS\product.js" />
@@ -351,6 +355,7 @@
     <Content Include="ExtraFiles\JS\Trip.js" />
     <Content Include="ExtraFiles\JS\upLoadImg.js" />
     <Content Include="ExtraFiles\JS\wishList.js" />
+    <Content Include="ExtraFiles\Listing.html" />
     <Content Include="ExtraFiles\Product.html" />
     <Content Include="ExtraFiles\Sign_Log.html" />
     <Content Include="ExtraFiles\test.html" />
@@ -396,6 +401,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Host\Views\HomeHost\Listing.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -426,7 +432,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Areas\Host\Controllers\" />
     <Folder Include="Areas\Host\Data\" />
     <Folder Include="Areas\Host\Views\Shared\" />
     <Folder Include="Areas\User\Data\" />

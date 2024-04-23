@@ -1,0 +1,193 @@
+﻿@model List<PPl3.Models.property>
+@{
+    Layout = null;
+}
+
+@{ 
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    int position = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T|.|N|.|T</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/Listing.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter header_container">
+                    <div class="start_nav">
+                        <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                    </div>
+
+                    <div class="list_header">
+                        <ul class="nav">
+                            <li class="today_btn">Today</li>
+                            <li class="calendar_btn">Calendar</li>
+                            <li class="listing_btn">Listings</li>
+                            <li class="inbox_btn">Inbox</li>
+                            <li>
+                                Menu<i class="fa-solid fa-chevron-down"></i>
+                                <ul class="subnav">
+                                    <li>Reservations</li>
+                                    <li>Earnings</li>
+                                    <li>Insights</li>
+                                    <li>Create a new listing</li>
+                                    <li>Guidebooks</li>
+                                    <li>Explore hosting resources</li>
+                                    <li>Connect with Hosts near you</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="begin_nav">
+                        <div class="alert_icon">
+                            <button><i class="fa-regular fa-bell"></i></button>
+                        </div>
+
+                        <div class="avatar" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter content_container">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="page_listing">
+                            <div class="col l-12 m-12 c-12 tool_listing">
+                                <div class="tittle">
+                                    <h1>Your listing</h1>
+                                </div>
+                                <div class="tool_btn">
+                                    <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <div class="search">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                        <input type="text" placeholder="Search listings by name or location">
+                                        <i class="fa-regular fa-circle-xmark"></i>
+                                    </div>
+                                    <button class="layout_btn"><i class="fa-solid fa-bars-progress"></i></button>
+                                    <button><a href=""><i class="fa-solid fa-plus"></i></a></button>
+                                </div>
+                            </div>
+                            <div class="list_hotel_1">
+                                @foreach (PPl3.Models.property item in Model)
+                                {
+                                    position++;
+                                    <div class="col l-4 m-6 c-12 hotel_@position">
+                                        <div class="hotel_item">
+                                            <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                                <div class="in_progress">
+                                                    @if (item.created != null)
+                                                    {
+
+                                                        <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>
+
+                                                    }
+
+                                                </div>
+                                                <div class="btn_listing">
+                                                    <div class="edit_btn">
+                                                        <button>Edit listing</button>
+                                                    </div>
+                                                    <div class="remove_btn js_remove_btn btn_@position">
+                                                        <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="infor_hotel">
+                                                @if (item.created != null)
+                                                {
+                                                    <span>@item.p_name (@item.room_type.rt_name) , started @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <p>@item.p_address</p>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span>@item.p_name (@item.room_type.rt_name) </span>
+                                                    <p>@item.p_address</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="list_hotel_2">
+                                @{
+                                    position = 0;
+                                }
+                                @foreach (PPl3.Models.property item in Model)
+                                {
+                                    position++;
+                                    <div class="col l-12 m-12 c-12 hotel_@position">
+                                        <div class="hotel_item_2">
+                                            <div class="img_hotel img_hotel_2" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                                <div class="btn_listing">
+                                                    <div class="edit_btn_2">
+                                                        <button><i class="fa-solid fa-pen"></i></button>
+                                                    </div>
+                                                    <div class="remove_btn_2 js_remove_btn btn_@position">
+                                                        <button><i class="fa-solid fa-trash-can"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="infor_hotel infor_hotel_2">
+                                                @if (item.created != null)
+                                                {
+                                                    <span>@item.p_name (@item.room_type.rt_name) , started @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <p>@item.p_address</p>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span>@item.p_name (@item.room_type.rt_name) </span>
+                                                    <p>@item.p_address</p>
+                                                }
+                                                @if (item.created != null)
+                                                {
+
+                                                    <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>
+
+                                                }
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/ExtraFiles/JS/Listing.js"></script>
+</body>
+</html>
