@@ -85,8 +85,9 @@ html {
     font-size: 18px;
     border-radius: 50%;
     background-color: transparent;
-    margin-right: 30px;
+    margin-right: 20px;
     border: 1px solid #ccc;
+    margin-top : 10px;
 }
 
 .avatar {
@@ -99,7 +100,7 @@ html {
 }
 
 #content {
-    margin-top: 60px;
+    margin-top: 112px;
 }
 
 .tool_listing {
