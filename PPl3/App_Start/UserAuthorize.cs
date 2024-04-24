@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
+
 namespace PPl3.App_Start
 {
     public class UserAuthorize : AuthorizeAttribute
@@ -39,8 +40,7 @@ namespace PPl3.App_Start
             }
             else
             {
-                var returnUrl = filterContext.RequestContext.HttpContext.Request.RawUrl;
-
+                var returnUrl = filterContext.RequestContext.HttpContext.Request.Url.AbsoluteUri;
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
 
                 {

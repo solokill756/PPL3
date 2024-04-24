@@ -322,11 +322,11 @@
                                     <div class="check_in_out">
                                         <div class="check_in check_item">
                                             <button>Check In</button>
-                                            <span>Add Date</span>
+                                            <span id="checkInDate">Add Date</span>
                                         </div>
                                         <div class="check_out check_item">
                                             <button>Check Out</button>
-                                            <span>Add date</span>
+                                            <span id="checkOutDate">Add date</span>
                                         </div>
                                     </div>
                                     <div class="guest_number">
@@ -368,7 +368,7 @@
                                     </div>
                                 </div>
                                 <div class="pay_footer">
-                                    <button onclick="window.location.href = '/user/homeuser/login'">Login To Booking Hotel</button>
+                                    <button onclick="window.location.href = '/user/homeuser/detail?id=@property.id'">Login To Booking Hotel</button>
                                 </div>
 
                                 <div class="total">
@@ -833,9 +833,22 @@
                                 dayCheckIn = parseInt(day.text());
                                 monthCheckIn = month + 1;
                                 yearCheckIn = year;
-                                if (month + 1 >= 10)
-                                    checkIn.html(`${day.text()}/${month + 1}/${year}`);
-                                else checkIn.html(`${day.text()}/0${month + 1}/${year}`);
+                                if (month + 1 >= 10) {
+                                    if (day.text() >= 10) {
+                                        checkIn.html(`${day.text()}/${month + 1}/${year}`);
+                                    }
+                                    else {
+                                        checkIn.html(`0${day.text()}/${month + 1}/${year}`);
+                                    }
+                                }
+                                else {
+                                    if (day.text() >= 10) {
+                                        checkIn.html(`${day.text()}/0${month + 1}/${year}`);
+                                    }
+                                    else {
+                                        checkIn.html(`0${day.text()}/0${month + 1}/${year}`);
+                                    }
+                                }
                                 let daysBeforeCheckIn = calendar.find('.calendar-days div');
                                 for (let j = 0; j < i; j++) {
                                     daysBeforeCheckIn.eq(j).addClass('before-check-in');
@@ -849,8 +862,22 @@
                                 yearCheckOut = year;
                                 if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
                                     day.addClass('curr-date');
-                                    if (month + 1 >= 10) checkOut.html(`${day.text()}/${month + 1}/${year}`);
-                                    else checkOut.html(`${day.text()}/0${month + 1}/${year}`);
+                                    if (month + 1 >= 10) {
+                                        if (day.text() >= 10) {
+                                            checkOut.html(`${day.text()}/${month + 1}/${year}`);
+                                        }
+                                        else {
+                                            checkOut.html(`0${day.text()}/${month + 1}/${year}`);
+                                        }
+                                    }
+                                    else {
+                                        if (day.text() >= 10) {
+                                            checkOut.html(`${day.text()}/0${month + 1}/${year}`);
+                                        }
+                                        else {
+                                            checkOut.html(`0${day.text()}/0${month + 1}/${year}`);
+                                        }
+                                    }
                                 } else {
                                     currentDay = 1;
                                 }

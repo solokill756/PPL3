@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using PPl3.Models;
 using PPl3.App_Start;
 
+
 namespace PPl3.Areas.User.Controllers
 {
 
@@ -351,14 +352,14 @@ namespace PPl3.Areas.User.Controllers
             }
 
             else
-
             {
+                
                 var id_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (entities.users.Where(item => item.id ==  id_user).FirstOrDefault());
                 if(userInfor.user_type != 1) Session["user"] = userInfor;
                 else if(userInfor.user_type == 1) Session["admin"] = userInfor;
                 TempData["check"] = false;
-                if (Session["user"] != null) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
+                if (Session["user"] != null)  return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
                 else
                 {
                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin"});
@@ -420,10 +421,9 @@ namespace PPl3.Areas.User.Controllers
 
 
         // Detail
+        [UserAuthorize(idChucNang = 12)]
         public ActionResult Detail(int id , int bookingId = -1)
         {
-            if (Session["user"] != null)
-            {
                 if (bookingId != -1) ViewBag.bookingId = bookingId;
                 PPL3Entities db = new PPL3Entities();
                 List<booking> bookings = new List<booking>();
@@ -438,8 +438,6 @@ namespace PPl3.Areas.User.Controllers
                 date = date.Substring(0, date.Length - 1);
                 ViewBag.dataJson = JsonConvert.SerializeObject(date);
                 return View();
-            }
-            else return RedirectToAction("login");
            
         }
 

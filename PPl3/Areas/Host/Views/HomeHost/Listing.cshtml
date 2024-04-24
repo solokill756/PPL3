@@ -141,7 +141,7 @@
                                             <div class="infor_hotel">
                                                 @if (item.created != null)
                                                 {
-                                                    <span>@item.p_name (@item.room_type.rt_name) , started @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <span>@item.p_name (@item.room_type.rt_name) , created @item.created.Value.ToString("dd/MM/yyyy")</span>
                                                     <p>@item.p_address</p>
 
                                                 }
@@ -178,7 +178,7 @@
                                             <div class="infor_hotel infor_hotel_2">
                                                 @if (item.created != null)
                                                 {
-                                                    <span>@item.p_name (@item.room_type.rt_name) , started @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <span>@item.p_name (@item.room_type.rt_name) , created @item.created.Value.ToString("dd/MM/yyyy")</span>
                                                     <p>@item.p_address</p>
 
                                                 }
@@ -278,7 +278,7 @@
                                 + '</div>'
                                 + '<div class="infor_hotel infor_hotel_2">';
                             if (list_pro[i].created != null) {
-                                hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , started ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
+                                hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
                                     '<p>' + list_pro[i].p_address + '</p>';
                             } else {
                                 hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
@@ -315,7 +315,7 @@
                                 '</div>' +
                                 '<div class="infor_hotel">';
                             if (list_pro[i].created != null) {
-                                hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , started ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
+                                hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
                                     '<p>' + list_pro[i].p_address + '</p>';
                             } else {
                                 hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
