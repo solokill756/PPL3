@@ -85,7 +85,7 @@
                                 <li class=""><button>Notifications</button></li>
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
-                                <li><a href="Content">Manage listings</a></li>
+                                <li><a href="/host/HomeHost/Listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
                                 <li><a href="#">Gift Cards</a></li>
                                 <li><a href="#">Help Center</a></li>
@@ -937,14 +937,17 @@
                     type: "POST",
                     data: data,
                     success: function (data) {
-                        if (data.success == true) {
+                        if (data.success == "true") {
                             console.log(data);
                             window.location.href = data.redirectUrl;
                         }
-                        else {
-                            console.log(data.success);
-                            alert("Ngày bạn đặt không hợp lệ");
+                        else if (data.success == "error1") {
+                            alert("The date you booked is invalid");
                         }
+                        else if (data.success == "error2") {
+                            alert("You can only book for 2 consecutive months");
+                        }
+                        
                     },
                     error: function (err) {
                         console.log(err);
@@ -1001,8 +1004,11 @@
                 type: "POST",
                 data: data,
                 success: function (data) {
-                    if (data == "false") {
-                        alert("Ngày bạn đặt không hợp lệ");
+                    if (data == "error1") {
+                        alert("The date you booked is invalid");
+                    }
+                    else if (data == "error2") {
+                        alert("You can only book for 2 consecutive months");
                     }
                     else {
                         $('.success').html('<div class="alert_complete"><i class="fa-solid fa-check"></i><p>You have edited your booking !</p></div>');

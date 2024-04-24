@@ -39,54 +39,55 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <div class="main">
-        <div id="header">
-            <div class="gird wide">
-                <div class="row no-gutter nav">
+    <div id="header">
+        <div class="gird wide">
+            <div class="row no-gutter nav">
+                <div class="nav_logo">
                     <div class="nav_logo">
-                        <div class="nav_logo">
-                            <a href="/user/homeuser/index" class="logo_link">
-                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
-                                <h1>T|.|N|.|T</h1>
-                            </a>
-                        </div>
+                        <a href="/user/homeuser/index" class="logo_link">
+                            <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                            <h1>T|.|N|.|T</h1>
+                        </a>
                     </div>
-                    <div class="nav_menu">
-                        <div class="nav_languages">
-                            <a href="">Switch To Hosting</a>
-                            <button><i class="fa-solid fa-globe"></i></button>
-                        </div>
-                        <div class="nav_login">
-                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
-                            @if (tmp_user.user_profile.FirstOrDefault() != null)
-                            {
-                                <button class="js_menuUser_btn icon_style" style="background : url(@tmp_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
-                            }
-                            else
-                            {
-                                <button class="js_menuUser_btn">
-                                    <i class="fa-solid fa-user"></i>
-                                </button>
-                            }
-                        </div>
+                </div>
+                <div class="nav_menu">
+                    <div class="nav_languages">
+                        <a href="">Switch To Hosting</a>
+                        <button><i class="fa-solid fa-globe"></i></button>
+                    </div>
+                    <div class="nav_login">
+                        <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                        @if (tmp_user.user_profile.FirstOrDefault() != null)
+                        {
+                            <button class="js_menuUser_btn icon_style" style="background : url(@tmp_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                        }
+                        else
+                        {
+                            <button class="js_menuUser_btn">
+                                <i class="fa-solid fa-user"></i>
+                            </button>
+                        }
+                    </div>
 
-                        <div class="sub_nav sub_nav_user js_sub_nav_user">
-                            <ul class="menu_user js_menu_user">
-                                <li class=""><button>Messages</button></li>
-                                <li class=""><button>Notifications</button></li>
-                                <li class=""><a href="/user/homeuser/trip">Trip</a></li>
-                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
-                                <li><a href="Content">Manage listings</a></li>
-                                <li><a href="/user/homeuser/profile?id=@tmp_user.id">Account</a></li>
-                                <li><a href="#">Gift Cards</a></li>
-                                <li><a href="#">Help Center</a></li>
-                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
-                            </ul>
-                        </div>
+                    <div class="sub_nav sub_nav_user js_sub_nav_user">
+                        <ul class="menu_user js_menu_user">
+                            <li class=""><button>Messages</button></li>
+                            <li class=""><button>Notifications</button></li>
+                            <li class=""><a href="/user/homeuser/trip">Trip</a></li>
+                            <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                            <li><a href="/host/homehost/listing">Manage listings</a></li>
+                            <li><a href="/user/homeuser/profile?id=@tmp_user.id">Account</a></li>
+                            <li><a href="#">Gift Cards</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="main">
+
         <div id="content">
             <div class="gird wide">
                 <div class="row no-gutter">
@@ -173,7 +174,7 @@
                                         else
                                         {
                                             <div class="infor_basics_item">
-                                                @{ 
+                                                @{
                                                     count = 0;
                                                     count = p_user.property_reviews.Where(item => item.review_by_user == p_user.id).ToArray().Length;
                                                     count += p_user.host_reviews.Where(item => (item.review_by_user == p_user.id)).ToArray().Length;
@@ -202,7 +203,7 @@
                                                         <span>@count</span>
                                                         <p>Months on Airbnb</p>
                                                     }
-                                                    else 
+                                                    else
                                                     {
                                                         count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(p_user.created.Value.ToString("dd"));
                                                         <span>@count</span>
@@ -239,7 +240,7 @@
                                         </div>
                                     }
                                 }
-                                
+
                             </div>
                         </div>
                     </div>
