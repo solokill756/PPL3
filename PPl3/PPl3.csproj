@@ -205,6 +205,9 @@
     <Compile Include="Models\email_content_languages.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\emergency_contact.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\favourite.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -332,6 +335,7 @@
     <Content Include="ExtraFiles\assets\css\profile.css" />
     <Content Include="ExtraFiles\assets\css\seller_profile.css" />
     <Content Include="ExtraFiles\assets\css\Sign_Log_v1.css" />
+    <Content Include="ExtraFiles\assets\css\personal_infor.css" />
     <Content Include="ExtraFiles\assets\css\style_v1.css" />
     <Content Include="ExtraFiles\assets\css\Trip.css" />
     <Content Include="ExtraFiles\assets\css\wishList.css" />
@@ -343,6 +347,7 @@
     <Content Include="ExtraFiles\JS\imgSlide.js" />
     <Content Include="ExtraFiles\JS\main_v1.js" />
     <Content Include="ExtraFiles\JS\menuGuest.js" />
+    <Content Include="ExtraFiles\JS\personal_infor.js" />
     <Content Include="ExtraFiles\JS\product.js" />
     <Content Include="ExtraFiles\JS\room_classifi_v1.js" />
     <Content Include="ExtraFiles\JS\seller_profile.js" />
@@ -389,6 +394,7 @@
     <Content Include="Areas\User\Views\HomeUser\Trip.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\editProfile.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\profile.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\userPersonalProfile.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>

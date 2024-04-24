@@ -12,17 +12,16 @@ namespace PPl3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class governmentID
+    public partial class emergency_contact
     {
         public int id { get; set; }
-        public Nullable<int> userID { get; set; }
-        public string driver_license { get; set; }
-        public string passport { get; set; }
-        public string identity_card { get; set; }
-        public string backof_id_card { get; set; }
-        public Nullable<System.DateTime> date_range { get; set; }
-        public Nullable<System.DateTime> expiration_date { get; set; }
-        public string number_card { get; set; }
+        public Nullable<int> userid { get; set; }
+        public string ec_name { get; set; }
+        public string relationship { get; set; }
+        public string ec_language { get; set; }
+        public string email { get; set; }
+        public string country { get; set; }
+        public string phone_number { get; set; }
     
         public virtual user user { get; set; }
     }

@@ -24,8 +24,12 @@ namespace PPl3.Models
         public string street_address { get; set; }
         public Nullable<int> u_state { get; set; }
         public Nullable<int> u_city { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
     
+        public virtual city city { get; set; }
         public virtual country country { get; set; }
+        public virtual state state { get; set; }
         public virtual user user { get; set; }
     }
 }

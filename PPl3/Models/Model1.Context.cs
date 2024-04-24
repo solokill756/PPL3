@@ -38,6 +38,7 @@ namespace PPl3.Models
         public virtual DbSet<dispute> disputes { get; set; }
         public virtual DbSet<email_content_languages> email_content_languages { get; set; }
         public virtual DbSet<email_contents> email_contents { get; set; }
+        public virtual DbSet<emergency_contact> emergency_contact { get; set; }
         public virtual DbSet<favourite> favourites { get; set; }
         public virtual DbSet<governmentID> governmentIDs { get; set; }
         public virtual DbSet<guest_type> guest_type { get; set; }

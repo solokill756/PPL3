@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -157,6 +157,19 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="ec_status" Type="tinyint" />
         </EntityType>
+        <EntityType Name="emergency_contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" />
+          <Property Name="ec_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="relationship" Type="nvarchar" MaxLength="255" />
+          <Property Name="ec_language" Type="varchar" MaxLength="255" />
+          <Property Name="email" Type="varchar" MaxLength="255" />
+          <Property Name="country" Type="varchar" MaxLength="255" />
+          <Property Name="phone_number" Type="varchar" MaxLength="20" />
+        </EntityType>
         <EntityType Name="favourite">
           <Key>
             <PropertyRef Name="id" />
@@ -175,6 +188,10 @@
           <Property Name="driver_license" Type="varchar(max)" />
           <Property Name="passport" Type="varchar(max)" />
           <Property Name="identity_card" Type="varchar(max)" />
+          <Property Name="backof_id_card" Type="varchar(max)" />
+          <Property Name="date_range" Type="date" />
+          <Property Name="expiration_date" Type="date" />
+          <Property Name="number_card" Type="varchar" MaxLength="15" />
         </EntityType>
         <EntityType Name="guest_type">
           <Key>
@@ -414,6 +431,8 @@
           <Property Name="street_address" Type="nvarchar" MaxLength="255" />
           <Property Name="u_state" Type="int" />
           <Property Name="u_city" Type="int" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="user_profile">
           <Key>
@@ -498,9 +517,7 @@
           <Property Name="language_id" Type="int" />
         </EntityType>
         <Association Name="bkg_booking_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
           <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -512,9 +529,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="bkg_guest_type_id_FK">
-          <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1" />
           <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="guest_type">
@@ -526,9 +541,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="booking_property_id_id_FK">
-          <End Role="properties" Type="Self.properties" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
           <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="properties">
@@ -624,9 +637,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="disputes_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
           <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -658,6 +669,18 @@
             </Principal>
             <Dependent Role="disputes">
               <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ecc_userid_id_FK">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="emergency_contact" Type="Self.emergency_contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emergency_contact">
+              <PropertyRef Name="userid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -722,9 +745,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="favourite_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -760,9 +781,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="hr_hostid_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -846,9 +865,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pi_added_by_user_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="property_images" Type="Self.property_images" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -872,9 +889,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pn_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="phone_number" Type="Self.phone_number" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -886,9 +901,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pr_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -912,9 +925,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pr_reviews_by_user_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1022,9 +1033,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -1036,9 +1045,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_currency_id_id_FK">
-          <End Role="currencies" Type="Self.currencies" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="currencies">
@@ -1062,9 +1069,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_promo_code_id_id_FK">
-          <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="promo_codes">
@@ -1099,6 +1104,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="u_city_id_FK">
+          <End Role="cities" Type="Self.cities" Multiplicity="0..1" />
+          <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_personalInfor">
+              <PropertyRef Name="u_city" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="u_state_id_FK">
+          <End Role="states" Type="Self.states" Multiplicity="0..1" />
+          <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="states">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_personalInfor">
+              <PropertyRef Name="u_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="ul_language_id_FK">
           <End Role="listLanguage" Type="Self.listLanguage" Multiplicity="0..1" />
           <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
@@ -1112,9 +1141,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ul_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1138,9 +1165,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="up_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1152,9 +1177,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="upp_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="user_profile" Type="Self.user_profile" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1166,9 +1189,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="ur_create_by_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1192,9 +1213,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="useridddd_id_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1255,6 +1274,7 @@
           <EntitySet Name="disputes" EntityType="Self.disputes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="email_content_languages" EntityType="Self.email_content_languages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="email_contents" EntityType="Self.email_contents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="emergency_contact" EntityType="Self.emergency_contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="favourite" EntityType="Self.favourite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="governmentID" EntityType="Self.governmentID" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
@@ -1334,6 +1354,10 @@
           <AssociationSet Name="disputes_userId_id_FK" Association="Self.disputes_userId_id_FK">
             <End Role="users" EntitySet="users" />
             <End Role="disputes" EntitySet="disputes" />
+          </AssociationSet>
+          <AssociationSet Name="ecc_userid_id_FK" Association="Self.ecc_userid_id_FK">
+            <End Role="users" EntitySet="users" />
+            <End Role="emergency_contact" EntitySet="emergency_contact" />
           </AssociationSet>
           <AssociationSet Name="ecl_email_content_id_id_FK" Association="Self.ecl_email_content_id_id_FK">
             <End Role="email_contents" EntitySet="email_contents" />
@@ -1475,6 +1499,14 @@
             <End Role="users" EntitySet="users" />
             <End Role="transactions" EntitySet="transactions" />
           </AssociationSet>
+          <AssociationSet Name="u_city_id_FK" Association="Self.u_city_id_FK">
+            <End Role="cities" EntitySet="cities" />
+            <End Role="user_personalInfor" EntitySet="user_personalInfor" />
+          </AssociationSet>
+          <AssociationSet Name="u_state_id_FK" Association="Self.u_state_id_FK">
+            <End Role="states" EntitySet="states" />
+            <End Role="user_personalInfor" EntitySet="user_personalInfor" />
+          </AssociationSet>
           <AssociationSet Name="ul_language_id_FK" Association="Self.ul_language_id_FK">
             <End Role="listLanguage" EntitySet="listLanguage" />
             <End Role="users_languages" EntitySet="users_languages" />
@@ -1520,7 +1552,8 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1603,6 +1636,7 @@
           <Property Name="city_status" Type="Byte" />
           <NavigationProperty Name="state" Relationship="Self.cities_state_id_id_FK" FromRole="cities" ToRole="states" />
           <NavigationProperty Name="properties" Relationship="Self.pro_city_id_id_FK" FromRole="cities" ToRole="properties" />
+          <NavigationProperty Name="user_personalInfor" Relationship="Self.u_city_id_FK" FromRole="cities" ToRole="user_personalInfor" />
         </EntityType>
         <EntityType Name="cms_page_languages">
           <Key>
@@ -1708,6 +1742,20 @@
           <NavigationProperty Name="user" Relationship="Self.emct_receiver_id_id_FK" FromRole="email_contents" ToRole="users" />
           <NavigationProperty Name="user1" Relationship="Self.emct_sender_id_id_FK" FromRole="email_contents" ToRole="users" />
         </EntityType>
+        <EntityType Name="emergency_contact">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" />
+          <Property Name="ec_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="relationship" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ec_language" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="user" Relationship="Self.ecc_userid_id_FK" FromRole="emergency_contact" ToRole="users" />
+        </EntityType>
         <EntityType Name="favourite">
           <Key>
             <PropertyRef Name="id" />
@@ -1728,6 +1776,10 @@
           <Property Name="driver_license" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="passport" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="identity_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="backof_id_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="date_range" Type="DateTime" Precision="0" />
+          <Property Name="expiration_date" Type="DateTime" Precision="0" />
+          <Property Name="number_card" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="user" Relationship="Self.gid_userID_id_FK" FromRole="governmentID" ToRole="users" />
         </EntityType>
         <EntityType Name="guest_type">
@@ -1975,6 +2027,7 @@
           <NavigationProperty Name="cities" Relationship="Self.cities_state_id_id_FK" FromRole="states" ToRole="cities" />
           <NavigationProperty Name="country" Relationship="Self.states_country_id_id_FK" FromRole="states" ToRole="countries" />
           <NavigationProperty Name="properties" Relationship="Self.pro_state_id_id_FK" FromRole="states" ToRole="properties" />
+          <NavigationProperty Name="user_personalInfor" Relationship="Self.u_state_id_FK" FromRole="states" ToRole="user_personalInfor" />
         </EntityType>
         <EntityType Name="transaction">
           <Key>
@@ -2016,7 +2069,11 @@
           <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="u_state" Type="Int32" />
           <Property Name="u_city" Type="Int32" />
+          <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="city" Relationship="Self.u_city_id_FK" FromRole="user_personalInfor" ToRole="cities" />
           <NavigationProperty Name="country" Relationship="Self.up_country_id_id_FK" FromRole="user_personalInfor" ToRole="countries" />
+          <NavigationProperty Name="state" Relationship="Self.u_state_id_FK" FromRole="user_personalInfor" ToRole="states" />
           <NavigationProperty Name="user" Relationship="Self.up_userID_id_FK" FromRole="user_personalInfor" ToRole="users" />
         </EntityType>
         <EntityType Name="user_profile">
@@ -2095,6 +2152,7 @@
           <NavigationProperty Name="disputes" Relationship="Self.disputes_userId_id_FK" FromRole="users" ToRole="disputes" />
           <NavigationProperty Name="email_contents" Relationship="Self.emct_receiver_id_id_FK" FromRole="users" ToRole="email_contents" />
           <NavigationProperty Name="email_contents1" Relationship="Self.emct_sender_id_id_FK" FromRole="users" ToRole="email_contents" />
+          <NavigationProperty Name="emergency_contact" Relationship="Self.ecc_userid_id_FK" FromRole="users" ToRole="emergency_contact" />
           <NavigationProperty Name="favourites" Relationship="Self.favourite_userID_id_FK" FromRole="users" ToRole="favourite" />
           <NavigationProperty Name="governmentIDs" Relationship="Self.gid_userID_id_FK" FromRole="users" ToRole="governmentID" />
           <NavigationProperty Name="host_reviews" Relationship="Self.hr_hostid_id_FK" FromRole="users" ToRole="host_reviews" />
@@ -2278,6 +2336,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="u_city_id_FK">
+          <End Role="cities" Type="Self.city" Multiplicity="0..1" />
+          <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cities">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_personalInfor">
+              <PropertyRef Name="u_city" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="cpl_cms_page_id_id_FK">
           <End Role="cms_pages" Type="Self.cms_pages" Multiplicity="0..1" />
           <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
@@ -2455,6 +2525,18 @@
             </Principal>
             <Dependent Role="email_contents">
               <PropertyRef Name="sender_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ecc_userid_id_FK">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="emergency_contact" Type="Self.emergency_contact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emergency_contact">
+              <PropertyRef Name="userid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2710,6 +2792,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="u_state_id_FK">
+          <End Role="states" Type="Self.state" Multiplicity="0..1" />
+          <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="states">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_personalInfor">
+              <PropertyRef Name="u_state" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="transaction_payer_id_id_FK">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
@@ -2856,6 +2950,7 @@
           <EntitySet Name="disputes" EntityType="Self.dispute" />
           <EntitySet Name="email_content_languages" EntityType="Self.email_content_languages" />
           <EntitySet Name="email_contents" EntityType="Self.email_contents" />
+          <EntitySet Name="emergency_contact" EntityType="Self.emergency_contact" />
           <EntitySet Name="favourites" EntityType="Self.favourite" />
           <EntitySet Name="governmentIDs" EntityType="Self.governmentID" />
           <EntitySet Name="guest_type" EntityType="Self.guest_type" />
@@ -2932,6 +3027,10 @@
             <End Role="cities" EntitySet="cities" />
             <End Role="properties" EntitySet="properties" />
           </AssociationSet>
+          <AssociationSet Name="u_city_id_FK" Association="Self.u_city_id_FK">
+            <End Role="cities" EntitySet="cities" />
+            <End Role="user_personalInfor" EntitySet="user_personalInfor" />
+          </AssociationSet>
           <AssociationSet Name="cpl_cms_page_id_id_FK" Association="Self.cpl_cms_page_id_id_FK">
             <End Role="cms_pages" EntitySet="cms_pages" />
             <End Role="cms_page_languages" EntitySet="cms_page_languages" />
@@ -2991,6 +3090,10 @@
           <AssociationSet Name="emct_sender_id_id_FK" Association="Self.emct_sender_id_id_FK">
             <End Role="users" EntitySet="users" />
             <End Role="email_contents" EntitySet="email_contents" />
+          </AssociationSet>
+          <AssociationSet Name="ecc_userid_id_FK" Association="Self.ecc_userid_id_FK">
+            <End Role="users" EntitySet="users" />
+            <End Role="emergency_contact" EntitySet="emergency_contact" />
           </AssociationSet>
           <AssociationSet Name="favourite_property_id_id_FK" Association="Self.favourite_property_id_id_FK">
             <End Role="properties" EntitySet="properties" />
@@ -3075,6 +3178,10 @@
           <AssociationSet Name="pr_reviews_by_user_id_FK" Association="Self.pr_reviews_by_user_id_FK">
             <End Role="users" EntitySet="users" />
             <End Role="property_reviews" EntitySet="property_reviews" />
+          </AssociationSet>
+          <AssociationSet Name="u_state_id_FK" Association="Self.u_state_id_FK">
+            <End Role="states" EntitySet="states" />
+            <End Role="user_personalInfor" EntitySet="user_personalInfor" />
           </AssociationSet>
           <AssociationSet Name="transaction_payer_id_id_FK" Association="Self.transaction_payer_id_id_FK">
             <End Role="users" EntitySet="users" />
@@ -3292,6 +3399,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="emergency_contact">
+            <EntityTypeMapping TypeName="PPL3Model.emergency_contact">
+              <MappingFragment StoreEntitySet="emergency_contact">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="ec_name" ColumnName="ec_name" />
+                <ScalarProperty Name="relationship" ColumnName="relationship" />
+                <ScalarProperty Name="ec_language" ColumnName="ec_language" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="country" ColumnName="country" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="favourites">
             <EntityTypeMapping TypeName="PPL3Model.favourite">
               <MappingFragment StoreEntitySet="favourite">
@@ -3310,6 +3431,10 @@
                 <ScalarProperty Name="driver_license" ColumnName="driver_license" />
                 <ScalarProperty Name="passport" ColumnName="passport" />
                 <ScalarProperty Name="identity_card" ColumnName="identity_card" />
+                <ScalarProperty Name="backof_id_card" ColumnName="backof_id_card" />
+                <ScalarProperty Name="date_range" ColumnName="date_range" />
+                <ScalarProperty Name="expiration_date" ColumnName="expiration_date" />
+                <ScalarProperty Name="number_card" ColumnName="number_card" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3568,6 +3693,8 @@
                 <ScalarProperty Name="street_address" ColumnName="street_address" />
                 <ScalarProperty Name="u_state" ColumnName="u_state" />
                 <ScalarProperty Name="u_city" ColumnName="u_city" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

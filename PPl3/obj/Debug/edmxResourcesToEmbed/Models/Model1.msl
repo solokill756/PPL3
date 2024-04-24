@@ -166,6 +166,20 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="emergency_contact">
+      <EntityTypeMapping TypeName="PPL3Model.emergency_contact">
+        <MappingFragment StoreEntitySet="emergency_contact">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="ec_name" ColumnName="ec_name" />
+          <ScalarProperty Name="relationship" ColumnName="relationship" />
+          <ScalarProperty Name="ec_language" ColumnName="ec_language" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="country" ColumnName="country" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="favourites">
       <EntityTypeMapping TypeName="PPL3Model.favourite">
         <MappingFragment StoreEntitySet="favourite">
@@ -184,6 +198,10 @@
           <ScalarProperty Name="driver_license" ColumnName="driver_license" />
           <ScalarProperty Name="passport" ColumnName="passport" />
           <ScalarProperty Name="identity_card" ColumnName="identity_card" />
+          <ScalarProperty Name="backof_id_card" ColumnName="backof_id_card" />
+          <ScalarProperty Name="date_range" ColumnName="date_range" />
+          <ScalarProperty Name="expiration_date" ColumnName="expiration_date" />
+          <ScalarProperty Name="number_card" ColumnName="number_card" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -442,6 +460,8 @@
           <ScalarProperty Name="street_address" ColumnName="street_address" />
           <ScalarProperty Name="u_state" ColumnName="u_state" />
           <ScalarProperty Name="u_city" ColumnName="u_city" />
+          <ScalarProperty Name="first_name" ColumnName="first_name" />
+          <ScalarProperty Name="last_name" ColumnName="last_name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
