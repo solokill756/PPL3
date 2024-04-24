@@ -10,6 +10,8 @@ using System.Web.Security;
 using Newtonsoft.Json;
 using PPl3.Models;
 using PPl3.App_Start;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 
 namespace PPl3.Areas.User.Controllers
@@ -322,6 +324,219 @@ namespace PPl3.Areas.User.Controllers
             Session["user"] = userInfor;
             return Json("true", JsonRequestBehavior.AllowGet);
         }
+        //user personal profile 
+        public ActionResult userPersonalProfile()
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            if (!(db.user_personalInfor.Any(item => item.userID == p_user.id)))
+            {
+                user_personalInfor new_personal = new user_personalInfor();
+                new_personal.userID = p_user.id;
+                db.user_personalInfor.Add(new_personal);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            if (!(db.governmentIDs.Any(item => item.userID == p_user.id)))
+            {
+                governmentID new_gvid = new governmentID();
+                new_gvid.userID = p_user.id;
+                db.governmentIDs.Add(new_gvid);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            return View();
+        }
+        [HttpGet]
+        public JsonResult GetCountries()
+        {
+            PPL3Entities db = new PPL3Entities();
+            var countries = db.countries
+                           .Select(s => new {
+                               id = s.id,
+                               country_name = s.ct_name
+                           }).ToList();
+            return Json(countries, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetStates(int countryId)
+        {
+            PPL3Entities db = new PPL3Entities();
+            var states = db.states
+                           .Where(s => s.country_id == countryId)
+                           .Select(s => new {
+                               id = s.id,
+                               state_name = s.state_name
+                           }).ToList();
+            return Json(states, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetCities(int stateId)
+        {
+            PPL3Entities db = new PPL3Entities();
+            var cities = db.cities
+                           .Where(s => s.state_id == stateId)
+                           .Select(s => new {
+                               id = s.id,
+                               city_name = s.city_name
+                           }).ToList();
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult addLegalName(string first_name, string last_name)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
+            tmpprofile.legal_name = first_name + " " + last_name;
+            tmpprofile.first_name = first_name;
+            tmpprofile.last_name = last_name;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult addUserPhone(string phone_number)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            phone_number find_phone = db.phone_number.Where(item => item.userID == p_user.id).FirstOrDefault();
+            if (find_phone != null)
+            {
+                db.phone_number.Remove(find_phone);
+                phone_number newphone = new phone_number()
+                {
+                    userID = p_user.id,
+                    phone = phone_number
+                };
+                db.phone_number.Add(newphone);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            else
+            {
+                phone_number newphone = new phone_number()
+                {
+                    userID = p_user.id,
+                    phone = phone_number
+                };
+                db.phone_number.Add(newphone);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+        
+        [HttpPost]
+        public JsonResult addUserIDCard(string date_range, string Expiration_date, string cccd_number)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            governmentID up = db.governmentIDs.Where(item => item.userID == p_user.id).FirstOrDefault();
+            if (date_range != null)
+            {
+                DateTime tmpdate = DateTime.ParseExact(date_range, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                up.date_range = tmpdate;
+            }
+            if (Expiration_date != null)
+            {
+                DateTime tmpdate = DateTime.ParseExact(Expiration_date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                up.expiration_date = tmpdate;
+            }
+            if (cccd_number != null)
+            {
+                up.number_card = cccd_number;
+            }
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult addimgGVID1(string img)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            governmentID up = db.governmentIDs.Where(item => item.userID == p_user.id).FirstOrDefault();
+            up.backof_id_card = img;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult addimgGVID2(string img)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            governmentID up = db.governmentIDs.Where(item => item.userID == p_user.id).FirstOrDefault();
+            up.identity_card = img;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult addEmergencyContact(string ec_name, string relationship, string ec_language, string ec_email, string ec_country, string ec_phone_number)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            emergency_contact e = db.emergency_contact.Where(item => item.userid == p_user.id).FirstOrDefault();
+            if (ec_phone_number.Length > 20 || !Regex.IsMatch(ec_phone_number, @"^\d+$")) ec_phone_number = "";
+            if(e != null)
+            {
+                e.ec_name = ec_name;
+                e.phone_number = ec_phone_number;
+                e.email = ec_email;
+                e.country = ec_country;
+                e.relationship = relationship;
+                e.ec_language = ec_language;
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            else
+            {
+                emergency_contact newe = new emergency_contact()
+                {
+                    userid = p_user.id,
+                    ec_name = ec_name,
+                    phone_number = ec_phone_number,
+                    relationship = relationship,
+                    ec_language = ec_language,
+                    email = ec_email,
+                    country = ec_country,
+                };
+                db.emergency_contact.Add(newe);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult addAddressCtc(int country_id, int state_id, int city_id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
+            tmpprofile.country_id = country_id;
+            tmpprofile.u_state = state_id;
+            tmpprofile.u_city = city_id;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
         // Login and Logout and Sign up
         public ActionResult Login()
         {

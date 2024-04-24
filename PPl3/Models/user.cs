@@ -21,6 +21,7 @@ namespace PPl3.Models
             this.disputes = new HashSet<dispute>();
             this.email_contents = new HashSet<email_contents>();
             this.email_contents1 = new HashSet<email_contents>();
+            this.emergency_contact = new HashSet<emergency_contact>();
             this.favourites = new HashSet<favourite>();
             this.governmentIDs = new HashSet<governmentID>();
             this.host_reviews = new HashSet<host_reviews>();
@@ -59,6 +60,8 @@ namespace PPl3.Models
         public virtual ICollection<email_contents> email_contents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<email_contents> email_contents1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<emergency_contact> emergency_contact { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<favourite> favourites { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

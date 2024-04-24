@@ -1,0 +1,698 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    int pos = 0;
+    string tmpBD;
+
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal information</title>
+    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
+    <link href="~/ExtraFiles/assets/css/personal_infor.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/headerGuest.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @if (p_user.user_profile.FirstOrDefault().user_avatar != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                            }
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><a href="/user/homeuser/trip">Trip</a></li>
+                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                                <li><a href="Content">Manage listings</a></li>
+                                <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
+                                <li><a href="/user/homeuser/userPersonalProfile">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="tittle">
+                            <h1>Personal info</h1>
+                        </div>
+                    </div>
+                    <div class="col l-6 m-12 c-12">
+                        <ul class="infor_list">
+                            <li>
+                                <div class="infor_container">
+                                    <div class="infor_item">
+                                        <span>Legal name</span>
+                                        <p class="legal_name">@p_user.user_personalInfor.FirstOrDefault().legal_name</p>
+                                    </div>
+                                    <button class="btn"><i class="fa-solid fa-chevron-down"></i></button>
+                                </div>
+                                <div class="input_box">
+                                    <div class="two_input input_name">
+                                        <input type="text" id="first_name" placeholder="First name" value="@p_user.user_personalInfor.FirstOrDefault().first_name">
+                                        <input type="text" id="last_name" placeholder="Last name" value="@p_user.user_personalInfor.FirstOrDefault().last_name">
+                                    </div>
+                                    <button class="save_btn name_btn" id="savename">Save</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="infor_container">
+                                    <div class="infor_item">
+                                        <span>Phone numbers</span>
+                                        <p class="phone_numbers">Add a number so confirmed guests and Airbnb can get in touch. You can add other numbers and choose how they’re used.</p>
+                                    </div>
+                                    <button class="btn"><i class="fa-solid fa-chevron-down"></i></button>
+                                </div>
+                                <div class="input_box">
+                                    <div class="first_input input_sdt">
+                                        <input type="number" id="phone_number" placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone">
+                                        <p class="error error_mess_phone">Please enter all 10 numbers</p>
+                                    </div>
+                                    <button class="save_btn" id="savephone">Save</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="infor_container">
+                                    <div class="infor_item">
+                                        <span>Government ID</span>
+                                        <p>Confirmed</p>
+                                    </div>
+                                    <button class="btn"><i class="fa-solid fa-chevron-down"></i></button>
+                                </div>
+                                <div class="input_box">
+                                    <div class="input_cccd">
+                                        <div class="input_cccd_container">
+                                            <div class="first_input input_date">
+                                                <h5>Date range: </h5>
+                                                @{
+                                                    if (p_user.governmentIDs.FirstOrDefault().date_range != null)
+                                                    {
+                                                        <input type="date" id="date_range" value="@p_user.governmentIDs.FirstOrDefault().date_range.Value.ToString("yyyy-MM-dd")">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="date" id="date_range">
+                                                    }
+                                                }
+                                            </div>
+                                            <div class="first_input input_date">
+                                                <h5>Expiration date: </h5>
+                                                @{
+                                                    if (p_user.governmentIDs.FirstOrDefault().date_range != null)
+                                                    {
+                                                        <input type="date" id="Expiration_date" value="@p_user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("yyyy-MM-dd")">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="date" id="Expiration_date">
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="first_input">
+                                            <h5>Issued by: </h5>
+                                            <input type="number" id="cccd_number" placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card">
+                                            <p class="error error_mess">Please enter all 12 numbers</p>
+                                        </div>
+                                    </div>
+                                    <div class="img_cccd">
+                                        <h5>Citizen identity card's image: </h5>
+                                        <input type="file" hidden id="file_upload_left">
+                                        <button class="img_btn_front">
+                                            @{
+                                                if (@p_user.governmentIDs.FirstOrDefault().backof_id_card != null)
+                                                {
+                                                    <div class="img_front img"
+                                                         style="background : url(@p_user.governmentIDs.FirstOrDefault().backof_id_card) top center /cover no-repeat"> </div>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa-solid fa-plus"></i>
+                                                    <div class="img_front"> </div>
+                                                }
+                                            }
+
+                                        </button>
+                                        <input type="file" hidden id="file_upload_right">
+                                        <button class="img_btn_behind">
+                                            @{
+                                                if (@p_user.governmentIDs.FirstOrDefault().identity_card != null)
+                                                {
+                                                    <div class="img_behind img"
+                                                         style="background : url(@p_user.governmentIDs.FirstOrDefault().identity_card) top center /cover no-repeat"> </div>
+                                                }
+                                                else
+                                                {
+
+                                                    <i class="fa-solid fa-plus"></i>
+                                                    <div class="img_behind"> </div>
+                                                }
+                                            }
+                                            <div class="img_behind">
+
+                                            </div>
+                                        </button>
+                                    </div>
+                                    <button class="save_btn" id="savecard">Save</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="infor_container">
+                                    <div class="infor_item">
+                                        <span>Address</span>
+                                        @{
+                                            String country = "";
+                                            string state = "";
+                                            string city = "";
+                                            if (p_user.user_personalInfor != null)
+                                            {
+                                                if (p_user.user_personalInfor.FirstOrDefault().country != null)
+                                                {
+                                                    country = p_user.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                    if (p_user.user_personalInfor.FirstOrDefault().state != null)
+                                                    {
+                                                        state = p_user.user_personalInfor.FirstOrDefault().state.state_name;
+                                                        if (p_user.user_personalInfor.FirstOrDefault().city != null)
+                                                        {
+                                                            city = p_user.user_personalInfor.FirstOrDefault().city.city_name;
+                                                            <p class="address">Live in @city, @state, @country</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="address">Live in @state, @country</p>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="address">Live in @country</p>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <p class="address">Live in</p>
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                    <button class="btn"><i class="fa-solid fa-chevron-down"></i></button>
+                                </div>
+                                <div class="input_box">
+                                    <div class="input_address">
+                                        <div class="first_input">
+                                            @*<input type="text" id="country" placeholder="Country">*@
+                                            <select class="form-control"
+                                                    id="country">
+                                                @*@{
+                                                    if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                    {
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country_id">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="">Please select country</option>
+                                                    }*@
+                                                @*<option value="">Please select country</option>
+                                                @foreach (var item in db.countries.ToList())
+                                                {
+                                                    <option value="@item.id">@item.ct_name</option>
+                                                }*@
+                                            </select>
+                                        </div>
+                                        <div class="two_input">
+                                            @*<input type="text" id="district" placeholder="District">*@
+                                            <select class="form-control"
+                                                    id="district">
+                                                <option value="">Please select state</option>
+                                            </select>
+                                            @*<input type="text" id="city" placeholder="City">*@
+                                            <select class="form-control"
+                                                    id="city">
+                                                <option value="">Please select City</option>
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+                                    <button class="save_btn address_btn" id="saveaddress">Save</button>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="infor_container">
+                                    <div class="infor_item">
+                                        <span>Emergency contact</span>
+                                        <p>Confirmed</p>
+                                    </div>
+                                    <button class="btn"><i class="fa-solid fa-chevron-down"></i></button>
+                                </div>
+                                <div class="input_box">
+                                    <div class="input_emergency_contact">
+                                        @{
+                                            if (p_user.emergency_contact.FirstOrDefault() != null)
+                                            {
+                                                <div class="first_input">
+                                                    <input type="text" id="ec_name" placeholder="Name" value="@p_user.emergency_contact.FirstOrDefault().ec_name">
+                                                    <input type="text" id="relationship" placeholder="Relationship" value="@p_user.emergency_contact.FirstOrDefault().relationship">
+                                                    <input type="text" id="ec_language" placeholder="Language" value="@p_user.emergency_contact.FirstOrDefault().ec_language">
+                                                    <input type="email" id="ec_email" placeholder="Email" value="@p_user.emergency_contact.FirstOrDefault().email">
+                                                </div>
+                                                <div class="two_input">
+                                                    <input type="text" id="ec_country" placeholder="Country" value="@p_user.emergency_contact.FirstOrDefault().country">
+                                                    <input type="tel" id="ec_phone_number" placeholder="Phone number" value="@p_user.emergency_contact.FirstOrDefault().phone_number">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="first_input">
+                                                    <input type="text" id="ec_name" placeholder="Name" value="">
+                                                    <input type="text" id="relationship" placeholder="Relationship" value="">
+                                                    <input type="text" id="ec_language" placeholder="Language" value="">
+                                                    <input type="email" id="ec_email" placeholder="Email" value="">
+                                                </div>
+                                                <div class="two_input">
+                                                    <input type="text" id="ec_country" placeholder="Country" value="">
+                                                    <input type="tel" id="ec_phone_number" placeholder="Phone number" value="">
+                                                </div>
+                                            }
+                                        }
+                                    </div>
+                                    <button class="save_btn" id="saveemergency">Save</button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col l-o-1 l-5 m-12 c-12">
+                        <div class="ask_list">
+                            <div class="ask_item">
+                                <div class="ask_icon">
+                                    <i class="fa-solid fa-shield"></i>
+                                    <i class="icon_sub fa-solid fa-lock"></i>
+                                </div>
+                                <span>Why isn’t my info shown here?</span>
+                                <p>We’re hiding some account details to protect your identity.</p>
+                            </div>
+                            <div class="ask_item">
+                                <div class="ask_icon">
+                                    <i class="fa-solid fa-lock"></i>
+                                </div>
+                                <span>Which details can be edited?</span>
+                                <p>Contact info and personal details can be edited. If this info was used to verify your identity, you’ll need to get verified again the next time you book—or to continue hosting.</p>
+                            </div>
+                            <div class="ask_item">
+                                <div class="ask_icon">
+                                    <i class="fa-solid fa-eye"></i>
+                                </div>
+                                <span>What info is shared with others?</span>
+                                <p>Airbnb only releases contact information for Hosts and guests after a reservation is confirmed.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <div class="gird wide">
+                <div class="row no-gutter infor_contact_list">
+                    <div class="col l-4 m-6 c-12 infor_contact_item support">
+                        <span>Support</span>
+                        <ul>
+                            <li><a href="">Help Center</a></li>
+                            <li><a href="">Get help with a safety issue</a></li>
+                            <li><a href="">AirCover</a></li>
+                            <li><a href="">Anti-discrimination</a></li>
+                            <li><a href="">Disability support</a></li>
+                            <li><a href="">Cancellation options</a></li>
+                            <li><a href="">Report neighborhood concern</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item hosting">
+                        <span>Hosting</span>
+                        <ul>
+                            <li><a href="">T|.|N|.|T your home</a></li>
+                            <li><a href="">AirCover for Hosts</a></li>
+                            <li><a href="">Hosting resources</a></li>
+                            <li><a href="">Community forum</a></li>
+                            <li><a href="">Hosting responsibly</a></li>
+                            <li><a href="">T|.|N|.|T-friendly apartments</a></li>
+                            <li><a href="">Join a free Hosting class</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item airbnb">
+                        <span>T|.|N|.|T</span>
+                        <ul>
+                            <li><a href="">Newsroom</a></li>
+                            <li><a href="">New features</a></li>
+                            <li><a href="">Careers</a></li>
+                            <li><a href="">Investors</a></li>
+                            <li><a href="">Gift cards</a></li>
+                            <li><a href="">T|.|N|.|T.org emergency stays</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/ExtraFiles/JS/personal_infor.js"></script>
+    <script src="~/ExtraFiles/JS/menuGuest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @*<script>
+        $(document).ready(function () {
+            $('#country').val(@p_user.user_personalInfor.FirstOrDefault().country_id);
+            $('#city').val(@p_user.user_personalInfor.FirstOrDefault().u_s);
+            $('#district').val(@p_user.user_personalInfor.FirstOrDefault().u_state);
+        });
+    </script>*@
+    @*Lấy list countries*@
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/user/HomeUser/GetCountries",
+                success: function (countries) {
+                    $('#country').empty();
+                    $('#country').append('<option value="">Please select your state</option>');
+                    $.each(countries, function (key, value) {
+                        $('#country').append('<option value="' + value.id + '">' + value.country_name + '</option>');
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+    @*Lấy list states*@
+    <script>
+        $(document).ready(function () {
+            $('#country').change(function () {
+                var countryId = $(this).val();
+                if (countryId) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/user/HomeUser/GetStates?countryId=" + countryId,
+                        success: function (states) {
+                            $('#district').empty();
+                            $('#district').append('<option value="">Please select your state</option>');
+                            $('#city').empty();
+                            $('#city').append('<option value="">Please select your city</option>');
+                            $.each(states, function (key, value) {
+                                $('#district').append('<option value="' + value.id + '">' + value.state_name + '</option>');
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    $('#district').empty();
+                }
+            });
+        });
+    </script>
+    @*Lấy list cities*@
+    <script>
+        $(document).ready(function () {
+            $('#district').change(function () {
+                var stateId = $(this).val();
+                if (stateId) {
+                    $.ajax({
+                        type: "GET",
+                        url: "/user/HomeUser/GetCities?stateId=" + stateId,
+                        success: function (cities) {
+                            $('#city').empty();
+                            $('#city').append('<option value="">Please select your city</option>');
+                            $.each(cities, function (key, value) {
+                                $('#city').append('<option value="' + value.id + '">' + value.city_name + '</option>');
+                            });
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    $('#city').empty();
+                }
+            });
+        });
+    </script>
+    <script>
+        function addLegalName() {
+            var fn = document.getElementById("first_name").value;
+            var ln = document.getElementById("last_name").value;
+            var data = {
+                first_name: fn,
+                last_name: ln
+            };
+            $.ajax({
+                url: '/user/homeuser/addLegalName',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    <script>
+        function addUserPhone() {
+            var pn = document.getElementById("phone_number").value;
+            var data = {
+                phone_number: pn
+            };
+            $.ajax({
+                url: '/user/homeuser/addUserPhone',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    <script>
+        function addUserIDCard() {
+            var dateRange = document.getElementById("date_range").value;
+            var expirationDate = document.getElementById("Expiration_date").value;
+            var cccdNumber = document.getElementById("cccd_number").value;
+            var data = new FormData();
+            if (dateRange) data.append('date_range', dateRange);
+            if (expirationDate) data.append('Expiration_date', expirationDate);
+            if (cccdNumber) data.append('cccd_number', cccdNumber);
+            $.ajax({
+                url: '/user/homeuser/addUserIDCard',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    <script>
+        function addimgGVID1() {
+            var fileUploadLeft = document.getElementById("file_upload_left").files[0];
+            if (fileUploadLeft) {
+                var readerLeft = new FileReader();
+                readerLeft.readAsDataURL(fileUploadLeft);
+                readerLeft.onload = function (e) {
+                    var fileUploadLeftful = e.target.result;
+                    var data = new FormData();
+                    data.append('img', fileUploadLeftful);
+                    $.ajax({
+                        url: '/user/homeuser/addimgGVID1',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                };
+            }
+        }
+    </script>
+    <script>
+        function addimgGVID2() {
+            var fileUploadRight = document.getElementById("file_upload_right").files[0];
+            if (fileUploadRight) {
+                var readerRight = new FileReader();
+                readerRight.readAsDataURL(fileUploadRight);
+                readerRight.onload = function (e) {
+                    var fileUploadRightfur = e.target.result;
+                    var data = new FormData();
+                    data.append('img', fileUploadRightfur);
+                    $.ajax({
+                        url: '/user/homeuser/addimgGVID2',
+                        type: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        processData: false,
+                        contentType: false,
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                };
+            }
+        }
+    </script>
+    <script>
+        function addEmergencyContact() {
+            var ecName = document.getElementById("ec_name").value;
+            var ecRelationship = document.getElementById("relationship").value;
+            var ecLanguage = document.getElementById("ec_language").value;
+            var ecEmail = document.getElementById("ec_email").value;
+            var ecCountry = document.getElementById("ec_country").value;
+            var ecPhoneNumber = document.getElementById("ec_phone_number").value;
+            var data = {
+                ec_name: ecName,
+                relationship: ecRelationship,
+                ec_language: ecLanguage,
+                ec_email: ecEmail,
+                ec_country: ecCountry,
+                ec_phone_number: ecPhoneNumber
+            };
+            $.ajax({
+                url: '/user/homeuser/addEmergencyContact',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    <script>
+        function addAddressCtc() {
+            var countryID = document.getElementById("country").value;
+            var cityID = document.getElementById("city").value;
+            var stateID = document.getElementById("district").value;
+            var data = {
+                country_id: countryID,
+                state_id: stateID,
+                city_id: cityID
+            };
+            $.ajax({
+                url: '/user/homeuser/addAddressCtc',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    @*Thiết lập lấy dữ liệu từ nút savename*@
+    <script>
+        const saveName = document.getElementById('savename');
+        saveName.addEventListener('click', () => {
+            addLegalName();
+        });
+    </script>
+    @*Thiết lập lấy dữ liệu từ nút savephone*@
+    <script>
+        const savePhone = document.getElementById('savephone');
+        savePhone.addEventListener('click', () => {
+            addUserPhone();
+        });
+    </script>
+    @*Thiết lập lấy dữ liệu từ nút savecard*@
+    <script>
+        const saveCard = document.getElementById('savecard');
+        saveCard.addEventListener('click', () => {
+            addUserIDCard();
+            addimgGVID1();
+            addimgGVID2();
+        });
+    </script>
+    @*Thiết lập lấy dữ liệu từ nút saveemergency*@
+    <script>
+        const saveEmergency = document.getElementById('saveemergency');
+        saveEmergency.addEventListener('click', () => {
+            addEmergencyContact();
+        });
+    </script>
+    @*Thiết lập lấy dữ liệu từ nút saveaddress*@
+    <script>
+        const saveAddress = document.getElementById('saveaddress');
+        saveAddress.addEventListener('click', () => {
+            addAddressCtc();
+        });
+    </script>
+
+</body>
+</html>
