@@ -707,7 +707,7 @@ namespace PPl3.Areas.User.Controllers
         public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId)
         {
             if (check_in_date > check_out_date) return  Json("error1", JsonRequestBehavior.AllowGet);
-            if ((check_out_date.Month - check_in_date.Month) >= 2) return Json("error2", JsonRequestBehavior.AllowGet);
+            if ((check_out_date.Month - check_in_date.Month >= 2 && check_out_date.Year == check_in_date.Year) || (check_out_date.Year != check_in_date.Year)) return Json("error2", JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
@@ -753,7 +753,7 @@ namespace PPl3.Areas.User.Controllers
             {
                 success = "error1"
             }, JsonRequestBehavior.AllowGet);
-            if ((checkOutDate.Month - checkInDate.Month) >= 2) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
+            if ((checkOutDate.Month - checkInDate.Month >= 2 && checkOutDate.Year == checkInDate.Year) || (checkInDate.Year != checkOutDate.Year)) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             while (db.bookings.Any(item => item.check_out_date < DateTime.Now))
