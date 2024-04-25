@@ -194,12 +194,15 @@ namespace PPl3.Areas.User.Controllers
 
         private void DeleteImage(string imagePath)
         {
-  
-            string physicalPath = ControllerContext.HttpContext.Server.MapPath(imagePath);
-            if (System.IO.File.Exists(physicalPath))
+            if(!IsImageUrl(imagePath))
             {
-                System.IO.File.Delete(physicalPath);
+                string physicalPath = ControllerContext.HttpContext.Server.MapPath(imagePath);
+                if (System.IO.File.Exists(physicalPath))
+                {
+                    System.IO.File.Delete(physicalPath);
+                }
             }
+           
         }
 
         public ActionResult editProfile()
@@ -824,6 +827,22 @@ namespace PPl3.Areas.User.Controllers
 
             return db.users.Any(u => u.user_password == password && u.id == id);
 
+        }
+
+        public bool IsImageUrl(string imagePath)
+        {
+            // Kiểm tra xem đường dẫn có bắt đầu bằng "http://" hoặc "https://"
+            if (imagePath.StartsWith("http://") || imagePath.StartsWith("https://"))
+            {
+                // Kiểm tra đuôi mở rộng của đường dẫn
+                string extension = System.IO.Path.GetExtension(imagePath);
+                if (!string.IsNullOrEmpty(extension))
+                {
+                    string[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+                    return imageExtensions.Contains(extension.ToLower());
+                }
+            }
+            return false;
         }
 
     }
