@@ -76,7 +76,7 @@
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="/user/homeuser/index">Switch to guest</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
-                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
                                 <li><a href="#">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
@@ -124,7 +124,7 @@
                                                     else
                                                     {
 
-                                                        <button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>
+                                                        <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
 
                                                     }
 
@@ -254,81 +254,87 @@
                     type: "GET",
                     data: { text: text },
                     success: function (data) {
-                        $(".list_hotel_1").html("");
-                        $(".list_hotel_2").html("");
-                        console.log(data);
-                        let list_pro = [];
-                        $.each(data.list_pro, function (index, value) {
-                            list_pro.push(value);
-                        });
-                        for (var i = 0; i <= parseInt(data.count) - 1; i++) {
-                            // listHotel2
-                            var hotelHtml2 = '<div class="col l-12 m-12 c-12 hotel_' + list_pro[i].id + '">' +
-                                '<div class="hotel_item_2">' +
-                                '<div class="img_hotel img_hotel_2" style="background : url(' + list_pro[i].pi_image + ') top center /cover no-repeat">' +
-                                '<div class="btn_listing">' + '<div class="edit_btn_2">' + '<button>' + '<i class="fa-solid fa-pen">' + '</i>'
-                                + '</button>'
-                                + '</div>'
-                                + '<div class="remove_btn_2 js_remove_btn btn_' + (i + 1) + '" onclick="DeleteListing(\'' + list_pro[i].id + '\')">'
-                                + '<button>' + '<i class="fa-solid fa-trash-can">'
-                                + '</i>'
-                                + '</button>'
-                                + '</div>'
-                                + '</div>'
-                                + '</div>'
-                                + '<div class="infor_hotel infor_hotel_2">';
-                            if (list_pro[i].created != null) {
-                                hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
-                                    '<p>' + list_pro[i].p_address + '</p>';
-                            } else {
-                                hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
-                                    '<p>' + list_pro[i].p_address + '</p>';
-                            }
-                            if (list_pro[i].created != null) {
-                                hotelHtml2 += '<button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>';
-                            } else {
-                                hotelHtml2 += '<button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>';
-                            }
-                            hotelHtml2 += '<i class="fa-solid fa-chevron-right">' + '</i>'
-                                + ' </div>'
-                                + '</div>'
-                                + '</div>';
+                        if (data.success == true) {
+                            $(".list_hotel_1").html("");
+                            $(".list_hotel_2").html("");
+                            console.log(data);
+                            let list_pro = [];
+                            $.each(data.list_pro, function (index, value) {
+                                list_pro.push(value);
+                            });
+                            for (var i = 0; i <= parseInt(data.count) - 1; i++) {
+                                // listHotel2
+                                var hotelHtml2 = '<div class="col l-12 m-12 c-12 hotel_' + list_pro[i].id + '">' +
+                                    '<div class="hotel_item_2">' +
+                                    '<div class="img_hotel img_hotel_2" style="background : url(' + list_pro[i].pi_image + ') top center /cover no-repeat">' +
+                                    '<div class="btn_listing">' + '<div class="edit_btn_2">' + '<button>' + '<i class="fa-solid fa-pen">' + '</i>'
+                                    + '</button>'
+                                    + '</div>'
+                                    + '<div class="remove_btn_2 js_remove_btn btn_' + (i + 1) + '" onclick="DeleteListing(\'' + list_pro[i].id + '\')">'
+                                    + '<button>' + '<i class="fa-solid fa-trash-can">'
+                                    + '</i>'
+                                    + '</button>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '<div class="infor_hotel infor_hotel_2">';
+                                if (list_pro[i].created != null) {
+                                    hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                } else {
+                                    hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                }
+                                if (list_pro[i].created != null) {
+                                    hotelHtml2 += '<button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>';
+                                } else {
+                                    hotelHtml2 += '<button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>';
+                                }
+                                hotelHtml2 += '<i class="fa-solid fa-chevron-right">' + '</i>'
+                                    + ' </div>'
+                                    + '</div>'
+                                    + '</div>';
 
 
-                            // List_hotel_1
-                            var hotelHtml1 = '<div class="col l-4 m-6 c-12 hotel_' + list_pro[i].id + '">' +
-                                '<div class="hotel_item">' +
-                                '<div class="img_hotel" style="background : url(' + list_pro[i].pi_image + ') top center /cover no-repeat">' +
-                                '<div class="in_progress">';
-                            if (list_pro[i].created != null) {
-                                hotelHtml1 += '<button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>';
-                            } else {
-                                hotelHtml1 += '<button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>';
-                            }
-                            hotelHtml1 += '</div>' +
-                                '<div class="btn_listing">' +
-                                '<div class="edit_btn"><button>Edit listing</button></div>' +
-                                '<div class="remove_btn js_remove_btn btn_' + i + 1 + '" onclick="DeleteListing(\'' + list_pro[i].id + '\')">' +
-                                '<button><i class="fa-solid fa-trash-can"></i>Remove listing</button>' +
-                                '</div>' +
-                                '</div>' +
-                                '</div>' +
-                                '<div class="infor_hotel">';
-                            if (list_pro[i].created != null) {
-                                hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
-                                    '<p>' + list_pro[i].p_address + '</p>';
-                            } else {
-                                hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
-                                    '<p>' + list_pro[i].p_address + '</p>';
-                            }
-                            hotelHtml1 += '</div>' +
-                                '</div>' +
-                                '</div>';
-                            // Thêm nội dung HTML vào một phần tử có id là "yourContainerId"
-                            $(".list_hotel_1").append(hotelHtml1);
-                            $(".list_hotel_2").append(hotelHtml2);
+                                // List_hotel_1
+                                var hotelHtml1 = '<div class="col l-4 m-6 c-12 hotel_' + list_pro[i].id + '">' +
+                                    '<div class="hotel_item">' +
+                                    '<div class="img_hotel" style="background : url(' + list_pro[i].pi_image + ') top center /cover no-repeat">' +
+                                    '<div class="in_progress">';
+                                if (list_pro[i].created != null) {
+                                    hotelHtml1 += '<button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>';
+                                } else {
+                                    hotelHtml1 += '<button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>';
+                                }
+                                hotelHtml1 += '</div>' +
+                                    '<div class="btn_listing">' +
+                                    '<div class="edit_btn"><button>Edit listing</button></div>' +
+                                    '<div class="remove_btn js_remove_btn btn_' + i + 1 + '" onclick="DeleteListing(\'' + list_pro[i].id + '\')">' +
+                                    '<button><i class="fa-solid fa-trash-can"></i>Remove listing</button>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="infor_hotel">';
+                                if (list_pro[i].created != null) {
+                                    hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                } else {
+                                    hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                }
+                                hotelHtml1 += '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                                // Thêm nội dung HTML vào một phần tử có id là "yourContainerId"
+                                $(".list_hotel_1").append(hotelHtml1);
+                                $(".list_hotel_2").append(hotelHtml2);
 
+                            }
                         }
+                        else if (data.success == false) {
+                            window.location.href = data.redirectUrl;
+                        }
+                      
 
 
                     },

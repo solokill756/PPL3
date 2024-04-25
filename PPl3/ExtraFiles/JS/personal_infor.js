@@ -151,3 +151,6 @@ saveBtns.forEach((saveBtn) => {
     })
 })
 
+
+// check gía trị của các thành phần được nhập
+

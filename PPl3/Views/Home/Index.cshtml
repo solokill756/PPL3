@@ -171,7 +171,7 @@
                             <div class="img_seller_profile" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/home/profile?id=@p_user.id'">
                             </div>
                             <span class="logo_shield"><i class="fa-solid fa-shield"></i></span>
-                            <span class="name_seller">@p_user.account_name</span>
+                            <span class="name_seller">@p_user.user_personalInfor.FirstOrDefault().legal_name</span>
                             <div class="contact_seller">
                                 <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                                 <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>

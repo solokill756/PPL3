@@ -17,7 +17,7 @@
     int pos = 0;
     string tmpBD;
     bool is_host = false;
-    if (p_user.user_type1.ut_name == "host")
+    if (p_user.user_type == 3)
     {
         is_host = true;
     }
@@ -32,7 +32,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guest profile - T|.|N|.|T</title>
-    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css?v=3">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/headerGuest.css">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="nav_menu">
                     <div class="nav_languages">
-                        <a href="">Switch To Hosting</a>
+                        <a href="/host/homehost/listing">Switch To Hosting</a>
                         <button><i class="fa-solid fa-globe"></i></button>
                     </div>
                     <div class="nav_login">
@@ -77,7 +77,7 @@
                             <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                             <li><a href="/host/homehost/listing">Manage listings</a></li>
                             <li><a href="/user/homeuser/profile?id=@tmp_user.id">Account</a></li>
-                            <li><a href="#">Gift Cards</a></li>
+                            <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
                             <li><a href="#">Help Center</a></li>
                             <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                         </ul>
@@ -98,9 +98,14 @@
                                     @{
                                         if (p_user.user_profile.FirstOrDefault().user_avatar != null)
                                         {
-                                            <div class="avatar" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
-                                                <i class="fa-solid fa-shield"></i>
-                                            </div>
+                                            
+                                                <div class="avatar" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat; width: 160px; height:160px">
+                                                    <i class="fa-solid fa-shield"></i>
+                                                </div>
+
+                                            
+                                            
+                                         
                                         }
                                         else
                                         {
@@ -109,9 +114,6 @@
                                             </div>
                                         }
                                     }
-                                    @*<div class="avatar">
-                                            <i class="fa-solid fa-shield"></i>
-                                        </div>*@
                                     <h2>@p_user.user_personalInfor.FirstOrDefault().legal_name</h2>
                                     @{
                                         if (is_host)
@@ -149,6 +151,7 @@
                                             <div class="infor_basic">
                                                 @{
                                                     count = 0;
+
                                                     if (DateTime.Now.ToString("yyyy") != p_user.day_become_host.Value.ToString("yyyy"))
                                                     {
 

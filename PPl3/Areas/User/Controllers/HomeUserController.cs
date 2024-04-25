@@ -149,7 +149,8 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult profile(int id)
         {
             if (Session["user"] != null)
-            {   
+            {
+              
                 PPL3Entities db = new PPL3Entities();
                 user p_user = (user)Session["user"];
                 if (!(db.user_profile.Any(item => item.userID == p_user.id)))
@@ -193,6 +194,7 @@ namespace PPl3.Areas.User.Controllers
 
         private void DeleteImage(string imagePath)
         {
+  
             string physicalPath = ControllerContext.HttpContext.Server.MapPath(imagePath);
             if (System.IO.File.Exists(physicalPath))
             {
@@ -325,28 +327,37 @@ namespace PPl3.Areas.User.Controllers
             return Json("true", JsonRequestBehavior.AllowGet);
         }
         //user personal profile 
-        public ActionResult userPersonalProfile()
+        public ActionResult userPersonalProfile(bool error = false)
         {
+            if (error == true) ViewBag.Error = error;
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
-            if (!(db.user_personalInfor.Any(item => item.userID == p_user.id)))
+            if(p_user != null)
             {
-                user_personalInfor new_personal = new user_personalInfor();
-                new_personal.userID = p_user.id;
-                db.user_personalInfor.Add(new_personal);
-                db.SaveChanges();
-                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
-                Session["user"] = userInfor;
+                if (!(db.user_personalInfor.Any(item => item.userID == p_user.id)))
+                {
+                    user_personalInfor new_personal = new user_personalInfor();
+                    new_personal.userID = p_user.id;
+                    db.user_personalInfor.Add(new_personal);
+                    db.SaveChanges();
+                    var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                    Session["user"] = userInfor;
+                }
+                if (!(db.governmentIDs.Any(item => item.userID == p_user.id)))
+                {
+                    governmentID new_gvid = new governmentID();
+                    new_gvid.userID = p_user.id;
+                    db.governmentIDs.Add(new_gvid);
+                    db.SaveChanges();
+                    var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                    Session["user"] = userInfor;
+                }
             }
-            if (!(db.governmentIDs.Any(item => item.userID == p_user.id)))
+            else
             {
-                governmentID new_gvid = new governmentID();
-                new_gvid.userID = p_user.id;
-                db.governmentIDs.Add(new_gvid);
-                db.SaveChanges();
-                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
-                Session["user"] = userInfor;
-            }
+                return RedirectToAction("login", "homeuser", new { area = "user" });
+            }    
+           
             return View();
         }
         [HttpGet]
@@ -385,6 +396,7 @@ namespace PPl3.Areas.User.Controllers
             return Json(cities, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
         public JsonResult addLegalName(string first_name, string last_name)
         {
             PPL3Entities db = new PPL3Entities();
@@ -400,6 +412,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
         public JsonResult addUserPhone(string phone_number)
         {
             PPL3Entities db = new PPL3Entities();
@@ -434,6 +447,7 @@ namespace PPl3.Areas.User.Controllers
         }
         
         [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
         public JsonResult addUserIDCard(string date_range, string Expiration_date, string cccd_number)
         {
             PPL3Entities db = new PPL3Entities();
@@ -459,6 +473,7 @@ namespace PPl3.Areas.User.Controllers
             return Json("true", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
         public JsonResult addimgGVID1(string img)
         {
             PPL3Entities db = new PPL3Entities();
@@ -471,6 +486,7 @@ namespace PPl3.Areas.User.Controllers
             return Json("true", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
         public JsonResult addimgGVID2(string img)
         {
             PPL3Entities db = new PPL3Entities();
@@ -484,6 +500,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
         public JsonResult addEmergencyContact(string ec_name, string relationship, string ec_language, string ec_email, string ec_country, string ec_phone_number)
         {
             PPL3Entities db = new PPL3Entities();
@@ -523,6 +540,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
         public JsonResult addAddressCtc(int country_id, int state_id, int city_id)
         {
             PPL3Entities db = new PPL3Entities();
@@ -636,9 +654,10 @@ namespace PPl3.Areas.User.Controllers
 
 
         // Detail
-        [UserAuthorize(idChucNang = 12)]
         public ActionResult Detail(int id , int bookingId = -1)
         {
+            if (Session["user"] != null )
+            {
                 if (bookingId != -1) ViewBag.bookingId = bookingId;
                 PPL3Entities db = new PPL3Entities();
                 List<booking> bookings = new List<booking>();
@@ -653,6 +672,11 @@ namespace PPl3.Areas.User.Controllers
                 date = date.Substring(0, date.Length - 1);
                 ViewBag.dataJson = JsonConvert.SerializeObject(date);
                 return View();
+            }
+            else
+            {
+                return RedirectToAction("login", "homeuser", new { area = "user" });
+            }
            
         }
 

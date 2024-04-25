@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\HostAuthorize.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UserAuthorize.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
@@ -400,6 +401,7 @@
     <Content Include="Areas\User\Views\HomeUser\editProfile.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\profile.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\userPersonalProfile.cshtml" />
+    <Content Include="Areas\Host\Views\HomeHost\Listing.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -407,7 +409,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Host\Views\HomeHost\Listing.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

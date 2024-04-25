@@ -18,10 +18,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personal information</title>
-    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
-    <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/personal_infor.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/ExtraFiles/assets/css/headerGuest.css">
+    <link href="~/ExtraFiles/assets/css/headerGuest.css?v=1" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -39,21 +39,43 @@
                     </div>
                     <div class="nav_menu">
                         <div class="nav_languages">
-                            <a href="">Switch To Hosting</a>
+                            <a href="/host/homehost/listing">Switch To Hosting</a>
                             <button><i class="fa-solid fa-globe"></i></button>
                         </div>
                         <div class="nav_login">
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
-                            @if (p_user.user_profile.FirstOrDefault().user_avatar != null)
-                            {
-                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                            @{
+                                try
+                                {
+
+                                    if (p_user.user_profile.FirstOrDefault() != null)
+                                    {
+                                        if (p_user.user_profile.FirstOrDefault().user_avatar != null)
+                                        {
+                                            <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                                        }
+                                        else
+                                        {
+                                            <button class="js_menuUser_btn">
+                                                <i class="fa-solid fa-user"></i>
+                                            </button>
+
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <button class="js_menuUser_btn">
+                                            <i class="fa-solid fa-user"></i>
+                                        </button>
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine(ex.Message);
+                                }
                             }
-                            else
-                            {
-                                <button class="js_menuUser_btn">
-                                    <i class="fa-solid fa-user"></i>
-                                </button>
-                            }
+
                         </div>
 
                         <div class="sub_nav sub_nav_user js_sub_nav_user">
@@ -62,13 +84,21 @@
                                 <li class=""><button>Notifications</button></li>
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
-                                <li><a href="Content">Manage listings</a></li>
+                                <li><a href="/host/homehost/listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
-                                <li><a href="/user/homeuser/userPersonalProfile">Gift Cards</a></li>
+                                <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
                                 <li><a href="#">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
                         </div>
+                        @if (ViewBag.Error == true)
+                        {
+                            <div class="alert_out">
+                                <i class="fas fa-times" style="color: red;"></i>
+                                <p>Please enter complete information to become a host !</p>
+                            </div>
+                            
+                        }
                     </div>
                 </div>
             </div>
@@ -93,8 +123,42 @@
                                 </div>
                                 <div class="input_box">
                                     <div class="two_input input_name">
-                                        <input type="text" id="first_name" placeholder="First name" value="@p_user.user_personalInfor.FirstOrDefault().first_name">
-                                        <input type="text" id="last_name" placeholder="Last name" value="@p_user.user_personalInfor.FirstOrDefault().last_name">
+
+                                        @if (p_user.user_personalInfor.FirstOrDefault().first_name != null && p_user.user_personalInfor.FirstOrDefault().first_name.Trim() != "")
+                                        {
+                                            if (p_user.user_type == 2)
+                                            {
+                                                <input type="text" id="first_name" placeholder="First name" value="@p_user.user_personalInfor.FirstOrDefault().first_name">
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="first_name" placeholder="First name" value="@p_user.user_personalInfor.FirstOrDefault().first_name" readonly style="cursor:not-allowed">
+                                            }
+
+                                        }
+                                        else
+                                        {
+
+                                            <input type="text" id="first_name" placeholder="First name">
+                                        }
+                                        @if (p_user.user_personalInfor.FirstOrDefault().last_name != null && p_user.user_personalInfor.FirstOrDefault().last_name.Trim() != "")
+                                        {
+                                            if (p_user.user_type == 2)
+                                            {
+                                                <input type="text" id="last_name" placeholder="Last name" value="@p_user.user_personalInfor.FirstOrDefault().last_name">
+                                            }
+                                            else { 
+                                                <input type="text" id="last_name" placeholder="Last name" value="@p_user.user_personalInfor.FirstOrDefault().last_name" readonly style="cursor:not-allowed">
+                                            }   
+
+                                        }
+                                        else
+                                        {
+                                            <input type="text" id="last_name" placeholder="Last name">
+                                        }
+
+
+
                                     </div>
                                     <button class="save_btn name_btn" id="savename">Save</button>
                                 </div>
@@ -109,7 +173,30 @@
                                 </div>
                                 <div class="input_box">
                                     <div class="first_input input_sdt">
-                                        <input type="number" id="phone_number" placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone">
+                                        @if (p_user.phone_number.FirstOrDefault() != null)
+                                        {
+                                            if (p_user.phone_number.FirstOrDefault().phone != null)
+                                            {
+                                                if (p_user.user_type == 2)
+                                                {
+
+                                                    <input type="number" id="phone_number" required placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone">
+                                                }
+                                                else if (p_user.user_type == 3)
+                                                {
+                                                    <input type="number" id="phone_number" required placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone" readonly style="cursor:not-allowed">
+                                                }
+                                            }
+                                            else { 
+                                                <input type="number" id="phone_number" required placeholder="Phone number">
+
+                                            }
+                                        }
+                                        else { 
+                                            <input type="number" id="phone_number" required placeholder="Phone number">
+                                        }
+
+
                                         <p class="error error_mess_phone">Please enter all 10 numbers</p>
                                     </div>
                                     <button class="save_btn" id="savephone">Save</button>
@@ -129,13 +216,22 @@
                                             <div class="first_input input_date">
                                                 <h5>Date range: </h5>
                                                 @{
+
                                                     if (p_user.governmentIDs.FirstOrDefault().date_range != null)
                                                     {
-                                                        <input type="date" id="date_range" value="@p_user.governmentIDs.FirstOrDefault().date_range.Value.ToString("yyyy-MM-dd")">
+                                                        if (p_user.user_type == 2)
+                                                        {
+                                                            <input type="date" id="date_range" value="@p_user.governmentIDs.FirstOrDefault().date_range.Value.ToString("yyyy-MM-dd")">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="date" id="date_range" value="@p_user.governmentIDs.FirstOrDefault().date_range.Value.ToString("yyyy-MM-dd")" readonly style="cursor:not-allowed">
+                                                        }
+
                                                     }
                                                     else
                                                     {
-                                                        <input type="date" id="date_range">
+                                                        <input type="date" id="date_range" required>
                                                     }
                                                 }
                                             </div>
@@ -144,58 +240,133 @@
                                                 @{
                                                     if (p_user.governmentIDs.FirstOrDefault().date_range != null)
                                                     {
-                                                        <input type="date" id="Expiration_date" value="@p_user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("yyyy-MM-dd")">
+                                                        if (p_user.user_type == 2)
+                                                        {
+                                                            <input type="date" id="Expiration_date" value="@p_user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("yyyy-MM-dd")">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input type="date" id="Expiration_date" value="@p_user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("yyyy-MM-dd")" readonly style="cursor:not-allowed">
+                                                        }
+                                                        
                                                     }
                                                     else
                                                     {
-                                                        <input type="date" id="Expiration_date">
+                                                        <input type="date" required id="Expiration_date">
                                                     }
                                                 }
                                             </div>
                                         </div>
                                         <div class="first_input">
                                             <h5>Issued by: </h5>
-                                            <input type="number" id="cccd_number" placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card">
+                                            @if(p_user.user_type == 2) { 
+                                                <input type="number" id="cccd_number" required placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card">
+                                            }
+                                            else { 
+                                                <input type="number" id="cccd_number" required placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card" readonly style="cursor:not-allowed">
+                                            }
+                                            
                                             <p class="error error_mess">Please enter all 12 numbers</p>
                                         </div>
                                     </div>
                                     <div class="img_cccd">
                                         <h5>Citizen identity card's image: </h5>
-                                        <input type="file" hidden id="file_upload_left">
-                                        <button class="img_btn_front">
-                                            @{
-                                                if (@p_user.governmentIDs.FirstOrDefault().backof_id_card != null)
-                                                {
-                                                    <div class="img_front img"
-                                                         style="background : url(@p_user.governmentIDs.FirstOrDefault().backof_id_card) top center /cover no-repeat"> </div>
+                                        @if (p_user.user_type == 2)
+                                        {
+                                            <input type="file" required hidden id="file_upload_left">
+                                        }
+                                        else
+                                        {
+                                            <input type="file" required hidden id="file_upload_left" readonly style="cursor:not-allowed">
+                                        }
+                                        @if (p_user.user_type == 2)
+                                        {
+                                            <button class="img_btn_front">
+                                                @{
+                                                    if (@p_user.governmentIDs.FirstOrDefault().backof_id_card != null)
+                                                    {
+                                                        <div class="img_front img"
+                                                             style="background : url(@p_user.governmentIDs.FirstOrDefault().backof_id_card) top center /cover no-repeat"> </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-solid fa-plus"></i>
+                                                        <div class="img_front"> </div>
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                    <i class="fa-solid fa-plus"></i>
-                                                    <div class="img_front"> </div>
-                                                }
-                                            }
 
-                                        </button>
-                                        <input type="file" hidden id="file_upload_right">
-                                        <button class="img_btn_behind">
-                                            @{
-                                                if (@p_user.governmentIDs.FirstOrDefault().identity_card != null)
-                                                {
-                                                    <div class="img_behind img"
-                                                         style="background : url(@p_user.governmentIDs.FirstOrDefault().identity_card) top center /cover no-repeat"> </div>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="img_btn_front" disabled style="cursor : not-allowed">
+                                                @{
+                                                    if (@p_user.governmentIDs.FirstOrDefault().backof_id_card != null)
+                                                    {
+                                                        <div class="img_front img"
+                                                             style="background : url(@p_user.governmentIDs.FirstOrDefault().backof_id_card) top center /cover no-repeat"> </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <i class="fa-solid fa-plus"></i>
+                                                        <div class="img_front"> </div>
+                                                    }
                                                 }
-                                                else
-                                                {
 
-                                                    <i class="fa-solid fa-plus"></i>
-                                                    <div class="img_behind"> </div>
+                                            </button>
+                                        }
+
+                                        @if (p_user.user_type == 2)
+                                        {
+                                            <input type="file" required hidden id="file_upload_right">
+                                        }
+                                        else
+                                        {
+                                            <input type="file" required hidden id="file_upload_right" readonly style="cursor:not-allowed">
+                                        }
+                                        @if (p_user.user_type == 2)
+                                        {
+                                            <button class="img_btn_behind">
+                                                @{
+                                                    if (@p_user.governmentIDs.FirstOrDefault().identity_card != null)
+                                                    {
+                                                        <div class="img_behind img"
+                                                             style="background : url(@p_user.governmentIDs.FirstOrDefault().identity_card) top center /cover no-repeat"> </div>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <i class="fa-solid fa-plus"></i>
+                                                        <div class="img_behind"> </div>
+                                                    }
                                                 }
-                                            }
-                                            <div class="img_behind">
+                                                <div class="img_behind">
 
-                                            </div>
-                                        </button>
+                                                </div>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button class="img_btn_behind" disabled style="cursor: not-allowed">
+                                                @{
+                                                    if (@p_user.governmentIDs.FirstOrDefault().identity_card != null)
+                                                    {
+                                                        <div class="img_behind img"
+                                                             style="background : url(@p_user.governmentIDs.FirstOrDefault().identity_card) top center /cover no-repeat"> </div>
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <i class="fa-solid fa-plus"></i>
+                                                        <div class="img_behind"> </div>
+                                                    }
+                                                }
+                                                <div class="img_behind">
+
+                                                </div>
+                                            </button>
+                                        }
+
                                     </div>
                                     <button class="save_btn" id="savecard">Save</button>
                                 </div>
@@ -236,7 +407,9 @@
                                                     <p class="address">Live in</p>
                                                 }
                                             }
-                                        }
+
+
+}
                                     </div>
                                     <button class="btn"><i class="fa-solid fa-chevron-down"></i></button>
                                 </div>
@@ -244,35 +417,104 @@
                                     <div class="input_address">
                                         <div class="first_input">
                                             @*<input type="text" id="country" placeholder="Country">*@
-                                            <select class="form-control"
-                                                    id="country">
-                                                @*@{
-                                                    if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                            @if (p_user.user_type == 3)
+                                            {
+                                                <select class="form-control"
+                                                        id="countryHost" disabled style="cursor:not-allowed">
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country_id">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country.ct_name">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="">Please select country</option>
+                                                        <option value="">Please select Country</option>
+                                                    }
+
+                                                </select>
+                                            }
+                                            else { 
+                                                <select class="form-control"
+                                                        id="country" >
+                                                    @*@if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                    {
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country.ct_name">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="">Please select Country</option>
                                                     }*@
-                                                @*<option value="">Please select country</option>
-                                                @foreach (var item in db.countries.ToList())
-                                                {
-                                                    <option value="@item.id">@item.ct_name</option>
-                                                }*@
-                                            </select>
+
+                                                </select>
+                                            
+                                            }
+
                                         </div>
                                         <div class="two_input">
                                             @*<input type="text" id="district" placeholder="District">*@
-                                            <select class="form-control"
-                                                    id="district">
-                                                <option value="">Please select state</option>
-                                            </select>
+                                            @if (p_user.user_type == 2)
+                                            {
+                                                <select class="form-control"
+                                                        id="district">
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
+                                                    {
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().state.state_name">@p_user.user_personalInfor.FirstOrDefault().state.state_name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="">Please select state</option>
+                                                    }
+
+                                                </select>
+                                            }
+                                            else
+                                            {
+                                                <select class="form-control"
+                                                        id="district" disabled style="cursor:not-allowed">
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
+                                                    {
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().state.state_name">@p_user.user_personalInfor.FirstOrDefault().state.state_name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="">Please select state</option>
+                                                    }
+
+                                                </select>
+
+                                            }
+
                                             @*<input type="text" id="city" placeholder="City">*@
-                                            <select class="form-control"
-                                                    id="city">
-                                                <option value="">Please select City</option>
-                                            </select>
+                                            @if (p_user.user_type == 2)
+                                            {
+                                                <select class="form-control"
+                                                        id="city">
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().u_city != null)
+                                                    {
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().city.city_name">@p_user.user_personalInfor.FirstOrDefault().city.city_name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="">Please select City</option>
+                                                    }
+
+                                                </select>
+                                            }
+                                            else { 
+                                            
+                                                <select class="form-control"
+                                                        id="city" disabled style="cursor:not-allowed">
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().u_city != null)
+                                                    {
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().city.city_name">@p_user.user_personalInfor.FirstOrDefault().city.city_name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="">Please select City</option>
+                                                    }
+
+                                                </select>
+                                            }
+
                                         </div>
 
 
@@ -293,16 +535,33 @@
                                         @{
                                             if (p_user.emergency_contact.FirstOrDefault() != null)
                                             {
-                                                <div class="first_input">
-                                                    <input type="text" id="ec_name" placeholder="Name" value="@p_user.emergency_contact.FirstOrDefault().ec_name">
-                                                    <input type="text" id="relationship" placeholder="Relationship" value="@p_user.emergency_contact.FirstOrDefault().relationship">
-                                                    <input type="text" id="ec_language" placeholder="Language" value="@p_user.emergency_contact.FirstOrDefault().ec_language">
-                                                    <input type="email" id="ec_email" placeholder="Email" value="@p_user.emergency_contact.FirstOrDefault().email">
-                                                </div>
-                                                <div class="two_input">
-                                                    <input type="text" id="ec_country" placeholder="Country" value="@p_user.emergency_contact.FirstOrDefault().country">
-                                                    <input type="tel" id="ec_phone_number" placeholder="Phone number" value="@p_user.emergency_contact.FirstOrDefault().phone_number">
-                                                </div>
+                                                if (p_user.user_type == 2)
+                                                {
+                                                    <div class="first_input">
+                                                        <input type="text" id="ec_name" placeholder="Name" value="@p_user.emergency_contact.FirstOrDefault().ec_name">
+                                                        <input type="text" id="relationship" placeholder="Relationship" value="@p_user.emergency_contact.FirstOrDefault().relationship">
+                                                        <input type="text" id="ec_language" placeholder="Language" value="@p_user.emergency_contact.FirstOrDefault().ec_language">
+                                                        <input type="email" id="ec_email" placeholder="Email" value="@p_user.emergency_contact.FirstOrDefault().email">
+                                                    </div>
+                                                    <div class="two_input">
+                                                        <input type="text" id="ec_country" placeholder="Country" value="@p_user.emergency_contact.FirstOrDefault().country">
+                                                        <input type="tel" id="ec_phone_number" placeholder="Phone number" value="@p_user.emergency_contact.FirstOrDefault().phone_number">
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="first_input">
+                                                        <input type="text" id="ec_name" placeholder="Name" value="@p_user.emergency_contact.FirstOrDefault().ec_name" readonly style="cursor:not-allowed">
+                                                        <input type="text" id="relationship" placeholder="Relationship" value="@p_user.emergency_contact.FirstOrDefault().relationship" readonly style="cursor:not-allowed">
+                                                        <input type="text" id="ec_language" placeholder="Language" value="@p_user.emergency_contact.FirstOrDefault().ec_language" readonly style="cursor:not-allowed">
+                                                        <input type="email" id="ec_email" placeholder="Email" value="@p_user.emergency_contact.FirstOrDefault().email" readonly style="cursor:not-allowed">
+                                                    </div>
+                                                    <div class="two_input">
+                                                        <input type="text" id="ec_country" placeholder="Country" value="@p_user.emergency_contact.FirstOrDefault().country" readonly style="cursor:not-allowed">
+                                                        <input type="tel" id="ec_phone_number" placeholder="Phone number" value="@p_user.emergency_contact.FirstOrDefault().phone_number" readonly style="cursor:not-allowed">
+                                                    </div>
+                                                }
+
                                             }
                                             else
                                             {
@@ -396,7 +655,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/personal_infor.js"></script>
-    <script src="~/ExtraFiles/JS/menuGuest.js"></script>
+    <script src="~/ExtraFiles/JS/menuGuest.js?v=2"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @*<script>
         $(document).ready(function () {
@@ -435,12 +694,13 @@
                         type: "GET",
                         url: "/user/HomeUser/GetStates?countryId=" + countryId,
                         success: function (states) {
+                        
                             $('#district').empty();
                             $('#district').append('<option value="">Please select your state</option>');
                             $('#city').empty();
                             $('#city').append('<option value="">Please select your city</option>');
                             $.each(states, function (key, value) {
-                                $('#district').append('<option value="' + value.id + '">' + value.state_name + '</option>');
+                                    $('#district').append('<option value="' + value.id + '">' + value.state_name + '</option>');
                             });
                         },
                         error: function (xhr, status, error) {

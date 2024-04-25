@@ -512,9 +512,7 @@
     <Property Name="language_id" Type="int" />
   </EntityType>
   <Association Name="bkg_booking_id_FK">
-    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
     <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="bookings">
@@ -526,9 +524,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="bkg_guest_type_id_FK">
-    <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1" />
     <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="guest_type">
@@ -638,9 +634,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="disputes_booking_id_id_FK">
-    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
     <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="bookings">
@@ -652,7 +646,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="disputes_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="properties">
@@ -736,7 +732,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="favourite_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="properties">
@@ -832,7 +830,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="neighbourhood_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="neighbourhood" Type="Self.neighbourhood" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="properties">
@@ -856,7 +856,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pa_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="property_amenities" Type="Self.property_amenities" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="properties">
@@ -880,7 +882,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pi_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="property_images" Type="Self.property_images" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="properties">
@@ -904,9 +908,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pr_booking_id_id_FK">
-    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
     <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="bookings">
@@ -918,7 +920,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pr_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="properties">
@@ -942,7 +946,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_city_id_id_FK">
-    <End Role="cities" Type="Self.cities" Multiplicity="0..1" />
+    <End Role="cities" Type="Self.cities" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="cities">
@@ -954,7 +960,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_country_id_id_FK">
-    <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
+    <End Role="countries" Type="Self.countries" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="countries">
@@ -966,7 +974,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_currency_id_id_FK">
-    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
+    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="currencies">
@@ -978,7 +988,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_property_type_id_id_FK">
-    <End Role="property_type" Type="Self.property_type" Multiplicity="0..1" />
+    <End Role="property_type" Type="Self.property_type" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="property_type">
@@ -990,7 +1002,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_room_type_id_id_FK">
-    <End Role="room_type" Type="Self.room_type" Multiplicity="0..1" />
+    <End Role="room_type" Type="Self.room_type" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="room_type">
@@ -1002,7 +1016,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_state_id_id_FK">
-    <End Role="states" Type="Self.states" Multiplicity="0..1" />
+    <End Role="states" Type="Self.states" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="states">
@@ -1014,7 +1030,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_userId_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1038,9 +1056,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="transaction_booking_id_id_FK">
-    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
     <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="bookings">
@@ -1052,9 +1068,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="transaction_currency_id_id_FK">
-    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
     <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="currencies">
@@ -1078,9 +1092,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="transaction_promo_code_id_id_FK">
-    <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1" />
     <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="promo_codes">
@@ -1092,7 +1104,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="transaction_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="properties">
