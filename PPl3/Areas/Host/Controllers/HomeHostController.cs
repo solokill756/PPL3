@@ -97,6 +97,12 @@ namespace PPl3.Areas.Host.Controllers
         }
 
 
+        public ActionResult addHotel()
+        {
+            return View();
+        }
+
+
         // Fuction
 
         public bool checkHost(user p_user)
