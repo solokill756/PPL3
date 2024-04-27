@@ -2,7 +2,7 @@
 var elements = document.getElementsByClassName('_10');
 
 for (var i = 0; i < elements.length; i++) {
-  elements[i].contentEditable = 'true';
+    elements[i].contentEditable = 'true';
 
   elements[i].addEventListener('input', function(e) {
     var newNumber = parseInt(contentWithoutPercent, 10);
@@ -21,7 +21,7 @@ for (var i = 0; i < elements.length; i++) {
     }
   });
 
-  elements[i].addEventListener('blur', function(e) {
+  elements[i].addEventListener('bl ur', function(e) {
     var contentWithoutPercent = this.textContent.slice(0, -1);
     var newNumber = parseInt(contentWithoutPercent, 10);
 
@@ -298,7 +298,7 @@ amenitiesBtns.forEach((btn) =>{
 
 const hightlightsBtns = document.querySelectorAll('.highlights_list button')
 var current = 0
-hightlightsBtns.forEach((btn) =>{
+hightlightsBtns.forEach((btn) => {
   btn.addEventListener('click',()=>{
     if(btn.classList.contains('clicked')){
       current--;
@@ -308,19 +308,74 @@ hightlightsBtns.forEach((btn) =>{
       btn.classList.add('clicked')
     }
     if(current === 2){
-      btn.style.pointerEvent = 'none'
+      
       hightlightsBtns.forEach((btn1) =>{
         if(btn1.classList.contains('clicked')){
           
         }else{
-          btn1.style.opacity = 0.4
+            btn1.style.opacity = 0.4
+            btn1.style.pointerEvents = 'none'
         }
       })
     }else{
-      btn.style.pointerEvent = ''
-      hightlightsBtns.forEach((btn1) =>{
+        hightlightsBtns.forEach((btn1) => {
+        btn1.style.pointerEvents = ''
         btn1.style.opacity = 1
       })
     }
   })
 })
+
+
+// pages 2
+const list_btns = document.querySelectorAll('.list_place .place_item button');
+
+list_btns.forEach(function (item) {
+    item.addEventListener('click', () => {
+        var selected_btns = document.querySelectorAll('.list_place .place_item .selected');
+
+        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
+
+        selected_btns.forEach(function (btn) {
+
+            btn.classList.remove('selected');
+
+        });
+        item.classList.add("selected");
+    })
+})
+
+// pages 3
+
+document.querySelectorAll('.list_type_of .type_of_item button').forEach(function (item) {
+    item.addEventListener('click', () => {
+        var selected_btns = document.querySelectorAll('.list_type_of .type_of_item button');
+
+        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
+
+        selected_btns.forEach(function (btn) {
+
+            btn.classList.remove('selected');
+
+        });
+        item.classList.add("selected");
+    })
+})
+
+// pages 9
+
+document.querySelectorAll('.confirm_list .confirm_item button').forEach(function (item) {
+    item.addEventListener('click', () => {
+        var selected_btns = document.querySelectorAll('.confirm_list .confirm_item button');
+
+        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
+
+        selected_btns.forEach(function (btn) {
+
+            btn.classList.remove('selected');
+
+        });
+        item.classList.add("selected");
+    })
+})
+

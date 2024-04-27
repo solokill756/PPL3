@@ -12,23 +12,19 @@ namespace PPl3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class room_type
+    public partial class discount
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public room_type()
+        public discount()
         {
-            this.properties = new HashSet<property>();
+            this.properties_discounts = new HashSet<properties_discounts>();
         }
     
         public int id { get; set; }
-        public string rt_name { get; set; }
-        public Nullable<System.DateTime> created { get; set; }
-        public Nullable<System.DateTime> modified { get; set; }
-        public Nullable<byte> rt_status { get; set; }
-        public string icon_image { get; set; }
-        public string describe { get; set; }
+        public string descride { get; set; }
+        public Nullable<decimal> discounts { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<property> properties { get; set; }
+        public virtual ICollection<properties_discounts> properties_discounts { get; set; }
     }
 }
