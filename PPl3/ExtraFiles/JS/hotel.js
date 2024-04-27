@@ -324,3 +324,57 @@ hightlightsBtns.forEach((btn) =>{
     }
   })
 })
+
+
+
+//UpLoad ảnh hotel
+const img = document.querySelectorAll('.img')
+const remove = document.querySelectorAll('.remove')
+var check = 0;
+for (let i = 1; i <= img.length; i++){
+  const fileUpLoad = document.getElementById('up_img_' + i)
+  const addImgBtn = document.querySelector('.btn_img_' + i)
+  const imgProfile = document.querySelector('.img_' + i)
+  const btnRemove = document.querySelector('.remove_' + i)
+  
+  imgProfile.addEventListener('click', () =>{
+    fileUpLoad.click();
+  })
+
+  btnRemove.addEventListener('click', (e) => {
+    check--
+    imgProfile.style.backgroundImage = "";
+    imgProfile.style.backgroundPosition = "";
+    imgProfile.style.backgroundSize = "";
+    imgProfile.style.backgroundRepeat = "";
+    btnRemove.classList.remove('open')
+    addImgBtn.classList.remove('close')
+    nextBtn.style.pointerEvents = 'none'
+    fileUpLoad.value = null;
+    e.stopPropagation();
+  })
+  
+  fileUpLoad.addEventListener('change', () =>{
+    check++;
+    var file = fileUpLoad.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            var imageUrl = e.target.result;
+            imgProfile.style.backgroundImage = "url('" + imageUrl + "')";
+            imgProfile.style.backgroundPosition = "top center";
+            imgProfile.style.backgroundSize = "cover";
+            imgProfile.style.backgroundRepeat = "no-repeat";
+            addImgBtn.classList.add('close')
+            btnRemove.classList.add('open')
+        };
+        reader.onerror = function(e) {
+          console.error("Error reading file:", e.target.error);
+        };
+    }
+    if(check === 5){
+      nextBtn.style.pointerEvents = ''
+    }
+  })
+}
