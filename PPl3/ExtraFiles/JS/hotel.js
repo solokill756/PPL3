@@ -2,7 +2,7 @@
 var elements = document.getElementsByClassName('_10');
 
 for (var i = 0; i < elements.length; i++) {
-    elements[i].contentEditable = 'true';
+  elements[i].contentEditable = 'true';
 
   elements[i].addEventListener('input', function(e) {
     var newNumber = parseInt(contentWithoutPercent, 10);
@@ -21,7 +21,7 @@ for (var i = 0; i < elements.length; i++) {
     }
   });
 
-  elements[i].addEventListener('bl ur', function(e) {
+  elements[i].addEventListener('blur', function(e) {
     var contentWithoutPercent = this.textContent.slice(0, -1);
     var newNumber = parseInt(contentWithoutPercent, 10);
 
@@ -298,7 +298,7 @@ amenitiesBtns.forEach((btn) =>{
 
 const hightlightsBtns = document.querySelectorAll('.highlights_list button')
 var current = 0
-hightlightsBtns.forEach((btn) => {
+hightlightsBtns.forEach((btn) =>{
   btn.addEventListener('click',()=>{
     if(btn.classList.contains('clicked')){
       current--;
@@ -308,18 +308,17 @@ hightlightsBtns.forEach((btn) => {
       btn.classList.add('clicked')
     }
     if(current === 2){
-      
+      btn.style.pointerEvent = 'none'
       hightlightsBtns.forEach((btn1) =>{
         if(btn1.classList.contains('clicked')){
           
         }else{
-            btn1.style.opacity = 0.4
-            btn1.style.pointerEvents = 'none'
+          btn1.style.opacity = 0.4
         }
       })
     }else{
-        hightlightsBtns.forEach((btn1) => {
-        btn1.style.pointerEvents = ''
+      btn.style.pointerEvent = ''
+      hightlightsBtns.forEach((btn1) =>{
         btn1.style.opacity = 1
       })
     }
@@ -327,55 +326,55 @@ hightlightsBtns.forEach((btn) => {
 })
 
 
-// pages 2
-const list_btns = document.querySelectorAll('.list_place .place_item button');
 
-list_btns.forEach(function (item) {
-    item.addEventListener('click', () => {
-        var selected_btns = document.querySelectorAll('.list_place .place_item .selected');
+//UpLoad ảnh hotel
+const img = document.querySelectorAll('.img')
+const remove = document.querySelectorAll('.remove')
+var check = 0;
+for (let i = 1; i <= img.length; i++){
+  const fileUpLoad = document.getElementById('up_img_' + i)
+  const addImgBtn = document.querySelector('.btn_img_' + i)
+  const imgProfile = document.querySelector('.img_' + i)
+  const btnRemove = document.querySelector('.remove_' + i)
+  
+  imgProfile.addEventListener('click', () =>{
+    fileUpLoad.click();
+  })
 
-        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
-
-        selected_btns.forEach(function (btn) {
-
-            btn.classList.remove('selected');
-
-        });
-        item.classList.add("selected");
-    })
-})
-
-// pages 3
-
-document.querySelectorAll('.list_type_of .type_of_item button').forEach(function (item) {
-    item.addEventListener('click', () => {
-        var selected_btns = document.querySelectorAll('.list_type_of .type_of_item button');
-
-        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
-
-        selected_btns.forEach(function (btn) {
-
-            btn.classList.remove('selected');
-
-        });
-        item.classList.add("selected");
-    })
-})
-
-// pages 9
-
-document.querySelectorAll('.confirm_list .confirm_item button').forEach(function (item) {
-    item.addEventListener('click', () => {
-        var selected_btns = document.querySelectorAll('.confirm_list .confirm_item button');
-
-        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
-
-        selected_btns.forEach(function (btn) {
-
-            btn.classList.remove('selected');
-
-        });
-        item.classList.add("selected");
-    })
-})
-
+  btnRemove.addEventListener('click', (e) => {
+    check--
+    imgProfile.style.backgroundImage = "";
+    imgProfile.style.backgroundPosition = "";
+    imgProfile.style.backgroundSize = "";
+    imgProfile.style.backgroundRepeat = "";
+    btnRemove.classList.remove('open')
+    addImgBtn.classList.remove('close')
+    nextBtn.style.pointerEvents = 'none'
+    fileUpLoad.value = null;
+    e.stopPropagation();
+  })
+  
+  fileUpLoad.addEventListener('change', () =>{
+    check++;
+    var file = fileUpLoad.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            var imageUrl = e.target.result;
+            imgProfile.style.backgroundImage = "url('" + imageUrl + "')";
+            imgProfile.style.backgroundPosition = "top center";
+            imgProfile.style.backgroundSize = "cover";
+            imgProfile.style.backgroundRepeat = "no-repeat";
+            addImgBtn.classList.add('close')
+            btnRemove.classList.add('open')
+        };
+        reader.onerror = function(e) {
+          console.error("Error reading file:", e.target.error);
+        };
+    }
+    if(check === 5){
+      nextBtn.style.pointerEvents = ''
+    }
+  })
+}
