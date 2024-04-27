@@ -1,40 +1,40 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-html{
+html {
     scroll-behavior: smooth;
     font-family: 'Montserrat', sans-serif;
 }
 
-.center{
+.center {
     display: flex !important;
     justify-content: center;
 }
 
-.open{
+.open {
     display: block !important;
 }
 
-.active{
+.active {
     animation: backClick ease-in-out 1s !important;
 }
 
-.close{
+.close {
     display: none !important;
 }
 
-.clicked{
+.clicked {
     border: 3px solid #000 !important;
     background-color: rgb(208, 208, 208) !important;
     color: #727171;
 }
 
-#header{
+#header {
     position: fixed;
     top: 0;
     left: 0;
@@ -44,18 +44,18 @@ html{
     background-color: #fff;
 }
 
-.header_container{
+.header_container {
     display: flex;
     height: 100px;
     justify-content: space-between;
     align-items: center;
 }
 
-.logo i{
+.logo i {
     font-size: 35px;
 }
 
-.save_btn button{
+.save_btn button {
     padding: 10px;
     font-size: 16px;
     border-radius: 20px;
@@ -64,11 +64,11 @@ html{
     cursor: pointer;
 }
 
-.save_btn button:hover{
-    border: 1px solid #000;
-}
+    .save_btn button:hover {
+        border: 1px solid #000;
+    }
 
-#footer{
+#footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -77,32 +77,32 @@ html{
     background-color: #fff;
 }
 
-.list_btn{
+.list_btn {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 110px;
 }
 
-.list_btn button{
-    padding: 15px 25px;
-    font-size: 17px;
-    background-color: #1f1d1d;
-    border-radius: 10px;
-    cursor: pointer;
-    color: #fff;
-}
+    .list_btn button {
+        padding: 15px 25px;
+        font-size: 17px;
+        background-color: #1f1d1d;
+        border-radius: 10px;
+        cursor: pointer;
+        color: #fff;
+    }
 
-.list_btn button:hover{
-    background-color: #000;
-}
+        .list_btn button:hover {
+            background-color: #000;
+        }
 
-.bar{
+.bar {
     background-color: #dfdada;
     border-radius: 10px;
 }
 
-.bg-black{
+.bg-black {
     height: 8px;
     border-radius: 10px;
     background-color: #000;
@@ -111,12 +111,12 @@ html{
 }
 
 
-#content{
+#content {
     margin: 165px 0 110px 0;
     overflow: hidden;
 }
 
-.page_container{
+.page_container {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -125,89 +125,89 @@ html{
 }
 
 
-#page_1{
+#page_1 {
     display: none;
     transition: ease-in-out 1s;
 }
 
-.instruct_container{
+.instruct_container {
     display: flex;
     align-items: center;
     height: 100%;
 }
 
-.instruct span{
+.instruct span {
     font-size: 20px;
     font-weight: 600;
 }
 
-.instruct h1{
+.instruct h1 {
     font-size: 45px;
     margin: 20px 0;
 }
 
-.instruct p{
+.instruct p {
     font-size: 20px;
 }
 
-.video video{
+.video video {
     display: block;
     width: 100%;
     cursor: pointer;
 }
 
 
-#page_2{
+#page_2 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.tittle{
+.tittle {
     margin-left: 10px;
     margin-bottom: 50px;
     line-height: 35px;
 }
 
-.place_item{
+.place_item {
     display: flex;
     flex-wrap: nowrap;
 }
 
-.place_item button{
-    width: 33.333%;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #fff;
-    border: 3px solid #ccc;
-    cursor: pointer;
-}
+    .place_item button {
+        width: 33.333%;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 3px solid #ccc;
+        cursor: pointer;
+    }
 
-.place_item button:hover{
-    border: 3px solid #000;
-}
+        .place_item button:hover {
+            border: 3px solid #000;
+        }
 
-.place_item button:focus{
-    border: 3px solid #000;
-    background-color: rgb(208, 208, 208);
-}
+        .place_item button:focus {
+            border: 3px solid #000;
+            background-color: rgb(208, 208, 208);
+        }
 
-.place_item button>img{
-    width: 20%;
-}
+        .place_item button > img {
+            width: 20%;
+        }
 
-.place_item button>p{
-    font-size: 20px;
-}
+        .place_item button > p {
+            font-size: 20px;
+        }
 
-#page_3{
+#page_3 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.type_of_item button{
+.type_of_item button {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -221,49 +221,52 @@ html{
     cursor: pointer;
 }
 
-.type_of_item button:hover{
-    border: 3px solid #000;
-}
-
-.type_of_item button:focus{
-    border: 3px solid #000;
-    background-color: rgb(208, 208, 208);
-    .text p{
-        color: #727171;
+    .type_of_item button:hover {
+        border: 3px solid #000;
     }
+
+    .type_of_item button:focus {
+        border: 3px solid #000;
+        background-color: rgb(208, 208, 208);
+        .text p
+
+{
+    color: #727171;
 }
 
-.text{
+}
+
+.text {
     line-height: 30px;
     padding-right: 30px;
 }
 
-.text span{
-    font-size: 20px;
-    font-weight: 600;
-}
+    .text span {
+        font-size: 20px;
+        font-weight: 600;
+    }
 
-.text p{
-    color: #bebebe;
-    font-size: 16px;
-}
+    .text p {
+        color: #bebebe;
+        font-size: 16px;
+    }
 
-.icon img{
+.icon img {
     width: 40px;
 }
 
-#page_4{
+#page_4 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.tittle p{
+.tittle p {
     font-size: 19px;
     color: #bebebe;
 }
 
-.first_input input{
+.first_input input {
     width: 92.8%;
     padding: 20px;
     border-radius: 15px;
@@ -273,13 +276,13 @@ html{
     margin-top: 10px;
 }
 
-#page_5{
+#page_5 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.quantity_item{
+.quantity_item {
     display: flex;
     justify-content: space-between;
     padding: 30px 20px;
@@ -288,95 +291,95 @@ html{
     border-radius: 10px;
 }
 
-.quantity_guest button{
+.quantity_guest button {
     padding: 5px 7px;
     border-radius: 40px;
     background-color: #fff;
     cursor: pointer;
 }
 
-.minus_btn{
+.minus_btn {
     border: 2px solid #dfdada;
     color: #ccc;
 }
 
-#page_6{
+#page_6 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-#page_7{
+#page_7 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.list_offer{
+.list_offer {
     margin-bottom: 50px;
 }
 
-.offer_item{
+.offer_item {
     display: flex;
     flex-wrap: nowrap;
 }
 
-.offer_item button{
-    width: 33.333%;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #fff;
-    border: 3px solid #ccc;
-    cursor: pointer;
-}
+    .offer_item button {
+        width: 33.333%;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 3px solid #ccc;
+        cursor: pointer;
+    }
 
-.offer_item button:hover{
-    border: 3px solid #000;
-}
+        .offer_item button:hover {
+            border: 3px solid #000;
+        }
 
-.offer_item button>img{
-    width: 20%;
-}
+        .offer_item button > img {
+            width: 20%;
+        }
 
-.offer_item button>p{
-    font-size: 20px;
-}
+        .offer_item button > p {
+            font-size: 20px;
+        }
 
-#page_8{
+#page_8 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.amenities_item{
+.amenities_item {
     display: flex;
     flex-wrap: nowrap;
 }
 
-.amenities_item button{
-    width: 33.333%;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-    background-color: #fff;
-    border: 3px solid #ccc;
-    cursor: pointer;
-}
+    .amenities_item button {
+        width: 33.333%;
+        padding: 10px;
+        margin: 10px;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 3px solid #ccc;
+        cursor: pointer;
+    }
 
-.amenities_item button:hover{
-    border: 3px solid #000;
-}
+        .amenities_item button:hover {
+            border: 3px solid #000;
+        }
 
-.amenities_item button>img{
-    width: 20%;
-}
+        .amenities_item button > img {
+            width: 20%;
+        }
 
-.amenities_item button>p{
-    font-size: 20px;
-}
+        .amenities_item button > p {
+            font-size: 20px;
+        }
 
-.input_about textarea{
+.input_about textarea {
     resize: none;
     width: 100%;
     padding: 20px;
@@ -387,57 +390,57 @@ html{
 }
 
 
-#page_9{
+#page_9 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.highlights_list{
+.highlights_list {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 80px;
 }
 
-.highlights_list li{
-    list-style: none;
-    margin-right: 15px;
-}
+    .highlights_list li {
+        list-style: none;
+        margin-right: 15px;
+    }
 
-.highlights_list li>button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px 15px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    background-color: #fff;
-    cursor: pointer;
-    border: 3px solid #ccc;
-}
+        .highlights_list li > button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background-color: #fff;
+            cursor: pointer;
+            border: 3px solid #ccc;
+        }
 
-.highlights_list li>button:hover{
-    border: 3px solid #000;
-}
+            .highlights_list li > button:hover {
+                border: 3px solid #000;
+            }
 
-.highlights_list li>button>img{
-    width: 30%;
-    margin-right: 5px;
-}
+            .highlights_list li > button > img {
+                width: 30%;
+                margin-right: 5px;
+            }
 
-#page_10{
+#page_10 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-#page_11{
+#page_11 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.confirm_item button{
+.confirm_item button {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -451,84 +454,87 @@ html{
     cursor: pointer;
 }
 
-.confirm_item button:hover{
-    border: 3px solid #000;
-}
-
-.confirm_item button:focus{
-    border: 3px solid #000;
-    background-color: rgb(208, 208, 208);
-    .text p{
-        color: #727171;
+    .confirm_item button:hover {
+        border: 3px solid #000;
     }
+
+    .confirm_item button:focus {
+        border: 3px solid #000;
+        background-color: rgb(208, 208, 208);
+        .text p
+
+{
+    color: #727171;
 }
 
-.text{
+}
+
+.text {
     line-height: 30px;
     padding-right: 30px;
 }
 
-.text span{
-    font-size: 20px;
-    font-weight: 600;
-}
+    .text span {
+        font-size: 20px;
+        font-weight: 600;
+    }
 
-.text p{
-    color: #bebebe;
-    font-size: 16px;
-}
+    .text p {
+        color: #bebebe;
+        font-size: 16px;
+    }
 
-.icon img{
+.icon img {
     width: 40px;
 }
 
-#page_12{
+#page_12 {
     display: none;
     transition: ease-in-out 1s;
     animation: modeFadeIn ease-in-out 1s;
 }
 
-.price{
+.price {
     display: flex;
     position: relative;
 }
 
-.price img{
-    transform: translateX(-25%);
-}
+    .price img {
+        transform: translateX(-25%);
+    }
 
-.price span{
-    color: #000000;
-    text-align: left;
-    font-family: "Poppins-Medium", sans-serif;
-    font-size: 300px;
-    position: absolute;
-    left: 364px;
-    top: 40.12px;
-    width: 366px;
-    height: 260px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    outline: none;
-    white-space: nowrap;
-    min-width: 3ch;
-    margin-right: 8px;
-    flex-shrink: 0; 
-    transform: translateX(-25%);
-}
+    .price span {
+        color: #000000;
+        text-align: left;
+        font-family: "Poppins-Medium", sans-serif;
+        font-size: 300px;
+        position: absolute;
+        left: 364px;
+        top: 40.12px;
+        width: 366px;
+        height: 260px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        outline: none;
+        white-space: nowrap;
+        min-width: 3ch;
+        margin-right: 8px;
+        flex-shrink: 0;
+        transform: translateX(-25%);
+    }
 
-.price input:focus{
-    border: none;
-}
+    .price input:focus {
+        border: none;
+    }
 
-.discounts_list .discounts_item:first-child p{
+.discounts_list .discounts_item:first-child p {
     margin-right: 15px;
     margin-left: 10px;
 }
 
 
-.discounts_item{
+.discounts_item {
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -539,17 +545,17 @@ html{
     cursor: pointer;
 }
 
-.number{
+.number {
     margin-right: 30px;
 }
 
-.condition{
+.condition {
     display: flex;
     flex-direction: column;
     font-size: 20px;
 }
 
-._102{
+._102 {
     color: #000000;
     text-align: left;
     font-size: 20px;
@@ -560,21 +566,26 @@ html{
     border-radius: 10px;
 }
 
-@keyframes modeFadeIn{
-    from{
+@keyframes modeFadeIn {
+    from {
         transform: translateX(100%);
-    }to{
+    }
+
+    to {
         transform: translateX(0);
     }
 }
 
-@keyframes backClick{
-    from{
+@keyframes backClick {
+    from {
         transform: translateX(-100%);
-    }to{
+    }
+
+    to {
         transform: translateX(0);
     }
 }
+<<<<<<< HEAD
 
 /* Code css của page 6 thêm img */
 
@@ -624,3 +635,5 @@ html{
     cursor: pointer;
 }
 
+=======
+>>>>>>> cd2bbb4130cfbb24726355787db3e9807f13e09e

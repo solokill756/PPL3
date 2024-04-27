@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
+
 namespace PPl3.App_Start
 {
     public class UserAuthorize : AuthorizeAttribute
@@ -19,7 +20,7 @@ namespace PPl3.App_Start
             if(userSession != null)
             {
                 PPL3Entities db = new PPL3Entities();
-                var count = db.user_type_user_role.Count(m => m.user_type_id == userSession.user_type && m.user_role_id == idChucNang && m.user_type_id == 2);
+                var count = db.user_type_user_role.Count(m => m.user_type_id == userSession.user_type && m.user_role_id == idChucNang && (m.user_type_id == 2 || m.user_type_id == 3));
                 if(count != 0)
                 {
                     return;
@@ -39,8 +40,7 @@ namespace PPl3.App_Start
             }
             else
             {
-                var returnUrl = filterContext.RequestContext.HttpContext.Request.RawUrl;
-
+                var returnUrl = filterContext.RequestContext.HttpContext.Request.Url.AbsoluteUri;
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
 
                 {

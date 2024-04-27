@@ -85,7 +85,7 @@
                                 <li class=""><button>Notifications</button></li>
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
-                                <li><a href="Content">Manage listings</a></li>
+                                <li><a href="/host/HomeHost/Listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
                                 <li><a href="#">Gift Cards</a></li>
                                 <li><a href="#">Help Center</a></li>
@@ -173,9 +173,12 @@
                                         <div class="infor">
                                             <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
                                             @{
-                                                int count;
+                                                int count = 0;
                                                 string currentDateTime = DateTime.Now.ToString("yyyy");
-                                                count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                if (property.user.day_become_host != null) {
+                                                    count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                }
+
                                             }
                                             <p>@count years hosting</p>
                                         </div>
@@ -305,7 +308,7 @@
                                         }
                                     </div>
                                     <div class="col l-12 m-12 c-12 show_all">
-                                        <button>Show all 19 amenities</button>
+                                        <button>Show all @property.property_amenities.ToArray().Length amenities</button>
                                     </div>
                                 </div>
                             </div>
@@ -486,13 +489,13 @@
                                 @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                 {
                                     <div class="pay_footer">
-                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id')">Change Booking</button>
+                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Change Booking</button>
                                     </div>
                                 }
                                 else
                                 {
                                     <div class="pay_footer disapear">
-                                        <button id="checkAvailabilityButton" onclick="booking('@property.id')">Check Availability</button>
+                                        <button id="checkAvailabilityButton" onclick="booking('@property.id' , '@property.accomodates_count')">Check Availability</button>
                                     </div>
 
                                 }
@@ -607,7 +610,12 @@
                                                     <div class="infor_basic">
                                                         @{
                                                             currentDateTime = DateTime.Now.ToString("yyyy");
-                                                            count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                            if(property.user.day_become_host != null) {
+                                                                count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                            } else {
+                                                                count = 0;
+                                                            }
+
                                                         }
                                                         <span>@count</span>
                                                         <p>Years hosting</p>
@@ -894,7 +902,7 @@
 <script src="~/Scripts/jquery-3.7.1.js"></script>
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 <script>
-    function booking(hotelId) {
+    function booking(hotelId , hotelGuest) {
         $(document).ready(function () {
             function isValidDate(dateString) {
                 var regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -910,6 +918,7 @@
             var checkOutDate1 = $('#checkOutDate').text();
             var correctFormDateIn = "";
             var correctFormDateOut = "";
+            var hotelGusestCount = 0;
             checkInDate1.split("/").forEach(function (item) {
                 correctFormDateIn = item + "-" + correctFormDateIn;
             })
@@ -920,7 +929,13 @@
             correctFormDateOut = correctFormDateOut.substring(0, correctFormDateOut.length - 1);
             numberGuest.toString().split(",").forEach(function (item) {
                 guest_count1.push(item.trim().split(" ")[0]);
+                hotelGusestCount += parseInt(item.trim().split(" ")[0]);
+
             })
+            if (hotelGusestCount > hotelGuest) {
+                alert("Please book less than or equal to the number of people staying at the hotel !");
+                return;
+            }
             console.log(correctFormDateIn);
             console.log(correctFormDateOut);
             if (isValidDate(correctFormDateIn) && isValidDate(correctFormDateOut)) {
@@ -962,7 +977,7 @@
     }
 
 
-    function FixBookingHotel(bookingId, id) {
+    function FixBookingHotel(bookingId, id , hotelGuest) {
           $(document).ready(function () {
         function isValidDate(dateString) {
             var regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -978,6 +993,7 @@
         var checkOutDate1 = $('#checkOutDate').text();
         var correctFormDateIn = "";
         var correctFormDateOut = "";
+        var hotelGusestCount = 0;
         checkInDate1.split("/").forEach(function (item) {
             correctFormDateIn = item + "-" + correctFormDateIn;
         })
@@ -988,7 +1004,12 @@
         correctFormDateOut = correctFormDateOut.substring(0, correctFormDateOut.length - 1);
         numberGuest.toString().split(",").forEach(function (item) {
             guest_count1.push(item.trim().split(" ")[0]);
+            hotelGusestCount += parseInt(item.trim().split(" ")[0]);
         })
+              if (hotelGusestCount > hotelGuest) {
+                  alert("Please book less than or equal to the number of people staying at the hotel !");
+                  return;
+              }
         if (isValidDate(correctFormDateIn) && isValidDate(correctFormDateOut)) {
             console.log(1);
             var data = {

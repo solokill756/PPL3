@@ -19,6 +19,10 @@ namespace PPl3.Models
         public string driver_license { get; set; }
         public string passport { get; set; }
         public string identity_card { get; set; }
+        public string backof_id_card { get; set; }
+        public Nullable<System.DateTime> date_range { get; set; }
+        public Nullable<System.DateTime> expiration_date { get; set; }
+        public string number_card { get; set; }
     
         public virtual user user { get; set; }
     }

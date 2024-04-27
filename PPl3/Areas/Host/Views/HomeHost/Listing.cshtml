@@ -1,0 +1,350 @@
+﻿@model List<PPl3.Models.property>
+@{
+    Layout = null;
+}
+
+@{
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    int position = 0;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T|.|N|.|T</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/Listing.css?v=1" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="~/ExtraFiles/assets/css/headerGuest.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter header_container">
+                    <div class="start_nav" onclick="window.location.href = '/user/homeuser/index'" style="cursor:pointer">
+                        <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                    </div>
+
+                    <div class="list_header">
+                        <ul class="nav">
+                            <li class="today_btn">Today</li>
+                            <li class="calendar_btn">Calendar</li>
+                            <li class="listing_btn">Listings</li>
+                            <li class="inbox_btn">Inbox</li>
+                            <li>
+                                Menu<i class="fa-solid fa-chevron-down"></i>
+                                <ul class="subnav">
+                                    <li>Reservations</li>
+                                    <li>Earnings</li>
+                                    <li>Insights</li>
+                                    <li>Create a new listing</li>
+                                    <li>Guidebooks</li>
+                                    <li>Explore hosting resources</li>
+                                    <li>Connect with Hosts near you</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav_menu">
+                        <div class="alert_icon">
+                            <button><i class="fa-regular fa-bell"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @if (p_user.user_profile.FirstOrDefault() != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                            }
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><a href="/user/homeuser/trip">Trip</a></li>
+                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                                <li><a href="/user/homeuser/index">Switch to guest</a></li>
+                                <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
+                                <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter content_container">
+                    <div class="col l-12 m-12 c-12">
+                        <div class="page_listing">
+                            <div class="col l-12 m-12 c-12 tool_listing">
+                                <div class="tittle">
+                                    <h1>Your listing</h1>
+                                </div>
+                                <div class="tool_btn">
+                                    <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <div class="search">
+                                        <i class="fa-solid fa-magnifying-glass"></i>
+                                        <input type="text" id="searchInput" placeholder="Search listings by name">
+                                        <i class="fa-regular fa-circle-xmark"></i>
+                                    </div>
+                                    <button class="layout_btn"><i class="fa-solid fa-bars-progress"></i></button>
+                                    <button><a href="/host/homehost/addhotel"><i class="fa-solid fa-plus"></i></a></button>
+                                </div>
+                            </div>
+                            <div class="list_hotel_1">
+                                @foreach (PPl3.Models.property item in Model)
+                                {
+                                    position++;
+                                    <div class="col l-4 m-6 c-12 hotel_@position">
+                                        <div class="hotel_item">
+                                            <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                                <div class="in_progress">
+                                                    @if (item.created != null)
+                                                    {
+
+                                                        <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+
+                                                    }
+
+                                                </div>
+                                                <div class="btn_listing">
+                                                    <div class="edit_btn">
+                                                        <button>Edit listing</button>
+                                                    </div>
+                                                    <div class="remove_btn js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
+                                                        <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="infor_hotel">
+                                                @if (item.created != null)
+                                                {
+                                                    <span>@item.p_name (@item.room_type.rt_name) , created @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <p>@item.p_address</p>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span>@item.p_name (@item.room_type.rt_name) </span>
+                                                    <p>@item.p_address</p>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="list_hotel_2">
+                                @{
+                                    position = 0;
+                                }
+                                @foreach (PPl3.Models.property item in Model)
+                                {
+                                    position++;
+                                    <div class="col l-12 m-12 c-12 hotel_@position">
+                                        <div class="hotel_item_2">
+                                            <div class="img_hotel img_hotel_2" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                                <div class="btn_listing">
+                                                    <div class="edit_btn_2">
+                                                        <button><i class="fa-solid fa-pen"></i></button>
+                                                    </div>
+                                                    <div class="remove_btn_2 js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
+                                                        <button><i class="fa-solid fa-trash-can"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="infor_hotel infor_hotel_2">
+                                                @if (item.created != null)
+                                                {
+                                                    <span>@item.p_name (@item.room_type.rt_name) , created @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <p>@item.p_address</p>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <span>@item.p_name (@item.room_type.rt_name) </span>
+                                                    <p>@item.p_address</p>
+                                                }
+                                                @if (item.created != null)
+                                                {
+
+                                                    <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+
+                                                }
+                                                else
+                                                {
+
+                                                    <button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>
+
+                                                }
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/ExtraFiles/JS/Listing.js"></script>
+    <script src="~/ExtraFiles/JS/menuGuest.js?v=1"></script>
+
+</body>
+</html>
+
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
+<script>
+    function DeleteListing(id) {
+        $(document).ready(function () {
+            $.ajax({
+                url: "/host/homehost/deletelisting",
+                type: "POST",
+                data: { id: id },
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        })
+    }
+
+    $('#searchInput').keypress(function (e) {
+
+        if (e.which == 13) { // Kiểm tra nếu phím nhấn là "Enter"
+
+            let text = $(this).val(); // Lấy giá trị của trường input
+            console.log(text);
+
+            $(document).ready(function () {
+
+                $.ajax({
+                    url: "/host/homehost/searchlisting",
+                    type: "GET",
+                    data: { text: text },
+                    success: function (data) {
+                        if (data.success == true) {
+                            $(".list_hotel_1").html("");
+                            $(".list_hotel_2").html("");
+                            console.log(data);
+                            let list_pro = [];
+                            $.each(data.list_pro, function (index, value) {
+                                list_pro.push(value);
+                            });
+                            for (var i = 0; i <= parseInt(data.count) - 1; i++) {
+                                // listHotel2
+                                var hotelHtml2 = '<div class="col l-12 m-12 c-12 hotel_' + list_pro[i].id + '">' +
+                                    '<div class="hotel_item_2">' +
+                                    '<div class="img_hotel img_hotel_2" style="background : url(' + list_pro[i].pi_image + ') top center /cover no-repeat">' +
+                                    '<div class="btn_listing">' + '<div class="edit_btn_2">' + '<button>' + '<i class="fa-solid fa-pen">' + '</i>'
+                                    + '</button>'
+                                    + '</div>'
+                                    + '<div class="remove_btn_2 js_remove_btn btn_' + (i + 1) + '" onclick="DeleteListing(\'' + list_pro[i].id + '\')">'
+                                    + '<button>' + '<i class="fa-solid fa-trash-can">'
+                                    + '</i>'
+                                    + '</button>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '<div class="infor_hotel infor_hotel_2">';
+                                if (list_pro[i].created != null) {
+                                    hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                } else {
+                                    hotelHtml2 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                }
+                                if (list_pro[i].created != null) {
+                                    hotelHtml2 += '<button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>';
+                                } else {
+                                    hotelHtml2 += '<button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>';
+                                }
+                                hotelHtml2 += '<i class="fa-solid fa-chevron-right">' + '</i>'
+                                    + ' </div>'
+                                    + '</div>'
+                                    + '</div>';
+
+
+                                // List_hotel_1
+                                var hotelHtml1 = '<div class="col l-4 m-6 c-12 hotel_' + list_pro[i].id + '">' +
+                                    '<div class="hotel_item">' +
+                                    '<div class="img_hotel" style="background : url(' + list_pro[i].pi_image + ') top center /cover no-repeat">' +
+                                    '<div class="in_progress">';
+                                if (list_pro[i].created != null) {
+                                    hotelHtml1 += '<button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>';
+                                } else {
+                                    hotelHtml1 += '<button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>';
+                                }
+                                hotelHtml1 += '</div>' +
+                                    '<div class="btn_listing">' +
+                                    '<div class="edit_btn"><button>Edit listing</button></div>' +
+                                    '<div class="remove_btn js_remove_btn btn_' + i + 1 + '" onclick="DeleteListing(\'' + list_pro[i].id + '\')">' +
+                                    '<button><i class="fa-solid fa-trash-can"></i>Remove listing</button>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '<div class="infor_hotel">';
+                                if (list_pro[i].created != null) {
+                                    hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ') , created ' + moment(list_pro[i].created).format('DD/MM/YYYY') + '</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                } else {
+                                    hotelHtml1 += '<span>' + list_pro[i].p_name + ' (' + list_pro[i].rt_name + ')</span>' +
+                                        '<p>' + list_pro[i].p_address + '</p>';
+                                }
+                                hotelHtml1 += '</div>' +
+                                    '</div>' +
+                                    '</div>';
+                                // Thêm nội dung HTML vào một phần tử có id là "yourContainerId"
+                                $(".list_hotel_1").append(hotelHtml1);
+                                $(".list_hotel_2").append(hotelHtml2);
+
+                            }
+                        }
+                        else if (data.success == false) {
+                            window.location.href = data.redirectUrl;
+                        }
+                      
+
+
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+
+                })
+
+            })
+        }
+    });
+</script>

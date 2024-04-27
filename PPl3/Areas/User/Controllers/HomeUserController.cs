@@ -10,6 +10,9 @@ using System.Web.Security;
 using Newtonsoft.Json;
 using PPl3.Models;
 using PPl3.App_Start;
+using System.Globalization;
+using System.Text.RegularExpressions;
+
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -146,7 +149,8 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult profile(int id)
         {
             if (Session["user"] != null)
-            {   
+            {
+              
                 PPL3Entities db = new PPL3Entities();
                 user p_user = (user)Session["user"];
                 if (!(db.user_profile.Any(item => item.userID == p_user.id)))
@@ -190,11 +194,15 @@ namespace PPl3.Areas.User.Controllers
 
         private void DeleteImage(string imagePath)
         {
-            string physicalPath = ControllerContext.HttpContext.Server.MapPath(imagePath);
-            if (System.IO.File.Exists(physicalPath))
+            if(!IsImageUrl(imagePath))
             {
-                System.IO.File.Delete(physicalPath);
+                string physicalPath = ControllerContext.HttpContext.Server.MapPath(imagePath);
+                if (System.IO.File.Exists(physicalPath))
+                {
+                    System.IO.File.Delete(physicalPath);
+                }
             }
+           
         }
 
         public ActionResult editProfile()
@@ -321,6 +329,235 @@ namespace PPl3.Areas.User.Controllers
             Session["user"] = userInfor;
             return Json("true", JsonRequestBehavior.AllowGet);
         }
+        //user personal profile 
+        public ActionResult userPersonalProfile(bool error = false)
+        {
+            if (error == true) ViewBag.Error = error;
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            if(p_user != null)
+            {
+                if (!(db.user_personalInfor.Any(item => item.userID == p_user.id)))
+                {
+                    user_personalInfor new_personal = new user_personalInfor();
+                    new_personal.userID = p_user.id;
+                    db.user_personalInfor.Add(new_personal);
+                    db.SaveChanges();
+                    var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                    Session["user"] = userInfor;
+                }
+                if (!(db.governmentIDs.Any(item => item.userID == p_user.id)))
+                {
+                    governmentID new_gvid = new governmentID();
+                    new_gvid.userID = p_user.id;
+                    db.governmentIDs.Add(new_gvid);
+                    db.SaveChanges();
+                    var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                    Session["user"] = userInfor;
+                }
+            }
+            else
+            {
+                return RedirectToAction("login", "homeuser", new { area = "user" });
+            }    
+           
+            return View();
+        }
+        [HttpGet]
+        public JsonResult GetCountries()
+        {
+            PPL3Entities db = new PPL3Entities();
+            var countries = db.countries
+                           .Select(s => new {
+                               id = s.id,
+                               country_name = s.ct_name
+                           }).ToList();
+            return Json(countries, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetStates(int countryId)
+        {
+            PPL3Entities db = new PPL3Entities();
+            var states = db.states
+                           .Where(s => s.country_id == countryId)
+                           .Select(s => new {
+                               id = s.id,
+                               state_name = s.state_name
+                           }).ToList();
+            return Json(states, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetCities(int stateId)
+        {
+            PPL3Entities db = new PPL3Entities();
+            var cities = db.cities
+                           .Where(s => s.state_id == stateId)
+                           .Select(s => new {
+                               id = s.id,
+                               city_name = s.city_name
+                           }).ToList();
+            return Json(cities, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
+        public JsonResult addLegalName(string first_name, string last_name)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
+            tmpprofile.legal_name = first_name + " " + last_name;
+            tmpprofile.first_name = first_name;
+            tmpprofile.last_name = last_name;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
+        public JsonResult addUserPhone(string phone_number)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            phone_number find_phone = db.phone_number.Where(item => item.userID == p_user.id).FirstOrDefault();
+            if (find_phone != null)
+            {
+                db.phone_number.Remove(find_phone);
+                phone_number newphone = new phone_number()
+                {
+                    userID = p_user.id,
+                    phone = phone_number
+                };
+                db.phone_number.Add(newphone);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            else
+            {
+                phone_number newphone = new phone_number()
+                {
+                    userID = p_user.id,
+                    phone = phone_number
+                };
+                db.phone_number.Add(newphone);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+        
+        [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
+        public JsonResult addUserIDCard(string date_range, string Expiration_date, string cccd_number)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            governmentID up = db.governmentIDs.Where(item => item.userID == p_user.id).FirstOrDefault();
+            if (date_range != null)
+            {
+                DateTime tmpdate = DateTime.ParseExact(date_range, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                up.date_range = tmpdate;
+            }
+            if (Expiration_date != null)
+            {
+                DateTime tmpdate = DateTime.ParseExact(Expiration_date, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                up.expiration_date = tmpdate;
+            }
+            if (cccd_number != null)
+            {
+                up.number_card = cccd_number;
+            }
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
+        public JsonResult addimgGVID1(string img)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            governmentID up = db.governmentIDs.Where(item => item.userID == p_user.id).FirstOrDefault();
+            up.backof_id_card = img;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
+        public JsonResult addimgGVID2(string img)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            governmentID up = db.governmentIDs.Where(item => item.userID == p_user.id).FirstOrDefault();
+            up.identity_card = img;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
+        public JsonResult addEmergencyContact(string ec_name, string relationship, string ec_language, string ec_email, string ec_country, string ec_phone_number)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            emergency_contact e = db.emergency_contact.Where(item => item.userid == p_user.id).FirstOrDefault();
+            if (ec_phone_number.Length > 20 || !Regex.IsMatch(ec_phone_number, @"^\d+$")) ec_phone_number = "";
+            if(e != null)
+            {
+                e.ec_name = ec_name;
+                e.phone_number = ec_phone_number;
+                e.email = ec_email;
+                e.country = ec_country;
+                e.relationship = relationship;
+                e.ec_language = ec_language;
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            else
+            {
+                emergency_contact newe = new emergency_contact()
+                {
+                    userid = p_user.id,
+                    ec_name = ec_name,
+                    phone_number = ec_phone_number,
+                    relationship = relationship,
+                    ec_language = ec_language,
+                    email = ec_email,
+                    country = ec_country,
+                };
+                db.emergency_contact.Add(newe);
+                db.SaveChanges();
+                var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+                Session["user"] = userInfor;
+            }
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [UserAuthorize(idChucNang = 12)]
+        public JsonResult addAddressCtc(int country_id, int state_id, int city_id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
+            tmpprofile.country_id = country_id;
+            tmpprofile.u_state = state_id;
+            tmpprofile.u_city = city_id;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
         // Login and Logout and Sign up
         public ActionResult Login()
         {
@@ -351,14 +588,14 @@ namespace PPl3.Areas.User.Controllers
             }
 
             else
-
             {
+                
                 var id_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (entities.users.Where(item => item.id ==  id_user).FirstOrDefault());
                 if(userInfor.user_type != 1) Session["user"] = userInfor;
                 else if(userInfor.user_type == 1) Session["admin"] = userInfor;
                 TempData["check"] = false;
-                if (Session["user"] != null) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
+                if (Session["user"] != null)  return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
                 else
                 {
                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin"});
@@ -422,7 +659,7 @@ namespace PPl3.Areas.User.Controllers
         // Detail
         public ActionResult Detail(int id , int bookingId = -1)
         {
-            if (Session["user"] != null)
+            if (Session["user"] != null )
             {
                 if (bookingId != -1) ViewBag.bookingId = bookingId;
                 PPL3Entities db = new PPL3Entities();
@@ -439,7 +676,10 @@ namespace PPl3.Areas.User.Controllers
                 ViewBag.dataJson = JsonConvert.SerializeObject(date);
                 return View();
             }
-            else return RedirectToAction("login");
+            else
+            {
+                return RedirectToAction("login", "homeuser", new { area = "user" });
+            }
            
         }
 
@@ -470,7 +710,7 @@ namespace PPl3.Areas.User.Controllers
         public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId)
         {
             if (check_in_date > check_out_date) return  Json("error1", JsonRequestBehavior.AllowGet);
-            if ((check_out_date.Month - check_in_date.Month) >= 2) return Json("error2", JsonRequestBehavior.AllowGet);
+            if ((check_out_date.Month - check_in_date.Month >= 2 && check_out_date.Year == check_in_date.Year) || (check_out_date.Year != check_in_date.Year)) return Json("error2", JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
@@ -516,7 +756,7 @@ namespace PPl3.Areas.User.Controllers
             {
                 success = "error1"
             }, JsonRequestBehavior.AllowGet);
-            if ((checkOutDate.Month - checkInDate.Month) >= 2) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
+            if ((checkOutDate.Month - checkInDate.Month >= 2 && checkOutDate.Year == checkInDate.Year) || (checkInDate.Year != checkOutDate.Year)) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             while (db.bookings.Any(item => item.check_out_date < DateTime.Now))
@@ -587,6 +827,22 @@ namespace PPl3.Areas.User.Controllers
 
             return db.users.Any(u => u.user_password == password && u.id == id);
 
+        }
+
+        public bool IsImageUrl(string imagePath)
+        {
+            // Kiểm tra xem đường dẫn có bắt đầu bằng "http://" hoặc "https://"
+            if (imagePath.StartsWith("http://") || imagePath.StartsWith("https://"))
+            {
+                // Kiểm tra đuôi mở rộng của đường dẫn
+                string extension = System.IO.Path.GetExtension(imagePath);
+                if (!string.IsNullOrEmpty(extension))
+                {
+                    string[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp" };
+                    return imageExtensions.Contains(extension.ToLower());
+                }
+            }
+            return false;
         }
 
     }

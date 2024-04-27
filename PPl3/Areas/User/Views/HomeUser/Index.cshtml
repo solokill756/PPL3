@@ -36,9 +36,9 @@
             <li class=""><button>Notifications</button></li>
             <li class=""><a href="/user/homeuser/trip">Trip</a></li>
             <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
-            <li><a href="Content">Manage listings</a></li>
+            <li><a href="/host/homehost/listing">Manage listings</a></li>
             <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
-            <li><a href="#">Gift Cards</a></li>
+            <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
             <li><a href="#">Help Center</a></li>
             <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
         </ul>
@@ -206,7 +206,7 @@
                             <div class="img_seller_profile" style="background : url(@p_host.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/user/homeuser/profile?id=@p_host.id'">
                             </div>
                             <span class="logo_shield"><i class="fa-solid fa-shield"></i></span>
-                            <span class="name_seller">@p_host.account_name</span>
+                            <span class="name_seller">@p_host.user_personalInfor.FirstOrDefault().legal_name</span>
                             <div class="contact_seller">
                                 <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                                 <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>

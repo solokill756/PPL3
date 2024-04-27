@@ -41,3 +41,14 @@ content.addEventListener('click', () => {
 menuUser.addEventListener('click', function (e) {
     e.stopPropagation();
 });
+
+
+const alertOut = document.querySelector('.alert_out');
+
+
+if (alertOut) {
+    setInterval(() => {
+        alertOut.classList.add('offActive')
+    }, 3000)
+
+}
