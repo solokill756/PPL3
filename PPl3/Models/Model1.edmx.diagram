@@ -109,6 +109,10 @@
         <AssociationConnector Association="PPL3Model.utur_user_type_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.ul_userID_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.useridddd_id_id_FK" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PPL3Model.discount" Width="1.5" PointX="17.25" PointY="26.5" />
+        <EntityTypeShape EntityType="PPL3Model.properties_discounts" Width="1.5" PointX="19.5" PointY="32.5" />
+        <AssociationConnector Association="PPL3Model.FK_properties_discounts_discounts" />
+        <AssociationConnector Association="PPL3Model.FK_properties_discounts_properties" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

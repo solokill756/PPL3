@@ -198,6 +198,9 @@
     <Compile Include="Models\currency.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\discount.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\dispute.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -256,6 +259,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\promo_codes.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\properties_discounts.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\property.cs">
@@ -344,9 +350,13 @@
     <Content Include="ExtraFiles\assets\css\style_v1.css" />
     <Content Include="ExtraFiles\assets\css\Trip.css" />
     <Content Include="ExtraFiles\assets\css\wishList.css" />
+    <Content Include="ExtraFiles\assets\Image\apartment %281%29.png" />
     <Content Include="ExtraFiles\assets\Image\button-151.png" />
     <Content Include="ExtraFiles\assets\Image\button-171.png" />
     <Content Include="ExtraFiles\assets\Image\button-detail0.png" />
+    <Content Include="ExtraFiles\assets\Image\guesthouse.png" />
+    <Content Include="ExtraFiles\assets\Image\home %281%29.png" />
+    <Content Include="ExtraFiles\assets\Image\hotel.png" />
     <Content Include="ExtraFiles\assets\Image\image-10.png" />
     <Content Include="ExtraFiles\assets\Image\image-100.png" />
     <Content Include="ExtraFiles\assets\Image\image-110.png" />
@@ -391,6 +401,7 @@
     <Content Include="ExtraFiles\assets\Image\image-button-310.png" />
     <Content Include="ExtraFiles\assets\Image\image-button-320.png" />
     <Content Include="ExtraFiles\assets\Image\image-button-330.png" />
+    <Content Include="ExtraFiles\assets\Image\villa %281%29.png" />
     <Content Include="ExtraFiles\assets\video_3d\H0101WTUG2qWbyFhy02jlOggSkpsM9H02VOWN52g02oxhDVM.mp4" />
     <Content Include="ExtraFiles\assets\video_3d\KeNKUpa01dRaT5g00SSBV95FqXYkqf01DJdzn01F1aT00vCI.mp4" />
     <Content Include="ExtraFiles\assets\video_3d\zFaydEaihX6LP01x8TSCl76WHblb01Z01RrFELxyCXoNek.mp4" />

@@ -378,6 +378,8 @@
     <NavigationProperty Name="state" Relationship="Self.pro_state_id_id_FK" FromRole="properties" ToRole="states" />
     <NavigationProperty Name="user" Relationship="Self.pro_userId_id_FK" FromRole="properties" ToRole="users" />
     <NavigationProperty Name="transactions" Relationship="Self.transaction_property_id_id_FK" FromRole="properties" ToRole="transactions" />
+    <Property Name="ask_for_booking" Type="Byte" />
+    <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_properties" FromRole="property" ToRole="properties_discounts" />
   </EntityType>
   <EntityType Name="property_amenities">
     <Key>
@@ -457,6 +459,7 @@
     <Property Name="rt_status" Type="Byte" />
     <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="properties" Relationship="Self.pro_room_type_id_id_FK" FromRole="room_type" ToRole="properties" />
+    <Property Name="describe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="state">
     <Key>
@@ -1700,5 +1703,62 @@
       <End Role="users" EntitySet="users" />
       <End Role="users_interests" EntitySet="users_interests" />
     </AssociationSet>
+    <EntitySet Name="discounts" EntityType="PPL3Model.discount" />
+    <EntitySet Name="properties_discounts" EntityType="PPL3Model.properties_discounts" />
+    <AssociationSet Name="FK_properties_discounts_discounts" Association="PPL3Model.FK_properties_discounts_discounts">
+      <End Role="discount" EntitySet="discounts" />
+      <End Role="properties_discounts" EntitySet="properties_discounts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_properties_discounts_properties" Association="PPL3Model.FK_properties_discounts_properties">
+      <End Role="property" EntitySet="properties" />
+      <End Role="properties_discounts" EntitySet="properties_discounts" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="discount">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="descride" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="discounts" Type="Decimal" Precision="18" Scale="0" />
+    <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="discount" ToRole="properties_discounts" />
+  </EntityType>
+  <EntityType Name="properties_discounts">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="properties_id" Type="Int32" />
+    <Property Name="discounts_id" Type="Int32" />
+    <NavigationProperty Name="discount" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="properties_discounts" ToRole="discount" />
+    <NavigationProperty Name="property" Relationship="PPL3Model.FK_properties_discounts_properties" FromRole="properties_discounts" ToRole="property" />
+  </EntityType>
+  <Association Name="FK_properties_discounts_discounts">
+    <End Type="PPL3Model.discount" Role="discount" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="PPL3Model.properties_discounts" Role="properties_discounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="discount">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties_discounts">
+        <PropertyRef Name="discounts_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_properties_discounts_properties">
+    <End Type="PPL3Model.property" Role="property" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="PPL3Model.properties_discounts" Role="properties_discounts" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="property">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="properties_discounts">
+        <PropertyRef Name="properties_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

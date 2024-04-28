@@ -158,9 +158,12 @@
                                         <div class="infor">
                                             <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
                                             @{
-                                                int count;
+                                                int count = 0;
                                                 string currentDateTime = DateTime.Now.ToString("yyyy");
-                                                count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                if(property.user.day_become_host != null) {
+                                                    count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                }
+                                              
                                             }
                                             <p>@count years hosting</p>
                                         </div>
@@ -480,11 +483,37 @@
                                                     </div>
                                                     <div class="infor_basic">
                                                         @{
-                                                            currentDateTime = DateTime.Now.ToString("yyyy");
-                                                            count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                            count = 0;
+                                                            if (property.user.day_become_host != null)
+                                                            {
+                                                                if (DateTime.Now.ToString("yyyy") != property.user.day_become_host.Value.ToString("yyyy"))
+                                                                {
+
+                                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                                    <span>@count</span>
+                                                                    <p>Years hosting</p>
+                                                                }
+                                                                else if (DateTime.Now.ToString("MM") != property.user.day_become_host.Value.ToString("MM"))
+                                                                {
+                                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(property.user.day_become_host.Value.ToString("MM"));
+                                                                    <span>@count</span>
+                                                                    <p>Months hosting</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(property.user.day_become_host.Value.ToString("dd"));
+                                                                    <span>@count</span>
+                                                                    <p>Days hosting</p>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>@count</span>
+                                                                <p>Days hosting</p>
+                                                            }
+
                                                         }
-                                                        <span>@count</span>
-                                                        <p>Years hosting</p>
+
                                                     </div>
                                                 </div>
                                             </div>

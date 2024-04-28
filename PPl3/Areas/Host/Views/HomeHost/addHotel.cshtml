@@ -3,13 +3,18 @@
     Layout = null;
 }
 
+@{
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Set Hotel</title>
-    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/hotel.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -22,7 +27,7 @@
                     <div class="col l-12 m-12 c-12">
                         <div class="header_container">
                             <div class="logo">
-                                <a href="index.html"><i class="fa-brands fa-think-peaks" style="color: #000;"></i></a>
+                                <a href="index.html"><i class="fa-brands fa-think-peaks" style="color: red"></i></a>
                             </div>
                             <div class="save_btn">
                                 <button>Save & Exit</button>
@@ -50,7 +55,7 @@
                             <div class="col l-o-1 l-4 m-6 c-12">
                                 <div class="video">
                                     <video id="myVideo-1" muted autoplay playsinline>
-                                       
+
                                         <source src="~/ExtraFiles/assets/video_3d/zFaydEaihX6LP01x8TSCl76WHblb01Z01RrFELxyCXoNek.mp4">
                                     </video>
                                 </div>
@@ -69,62 +74,21 @@
                                     <h1>Which of these best describes your place?</h1>
                                 </div>
                                 <div class="list_place">
-                                    <div class="place_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-10.png">
-                                            <p>House</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-20.png">
-                                            <p>Aparment</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-30.png">
-                                            <p>Cabin</p>
-                                        </button>
-                                    </div>
-                                    <div class="place_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-40.png">
-                                            <p>Farm</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-50.png">
-                                            <p>Tiny Home</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-60.png">
-                                            <p>Houseboat</p>
-                                        </button>
-                                    </div>
-                                    <div class="place_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-10.png">
-                                            <p>House</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-20.png">
-                                            <p>Aparment</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-30.png">
-                                            <p>Cabin</p>
-                                        </button>
-                                    </div>
-                                    <div class="place_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-10.png">
-                                            <p>House</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-20.png">
-                                            <p>Aparment</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-30.png">
-                                            <p>Cabin</p>
-                                        </button>
-                                    </div>
+                                    @{
+                                        PPl3.Models.property_type[] arrray = db.property_type.ToArray();
+                                        for (int i = 0; i <= (arrray.Length - 1); i += 3)
+                                        {
+                                            <div class="place_item">
+                                                @for (int j = i; j <= i + 2 && j <= (arrray.Length - 1); ++j)
+                                                {
+                                                    <button class = "@arrray[j].id">
+                                                        <img src="@arrray[j].icon_image">
+                                                        <p>@arrray[j].pt_name</p>
+                                                    </button>
+                                                }
+                                            </div>
+                                        }
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -141,44 +105,21 @@
                                     <h1>What type of place will guests have?</h1>
                                 </div>
                                 <div class="list_type_of">
-                                    <div class="type_of_item">
-                                        <button>
-                                            <div class="text">
-                                                <span>An entire place</span>
-                                                <p>Guests have the whole place to themsevles.</p>
-                                            </div>
-                                            <div class="icon">
-                                                <img src="~/ExtraFiles/assets/Image/image-130.png">
-                                            </div>
-                                        </button>
-                                    </div>
+                                    @foreach (var item in db.room_type)
+                                    {
+                                        <div class="type_of_item">
+                                            <button class="@item.id">
+                                                <div class="text">
+                                                    <span>@item.rt_name</span>
+                                                    <p>@item.describe</p>
+                                                </div>
+                                                <div class="icon">
+                                                    <img src="@item.icon_image">
+                                                </div>
+                                            </button>
+                                        </div>
+                                    }
 
-                                    <div class="type_of_item">
-                                        <button>
-                                            <div class="text">
-                                                <span>A room</span>
-                                                <p>Guests have their own room in a home, plus access to shared spaces.</p>
-                                            </div>
-                                            <div class="icon">
-                                                <img src="~/ExtraFiles/assets/Image/image-140.png">
-                                            </div>
-                                        </button>
-                                    </div>
-
-                                    <div class="type_of_item">
-                                        <button>
-                                            <div class="text">
-                                                <span>A shared room</span>
-                                                <p>
-                                                    Guests sleep in a room or common area that may be shared with you or
-                                                    others.
-                                                </p>
-                                            </div>
-                                            <div class="icon">
-                                                <img src="~/ExtraFiles/assets/Image/image-150.png">
-                                            </div>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -196,12 +137,11 @@
                                     <p>Your address is only shared with guests after they’ve made a reservation.</p>
                                 </div>
                                 <div class="input_list first_input">
-                                    <input type="text" placeholder="Country/region">
-                                    <input type="text" placeholder="Street address">
-                                    <input type="text" placeholder="Apt, Floor, BLDG(if applicable)">
-                                    <input type="text" placeholder="City/Town/Village">
-                                    <input type="text" placeholder="Province/State/Territory(if applicable)">
-                                    <input type="text" placeholder="Postal Code(if applicable)">
+                                    <input type="text" placeholder="Country" id="Country">
+                                    <input type="text" placeholder="State" id="State">
+                                    <input type="text" placeholder="City" id="City">
+                                    <input type="text" placeholder="Street address" id="Street_address">
+
                                 </div>
                             </div>
                         </div>
@@ -277,6 +217,14 @@
                                             <button class="plus_btn plus_bathrooms_btn"><i class="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
+                                    <div class="quantity_item guest">
+                                        <h3>Pets</h3>
+                                        <div class="quantity_guest">
+                                            <button class="minus_btn minus_pets_btn"><i class="fa-solid fa-minus"></i></button>
+                                            <span class="number_pets">0</span>
+                                            <button class="plus_btn plus_pets_btn"><i class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -294,107 +242,46 @@
                                     <p>You can add more amenities after you publish your listing.</p>
                                 </div>
                                 <div class="list_offer">
-                                    <div class="offer_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-110.png">
-                                            <p>Wifi</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-120.png">
-                                            <p>TV</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-130.png">
-                                            <p>Kitchen</p>
-                                        </button>
-                                    </div>
-                                    <div class="offer_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-140.png">
-                                            <p>Washer</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/button-151.png">
-                                            <p>Free parking on premises</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-160.png">
-                                            <p>Paid parking on premises</p>
-                                        </button>
-                                    </div>
-                                    <div class="offer_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/button-171.png">
-                                            <p>Air conditioning</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-180.png">
-                                            <p>Dedicated workspace</p>
-                                        </button>
-                                        <button style="border: none;">
-                                        </button>
-                                    </div>
+                                    @{
+                                        PPl3.Models.amenity[] list_amenities = db.amenities.Where(item => item.category_id == 1 && item.amenity_status == 1).ToArray();
+                                        Console.Write(list_amenities.Length);
+                                        for (int i = 0; i <= (list_amenities.Length - 1); i += 3)
+                                        {
+                                            <div class="offer_item">
+                                                @for (int j = i; j <= i + 2 && j <= (list_amenities.Length - 1); ++j)
+                                                {
+                                                    <button class="@list_amenities[j].id">
+                                                        <img src="@list_amenities[j].icon_image">
+                                                        <p>@list_amenities[j].amenity_name</p>
+                                                    </button>
+                                                }
+                                            </div>
+
+                                        }
+                                    }
+
                                 </div>
                                 <div class="tittle">
                                     <h1>Do you have any standout amenities?</h1>
                                 </div>
                                 <div class="amenities_list">
-                                    <div class="amenities_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-210.png">
-                                            <p>Pool</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-220.png">
-                                            <p>Hot tub</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-230.png">
-                                            <p>Patio</p>
-                                        </button>
-                                    </div>
-                                    <div class="amenities_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-240.png">
-                                            <p>BBQ grill</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-250.png">
-                                            <p>Outdoor dining area</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-260.png">
-                                            <p>Fire pit</p>
-                                        </button>
-                                    </div>
-                                    <div class="amenities_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-270.png">
-                                            <p>Pool table</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-280.png">
-                                            <p>Indoor fireplace</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-290.png">
-                                            <p>Piano</p>
-                                        </button>
-                                    </div>
-                                    <div class="amenities_item">
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-300.png">
-                                            <p>Exercise equipment</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-310.png">
-                                            <p>Lake access</p>
-                                        </button>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-320.png">
-                                            <p>Beach access</p>
-                                        </button>
-                                    </div>
+                                    @{
+                                        list_amenities = db.amenities.Where(item => item.category_id != 1 && item.amenity_status == 1 && item.category_id != 3).ToArray();
+                                        for (int i = 0; i < (list_amenities.Length - 1); i += 3)
+                                        {
+                                            <div class="amenities_item">
+                                                @for (int j = i; j <= i + 2 && j <= list_amenities.Length - 1; ++j)
+                                                {
+                                                    <button class="@list_amenities[j].id">
+                                                        <img src="@list_amenities[j].icon_image">
+                                                        <p>@list_amenities[j].amenity_name</p>
+                                                    </button>
+                                                }
+
+                                            </div>
+                                        }
+                                    }
+
                                 </div>
                             </div>
                         </div>
@@ -412,56 +299,29 @@
                                     <p>Short titles work best. Have fun with it—you can always change it later.</p>
                                 </div>
                                 <div class="input_about">
-                                    <textarea name="" id="" cols="" rows="10"></textarea>
+                                    <textarea name="" id="property_name" cols="" rows="10"></textarea>
                                 </div>
                                 <div class="tittle">
                                     <h1>Next, let's describe your house</h1>
                                     <p>Choose up to 2 highlights. We'll use these to get your description started.</p>
                                 </div>
                                 <ul class="highlights_list">
-                                    <li>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-330.png">
-                                            <p>Peacefull</p>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-340.png">
-                                            <p>Unique</p>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-360.png">
-                                            <p>Stylish</p>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-370.png">
-                                            <p>Central</p>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-380.png">
-                                            <p>Spacious</p>
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button>
-                                            <img src="~/ExtraFiles/assets/Image/image-390.png">
-                                            <p>Family-friendly</p>
-                                        </button>
-                                    </li>
+                                    @foreach (var item in db.amenities.Where(item => item.category_id == 3))
+                                    {
+                                        <li>
+                                            <button class="@item.id">
+                                                <img src="@item.icon_image">
+                                                <p>@item.amenity_name</p>
+                                            </button>
+                                        </li>
+                                    }
                                 </ul>
                                 <div class="tittle">
                                     <h1>Create your description</h1>
                                     <p>Share what makes your place special.</p>
                                 </div>
                                 <div class="input_about">
-                                    <textarea name="" id="" cols="" rows="10" placeholder="Reconnect with loved ones in this family-friendly place."></textarea>
+                                    <textarea name="" id="property_describe" cols="" rows="10" placeholder="Reconnect with loved ones in this family-friendly place."></textarea>
                                 </div>
                             </div>
                         </div>
@@ -504,7 +364,7 @@
                                 </div>
                                 <div class="confirm_list">
                                     <div class="confirm_item">
-                                        <button>
+                                        <button class="0">
                                             <div class="text">
                                                 <span>Use Instant Book</span>
                                                 <p>Guests can book automatically.</p>
@@ -516,7 +376,7 @@
                                     </div>
 
                                     <div class="confirm_item">
-                                        <button>
+                                        <button class="1">
                                             <div class="text">
                                                 <span>Approve or decline requests</span>
                                                 <p>Guests must ask if they can book.</p>
@@ -544,7 +404,7 @@
                                 </div>
                                 <div class="price">
                                     <img src="~/ExtraFiles/assets/Image/image-420.png">
-                                    <span class="_10">10</span>
+                                    <span class="_10">0</span>
                                 </div>
                             </div>
                         </div>
@@ -562,33 +422,25 @@
                                     <p>Help your place stand out to get booked faster and earn your first reviews.</p>
                                 </div>
                                 <div class="discounts_list">
-                                    <div class="discounts_item">
-                                        <div class="number">
-                                            <p>20%</p>
+                                    @foreach(var item in db.discounts) { 
+                                        <div class="discounts_item @item.id">
+                                            <div class="number">
+                                                @if (item.discounts != null)
+                                                {
+                                                    <p class="_102">@item.discounts%</p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="_102">20%</p>
+                                                }
+                                            </div>
+                                            <div class="condition">
+                                                <span>New listing promotion</span>
+                                                <span>@item.descride</span>
+                                            </div>
                                         </div>
-                                        <div class="condition">
-                                            <span>New listing promotion</span>
-                                            <span>Offer 20% off your first 3 bookings</span>
-                                        </div>
-                                    </div>
-                                    <div class="discounts_item">
-                                        <div class="number">
-                                            <p class="_102">20%</p>
-                                        </div>
-                                        <div class="condition">
-                                            <span>New listing promotion</span>
-                                            <span>Offer 20% off your first 3 bookings</span>
-                                        </div>
-                                    </div>
-                                    <div class="discounts_item">
-                                        <div class="number">
-                                            <p class="_102">20%</p>
-                                        </div>
-                                        <div class="condition">
-                                            <span>Monthly discount</span>
-                                            <span>For stays of 28 nights or more</span>
-                                        </div>
-                                    </div>
+                                    }
+                                    
                                 </div>
                             </div>
                         </div>
@@ -626,7 +478,10 @@
                             <div class="back_btn">
                                 <button>Back</button>
                             </div>
-                            <div class="next_btn">
+                            <script>
+
+                            </script>
+                            <div class="next_btn" onclick="getData()">
                                 <button>Next</button>
                             </div>
                         </div>
@@ -635,6 +490,137 @@
             </div>
         </div>
     </div>
-    <script src="~/ExtraFiles/JS/hotel.js"></script>
+    <script src="~/ExtraFiles/JS/hotel.js?v=2"></script>
 </body>
 </html>
+
+
+
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+
+<script>
+    var data = {};
+
+    function getData() {
+        $(document).ready(function () {
+
+            console.log(data);
+            // pages 2
+            var get_property_type = $('.list_place .place_item .selected');
+            if (get_property_type.length > 0) {
+                var classList = get_property_type.attr('class');
+                if (classList) {
+                    data["property_type"] = classList.split(" ")[0];
+                    get_property_type.removeClass('selected');
+                    
+                }
+                console.log(data.property_type);
+
+            }
+
+            // pages 3
+            var get_room_type = $('.list_type_of .type_of_item .selected');
+            if (get_room_type.length > 0) {
+                var classList = get_room_type.attr('class');
+                if (classList) {
+                    data["room_type"] = classList.split(" ")[0];
+                    get_room_type.removeClass('selected');
+               
+                }
+
+            }
+
+            // pages 4
+            var text_country = $('#Country');
+            var text_state = $('#State');
+            var text_city = $('#City');
+            var text_street_address = $('#Street_address');
+            data['Country'] = text_country.val().trim();
+            data['State'] = text_state.val().trim();
+            data['City'] = text_city.val().trim();
+            data['StreetAddress'] = text_street_address.val().trim();
+            
+
+            // pages 6
+            var number_guest = $('.number_guest').text();
+            var number_bedrooms = $('.number_bedrooms').text();
+            var number_bathrooms = $('.number_bathrooms').text();
+            var number_pets = $('.number_pets').text();
+            var number_beds = $('.number_beds').text();
+            data.number_guest = number_guest;
+            data.number_bedrooms = number_bedrooms;
+            data.number_bathrooms = number_bathrooms;
+            data.number_beds = number_beds;
+            data.number_pets = number_pets;
+          
+            // pages 7
+            var list_main_amentities = $('.list_offer .offer_item .clicked').map(function () {
+                return $(this).attr('class').split(" ")[0];
+            }).get();
+            var list_other_amentities = $('.amenities_list .amenities_item .clicked').map(function () {
+                return $(this).attr('class').split(" ")[0];
+            }).get();
+
+            if (list_main_amentities.length > 0 || list_other_amentities.length > 0) {
+                if (list_main_amentities.length > 0) {
+                    data['list_main_amentities'] = list_main_amentities;
+                }
+
+                if (list_other_amentities.length > 0) {
+                    data['list_other_amentities'] = list_other_amentities;
+                }
+                 
+       
+            }
+            // pages 8
+            var property_name = $('#property_name').val();
+            if (property_name.length > 0) {
+                data["hotel_name"] = property_name;
+            }
+
+            var list_highlight_amenities = $('.highlights_list .clicked').map(function () {
+                return $(this).attr('class').split(" ")[0];
+            }).get();
+            console.log(list_highlight_amenities);
+            if (list_highlight_amenities.length > 0) {
+                data["listHighlight"] = list_highlight_amenities;
+            }
+
+            var property_describe = $('#property_describe').val();
+            if (property_describe.length > 0) {
+                data["hotelDescribe"] = property_describe.trim();
+            }
+
+            // pages 10
+            var ask_for_booking = $('.confirm_list .confirm_item .selected');
+            if (ask_for_booking.length > 0) {
+                var classList = ask_for_booking.attr('class');
+                if (classList) {
+                    data["ask_for_booking"] = classList.split(" ")[0];
+                    ask_for_booking.removeClass('selected');
+                }
+            }
+
+            // pages 11
+            var price = $('.price span').text(); // Sử dụng .text() thay vì .val()
+            if (price > "0") {
+                data["price"] = price.trim();
+            }
+
+            // pages 12
+            var list_discounts = [];
+
+            $('.discounts_item').each(function () {
+                var $this = $(this);
+                var discount = {};
+                discount.id = $this.attr('class').split(" ")[1]; // Thay vì $value.arr() sửa thành $this.attr()
+                discount.discount_value = $this.find('.number p').text(); // Sửa thành $this.find()
+                list_discounts.push(discount);
+            });
+            data["listDiscounts"] = list_discounts;
+
+        });
+    }
+
+</script>

@@ -67,5 +67,7 @@ namespace PPl3.Models
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<users_interests> users_interests { get; set; }
         public virtual DbSet<users_languages> users_languages { get; set; }
+        public virtual DbSet<discount> discounts { get; set; }
+        public virtual DbSet<properties_discounts> properties_discounts { get; set; }
     }
 }

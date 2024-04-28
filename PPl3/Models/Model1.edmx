@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -119,6 +119,14 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="currency_status" Type="tinyint" />
           <Property Name="icon_image" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="discounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="descride" Type="nvarchar" MaxLength="100" />
+          <Property Name="discounts" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="disputes">
           <Key>
@@ -319,6 +327,15 @@
           <Property Name="created" Type="datetime" />
           <Property Name="modified" Type="datetime" />
           <Property Name="p_status" Type="tinyint" />
+          <Property Name="ask_for_booking" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="properties_discounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="properties_id" Type="int" />
+          <Property Name="discounts_id" Type="int" />
         </EntityType>
         <EntityType Name="property_amenities">
           <Key>
@@ -387,6 +404,7 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="rt_status" Type="tinyint" />
           <Property Name="icon_image" Type="varchar(max)" />
+          <Property Name="describe" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="states">
           <Key>
@@ -517,7 +535,9 @@
           <Property Name="language_id" Type="int" />
         </EntityType>
         <Association Name="bkg_booking_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -529,7 +549,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="bkg_guest_type_id_FK">
-          <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1" />
+          <End Role="guest_type" Type="Self.guest_type" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="booking_guests" Type="Self.booking_guests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="guest_type">
@@ -627,7 +649,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="cr_review_id_id_FK">
-          <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="0..1" />
+          <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="component_rating" Type="Self.component_rating" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="property_reviews">
@@ -639,7 +663,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="disputes_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -651,9 +677,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="disputes_property_id_id_FK">
-          <End Role="properties" Type="Self.properties" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
           <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="properties">
@@ -771,6 +795,34 @@
             </Principal>
             <Dependent Role="amenities">
               <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_properties_discounts_discounts">
+          <End Role="discounts" Type="Self.discounts" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="properties_discounts" Type="Self.properties_discounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="discounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="properties_discounts">
+              <PropertyRef Name="discounts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_properties_discounts_properties">
+          <End Role="properties" Type="Self.properties" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="properties_discounts" Type="Self.properties_discounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="properties">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="properties_discounts">
+              <PropertyRef Name="properties_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -913,7 +965,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pr_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
+          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="bookings">
@@ -925,9 +979,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pr_property_id_id_FK">
-          <End Role="properties" Type="Self.properties" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="properties">
@@ -939,7 +991,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pr_reviews_by_user_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -951,9 +1005,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pro_city_id_id_FK">
-          <End Role="cities" Type="Self.cities" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="cities" Type="Self.cities" Multiplicity="0..1" />
           <End Role="properties" Type="Self.properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="cities">
@@ -965,9 +1017,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pro_country_id_id_FK">
-          <End Role="countries" Type="Self.countries" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
           <End Role="properties" Type="Self.properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="countries">
@@ -979,9 +1029,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pro_currency_id_id_FK">
-          <End Role="currencies" Type="Self.currencies" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
           <End Role="properties" Type="Self.properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="currencies">
@@ -993,9 +1041,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pro_property_type_id_id_FK">
-          <End Role="property_type" Type="Self.property_type" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="property_type" Type="Self.property_type" Multiplicity="0..1" />
           <End Role="properties" Type="Self.properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="property_type">
@@ -1007,9 +1053,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pro_room_type_id_id_FK">
-          <End Role="room_type" Type="Self.room_type" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="room_type" Type="Self.room_type" Multiplicity="0..1" />
           <End Role="properties" Type="Self.properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="room_type">
@@ -1021,9 +1065,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pro_state_id_id_FK">
-          <End Role="states" Type="Self.states" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="states" Type="Self.states" Multiplicity="0..1" />
           <End Role="properties" Type="Self.properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="states">
@@ -1035,9 +1077,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="pro_userId_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
           <End Role="properties" Type="Self.properties" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
@@ -1301,6 +1341,7 @@
           <EntitySet Name="component_rating" EntityType="Self.component_rating" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="countries" EntityType="Self.countries" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="currencies" EntityType="Self.currencies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="discounts" EntityType="Self.discounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="disputes" EntityType="Self.disputes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="email_content_languages" EntityType="Self.email_content_languages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="email_contents" EntityType="Self.email_contents" Schema="dbo" store:Type="Tables" />
@@ -1317,6 +1358,7 @@
           <EntitySet Name="phone_number" EntityType="Self.phone_number" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="promo_codes" EntityType="Self.promo_codes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="properties" EntityType="Self.properties" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="properties_discounts" EntityType="Self.properties_discounts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="property_amenities" EntityType="Self.property_amenities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="property_images" EntityType="Self.property_images" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="property_reviews" EntityType="Self.property_reviews" Schema="dbo" store:Type="Tables" />
@@ -1416,6 +1458,14 @@
           <AssociationSet Name="FK_amenities_categories" Association="Self.FK_amenities_categories">
             <End Role="categories" EntitySet="categories" />
             <End Role="amenities" EntitySet="amenities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_properties_discounts_discounts" Association="Self.FK_properties_discounts_discounts">
+            <End Role="discounts" EntitySet="discounts" />
+            <End Role="properties_discounts" EntitySet="properties_discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_properties_discounts_properties" Association="Self.FK_properties_discounts_properties">
+            <End Role="properties" EntitySet="properties" />
+            <End Role="properties_discounts" EntitySet="properties_discounts" />
           </AssociationSet>
           <AssociationSet Name="gid_userID_id_FK" Association="Self.gid_userID_id_FK">
             <End Role="users" EntitySet="users" />
@@ -1582,8 +1632,7 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1965,6 +2014,8 @@
           <NavigationProperty Name="state" Relationship="Self.pro_state_id_id_FK" FromRole="properties" ToRole="states" />
           <NavigationProperty Name="user" Relationship="Self.pro_userId_id_FK" FromRole="properties" ToRole="users" />
           <NavigationProperty Name="transactions" Relationship="Self.transaction_property_id_id_FK" FromRole="properties" ToRole="transactions" />
+          <Property Name="ask_for_booking" Type="Byte" />
+          <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_properties" FromRole="property" ToRole="properties_discounts" />
         </EntityType>
         <EntityType Name="property_amenities">
           <Key>
@@ -2044,6 +2095,7 @@
           <Property Name="rt_status" Type="Byte" />
           <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="properties" Relationship="Self.pro_room_type_id_id_FK" FromRole="room_type" ToRole="properties" />
+          <Property Name="describe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="state">
           <Key>
@@ -3287,7 +3339,64 @@
             <End Role="users" EntitySet="users" />
             <End Role="users_interests" EntitySet="users_interests" />
           </AssociationSet>
+          <EntitySet Name="discounts" EntityType="PPL3Model.discount" />
+          <EntitySet Name="properties_discounts" EntityType="PPL3Model.properties_discounts" />
+          <AssociationSet Name="FK_properties_discounts_discounts" Association="PPL3Model.FK_properties_discounts_discounts">
+            <End Role="discount" EntitySet="discounts" />
+            <End Role="properties_discounts" EntitySet="properties_discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_properties_discounts_properties" Association="PPL3Model.FK_properties_discounts_properties">
+            <End Role="property" EntitySet="properties" />
+            <End Role="properties_discounts" EntitySet="properties_discounts" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="discount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="descride" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="discounts" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="discount" ToRole="properties_discounts" />
+        </EntityType>
+        <EntityType Name="properties_discounts">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="properties_id" Type="Int32" />
+          <Property Name="discounts_id" Type="Int32" />
+          <NavigationProperty Name="discount" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="properties_discounts" ToRole="discount" />
+          <NavigationProperty Name="property" Relationship="PPL3Model.FK_properties_discounts_properties" FromRole="properties_discounts" ToRole="property" />
+        </EntityType>
+        <Association Name="FK_properties_discounts_discounts">
+          <End Type="PPL3Model.discount" Role="discount" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PPL3Model.properties_discounts" Role="properties_discounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="discount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="properties_discounts">
+              <PropertyRef Name="discounts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_properties_discounts_properties">
+          <End Type="PPL3Model.property" Role="property" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PPL3Model.properties_discounts" Role="properties_discounts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="property">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="properties_discounts">
+              <PropertyRef Name="properties_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3603,6 +3712,7 @@
           <EntitySetMapping Name="properties">
             <EntityTypeMapping TypeName="PPL3Model.property">
               <MappingFragment StoreEntitySet="properties">
+                <ScalarProperty Name="ask_for_booking" ColumnName="ask_for_booking" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="p_name" ColumnName="p_name" />
                 <ScalarProperty Name="p_description" ColumnName="p_description" />
@@ -3700,6 +3810,7 @@
           <EntitySetMapping Name="room_type">
             <EntityTypeMapping TypeName="PPL3Model.room_type">
               <MappingFragment StoreEntitySet="room_type">
+                <ScalarProperty Name="describe" ColumnName="describe" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="rt_name" ColumnName="rt_name" />
                 <ScalarProperty Name="created" ColumnName="created" />
@@ -3844,6 +3955,24 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="discounts">
+            <EntityTypeMapping TypeName="PPL3Model.discount">
+              <MappingFragment StoreEntitySet="discounts">
+                <ScalarProperty Name="discounts" ColumnName="discounts" />
+                <ScalarProperty Name="descride" ColumnName="descride" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="properties_discounts">
+            <EntityTypeMapping TypeName="PPL3Model.properties_discounts">
+              <MappingFragment StoreEntitySet="properties_discounts">
+                <ScalarProperty Name="discounts_id" ColumnName="discounts_id" />
+                <ScalarProperty Name="properties_id" ColumnName="properties_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
