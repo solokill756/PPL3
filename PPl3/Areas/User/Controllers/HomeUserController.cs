@@ -672,7 +672,7 @@ namespace PPl3.Areas.User.Controllers
                 {
                     date = date + item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy") + ",";
                 }
-                date = date.Substring(0, date.Length - 1);
+                if(date.Trim() != "") date = date.Substring(0, date.Length - 1);
                 ViewBag.dataJson = JsonConvert.SerializeObject(date);
                 return View();
             }

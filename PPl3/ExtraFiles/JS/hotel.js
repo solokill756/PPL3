@@ -67,7 +67,8 @@ for (var i = 0; i < elements.length; i++) {
 
 //Chuyển trang
 
-const nextBtn = document.querySelector('.next_btn button')
+const nextBtn = document.querySelector('.next_btn .next_btn')
+const doneBtn = document.querySelector('.next_btn .done_btn')
 const backBtn = document.querySelector('.back_btn button')
 const barStep1 = document.querySelector('.bg-black_step_1')
 const barStep2 = document.querySelector('.bg-black_step_2')
@@ -107,7 +108,8 @@ nextBtn.addEventListener('click', () =>{
       })
     }
     else if(index > 5 && index < 9){
-      if(index === 6){
+        if (index === 6) {
+        nextBtn.style.pointerEvents = 'none'
         barWith = 0;
         barWith = barWith + 33.333;
       }else{
@@ -147,10 +149,11 @@ nextBtn.addEventListener('click', () =>{
       })
     }
     else if(index === 12){
-      nextBtn.textContent = 'Done'
-      nextBtn.style.pointerEvents = 'none'
+        nextBtn.style.display = 'none';
+        doneBtn.style.display = 'block';
     }else{
-      nextBtn.textContent = 'Next'
+        nextBtn.style.display = 'block';
+        doneBtn.style.display = 'none';
     }
 })
 
@@ -223,11 +226,12 @@ backBtn.addEventListener('click', () =>{
         video1.play();
       })
     }
-    else if(index === 12){
-      nextBtn.textContent = 'Done'
-      nextBtn.style.pointerEvents = 'none'
-    }else{
-      nextBtn.textContent = 'Next'
+    else if (index === 12) {
+        nextBtn.style.display = 'none';
+        doneBtn.style.display = 'block';
+    } else {
+        nextBtn.style.display = 'block';
+        doneBtn.style.display = 'none';
     }
 })
 
@@ -308,17 +312,19 @@ hightlightsBtns.forEach((btn) =>{
       btn.classList.add('clicked')
     }
     if(current === 2){
-      btn.style.pointerEvent = 'none'
+      
       hightlightsBtns.forEach((btn1) =>{
         if(btn1.classList.contains('clicked')){
           
-        }else{
+        } else {
+          btn1.style.pointerEvents = 'none'
           btn1.style.opacity = 0.4
         }
       })
     }else{
-      btn.style.pointerEvent = ''
-      hightlightsBtns.forEach((btn1) =>{
+      
+        hightlightsBtns.forEach((btn1) => {
+        btn1.style.pointerEvents = ''
         btn1.style.opacity = 1
       })
     }
@@ -378,3 +384,55 @@ for (let i = 1; i <= img.length; i++){
     }
   })
 }
+
+// pages 2
+const list_btns = document.querySelectorAll('.list_place .place_item button');
+
+list_btns.forEach(function (item) {
+    item.addEventListener('click', () => {
+        var selected_btns = document.querySelectorAll('.list_place .place_item .selected');
+
+        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
+
+        selected_btns.forEach(function (btn) {
+
+            btn.classList.remove('selected');
+
+        });
+        item.classList.add("selected");
+    })
+})
+
+// pages 3
+
+document.querySelectorAll('.list_type_of .type_of_item button').forEach(function (item) {
+    item.addEventListener('click', () => {
+        var selected_btns = document.querySelectorAll('.list_type_of .type_of_item button');
+
+        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
+
+        selected_btns.forEach(function (btn) {
+
+            btn.classList.remove('selected');
+
+        });
+        item.classList.add("selected");
+    })
+})
+
+// pages 9
+
+document.querySelectorAll('.confirm_list .confirm_item button').forEach(function (item) {
+    item.addEventListener('click', () => {
+        var selected_btns = document.querySelectorAll('.confirm_list .confirm_item button');
+
+        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
+
+        selected_btns.forEach(function (btn) {
+
+            btn.classList.remove('selected');
+
+        });
+        item.classList.add("selected");
+    })
+})

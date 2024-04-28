@@ -407,6 +407,7 @@
     <Content Include="ExtraFiles\assets\video_3d\zFaydEaihX6LP01x8TSCl76WHblb01Z01RrFELxyCXoNek.mp4" />
     <Content Include="ExtraFiles\editProfile.html" />
     <Content Include="ExtraFiles\hotel.html" />
+    <Content Include="ExtraFiles\hotel1.html" />
     <Content Include="ExtraFiles\index.html" />
     <Content Include="ExtraFiles\JS\calendar.js" />
     <Content Include="ExtraFiles\JS\editProfile.js" />
@@ -478,6 +479,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <Content Include="Areas\Host\Views\HomeHost\addHotel.cshtml" />
+    <Content Include="Areas\Host\Views\HomeHost\editHotel.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

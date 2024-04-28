@@ -124,7 +124,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="descride" Type="nvarchar" MaxLength="100" />
           <Property Name="discounts" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
@@ -333,7 +333,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="properties_id" Type="int" />
           <Property Name="discounts_id" Type="int" />
         </EntityType>

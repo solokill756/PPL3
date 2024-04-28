@@ -130,8 +130,8 @@
 
                                                 </div>
                                                 <div class="btn_listing">
-                                                    <div class="edit_btn">
-                                                        <button>Edit listing</button>
+                                                    <div class="edit_btn" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
+                                                        <button >Edit listing</button>
                                                     </div>
                                                     <div class="remove_btn js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
                                                         <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
@@ -167,7 +167,7 @@
                                         <div class="hotel_item_2">
                                             <div class="img_hotel img_hotel_2" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
                                                 <div class="btn_listing">
-                                                    <div class="edit_btn_2">
+                                                    <div class="edit_btn_2" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
                                                         <button><i class="fa-solid fa-pen"></i></button>
                                                     </div>
                                                     <div class="remove_btn_2 js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">

@@ -150,9 +150,10 @@
 
             <div class="review_hotel review_hotel_@position">
                 <p>@item.p_name</p>
-                <p>
-                    @item.startDate.Value.ToString("dd/MM/yyyy") - @item.end_date.Value.ToString("dd/MM/yyyy")
-                </p>
+                    @if (item.startDate != null && item.end_date != null)
+                    {
+                       <p> @item.startDate.Value.ToString("dd/MM/yyyy") - @item.end_date.Value.ToString("dd/MM/yyyy") </p>
+                    }
             </div>
 
             <div class="price_hotel price_hotel_@position">
