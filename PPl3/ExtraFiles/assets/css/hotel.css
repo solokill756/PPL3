@@ -274,6 +274,20 @@ html{
     margin-top: 10px;
 }
 
+.two_input input{
+    width: 45%;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 17px;
+    margin-right: 20px;
+    border: 2px solid #ccc;
+}
+
+.input_date_check{
+    margin-bottom: 50px;
+}
+
+
 #page_5{
     display: none;
     transition: ease-in-out 1s;
