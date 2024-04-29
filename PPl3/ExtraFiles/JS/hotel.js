@@ -67,9 +67,9 @@ for (var i = 0; i < elements.length; i++) {
 
 //Chuyển trang
 
-const nextBtn = document.querySelector('.next_btn .next_btn')
-const doneBtn = document.querySelector('.next_btn .done_btn')
+const nextBtn = document.querySelector('.next_btn button')
 const backBtn = document.querySelector('.back_btn button')
+const doneBtn = document.querySelector('.done_btn')
 const barStep1 = document.querySelector('.bg-black_step_1')
 const barStep2 = document.querySelector('.bg-black_step_2')
 const barStep3 = document.querySelector('.bg-black_step_3')
@@ -94,6 +94,68 @@ nextBtn.addEventListener('click', () =>{
     if (index > 1 && index < 5){
       barWith = barWith + 33.333;
       barStep1.style.width = `${barWith}%`
+      nextBtn.style.pointerEvents = 'none'
+      if(index === 2){
+        const placeBtn = document.querySelectorAll('.list_place button')
+        placeBtn.forEach((place) =>{
+          if(place.classList.contains('focus'))
+            nextBtn.style.pointerEvents = ''
+          place.addEventListener('focus', () =>{
+            placeBtn.forEach((pla) =>{
+              if(pla.classList.contains('focus')){
+                pla.classList.remove('focus')
+                nextBtn.style.pointerEvents = ''
+              }
+            })
+            place.classList.add('focus')
+            nextBtn.style.pointerEvents = ''
+          })
+        })
+      }else if(index === 3){
+        const listTypeOf = document.querySelectorAll('.list_type_of button')
+        listTypeOf.forEach((type) =>{
+          if(type.classList.contains('focus3'))
+            nextBtn.style.pointerEvents = ''
+          type.addEventListener('focus', ()=>{
+            listTypeOf.forEach((typ)=>{
+              if(typ.classList.contains('focus3')){
+                typ.classList.remove('focus3')
+              }
+            })
+            type.classList.add('focus3')
+            nextBtn.style.pointerEvents = ''
+          })
+        })
+      }else if(index === 4){
+        const listInput = document.querySelectorAll('.input_list input')
+        var checkInput = 0
+        listInput.forEach((inputs) =>{
+          if(inputs.value.trim() !== ''){
+            checkInput++
+          }
+          console.log(checkInput)
+          if(checkInput === listInput.length)
+            nextBtn.style.pointerEvents = ''
+        })
+        checkInput = 0
+        listInput.forEach((input)=>{
+          input.addEventListener('change', () =>{
+            const listInput = document.querySelectorAll('.input_list input')
+            listInput.forEach((inp) =>{
+              console.log(inp.value)
+              if(inp.value.trim() !== '')
+                checkInput++;
+              else
+                checkInput--;
+            })
+            if(checkInput === 5)
+              nextBtn.style.pointerEvents = ''
+            else
+              nextBtn.style.pointerEvents = 'none'
+            checkInput = 0
+          })
+        })
+      }
     }
     else if(index === 5){
       if(barWith > 66.660 && barWith < 66.667){
@@ -108,12 +170,37 @@ nextBtn.addEventListener('click', () =>{
       })
     }
     else if(index > 5 && index < 9){
-        if (index === 6) {
-        nextBtn.style.pointerEvents = 'none'
+      nextBtn.style.pointerEvents = 'none'
+      if(index === 6){
         barWith = 0;
         barWith = barWith + 33.333;
+        var check1 = 1;
+        const remove = document.querySelectorAll('.remove')
+        remove.forEach((rm)=>{
+          if(rm.classList.contains('open')){
+            ++check1;
+          }
+        })
+        console.log(check1)
+        if(check1 === 6){
+          nextBtn.style.pointerEvents = ''
+        }
       }else{
         barWith = barWith + 33.333;
+      }
+      if(index === 7){
+        nextBtn.style.pointerEvents = ''
+      }
+      else if(index === 8){
+        offerBtns.forEach((offer)=>{
+          if(offer.classList.contains('clicked')){
+            nextBtn.style.pointerEvents = ''
+            checkOffer++;
+          }
+        })
+        if(checkOffer === 0)
+          nextBtn.style.pointerEvents = 'none'
+        checkOffer = 0    
       }
       barStep2.style.width = `${barWith}%`
     }
@@ -133,8 +220,39 @@ nextBtn.addEventListener('click', () =>{
       if(index === 10){
         barWith = 0;
         barWith = barWith + 33.333;
+        nextBtn.style.pointerEvents = 'none'
+        const nameHotel = document.getElementById('name_hotel').value;
+        const hightlightsBtns = document.querySelectorAll('.highlights_list button')
+        var currentHigh = 0;
+        hightlightsBtns.forEach((btn) =>{
+          if(btn.classList.contains('clicked')){
+            currentHigh++;
+          }
+        })
+        
+        if(nameHotel.trim() !== '' && currentHigh === 2)
+          nextBtn.style.pointerEvents = ''
+        else
+          nextBtn.style.pointerEvents = 'none'
       }else{
         barWith = barWith + 33.333;
+      }
+      if(index === 11){
+        nextBtn.style.pointerEvents = 'none'
+        const listConfirm = document.querySelectorAll('.confirm_list button')
+        listConfirm.forEach((confirm) =>{
+          if(confirm.classList.contains('focus3'))
+            nextBtn.style.pointerEvents = ''
+          confirm.addEventListener('focus', ()=>{
+            listConfirm.forEach((cf)=>{
+              if(cf.classList.contains('focus3')){
+                cf.classList.remove('focus3')
+              }
+            })
+            confirm.classList.add('focus3')
+            nextBtn.style.pointerEvents = ''
+          })
+        })
       }
       barStep3.style.width = `${barWith}%`
     }
@@ -149,11 +267,11 @@ nextBtn.addEventListener('click', () =>{
       })
     }
     else if(index === 12){
-        nextBtn.style.display = 'none';
-        doneBtn.style.display = 'block';
+      nextBtn.classList.add('close')
+      doneBtn.classList.add('open')
     }else{
-        nextBtn.style.display = 'block';
-        doneBtn.style.display = 'none';
+      nextBtn.classList.remove('close')
+      doneBtn.classList.remove('open')
     }
 })
 
@@ -197,7 +315,8 @@ backBtn.addEventListener('click', () =>{
         barWith = 133.332;
         barWith = barWith - 33.333;
 
-      }else{
+      }
+      else{
         barWith = barWith - 33.333;
       }
       barStep2.style.width = `${barWith}%`
@@ -226,17 +345,17 @@ backBtn.addEventListener('click', () =>{
         video1.play();
       })
     }
-    else if (index === 12) {
-        nextBtn.style.display = 'none';
-        doneBtn.style.display = 'block';
-    } else {
-        nextBtn.style.display = 'block';
-        doneBtn.style.display = 'none';
+    else if(index === 12){
+      nextBtn.classList.add('close')
+      doneBtn.classList.add('open')
+    }else{
+      nextBtn.classList.remove('close')
+      doneBtn.classList.remove('open')
     }
 })
 
 
-//Xử lý button page 6
+//Xử lý button page 7
 
 const minusBtns = document.querySelectorAll('.minus_btn')
 const plusBtns = document.querySelectorAll('.plus_btn')
@@ -250,7 +369,7 @@ minusBtns.forEach((btn) =>{
       number--;
       textNumber.textContent = `${number}`
     }else{
-      btn.style.pointerEvent = 'none'
+      btn.style.pointerEvents = 'none'
       btn.style.color = '#ccc'
       btn.style.border = '1px solid #ccc'
     }
@@ -268,16 +387,16 @@ plusBtns.forEach((btn) =>{
     textNumber.textContent = `${number}`
     minusBtn.style.color = '#000'
     minusBtn.style.border = '1px solid #000'
-    minusBtn.style.pointerEvent = ''
+    minusBtn.style.pointerEvents = ''
   })
 })
 
 
-//Xử lý button ở page7
+//Xử lý button ở page 8
 
 const offerBtns = document.querySelectorAll('.list_offer button')
 const amenitiesBtns = document.querySelectorAll('.amenities_list button')
-
+var checkOffer = 0
 offerBtns.forEach((btn) =>{
   btn.addEventListener('click',()=>{
     if(btn.classList.contains('clicked')){
@@ -285,6 +404,15 @@ offerBtns.forEach((btn) =>{
     }else{
       btn.classList.add('clicked')
     }
+    offerBtns.forEach((offer)=>{
+      if(offer.classList.contains('clicked')){
+        nextBtn.style.pointerEvents = ''
+        checkOffer++;
+      }
+    })
+    if(checkOffer === 0)
+      nextBtn.style.pointerEvents = 'none'
+    checkOffer = 0
   })
 })
 
@@ -292,16 +420,18 @@ amenitiesBtns.forEach((btn) =>{
   btn.addEventListener('click',()=>{
     if(btn.classList.contains('clicked')){
       btn.classList.remove('clicked')
+      nextBtn.style.pointerEvents = ''
     }else{
       btn.classList.add('clicked')
     }
   })
 })
 
-//Xử lý button page8
+//Xử lý button page 10
 
 const hightlightsBtns = document.querySelectorAll('.highlights_list button')
 var current = 0
+var checkHigthLight = false
 hightlightsBtns.forEach((btn) =>{
   btn.addEventListener('click',()=>{
     if(btn.classList.contains('clicked')){
@@ -312,31 +442,34 @@ hightlightsBtns.forEach((btn) =>{
       btn.classList.add('clicked')
     }
     if(current === 2){
-      
       hightlightsBtns.forEach((btn1) =>{
         if(btn1.classList.contains('clicked')){
           
-        } else {
-          btn1.style.pointerEvents = 'none'
+        }else{
           btn1.style.opacity = 0.4
+          btn1.style.pointerEvents = 'none'
         }
       })
+      const nameHotel = document.getElementById('name_hotel').value;
+      console.log(nameHotel)
+      if(nameHotel.trim() !== '')
+        nextBtn.style.pointerEvents = ''
+      else
+        nextBtn.style.pointerEvents = 'none'
     }else{
-      
-        hightlightsBtns.forEach((btn1) => {
-        btn1.style.pointerEvents = ''
+      hightlightsBtns.forEach((btn1) =>{
         btn1.style.opacity = 1
+        btn1.style.pointerEvent = ''
       })
+      nextBtn.style.pointerEvents = 'none'
     }
   })
 })
 
 
-
 //UpLoad ảnh hotel
 const img = document.querySelectorAll('.img')
 const remove = document.querySelectorAll('.remove')
-var check = 0;
 for (let i = 1; i <= img.length; i++){
   const fileUpLoad = document.getElementById('up_img_' + i)
   const addImgBtn = document.querySelector('.btn_img_' + i)
@@ -348,7 +481,6 @@ for (let i = 1; i <= img.length; i++){
   })
 
   btnRemove.addEventListener('click', (e) => {
-    check--
     imgProfile.style.backgroundImage = "";
     imgProfile.style.backgroundPosition = "";
     imgProfile.style.backgroundSize = "";
@@ -361,7 +493,6 @@ for (let i = 1; i <= img.length; i++){
   })
   
   fileUpLoad.addEventListener('change', () =>{
-    check++;
     var file = fileUpLoad.files[0];
     if (file) {
         var reader = new FileReader();
@@ -378,61 +509,17 @@ for (let i = 1; i <= img.length; i++){
         reader.onerror = function(e) {
           console.error("Error reading file:", e.target.error);
         };
-    }
-    if(check === 5){
-      nextBtn.style.pointerEvents = ''
+        var check = 1;
+        const remove = document.querySelectorAll('.remove')
+        remove.forEach((rm)=>{
+          if(rm.classList.contains('open')){
+            ++check;
+          }
+        })
+        console.log(check)
+        if(check === 5 || check === 6){
+          nextBtn.style.pointerEvents = ''
+        }
     }
   })
 }
-
-// pages 2
-const list_btns = document.querySelectorAll('.list_place .place_item button');
-
-list_btns.forEach(function (item) {
-    item.addEventListener('click', () => {
-        var selected_btns = document.querySelectorAll('.list_place .place_item .selected');
-
-        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
-
-        selected_btns.forEach(function (btn) {
-
-            btn.classList.remove('selected');
-
-        });
-        item.classList.add("selected");
-    })
-})
-
-// pages 3
-
-document.querySelectorAll('.list_type_of .type_of_item button').forEach(function (item) {
-    item.addEventListener('click', () => {
-        var selected_btns = document.querySelectorAll('.list_type_of .type_of_item button');
-
-        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
-
-        selected_btns.forEach(function (btn) {
-
-            btn.classList.remove('selected');
-
-        });
-        item.classList.add("selected");
-    })
-})
-
-// pages 9
-
-document.querySelectorAll('.confirm_list .confirm_item button').forEach(function (item) {
-    item.addEventListener('click', () => {
-        var selected_btns = document.querySelectorAll('.confirm_list .confirm_item button');
-
-        // Lặp qua từng phần tử đã chọn và loại bỏ class 'selected'
-
-        selected_btns.forEach(function (btn) {
-
-            btn.classList.remove('selected');
-
-        });
-        item.classList.add("selected");
-    })
-})
