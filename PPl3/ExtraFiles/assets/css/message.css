@@ -1,0 +1,326 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.center{
+    display: flex !important;
+    justify-content: center;
+}
+
+.open{
+    display: block !important;
+}
+
+.active{
+    display: flex !important; 
+}
+
+.close{
+    display: none !important;
+}
+
+.clicked{
+    border: 3px solid #000 !important;
+    background-color: rgb(208, 208, 208) !important;
+    color: #727171;
+}
+
+#content{
+    display: flex;
+    margin-top: 100px;
+}
+
+.mess_box{
+    border: 1px solid #ccc;
+}
+
+.list_message{
+    height: 445px;
+    overflow: auto;
+}
+
+.list_message li{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    padding: 30px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.list_message li:hover{
+    background-color: #dbdada;
+}
+
+.first_input input{
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    font-size: 17px;
+    border: 3px solid #ccc;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.tittle{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.tittle button{
+    padding: 10px 12px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.tittle button>i{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.search{
+    padding: 0 20px;
+}
+
+.avatar{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+}
+
+.detail{
+    display: none;
+    width: 50%;
+    margin-left: 15px;
+}
+
+.name{
+    display: flex;
+    width: 150%;
+    justify-content: space-between;
+}
+
+.name p{
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.name span{
+    color: #727171;
+    font-size: 14px;
+}
+
+.message p{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 17px;
+    color: #727171;
+}
+
+
+.header_mess{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #ccc ;
+}
+
+.name_mess{
+    display: flex;
+    align-items: center;
+}
+
+.name_mess p{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.btn_detail{
+    padding: 5px;
+    border-radius: 50%;
+}
+
+.btn_detail button{
+    padding: 5px 13px;
+    border-radius: 50%;
+    border: none;
+    background-color: #ff385c;
+    cursor: pointer;
+}
+
+.btn_detail:hover{
+    background-color: #dfdada;
+}
+
+.btn_detail button>i{
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+}
+
+.body_mess{
+    display: none;
+    overflow: auto;
+    height: 420px;
+    padding: 20px 10px;
+}
+
+.mess_detail,
+.user_detail{
+    display: none;
+}
+
+.user_detail{
+    height: 620px;
+}
+
+
+.chat_section{
+    display: block;
+}
+
+.container{
+    display: flex;
+}
+
+.text_user{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.text_you{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.text{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.text p{
+    max-width: 45%;
+    background-color: #ff385c;
+    padding: 20px;
+    border-radius: 20px;
+    color: #fff;
+    overflow-wrap: break-word;
+}
+
+.footer_mess{
+    width: 100%;
+    border-top: 1px solid #ccc;
+    padding: 20px;
+}
+
+.input_mess{
+    display: flex;
+    justify-content: space-around;
+}
+
+.input_mess input{
+    width: 90%;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 20px;
+    margin: 0 10px;
+    background-color: #ebe8e8;
+    border: none;
+}
+
+.input_mess input:focus{
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.input_mess .send_btn{
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 10px 12px;
+    border-radius: 50%;
+    color: #ff385c;
+}
+
+.add_file_btn{
+    border: none;
+    background-color: transparent;
+}
+
+.add_file_btn i{
+    color: #ff385c;
+    font-weight: 800;
+    font-size: 25px;
+}
+
+.input_mess button:last-child:hover{
+    background-color: #ccc;
+}
+
+.header_detail{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 40%;
+}
+
+
+.header_detail .avatar{
+    width: 130px;
+    height: 130px;
+    margin-bottom: 20px;
+}
+
+.nav_bar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav_bar li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 30px;
+    list-style: none;
+}
+
+.nav_bar li>button{
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.nav_bar button:hover{
+    background-color: #a1a1a1;
+}
+
+.nav_bar li>p{
+    font-weight: 600;
+}
+
+.nav_bar button>i{
+    font-size: 20px;
+}
