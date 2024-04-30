@@ -109,7 +109,7 @@ nextBtn.addEventListener('click', () =>{
     }
     else if(index > 5 && index < 9){
         if (index === 6) {
-        nextBtn.style.pointerEvents = 'none'
+        //nextBtn.style.pointerEvents = 'none'
         barWith = 0;
         barWith = barWith + 33.333;
       }else{

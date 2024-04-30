@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using PPl3.App_Start;
 using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json.Serialization;
 
 namespace PPl3.Areas.Host.Controllers
 {
@@ -239,17 +240,13 @@ namespace PPl3.Areas.Host.Controllers
             db.SaveChanges();
 
             if(data.listDiscounts != null) {
-                for (int i = 0; i < data.listDiscounts.Length; ++i)
-                {
-                    discount find_discount = db.discounts.FirstOrDefault(item => item.id == i + 1);
-                    find_discount.discounts = decimal.Parse(data.listDiscounts[i].Substring(0, data.listDiscounts.Length - 1));
-                    db.SaveChanges();
-                }
+                
                 for (int i = 0; i < data.listDiscounts.Length; ++i)
                 {
                     properties_discounts new_discounts = new properties_discounts();
                     new_discounts.properties_id = db.properties.OrderByDescending(item => item.id).FirstOrDefault(item => item.userId == p_user.id)?.id;
                     new_discounts.discounts_id = db.discounts.FirstOrDefault(item => item.id == i + 1).id;
+                    new_discounts.discounts_value = decimal.Parse(data.listDiscounts[i].Substring(0 , data.listDiscounts[i].Length - 1));
                     db.properties_discounts.Add(new_discounts);
                     db.SaveChanges();
                 }
@@ -389,6 +386,205 @@ namespace PPl3.Areas.Host.Controllers
             PPL3Entities db = new PPL3Entities();
             property find_hotel = db.properties.FirstOrDefault(item => item.id == id);
             return View(find_hotel);
+        }
+
+
+        [HttpPost]
+
+        public JsonResult editHotel(MyModel data, int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            property find_hotel = db.properties.FirstOrDefault(item => item.id == id);
+
+            find_hotel.p_name = data.hotel_name;
+            find_hotel.p_description = data.hotelDescribe;
+            find_hotel.userId = p_user.id;
+            find_hotel.property_type_id = int.Parse(data.property_type);
+            find_hotel.room_type_id = int.Parse(data.room_type);
+            if (data.Country != null)
+            {
+                if (db.countries.Any(item => item.ct_name.Trim().ToLower() == data.Country.Trim().ToLower()))
+                {
+                    find_hotel.country_id = db.countries.FirstOrDefault(item => item.ct_name.Trim().ToLower() == data.Country.Trim().ToLower()).id;
+
+                }
+                else
+                {
+                    country new_country = new country();
+                    new_country.ct_name = data.Country.Trim();
+                    new_country.status = 1;
+                    db.countries.Add(new_country);
+                    db.SaveChanges();
+
+                    find_hotel.country_id = new_country.id;
+                }
+            }
+
+
+            if (data.State != null)
+            {
+                if (db.states.Any(item => item.state_name.Trim().ToLower() == data.State.Trim().ToLower()))
+                {
+                    find_hotel.state_id = db.states.FirstOrDefault(item => item.state_name.Trim().ToLower() == data.State.Trim().ToLower()).id;
+
+                }
+                else
+                {
+                    state new_state = new state();
+                    new_state.state_name = data.State.Trim();
+                    new_state.state_status = 1;
+                    new_state.country_id = find_hotel.country_id;
+                    db.states.Add(new_state);
+                    db.SaveChanges();
+
+                    find_hotel.state_id = new_state.id;
+                }
+            }
+
+
+
+            if (data.City != null)
+            {
+                if (db.cities.Any(item => item.city_name.Trim().ToLower() == data.City.Trim().ToLower()))
+                {
+                    find_hotel.city_id = db.cities.FirstOrDefault(item => item.city_name.Trim().ToLower() == data.City.Trim().ToLower()).id;
+
+                }
+                else
+                {
+                    city new_City = new city();
+                    new_City.city_name = data.City.Trim();
+                    new_City.city_status = 1;
+                    new_City.state_id = find_hotel.state_id;
+                    db.cities.Add(new_City);
+                    db.SaveChanges();
+
+                    find_hotel.city_id = new_City.id;
+                }
+            }
+
+            find_hotel.p_address = data.StreetAddress;
+            find_hotel.bedroom_count = data.number_bedrooms;
+            find_hotel.bathroom_count = data.number_bathrooms;
+            find_hotel.accomodates_count = data.number_guest;
+            find_hotel.max_pets = data.number_pets;
+            find_hotel.bed_count = data.number_beds;
+            find_hotel.availability_type = 1;
+            find_hotel.price = Decimal.Parse(data.price);
+            find_hotel.currency_id = 1;
+            find_hotel.created = DateTime.Now;
+            find_hotel.ask_for_booking = byte.Parse(data.ask_for_booking);
+            db.SaveChanges();
+
+            if (data.listDiscounts != null)
+            {
+
+                for (int i = 0; i < data.listDiscounts.Length; ++i)
+                {
+                    properties_discounts new_discounts = db.properties_discounts.FirstOrDefault(item => item.discounts_id == i + 1 && item.properties_id == id);
+                    new_discounts.discounts_value = decimal.Parse(data.listDiscounts[i].Substring(0, data.listDiscounts[i].Length - 1));
+                    db.SaveChanges();
+                }
+
+            }
+
+            while (db.property_amenities.Any(item => item.property_id == id))
+            {
+                property_amenities find_amennity = db.property_amenities.FirstOrDefault(item => item.property_id == id);
+                db.property_amenities.Remove(find_amennity);
+                db.SaveChanges();
+            }
+
+            if (data.list_other_amentities != null)
+            {
+               
+                foreach (var item in data.list_other_amentities)
+                {
+                    property_amenities new_conection = new property_amenities();
+                    new_conection.pa_status = 1;
+                    new_conection.property_id = find_hotel.id;
+                    new_conection.amenity_id = int.Parse(item);
+                    db.property_amenities.Add(new_conection);
+                    db.SaveChanges();
+                }
+            }
+            if (data.list_main_amentities != null)
+            {
+
+                foreach (var item in data.list_main_amentities)
+                {
+                    property_amenities new_conection = new property_amenities();
+                    new_conection.pa_status = 1;
+                    new_conection.property_id = find_hotel.id;
+                    new_conection.amenity_id = int.Parse(item);
+                    db.property_amenities.Add(new_conection);
+                    db.SaveChanges();
+                }
+            }
+
+            if (data.listHighlight != null)
+            {
+                foreach (var item in data.listHighlight)
+                {
+                    property_amenities new_conection = new property_amenities();
+                    new_conection.pa_status = 1;
+                    new_conection.property_id = find_hotel.id;
+                    new_conection.amenity_id = int.Parse(item);
+                    db.property_amenities.Add(new_conection);
+                    db.SaveChanges();
+                }
+            }
+
+
+            property_images[] list_imgs = db.property_images.Where(item => item.property_id == id).ToArray();
+            if (data.img_1 != null)
+            {
+                list_imgs[0].created = DateTime.Now;
+                list_imgs[0].pi_image = data.img_1;
+                db.SaveChanges();
+            }
+
+
+            if (data.img_2 != null)
+            {
+                list_imgs[1].created = DateTime.Now;
+                list_imgs[1].pi_image = data.img_1;
+                db.SaveChanges();
+            }
+
+
+           
+
+
+            if (data.img_3 != null)
+            {
+                list_imgs[2].created = DateTime.Now;
+                list_imgs[2].pi_image = data.img_1;
+                db.SaveChanges();
+            }
+
+
+            if (data.img_4 != null)
+            {
+                list_imgs[3].created = DateTime.Now;
+                list_imgs[3].pi_image = data.img_1;
+                db.SaveChanges();
+            }
+
+
+            if (data.img_5 != null)
+            {
+                list_imgs[4].created = DateTime.Now;
+                list_imgs[4].pi_image = data.img_1;
+                db.SaveChanges();
+            }
+
+            return Json(new
+            {
+                success = "true",
+                redirectUrl = Url.Action("listing", "Homehost", new { area = "Host" })
+            }, JsonRequestBehavior.AllowGet);
         }
 
         // Fuction

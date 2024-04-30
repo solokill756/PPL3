@@ -1,6 +1,6 @@
 ﻿@model PPl3.Models.property
 
-@{ 
+@{
     PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
 }
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
     <title>Set Hotel</title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/gird.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/hotel.css?v=3" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/hotel.css?v=4" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -76,22 +76,24 @@
                                             <div class="place_item">
                                                 @for (int j = i; j <= i + 2 && j <= (arrray.Length - 1); ++j)
                                                 {
-                                                    if (Model.property_type_id == arrray[j].id) { 
-                                                       <button class="@arrray[j].id selected">
-                                                         <img src="@arrray[j].icon_image">
-                                                         <p>@arrray[j].pt_name</p>
+                                                    if (Model.property_type_id == arrray[j].id)
+                                                    {
+                                                        <button class="@arrray[j].id selected">
+                                                            <img src="@arrray[j].icon_image">
+                                                            <p>@arrray[j].pt_name</p>
                                                         </button>
                                                     }
-                                                    else { 
+                                                    else
+                                                    {
                                                         <button class="@arrray[j].id">
                                                             <img src="@arrray[j].icon_image">
                                                             <p>@arrray[j].pt_name</p>
                                                         </button>
-                                                    
+
                                                     }
 
                                                 }
-                                                   
+
                                             </div>
                                         }
                                     }
@@ -126,9 +128,10 @@
                                                     </div>
                                                 </button>
                                             </div>
-                                            
+
                                         }
-                                        else { 
+                                        else
+                                        {
                                             <div class="type_of_item">
                                                 <button class="@item.id">
                                                     <div class="text">
@@ -140,7 +143,7 @@
                                                     </div>
                                                 </button>
                                             </div>
-                                        
+
                                         }
 
 
@@ -181,16 +184,20 @@
 
                                         <input type="text" placeholder="State" id="State">
                                     }
-                                    @if(Model.city_id != null) { 
+                                    @if (Model.city_id != null)
+                                    {
                                         <input type="text" placeholder="City" id="City" value="@Model.city.city_name">
                                     }
-                                    else { 
+                                    else
+                                    {
                                         <input type="text" placeholder="City" id="City" />
                                     }
-                                    @if(Model.p_address != null) { 
+                                    @if (Model.p_address != null)
+                                    {
                                         <input type="text" placeholder="Street address" id="Street_address" value="@Model.p_address">
                                     }
-                                    else { 
+                                    else
+                                    {
                                         <input type="text" placeholder="Street address" id="Street_address">
                                     }
 
@@ -244,124 +251,133 @@
                                     @if (p <= list_img.Length - 1)
                                     {
                                         <div class="col l-12 m-12 c-12">
-                                            <div class="img img_@(p + 1)" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
+                                            <div class="img img_1" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
                                                 <input type="file" hidden accept="img/*" id="up_img_1">
-                                                <button class="btn_img_@(p + 1) close"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_@(p + 1) open"><i class="fa-regular fa-trash-can"></i></button>
+                                                <button class="btn_img_1 close"><i class="fa-solid fa-plus"></i></button>
+                                                <button class="remove remove_1 open"><i class="fa-regular fa-trash-can"></i></button>
                                             </div>
                                         </div>
+                                        p++;
 
                                     }
                                     else
                                     {
                                         <div class="col l-12 m-12 c-12">
-                                            <div class="img img_@(p + 1)">
+                                            <div class="img img_1">
                                                 <input type="file" hidden accept="img/*" id="up_img_1">
-                                                <button class="btn_img_@(p + 1)"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_@(p + 1)"><i class="fa-regular fa-trash-can"></i></button>
+                                                <button class="btn_img_1"><i class="fa-solid fa-plus"></i></button>
+                                                <button class="remove remove_1"><i class="fa-regular fa-trash-can"></i></button>
                                             </div>
                                         </div>
+                                        p++;
+                                    }
 
-                                    }
-                                    @p++;
-                                <div class="container">
-                                    @if (p <= list_img.Length - 1)
-                                    {
-                                        <div class="col l-6 m-6 c-12">
-                                            <div class="img img_2" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
-                                                <input type="file" hidden accept="img/*" id="up_img_2">
-                                                <button class="btn_img_2 close"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_2 open"><i class="fa-regular fa-trash-can"></i></button>
+                                    <div class="container">
+                                        @if (p <= list_img.Length - 1)
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_2" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
+                                                    <input type="file" hidden accept="img/*" id="up_img_2">
+                                                    <button class="btn_img_2 close"><i class="fa-solid fa-plus"></i></button>
+                                                    <button class="remove remove_2 open"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                    }
-                                    else
-                                    {
-                                        <div class="col l-6 m-6 c-12">
-                                            <div class="img img_2">
-                                                <input type="file" hidden accept="img/*" id="up_img_2">
-                                                <button class="btn_img_2"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_2"><i class="fa-regular fa-trash-can"></i></button>
-                                            </div>
-                                        </div>
-                                    }
-                                    @p++;
+                                            p++;
 
-                                    @if (p <= list_img.Length - 1)
-                                    {
-                                        <div class="col l-6 m-6 c-12">
-                                            <div class="img img_3" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
-                                                <input type="file" hidden accept="img/*" id="up_img_3">
-                                                <button class="btn_img_3 close"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_3 open"><i class="fa-regular fa-trash-can"></i></button>
+                                        }
+                                        else
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_2">
+                                                    <input type="file" hidden accept="img/*" id="up_img_2">
+                                                    <button class="btn_img_2"><i class="fa-solid fa-plus"></i></button>
+                                                    <button class="remove remove_2"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                    }
-                                    else
-                                    {
-                                        <div class="col l-6 m-6 c-12">
-                                            <div class="img img_3">
-                                                <input type="file" hidden accept="img/*" id="up_img_3">
-                                                <button class="btn_img_3"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_3"><i class="fa-regular fa-trash-can"></i></button>
+                                            p++;
+                                        }
+
+
+                                        @if (p <= list_img.Length - 1)
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_3" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
+                                                    <input type="file" hidden accept="img/*" id="up_img_3">
+                                                    <button class="btn_img_3 close"><i class="fa-solid fa-plus"></i></button>
+                                                    <button class="remove remove_3 open"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    }
-                                    @p++;
+                                            p++;
+
+                                        }
+                                        else
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_3">
+                                                    <input type="file" hidden accept="img/*" id="up_img_3">
+                                                    <button class="btn_img_3"><i class="fa-solid fa-plus"></i></button>
+                                                    <button class="remove remove_3"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
+                                            </div>
+                                            p++;
+                                        }
+
+                                    </div>
+                                    <div class="container">
+                                        @if (p <= list_img.Length - 1)
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_4" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
+                                                    <input type="file" hidden accept="img/*" id="up_img_4">
+                                                    <button class="btn_img_4 close"><i class="fa-solid fa-plus"></i></button>
+                                                    <button class="remove remove_4 open"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
+                                            </div>
+                                            p++;
+                                        }
+                                        else
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_4">
+                                                    <input type="file" hidden accept="img/*" id="up_img_4">
+                                                    <button class="btn_img_4"><i class="fa-solid fa-plus"></i></button>
+                                                    <button class="remove remove_4"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
+                                            </div>
+                                            p++;
+                                        }
+
+
+
+                                        @if (p <= list_img.Length - 1)
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_5" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
+                                                    <input type="file" hidden accept="img/*" id="up_img_5">
+                                                    <button class="btn_img_5 close"><i class="fa-solid fa-plus"></i>Add More</button>
+                                                    <button class="remove remove_5 open"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
+                                            </div>
+                                            p++;
+                                        }
+                                        else
+                                        {
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="img img_5">
+                                                    <input type="file" hidden accept="img/*" id="up_img_5">
+                                                    <button class="btn_img_5"><i class="fa-solid fa-plus"></i>Add More</button>
+                                                    <button class="remove remove_5"><i class="fa-regular fa-trash-can"></i></button>
+                                                </div>
+                                            </div>
+                                            p++;
+                                        }
+
+
+
+                                    </div>
                                 </div>
-                                <div class="container">
-                                    @if (p <= list_img.Length - 1)
-                                    {
-                                        <div class="col l-6 m-6 c-12">
-                                            <div class="img img_4" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
-                                                <input type="file" hidden accept="img/*" id="up_img_4">
-                                                <button class="btn_img_4 close"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_4 open"><i class="fa-regular fa-trash-can"></i></button>
-                                            </div>
-                                        </div>
-
-                                    }
-                                    else
-                                    {
-                                        <div class="col l-6 m-6 c-12">
-                                            <div class="img img_4">
-                                                <input type="file" hidden accept="img/*" id="up_img_4">
-                                                <button class="btn_img_4"><i class="fa-solid fa-plus"></i></button>
-                                                <button class="remove remove_4"><i class="fa-regular fa-trash-can"></i></button>
-                                            </div>
-                                        </div>
-                                    }
-                                    @p++;
-
-
-                                    @if (p <= list_img.Length - 1)
-                                    {
-                                       <div class="col l-6 m-6 c-12">
-                                           <div class="img img_5" style="background-image: url(@list_img[p].pi_image); background-position: center top; background-size:cover; background-repeat: no-repeat;">
-                                               <input type="file" hidden accept="img/*" id="up_img_5">
-                                               <button class="btn_img_5 close"><i class="fa-solid fa-plus"></i>Add More</button>
-                                               <button class="remove remove_5 open"><i class="fa-regular fa-trash-can"></i></button>
-                                           </div>
-                                       </div>
-
-                                    }
-                                    else
-                                    {
-                                        <div class="col l-6 m-6 c-12">
-                                            <div class="img img_5">
-                                                <input type="file" hidden accept="img/*" id="up_img_5">
-                                                <button class="btn_img_5"><i class="fa-solid fa-plus"></i>Add More</button>
-                                                <button class="remove remove_5"><i class="fa-regular fa-trash-can"></i></button>
-                                            </div>
-                                        </div>
-                                    }
-                                    @p++;
-
-                                    
-                                </div>
-                              </div>
                             </div>
                         </div>
                     </div>
@@ -444,20 +460,23 @@
                                             <div class="offer_item">
                                                 @for (int j = i; j <= i + 2 && j <= (list_amenities.Length - 1); ++j)
                                                 {
-                                                    if(db.property_amenities.Any(item => item.property_id == Model.id && item.amenity_id == list_amenities[j].id)) { 
-                                                     <button class="@list_amenities[j].id clicked">
-                                                         <img src="@list_amenities[j].icon_image">
-                                                         <p>@list_amenities[j].amenity_name</p>
-                                                     </button>
-                                                    
-                                                    }   
-                                                    else { 
-                                                    <button class="@list_amenities[j].id">
-                                                        <img src="@list_amenities[j].icon_image">
-                                                        <p>@list_amenities[j].amenity_name</p>
-                                                    </button>
+                                                    int id_amenity = list_amenities[j].id;
+                                                    if (db.property_amenities.Any(item => item.property_id == Model.id && id_amenity == item.amenity_id))
+                                                    {
+                                                        <button class="@list_amenities[j].id clicked">
+                                                            <img src="@list_amenities[j].icon_image">
+                                                            <p>@list_amenities[j].amenity_name</p>
+                                                        </button>
+
                                                     }
-                                                   
+                                                    else
+                                                    {
+                                                        <button class="@list_amenities[j].id">
+                                                            <img src="@list_amenities[j].icon_image">
+                                                            <p>@list_amenities[j].amenity_name</p>
+                                                        </button>
+                                                    }
+
                                                 }
                                             </div>
 
@@ -476,19 +495,22 @@
                                             <div class="amenities_item">
                                                 @for (int j = i; j <= i + 2 && j <= list_amenities.Length - 1; ++j)
                                                 {
-                                                     if(db.property_amenities.Any(item => item.property_id == Model.id && item.amenity_id == list_amenities[j].id)) { 
-                                                          <button class="@list_amenities[j].id clicked">
-                                                              <img src="@list_amenities[j].icon_image">
-                                                              <p>@list_amenities[j].amenity_name</p>
-                                                          </button>
- 
-                                                     }   
-                                                     else { 
-                                                         <button class="@list_amenities[j].id">
-                                                             <img src="@list_amenities[j].icon_image">
-                                                             <p>@list_amenities[j].amenity_name</p>
-                                                         </button>
-                                                     }
+                                                    int id_amentity = list_amenities[j].id;
+                                                    if (db.property_amenities.Any(item => item.property_id == Model.id && item.amenity_id == id_amentity))
+                                                    {
+                                                        <button class="@list_amenities[j].id clicked">
+                                                            <img src="@list_amenities[j].icon_image">
+                                                            <p>@list_amenities[j].amenity_name</p>
+                                                        </button>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="@list_amenities[j].id">
+                                                            <img src="@list_amenities[j].icon_image">
+                                                            <p>@list_amenities[j].amenity_name</p>
+                                                        </button>
+                                                    }
                                                 }
 
                                             </div>
@@ -583,13 +605,15 @@
                                     <p>Share what makes your place special.</p>
                                 </div>
                                 <div class="input_about">
-                                    @if(Model.p_description != null) { 
+                                    @if (Model.p_description != null)
+                                    {
                                         <textarea name="" id="property_describe" cols="" rows="10" placeholder="Reconnect with loved ones in this family-friendly place.">@Model.p_description</textarea>
                                     }
-                                    else { 
+                                    else
+                                    {
                                         <textarea name="" id="property_describe" cols="" rows="10" placeholder="Reconnect with loved ones in this family-friendly place."></textarea>
                                     }
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -680,17 +704,15 @@
                                     {
                                         <div class="discounts_item @item.id">
                                             <div class="number">
-                                                @if (item.discounts != null)
+                                                @if (db.properties_discounts.Any(row => row.properties_id == Model.id && row.discounts_id == item.id))
                                                 {
-                                                    if (db.properties_discounts.Any(row => row.properties_id == Model.id && row.discounts_id == item.id))
-                                                    {
-                                                        <p class="_102">@Model.properties_discounts.FirstOrDefault().discount.discounts%</p>
-                                                    }
-                                                    <p class="_102">@item.discounts%</p>
+
+                                                    <p class="_102">@Model.properties_discounts.FirstOrDefault().discounts_value%</p>
+
                                                 }
                                                 else
                                                 {
-                                                    
+
                                                     <p class="_102">20%</p>
                                                 }
                                             </div>
@@ -750,8 +772,8 @@
 
                                 </script>
                                 <div class="next_btn">
-                                    <button class="next_btn">Next</button>
-                                    <button class="done_btn" style="display: none">Done</button>
+                                    <button class="next_btn" onclick="getData()">Next</button>
+                                    <button class="done_btn" style="display: none" onclick="EditData('@Model.id')">Done</button>
                                 </div>
                             </div>
                         </div>
@@ -760,6 +782,244 @@
             </div>
         </div>
     </div>
-        <script src="~/ExtraFiles/JS/hotel.js?v=3"></script>
+    <script src="~/ExtraFiles/JS/hotel.js?v=4"></script>
 </body>
 </html>
+
+
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+
+<script>
+    var data = {
+        property_type: "",
+        room_type: "",
+        hotel_name: "",
+        hotelDescribe: "",
+        Country: "",
+        State: "",
+        City: "",
+        StreetAddress: "",
+        img_1: "",
+        img_2: "",
+        img_3: "",
+        img_4: "",
+        img_5: "",
+        number_guest: "",
+        number_bedrooms: "",
+        number_bathrooms: "",
+        number_beds: "",
+        number_pets: "",
+        listHighlight: [],
+        list_main_amentities: [],
+        list_other_amentities: [],
+        listDiscounts: [],
+        price: "",
+        ask_for_booking: ""
+    };
+
+    function getData() {
+        $(document).ready(function () {
+
+            console.log(data);
+            // pages 2
+            var get_property_type = $('.list_place .place_item .selected');
+            if (get_property_type.length > 0) {
+                var classList = get_property_type.attr('class');
+                if (classList) {
+                    data["property_type"] = classList.split(" ")[0];
+              
+
+                }
+                console.log(data.property_type);
+
+            }
+
+            // pages 3
+            var get_room_type = $('.list_type_of .type_of_item .selected');
+            if (get_room_type.length > 0) {
+                var classList = get_room_type.attr('class');
+                if (classList) {
+                    data["room_type"] = classList.split(" ")[0];
+                  
+
+                }
+
+            }
+
+            // pages 4
+            var text_country = $('#Country');
+            var text_state = $('#State');
+            var text_city = $('#City');
+            var text_street_address = $('#Street_address');
+            data['Country'] = text_country.val().trim();
+            data['State'] = text_state.val().trim();
+            data['City'] = text_city.val().trim();
+            data['StreetAddress'] = text_street_address.val().trim();
+
+
+            // pages 6
+
+            var fileUpload1 = document.getElementById("up_img_1").files[0];
+            if (fileUpload1) {
+                var reader1 = new FileReader();
+                reader1.readAsDataURL(fileUpload1);
+                reader1.onload = function (e) {
+                    var fileUploadful1 = e.target.result;
+                    data["img_1"] = fileUploadful1;
+                    /*   console.log(fileUploadful1);*/
+                };
+            }
+
+            var fileUpload2 = document.getElementById("up_img_2").files[0];
+            if (fileUpload2) {
+                var reader2 = new FileReader();
+                reader2.readAsDataURL(fileUpload2);
+                reader2.onload = function (e) {
+                    var fileUploadful2 = e.target.result;
+                    data["img_2"] = fileUploadful2;
+                    /*    console.log(fileUploadful2);*/
+                };
+            }
+
+            var fileUpload3 = document.getElementById("up_img_3").files[0];
+            if (fileUpload3) {
+                var reader3 = new FileReader();
+                reader3.readAsDataURL(fileUpload3);
+                reader3.onload = function (e) {
+                    var fileUploadful3 = e.target.result;
+                    data["img_3"] = fileUploadful3;
+                    /*           console.log(fileUploadful3);*/
+                };
+            }
+
+
+            var fileUpload4 = document.getElementById("up_img_4").files[0];
+            if (fileUpload4) {
+                var reader4 = new FileReader();
+                reader4.readAsDataURL(fileUpload4);
+                reader4.onload = function (e) {
+                    var fileUploadful4 = e.target.result;
+                    data["img_4"] = fileUploadful4;
+                    /*      console.log(fileUploadful4);*/
+                };
+            }
+
+
+            var fileUpload5 = document.getElementById("up_img_5").files[0];
+            if (fileUpload5) {
+                var reader5 = new FileReader();
+                reader5.readAsDataURL(fileUpload5);
+                reader5.onload = function (e) {
+                    var fileUploadful5 = e.target.result;
+                    data["img_5"] = fileUploadful5;
+                    /*            console.log(fileUploadful5);*/
+                };
+            }
+
+
+
+
+            // pages 7
+            var number_guest = $('.number_guest').text();
+            var number_bedrooms = $('.number_bedrooms').text();
+            var number_bathrooms = $('.number_bathrooms').text();
+            var number_pets = $('.number_pets').text();
+            var number_beds = $('.number_beds').text();
+            data.number_guest = number_guest;
+            data.number_bedrooms = number_bedrooms;
+            data.number_bathrooms = number_bathrooms;
+            data.number_beds = number_beds;
+            data.number_pets = number_pets;
+
+            // pages 8
+            var list_main_amentities = $('.list_offer .offer_item .clicked').map(function () {
+                return $(this).attr('class').split(" ")[0];
+            }).get();
+            var list_other_amentities = $('.amenities_list .amenities_item .clicked').map(function () {
+                return $(this).attr('class').split(" ")[0];
+            }).get();
+
+            if (list_main_amentities.length > 0 || list_other_amentities.length > 0) {
+                if (list_main_amentities.length > 0) {
+                    data['list_main_amentities'] = list_main_amentities;
+                }
+
+                if (list_other_amentities.length > 0) {
+                    data['list_other_amentities'] = list_other_amentities;
+                }
+
+
+            }
+            // pages 9
+            var property_name = $('#property_name').val();
+            if (property_name.length > 0) {
+                data["hotel_name"] = property_name;
+            }
+
+            var list_highlight_amenities = $('.highlights_list .clicked').map(function () {
+                return $(this).attr('class').split(" ")[0];
+            }).get();
+            //console.log(list_highlight_amenities);
+            if (list_highlight_amenities.length > 0) {
+                data["listHighlight"] = list_highlight_amenities;
+            }
+
+            var property_describe = $('#property_describe').val();
+            if (property_describe.length > 0) {
+                data["hotelDescribe"] = property_describe.trim();
+            }
+
+            // pages 10
+            var ask_for_booking = $('.confirm_list .confirm_item .selected');
+            if (ask_for_booking.length > 0) {
+                var classList = ask_for_booking.attr('class');
+                if (classList) {
+                    data["ask_for_booking"] = classList.split(" ")[0];
+                   
+                }
+            }
+
+
+
+        });
+    }
+
+    function EditData(id) {
+        $(document).ready(function () {
+            // pages 11 + 12
+            var price = $('.price span').text(); // Sử dụng .text() thay vì .val()
+            if (price > "0") {
+                data["price"] = price.trim();
+            }
+
+            // pages 11 + 12
+            var list_discounts = [];
+
+            $('.discounts_item').each(function () {
+                var $this = $(this);
+                discount = $this.find('.number p').text(); // Sửa thành $this.find()
+                list_discounts.push(discount);
+            });
+            data["listDiscounts"] = list_discounts;
+
+            $.ajax({
+                url: "/host/homehost/EditHotel",
+                type: "POST",
+                data: JSON.stringify({data : data , id :id }), 
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response.success);
+                    window.location.href = response.redirectUrl;
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+
+
+        })
+    }
+
+</script>

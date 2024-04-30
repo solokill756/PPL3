@@ -16,7 +16,7 @@
     <title>Set Hotel</title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/gird.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/hotel.css?v=3" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/hotel.css?v=5" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -466,15 +466,8 @@
                                     {
                                         <div class="discounts_item @item.id">
                                             <div class="number">
-                                                @if (item.discounts != null)
-                                                {
-                                                    <p class="_102">@item.discounts%</p>
-                                                }
-                                                else
-                                                {
-                                                    <p class="_102">20%</p>
-                                                }
-                                            </div>
+                                               <p class="_102">20%</p>
+                                            </div>  
                                             <div class="condition">
                                                 <span>New listing promotion</span>
                                                 <span>@item.descride</span>
@@ -643,7 +636,7 @@
                 var classList = get_property_type.attr('class');
                 if (classList) {
                     data["property_type"] = classList.split(" ")[0];
-                    get_property_type.removeClass('selected');
+              
                     
                 }
                 console.log(data.property_type);
@@ -656,7 +649,7 @@
                 var classList = get_room_type.attr('class');
                 if (classList) {
                     data["room_type"] = classList.split(" ")[0];
-                    get_room_type.removeClass('selected');
+                
                
                 }
 
@@ -791,7 +784,7 @@
                 var classList = ask_for_booking.attr('class');
                 if (classList) {
                     data["ask_for_booking"] = classList.split(" ")[0];
-                    ask_for_booking.removeClass('selected');
+                  
                 }
             }
 

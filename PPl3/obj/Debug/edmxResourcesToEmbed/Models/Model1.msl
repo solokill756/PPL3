@@ -559,7 +559,6 @@
     <EntitySetMapping Name="discounts">
       <EntityTypeMapping TypeName="PPL3Model.discount">
         <MappingFragment StoreEntitySet="discounts">
-          <ScalarProperty Name="discounts" ColumnName="discounts" />
           <ScalarProperty Name="descride" ColumnName="descride" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
@@ -568,6 +567,7 @@
     <EntitySetMapping Name="properties_discounts">
       <EntityTypeMapping TypeName="PPL3Model.properties_discounts">
         <MappingFragment StoreEntitySet="properties_discounts">
+          <ScalarProperty Name="discounts_value" ColumnName="discounts_value" />
           <ScalarProperty Name="discounts_id" ColumnName="discounts_id" />
           <ScalarProperty Name="properties_id" ColumnName="properties_id" />
           <ScalarProperty Name="id" ColumnName="id" />

@@ -1720,7 +1720,6 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="descride" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-    <Property Name="discounts" Type="Decimal" Precision="18" Scale="0" />
     <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="discount" ToRole="properties_discounts" />
   </EntityType>
   <EntityType Name="properties_discounts">
@@ -1732,6 +1731,7 @@
     <Property Name="discounts_id" Type="Int32" />
     <NavigationProperty Name="discount" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="properties_discounts" ToRole="discount" />
     <NavigationProperty Name="property" Relationship="PPL3Model.FK_properties_discounts_properties" FromRole="properties_discounts" ToRole="property" />
+    <Property Name="discounts_value" Type="Decimal" Precision="18" Scale="0" />
   </EntityType>
   <Association Name="FK_properties_discounts_discounts">
     <End Type="PPL3Model.discount" Role="discount" Multiplicity="0..1">

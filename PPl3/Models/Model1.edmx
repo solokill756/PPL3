@@ -126,7 +126,6 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="descride" Type="nvarchar" MaxLength="100" />
-          <Property Name="discounts" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="disputes">
           <Key>
@@ -336,6 +335,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="properties_id" Type="int" />
           <Property Name="discounts_id" Type="int" />
+          <Property Name="discounts_value" Type="decimal" Precision="18" Scale="0" />
         </EntityType>
         <EntityType Name="property_amenities">
           <Key>
@@ -3356,7 +3356,6 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="descride" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="discounts" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="discount" ToRole="properties_discounts" />
         </EntityType>
         <EntityType Name="properties_discounts">
@@ -3368,6 +3367,7 @@
           <Property Name="discounts_id" Type="Int32" />
           <NavigationProperty Name="discount" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="properties_discounts" ToRole="discount" />
           <NavigationProperty Name="property" Relationship="PPL3Model.FK_properties_discounts_properties" FromRole="properties_discounts" ToRole="property" />
+          <Property Name="discounts_value" Type="Decimal" Precision="18" Scale="0" />
         </EntityType>
         <Association Name="FK_properties_discounts_discounts">
           <End Type="PPL3Model.discount" Role="discount" Multiplicity="0..1">
@@ -3961,7 +3961,6 @@
           <EntitySetMapping Name="discounts">
             <EntityTypeMapping TypeName="PPL3Model.discount">
               <MappingFragment StoreEntitySet="discounts">
-                <ScalarProperty Name="discounts" ColumnName="discounts" />
                 <ScalarProperty Name="descride" ColumnName="descride" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -3970,6 +3969,7 @@
           <EntitySetMapping Name="properties_discounts">
             <EntityTypeMapping TypeName="PPL3Model.properties_discounts">
               <MappingFragment StoreEntitySet="properties_discounts">
+                <ScalarProperty Name="discounts_value" ColumnName="discounts_value" />
                 <ScalarProperty Name="discounts_id" ColumnName="discounts_id" />
                 <ScalarProperty Name="properties_id" ColumnName="properties_id" />
                 <ScalarProperty Name="id" ColumnName="id" />

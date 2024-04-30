@@ -17,6 +17,7 @@ namespace PPl3.Models
         public int id { get; set; }
         public Nullable<int> properties_id { get; set; }
         public Nullable<int> discounts_id { get; set; }
+        public Nullable<decimal> discounts_value { get; set; }
     
         public virtual discount discount { get; set; }
         public virtual property property { get; set; }
