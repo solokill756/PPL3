@@ -341,6 +341,7 @@
     <Content Include="ExtraFiles\assets\css\headerGuest.css" />
     <Content Include="ExtraFiles\assets\css\hotel.css" />
     <Content Include="ExtraFiles\assets\css\Listing.css" />
+    <Content Include="ExtraFiles\assets\css\message.css" />
     <Content Include="ExtraFiles\assets\css\product.css" />
     <Content Include="ExtraFiles\assets\css\profile.css" />
     <Content Include="ExtraFiles\assets\css\revenue.css" />
@@ -417,6 +418,7 @@
     <Content Include="ExtraFiles\JS\Listing.js" />
     <Content Include="ExtraFiles\JS\main_v1.js" />
     <Content Include="ExtraFiles\JS\menuGuest.js" />
+    <Content Include="ExtraFiles\JS\message.js" />
     <Content Include="ExtraFiles\JS\newFile.1.js" />
     <Content Include="ExtraFiles\JS\newFile.js" />
     <Content Include="ExtraFiles\JS\personal_infor.js" />
@@ -430,6 +432,7 @@
     <Content Include="ExtraFiles\JS\upLoadImg.js" />
     <Content Include="ExtraFiles\JS\wishList.js" />
     <Content Include="ExtraFiles\Listing.html" />
+    <Content Include="ExtraFiles\message.html" />
     <Content Include="ExtraFiles\Product.html" />
     <Content Include="ExtraFiles\revenue.html" />
     <Content Include="ExtraFiles\Sign_Log.html" />

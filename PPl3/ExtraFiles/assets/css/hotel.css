@@ -647,3 +647,10 @@ html{
     display: none;
 }
 
+
+
+.selected {
+    border: 3px solid #000 !important;
+    background-color: rgb(208, 208, 208) !important;
+    color: #727171;
+}
