@@ -25,7 +25,7 @@
         <div id="header">
             <div class="gird wide">
                 <div class="row no-gutter header_container">
-                    <div class="start_nav" onclick="window.location.href = '/user/homeuser/index'" style="cursor:pointer">
+                    <div class="start_nav" onclick="window.location.href = '/host/homehost/listing'" style="cursor:pointer">
                         <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
                     </div>
 
@@ -113,35 +113,64 @@
                                     position++;
                                     <div class="col l-4 m-6 c-12 hotel_@position">
                                         <div class="hotel_item">
-                                            <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
-                                                <div class="in_progress">
-                                                    @if (item.created != null)
-                                                    {
+                                            @if(item.property_images.FirstOrDefault() != null) { 
+                                                <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                                    <div class="in_progress">
+                                                        @if (item.availability_type == 1)
+                                                        {
 
-                                                        <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+                                                            <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
 
-                                                    }
-                                                    else
-                                                    {
+                                                        }
+                                                        else
+                                                        {
 
-                                                        <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
 
-                                                    }
+                                                        }
 
-                                                </div>
-                                                <div class="btn_listing">
-                                                    <div class="edit_btn" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
-                                                        <button >Edit listing</button>
                                                     </div>
-                                                    <div class="remove_btn js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
-                                                        <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
+                                                    <div class="btn_listing">
+                                                        <div class="edit_btn" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
+                                                            <button>Edit listing</button>
+                                                        </div>
+                                                        <div class="remove_btn js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
+                                                            <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            }
+                                            else { 
+                                                        <div class="img_hotel" style="background: url(https://cdn2.iconfinder.com/data/icons/jetflat-multimedia/90/004_030_add_image_painting_photo_picture_gallery_album-1024.png) top center /cover no-repeat">
+                                                            <div class="in_progress">
+                                                                @if (item.availability_type == 1)
+                                                                {
+
+                                                                    <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+
+                                                                }
+                                                                else
+                                                                {
+
+                                                                    <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+
+                                                                }
+
+                                                            </div>
+                                                            <div class="btn_listing">
+                                                                <div class="edit_btn" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
+                                                                    <button>Edit listing</button>
+                                                                </div>
+                                                                <div class="remove_btn js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
+                                                                    <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                            }
                                             <div class="infor_hotel">
                                                 @if (item.created != null)
                                                 {
-                                                    <span>@item.p_name (@item.room_type.rt_name) , created @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <span>@(item.p_name != null ? $"{item.p_name}" : "") @(item.room_type != null ? $"{item.room_type.rt_name}" : "") , created @item.created.Value.ToString("dd/MM/yyyy")</span>
                                                     <p>@item.p_address</p>
 
                                                 }
@@ -165,20 +194,37 @@
                                     position++;
                                     <div class="col l-12 m-12 c-12 hotel_@position">
                                         <div class="hotel_item_2">
-                                            <div class="img_hotel img_hotel_2" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
-                                                <div class="btn_listing">
-                                                    <div class="edit_btn_2" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
-                                                        <button><i class="fa-solid fa-pen"></i></button>
-                                                    </div>
-                                                    <div class="remove_btn_2 js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
-                                                        <button><i class="fa-solid fa-trash-can"></i></button>
+                                            @if (item.property_images.FirstOrDefault() != null)
+                                            {
+
+                                                <div class="img_hotel img_hotel_2" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+                                                    <div class="btn_listing">
+                                                        <div class="edit_btn_2" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
+                                                            <button><i class="fa-solid fa-pen"></i></button>
+                                                        </div>
+                                                        <div class="remove_btn_2 js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
+                                                            <button><i class="fa-solid fa-trash-can"></i></button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="img_hotel img_hotel_2" style="background: url(https://cdn2.iconfinder.com/data/icons/jetflat-multimedia/90/004_030_add_image_painting_photo_picture_gallery_album-1024.png) top center /cover no-repeat">
+                                                    <div class="btn_listing">
+                                                        <div class="edit_btn_2" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
+                                                            <button><i class="fa-solid fa-pen"></i></button>
+                                                        </div>
+                                                        <div class="remove_btn_2 js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
+                                                            <button><i class="fa-solid fa-trash-can"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
                                             <div class="infor_hotel infor_hotel_2">
                                                 @if (item.created != null)
                                                 {
-                                                    <span>@item.p_name (@item.room_type.rt_name) , created @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <span>@(item.p_name != null ? $"{item.p_name}" : "") @(item.room_type != null ? $"{item.room_type.rt_name}" : "") , created @item.created.Value.ToString("dd/MM/yyyy")</span>
                                                     <p>@item.p_address</p>
 
                                                 }
@@ -188,7 +234,7 @@
                                                     <span>@item.p_name (@item.room_type.rt_name) </span>
                                                     <p>@item.p_address</p>
                                                 }
-                                                @if (item.created != null)
+                                                @if (item.availability_type == 1)
                                                 {
 
                                                     <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>

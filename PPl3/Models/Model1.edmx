@@ -327,6 +327,7 @@
           <Property Name="modified" Type="datetime" />
           <Property Name="p_status" Type="tinyint" />
           <Property Name="ask_for_booking" Type="tinyint" />
+          <Property Name="current_pages" Type="int" />
         </EntityType>
         <EntityType Name="properties_discounts">
           <Key>
@@ -795,6 +796,18 @@
             </Principal>
             <Dependent Role="amenities">
               <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_discounts_discounts">
+          <End Role="discounts" Type="Self.discounts" Multiplicity="1" />
+          <End Role="discounts1" Type="Self.discounts" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="discounts">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="discounts1">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1459,6 +1472,10 @@
             <End Role="categories" EntitySet="categories" />
             <End Role="amenities" EntitySet="amenities" />
           </AssociationSet>
+          <AssociationSet Name="FK_discounts_discounts" Association="Self.FK_discounts_discounts">
+            <End Role="discounts" EntitySet="discounts" />
+            <End Role="discounts1" EntitySet="discounts" />
+          </AssociationSet>
           <AssociationSet Name="FK_properties_discounts_discounts" Association="Self.FK_properties_discounts_discounts">
             <End Role="discounts" EntitySet="discounts" />
             <End Role="properties_discounts" EntitySet="properties_discounts" />
@@ -2016,6 +2033,7 @@
           <NavigationProperty Name="transactions" Relationship="Self.transaction_property_id_id_FK" FromRole="properties" ToRole="transactions" />
           <Property Name="ask_for_booking" Type="Byte" />
           <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_properties" FromRole="property" ToRole="properties_discounts" />
+          <Property Name="current_pages" Type="Int32" />
         </EntityType>
         <EntityType Name="property_amenities">
           <Key>
@@ -3349,6 +3367,10 @@
             <End Role="property" EntitySet="properties" />
             <End Role="properties_discounts" EntitySet="properties_discounts" />
           </AssociationSet>
+          <AssociationSet Name="FK_discounts_discounts" Association="PPL3Model.FK_discounts_discounts">
+            <End Role="discount" EntitySet="discounts" />
+            <End Role="discount1" EntitySet="discounts" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="discount">
           <Key>
@@ -3357,6 +3379,8 @@
           <Property Name="id" Type="Int32" Nullable="false" />
           <Property Name="descride" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="properties_discounts" Relationship="PPL3Model.FK_properties_discounts_discounts" FromRole="discount" ToRole="properties_discounts" />
+          <NavigationProperty Name="discounts1" Relationship="PPL3Model.FK_discounts_discounts" FromRole="discount" ToRole="discount1" />
+          <NavigationProperty Name="discount1" Relationship="PPL3Model.FK_discounts_discounts" FromRole="discount1" ToRole="discount" />
         </EntityType>
         <EntityType Name="properties_discounts">
           <Key>
@@ -3394,6 +3418,18 @@
             </Principal>
             <Dependent Role="properties_discounts">
               <PropertyRef Name="properties_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_discounts_discounts">
+          <End Type="PPL3Model.discount" Role="discount" Multiplicity="1" />
+          <End Type="PPL3Model.discount" Role="discount1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="discount">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="discount1">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3712,6 +3748,7 @@
           <EntitySetMapping Name="properties">
             <EntityTypeMapping TypeName="PPL3Model.property">
               <MappingFragment StoreEntitySet="properties">
+                <ScalarProperty Name="current_pages" ColumnName="current_pages" />
                 <ScalarProperty Name="ask_for_booking" ColumnName="ask_for_booking" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="p_name" ColumnName="p_name" />

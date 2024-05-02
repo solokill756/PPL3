@@ -58,6 +58,7 @@ namespace PPl3.Models
         public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> p_status { get; set; }
         public Nullable<byte> ask_for_booking { get; set; }
+        public Nullable<int> current_pages { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<booking> bookings { get; set; }

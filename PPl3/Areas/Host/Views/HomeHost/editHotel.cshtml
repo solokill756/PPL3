@@ -22,9 +22,9 @@
                     <div class="col l-12 m-12 c-12">
                         <div class="header_container">
                             <div class="logo">
-                                <a href="index.html"><i class="fa-brands fa-think-peaks" style="color: red"></i></a>
+                                <a href="/host/homehost/listing"><i class="fa-brands fa-think-peaks" style="color: red"></i></a>
                             </div>
-                            <div class="save_btn">
+                            <div class="save_btn" onclick="EditData('@Model.id')">
                                 <button>Save & Exit</button>
                             </div>
                         </div>
@@ -572,6 +572,7 @@
                                     }
 
                                 </div>
+                                i
                                 <div class="tittle">
                                     <h1>Next, let's describe your house</h1>
                                     <p>Choose up to 2 highlights. We'll use these to get your description started.</p>
@@ -614,6 +615,29 @@
                                         <textarea name="" id="property_describe" cols="" rows="10" placeholder="Reconnect with loved ones in this family-friendly place."></textarea>
                                     }
 
+                                </div>
+                                <div class="tittle">
+                                    <h1>Set booking dates for your hotel</h1>
+                                    <p>During this time you will allow users to make reservations</p>
+                                </div>
+                                <div class="input_date_check two_input">
+                                    @if (Model.startDate != null)
+                                    {
+                                        <input type="date" id="Check_in" placeholder="Check in" value="@Model.startDate.Value.ToString("yyyy-MM-dd")">
+
+                                    }
+                                    else
+                                    {
+                                        <input type="date" placeholder="Check in" id="Check_in">
+                                    }
+                                    @if (Model.end_date != null)
+                                    {
+                                        <input type="date" placeholder="Check out" id="Check_out" value="@Model.end_date.Value.ToString("yyyy-MM-dd")">
+                                    }
+                                    else
+                                    {
+                                        <input type="date" placeholder="Check out" id="Check_out">
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -782,7 +806,10 @@
             </div>
         </div>
     </div>
-    <script src="~/ExtraFiles/JS/hotel.js?v=6"></script>
+    <script>
+        var index = parseInt('@Model.current_pages');
+    </script>
+    <script src="~/ExtraFiles/JS/hotel.js?v=11"></script>
 </body>
 </html>
 
@@ -791,6 +818,7 @@
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 
 <script>
+    
     var data = {
         property_type: "",
         room_type: "",
@@ -815,9 +843,11 @@
         list_other_amentities: [],
         listDiscounts: [],
         price: "",
-        ask_for_booking: ""
+        ask_for_booking: "",
+        check_in: "",
+        check_out: ""
     };
-
+    
     function getData() {
         $(document).ready(function () {
 
@@ -969,6 +999,8 @@
             if (property_describe.length > 0) {
                 data["hotelDescribe"] = property_describe.trim();
             }
+            data["check_in"] = $('#Check_in').val();
+            data["check_out"] = $('#Check_out').val();
 
             // pages 10
             var ask_for_booking = $('.confirm_list .confirm_item .selected');
@@ -980,13 +1012,6 @@
                 }
             }
 
-
-
-        });
-    }
-
-    function EditData(id) {
-        $(document).ready(function () {
             // pages 11 + 12
             var price = $('.price span').text(); // Sử dụng .text() thay vì .val()
             if (price > "0") {
@@ -1003,10 +1028,19 @@
             });
             data["listDiscounts"] = list_discounts;
 
+
+        });
+    }
+
+    function EditData(id) {
+        getData();
+        $(document).ready(function () {
+            
+
             $.ajax({
                 url: "/host/homehost/EditHotel",
                 type: "POST",
-                data: JSON.stringify({data : data , id :id }), 
+                data: JSON.stringify({ data: data, id: id, current_page: index }), 
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {

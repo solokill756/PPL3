@@ -76,10 +76,51 @@ const barStep3 = document.querySelector('.bg-black_step_3')
 var video1 = document.getElementById('myVideo-1')
 var video2 = document.getElementById('myVideo-5')
 var video3 = document.getElementById('myVideo-9')
-
-var index = 1;
-var barWith = 0;
-
+var page1 = document.getElementById('page_1');
+console.log(index);
+var barWith;
+var step;
+if (index == 1) {
+    barWith = 0;
+}
+else {
+    page1.classList.add('close');
+    var pageshow = document.getElementById(`page_${index}`);
+    pageshow.classList.add('open');
+    if (index < 5) {
+        step = 0;
+        barWith = (index - 1) * 33.333;
+    }
+    else if (index < 9) {
+        step = 1;
+        barWith = (index % 5) * 33.333;
+    }
+    else {
+        step = 2;
+        barWith = (index % 9) * 33.333;
+    }
+    for (var i = 1; i <= step; ++i) {
+        if (i === 1) {
+            barStep1.style.width = '99.999%';
+        }
+        if (i === 2) {
+            barStep2.style.width = '99.999%';
+        }
+    }
+   
+    console.log(barWith + " " + step);
+    if (step + 1 === 1) {
+        barStep1.style.width = `${barWith}%`;
+    }
+    else if (step + 1 === 2) {
+        barStep2.style.width = `${barWith}%`;
+    }
+    else if (step + 1 === 3) {
+        barStep3.style.width = `${barWith}%`;
+    }
+    
+}
+var current = 0;
 nextBtn.addEventListener('click', () => {
     index++;
     backBtn.style.pointerEvents = ''
@@ -219,23 +260,43 @@ nextBtn.addEventListener('click', () => {
             })
         }
         else if (index > 9 && index < 13) {
-            if (index === 10) {
+        if (index === 10) {
                 barWith = 0;
                 barWith = barWith + 33.333;
                 nextBtn.style.pointerEvents = 'none'
                 const nameHotel = document.getElementById('property_name').value;
                 const hightlightsBtns = document.querySelectorAll('.highlights_list button')
-                var currentHigh = 0;
-                hightlightsBtns.forEach((btn) => {
-                    if (btn.classList.contains('clicked')) {
-                        currentHigh++;
-                    }
-                })
+                const descrideHotel = document.getElementById('property_describe').value;
+                const startDate = document.getElementById('Check_in').value;
+                const endDate = document.getElementById('Check_out').value;
+                var currentHigh = document.querySelectorAll('.highlights_list .clicked').length;
+                console.log(currentHigh);
+                console.log(startDate);
+                if (currentHigh === 2) {
+                    hightlightsBtns.forEach((btn1) => {
+                        if (btn1.classList.contains('clicked')) {
 
-                if (nameHotel.trim() !== '' && currentHigh === 2)
+                        }
+                        else {
+                            btn1.style.opacity = 0.4
+                            btn1.style.pointerEvents = 'none'
+                        }
+                    })
+                   
+                }
+                
+               
+                current = currentHigh;
+               
+               
+                
+
+                if (nameHotel.trim() !== '' && currentHigh === 2 && descrideHotel.trim() !== '' && startDate.trim() !== '' && endDate.trim() !== '')
                     nextBtn.style.pointerEvents = ''
-                else
+                else {
                     nextBtn.style.pointerEvents = 'none'
+                }
+                   
             } else {
                 barWith = barWith + 33.333;
             }
@@ -260,7 +321,8 @@ nextBtn.addEventListener('click', () => {
         }
 
 
-        if (index === 1) {
+    if (index === 1) {
+        page1.classList.remove('close');
             backBtn.style.pointerEvents = 'none'
             video1.addEventListener('ended', () => {
                 video1.currentTime = 0
@@ -340,7 +402,8 @@ backBtn.addEventListener('click', () =>{
       video3.currentTime = 0
     }
 
-    if(index === 1){
+    if (index === 1) {
+        page1.classList.remove('close');
       backBtn.style.pointerEvents = 'none'
       video1.addEventListener('ended', () =>{
         video1.currentTime = 0
@@ -433,8 +496,30 @@ amenitiesBtns.forEach((btn) =>{
 //Xử lý button page 10
 
 const hightlightsBtns = document.querySelectorAll('.highlights_list button')
-var current = 0
 var checkHigthLight = false
+const descrideHotel = document.getElementById('property_describe')
+const startDate = document.getElementById('Check_in')
+const endDate = document.getElementById('Check_out')
+const nameHotel = document.getElementById('property_name')
+
+nameHotel.addEventListener('change', () => {
+
+    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
+      nextBtn.style.pointerEvents = ''
+    else nextBtn.style.pointerEvents = 'none'
+})
+
+startDate.addEventListener('change', () => {
+    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
+        nextBtn.style.pointerEvents = ''
+    else nextBtn.style.pointerEvents = 'none'
+})
+
+endDate.addEventListener('change', () => {
+    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
+        nextBtn.style.pointerEvents = ''
+    else nextBtn.style.pointerEvents = 'none'
+})
 hightlightsBtns.forEach((btn) =>{
   btn.addEventListener('click',()=>{
     if(btn.classList.contains('clicked')){
@@ -453,16 +538,13 @@ hightlightsBtns.forEach((btn) =>{
           btn1.style.pointerEvents = 'none'
         }
       })
-        const nameHotel = document.getElementById('property_name').value;
-      console.log(nameHotel)
-      if(nameHotel.trim() !== '')
-        nextBtn.style.pointerEvents = ''
-      else
-        nextBtn.style.pointerEvents = 'none'
+        if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
+            nextBtn.style.pointerEvents = ''
+        else nextBtn.style.pointerEvents = 'none'
     }else{
       hightlightsBtns.forEach((btn1) =>{
         btn1.style.opacity = 1
-        btn1.style.pointerEvent = ''
+        btn1.style.pointerEvents = ''
       })
       nextBtn.style.pointerEvents = 'none'
     }

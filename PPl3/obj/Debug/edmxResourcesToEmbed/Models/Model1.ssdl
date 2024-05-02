@@ -322,6 +322,7 @@
     <Property Name="modified" Type="datetime" />
     <Property Name="p_status" Type="tinyint" />
     <Property Name="ask_for_booking" Type="tinyint" />
+    <Property Name="current_pages" Type="int" />
   </EntityType>
   <EntityType Name="properties_discounts">
     <Key>
@@ -790,6 +791,18 @@
       </Principal>
       <Dependent Role="amenities">
         <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_discounts_discounts">
+    <End Role="discounts" Type="Self.discounts" Multiplicity="1" />
+    <End Role="discounts1" Type="Self.discounts" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="discounts">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="discounts1">
+        <PropertyRef Name="id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1453,6 +1466,10 @@
     <AssociationSet Name="FK_amenities_categories" Association="Self.FK_amenities_categories">
       <End Role="categories" EntitySet="categories" />
       <End Role="amenities" EntitySet="amenities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_discounts_discounts" Association="Self.FK_discounts_discounts">
+      <End Role="discounts" EntitySet="discounts" />
+      <End Role="discounts1" EntitySet="discounts" />
     </AssociationSet>
     <AssociationSet Name="FK_properties_discounts_discounts" Association="Self.FK_properties_discounts_discounts">
       <End Role="discounts" EntitySet="discounts" />

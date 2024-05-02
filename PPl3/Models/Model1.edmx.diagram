@@ -113,6 +113,7 @@
         <EntityTypeShape EntityType="PPL3Model.properties_discounts" Width="1.5" PointX="19.5" PointY="32.5" />
         <AssociationConnector Association="PPL3Model.FK_properties_discounts_discounts" />
         <AssociationConnector Association="PPL3Model.FK_properties_discounts_properties" />
+        <AssociationConnector Association="PPL3Model.FK_discounts_discounts" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -29,7 +29,7 @@
                             <div class="logo">
                                 <a href="index.html"><i class="fa-brands fa-think-peaks" style="color: red"></i></a>
                             </div>
-                            <div class="save_btn">
+                            <div class="save_btn" onclick="sendData()">
                                 <button>Save & Exit</button>
                             </div>
                         </div>
@@ -407,6 +407,14 @@
                                 <div class="input_about">
                                     <textarea name="" id="property_describe" cols="" rows="10" placeholder="Reconnect with loved ones in this family-friendly place."></textarea>
                                 </div>
+                                <div class="tittle">
+                                    <h1>Set booking dates for your hotel</h1>
+                                    <p>During this time you will allow users to make reservations</p>
+                                </div>
+                                <div class="input_date_check two_input">
+                                    <input type="date" placeholder="Check in" id="Check_in">
+                                    <input type="date" placeholder="Check out" id="Check_out">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -589,7 +597,10 @@
             </div>
         </div>
     </div>
-    <script src="~/ExtraFiles/JS/hotel.js?v=7"></script>
+    <script>
+        var index = 1;
+    </script>
+    <script src="~/ExtraFiles/JS/hotel.js?v=11"></script>
 </body>
 </html>
 
@@ -623,13 +634,15 @@
         list_other_amentities: [],
         listDiscounts: [],
         price: "",
-        ask_for_booking: ""
+        ask_for_booking: "",
+        check_in: "",
+        check_out: ""
     };
 
     function getData() {
         $(document).ready(function () {
 
-            console.log(data);
+            //console.log(data);
             // pages 2
             var get_property_type = $('.list_place .place_item .selected');
             if (get_property_type.length > 0) {
@@ -778,6 +791,11 @@
                 data["hotelDescribe"] = property_describe.trim();
             }
 
+            data["check_in"] = $('#Check_in').val();
+            data["check_out"] = $('#Check_out').val();
+
+
+
             // pages 10
             var ask_for_booking = $('.confirm_list .confirm_item .selected');
             if (ask_for_booking.length > 0) {
@@ -788,13 +806,6 @@
                 }
             }
 
-
-
-        });
-    }
-
-    function sendData() {
-        $(document).ready(function () {
             // pages 11 + 12
             var price = $('.price span').text(); // Sử dụng .text() thay vì .val()
             if (price > "0") {
@@ -810,11 +821,18 @@
                 list_discounts.push(discount);
             });
             data["listDiscounts"] = list_discounts;
-     
+
+        });
+    }
+
+    function sendData() {
+         getData();
+        $(document).ready(function () {
+            console.log(data);
             $.ajax({
                 url: "/host/homehost/addHotel",
                 type: "POST",
-                data: JSON.stringify(data),
+                data: JSON.stringify({ data: data, page: index }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {

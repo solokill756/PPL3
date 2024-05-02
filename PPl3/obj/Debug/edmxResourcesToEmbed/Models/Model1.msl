@@ -310,6 +310,7 @@
     <EntitySetMapping Name="properties">
       <EntityTypeMapping TypeName="PPL3Model.property">
         <MappingFragment StoreEntitySet="properties">
+          <ScalarProperty Name="current_pages" ColumnName="current_pages" />
           <ScalarProperty Name="ask_for_booking" ColumnName="ask_for_booking" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="p_name" ColumnName="p_name" />
