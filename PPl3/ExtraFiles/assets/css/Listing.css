@@ -60,20 +60,42 @@ html {
     }
 
 
-.subnav {
+.list_header .nav .subnav {
     display: none;
     position: absolute;
     top: 100%;
-    right: -162%;
-    min-width: 160px;
+    left: 0;
+    min-width: 300px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    padding: 0;
+    margin: 0;
 }
 
-.subnav {
-    list-style: none;
+.list_header .nav .menu_btn:hover .subnav {
+    display: block;
 }
+
+.list_header .nav .subnav li {
+    list-style: none;
+    padding: 10px; 
+    border-bottom: 1px solid #ccc;
+}
+
+    .list_header .nav .subnav li:last-child {
+        border-bottom: none; 
+    }
+
+    .list_header .nav .subnav li a {
+        text-decoration: none;
+        color: gray;
+    }
+
+        .list_header .nav .subnav li a:hover {
+            color: black; 
+        }
+
 
 .begin_nav {
     display: flex;

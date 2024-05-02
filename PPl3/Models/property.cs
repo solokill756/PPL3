@@ -21,11 +21,11 @@ namespace PPl3.Models
             this.disputes = new HashSet<dispute>();
             this.favourites = new HashSet<favourite>();
             this.neighbourhoods = new HashSet<neighbourhood>();
+            this.properties_discounts = new HashSet<properties_discounts>();
             this.property_amenities = new HashSet<property_amenities>();
             this.property_images = new HashSet<property_images>();
             this.property_reviews = new HashSet<property_reviews>();
             this.transactions = new HashSet<transaction>();
-            this.properties_discounts = new HashSet<properties_discounts>();
         }
     
         public int id { get; set; }
@@ -72,6 +72,8 @@ namespace PPl3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<neighbourhood> neighbourhoods { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<properties_discounts> properties_discounts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<property_amenities> property_amenities { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<property_images> property_images { get; set; }
@@ -83,7 +85,5 @@ namespace PPl3.Models
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transaction> transactions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<properties_discounts> properties_discounts { get; set; }
     }
 }

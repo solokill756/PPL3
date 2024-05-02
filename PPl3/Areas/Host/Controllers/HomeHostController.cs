@@ -680,6 +680,67 @@ namespace PPl3.Areas.Host.Controllers
                 redirectUrl = Url.Action("listing", "Homehost", new { area = "Host" })
             }, JsonRequestBehavior.AllowGet);
         }
+        //r o 
+        public class GetMoneyModel
+        {
+            public int month {  get; set; }
+            public int year {  get; set; }
+            public double money {  get; set; }
+        }
+        [HttpGet]
+        public JsonResult GetListMoneyin12Month()
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            List<GetMoneyModel> data = new List<GetMoneyModel>();
+            DateTime currentDate = DateTime.Now;
+            string currentMonth = currentDate.ToString("MM");
+            string currentYear = currentDate.ToString("yyyy");
+            int firstMonth = int.Parse(currentMonth);
+            for(int i = 0; i < 6; i++)
+            {
+                firstMonth--;
+                if(firstMonth == 0)
+                {
+                    firstMonth = 12;
+                }
+            }
+
+            for(int i = 0; i < 12; i++)
+            {
+                int tmpYear;
+                if (firstMonth > int.Parse(currentMonth))
+                {
+                    tmpYear = int.Parse(currentYear) - 1;
+                }
+                else
+                {
+                    tmpYear = int.Parse(currentYear);
+                }
+                GetMoneyModel temp = new GetMoneyModel()
+                {
+                    month = firstMonth,
+                    year = tmpYear,
+                    money = 0,
+                };
+                data.Add(temp);
+                firstMonth++;
+                if (firstMonth > 12) firstMonth = 1;
+            }
+
+            foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
+            {
+                for(int i = 0; i < 12; i++)
+                {
+                    if (data[i].month == int.Parse(item.transfer_on.Value.ToString("MM")) && data[i].year == int.Parse(item.transfer_on.Value.ToString("yyyy")))
+                    {
+                        data[i].money += (double)item.amount;
+                        db.transactions.Remove(item);
+                    }
+                }
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         // Fuction
 

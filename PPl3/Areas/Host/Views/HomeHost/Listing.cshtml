@@ -4,8 +4,10 @@
 }
 
 @{
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
     int position = 0;
+    double count = 0;
 }
 
 <!DOCTYPE html>
@@ -19,6 +21,11 @@
     <link href="~/ExtraFiles/assets/css/Listing.css?v=1" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="~/ExtraFiles/assets/css/headerGuest.css" rel="stylesheet" />
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div id="main">
@@ -35,11 +42,11 @@
                             <li class="calendar_btn">Calendar</li>
                             <li class="listing_btn">Listings</li>
                             <li class="inbox_btn">Inbox</li>
-                            <li>
+                            <li class="menu_btn">
                                 Menu<i class="fa-solid fa-chevron-down"></i>
                                 <ul class="subnav">
                                     <li>Reservations</li>
-                                    <li>Earnings</li>
+                                    <li class="earning_btn">Earnings</li>
                                     <li>Insights</li>
                                     <li>Create a new listing</li>
                                     <li>Guidebooks</li>
@@ -49,6 +56,7 @@
                             </li>
                         </ul>
                     </div>
+
 
                     <div class="nav_menu">
                         <div class="alert_icon">
@@ -113,7 +121,8 @@
                                     position++;
                                     <div class="col l-4 m-6 c-12 hotel_@position">
                                         <div class="hotel_item">
-                                            @if(item.property_images.FirstOrDefault() != null) { 
+                                            @if (item.property_images.FirstOrDefault() != null)
+                                            {
                                                 <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
                                                     <div class="in_progress">
                                                         @if (item.availability_type == 1)
@@ -140,32 +149,33 @@
                                                     </div>
                                                 </div>
                                             }
-                                            else { 
-                                                        <div class="img_hotel" style="background: url(https://cdn2.iconfinder.com/data/icons/jetflat-multimedia/90/004_030_add_image_painting_photo_picture_gallery_album-1024.png) top center /cover no-repeat">
-                                                            <div class="in_progress">
-                                                                @if (item.availability_type == 1)
-                                                                {
+                                            else
+                                            {
+                                                <div class="img_hotel" style="background: url(https://cdn2.iconfinder.com/data/icons/jetflat-multimedia/90/004_030_add_image_painting_photo_picture_gallery_album-1024.png) top center /cover no-repeat">
+                                                    <div class="in_progress">
+                                                        @if (item.availability_type == 1)
+                                                        {
 
-                                                                    <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+                                                            <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
 
-                                                                }
-                                                                else
-                                                                {
+                                                        }
+                                                        else
+                                                        {
 
-                                                                    <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
 
-                                                                }
+                                                        }
 
-                                                            </div>
-                                                            <div class="btn_listing">
-                                                                <div class="edit_btn" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
-                                                                    <button>Edit listing</button>
-                                                                </div>
-                                                                <div class="remove_btn js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
-                                                                    <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
-                                                                </div>
-                                                            </div>
+                                                    </div>
+                                                    <div class="btn_listing">
+                                                        <div class="edit_btn" onclick="window.location.href='/host/homehost/editHotel?id=@item.id'">
+                                                            <button>Edit listing</button>
                                                         </div>
+                                                        <div class="remove_btn js_remove_btn btn_@position" onclick="DeleteListing('@item.id')">
+                                                            <button><i class="fa-solid fa-trash-can"></i>Remove listing</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             }
                                             <div class="infor_hotel">
                                                 @if (item.created != null)
@@ -256,12 +266,102 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="main hide">
+                    <div class="container">
+                        <h1>Earnings</h1>
+                        <h2>You’ve made</h2>
+                        <div>
+                            @{
+                                count = 0;
+                                DateTime currentDate = DateTime.Now;
+                                string currentMonth = currentDate.ToString("MM");
+                                string currentYear = currentDate.ToString("yyyy");
+
+                                foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
+                                {
+                                    if (item.transfer_on.Value.ToString("MM") == currentMonth && item.transfer_on.Value.ToString("yyyy") == currentYear)
+                                    {
+                                        count += (double)item.amount;
+
+                                    }
+                                }
+                                if (count != 0)
+                                {
+                                    <h2>$@count this month</h2>
+                                }
+                                else
+                                {
+                                    <h2>$0.00 this month</h2>
+                                }
+                            }
+                        </div>
+                        <div class="chart">
+                            <div>
+                                <canvas id="doughnut"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
     <script src="~/ExtraFiles/JS/Listing.js"></script>
     <script src="~/ExtraFiles/JS/menuGuest.js?v=1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const currentDate = new Date();
+        const monthNames = [
+            "January", "February", "March",
+            "April", "May", "June", "July",
+            "August", "September", "October",
+            "November", "December"
+        ];
+        const currentMonthIndex = currentDate.getMonth();
+        const currentMonthName = monthNames[currentMonthIndex];
+        
 
+        $(document).ready(function () {
+            $.ajax({
+                type: "GET",
+                url: "/host/homehost/GetListMoneyin12Month?CurrentMonth",
+                success: function (data) {
+                    const moneyList = data.map(item => item.money);
+                    const newLabels = data.map(item => item.month);
+                    for (let i = 0; i < 12; i++) {
+                        newLabels[i] = monthNames[newLabels[i] - 1];
+                    }
+                    const ctx = document.getElementById('doughnut');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: newLabels,
+                            datasets: [{
+                                label: 'Dolar $',
+                                data: moneyList,
+                                borderWidth: 1,
+                                width: 100,
+                                height: 100
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });   
+        });
+
+    </script>
 </body>
 </html>
 

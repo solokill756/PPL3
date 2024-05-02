@@ -126,6 +126,14 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="discounts">
+      <EntityTypeMapping TypeName="PPL3Model.discount">
+        <MappingFragment StoreEntitySet="discounts">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="descride" ColumnName="descride" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="disputes">
       <EntityTypeMapping TypeName="PPL3Model.dispute">
         <MappingFragment StoreEntitySet="disputes">
@@ -310,8 +318,6 @@
     <EntitySetMapping Name="properties">
       <EntityTypeMapping TypeName="PPL3Model.property">
         <MappingFragment StoreEntitySet="properties">
-          <ScalarProperty Name="current_pages" ColumnName="current_pages" />
-          <ScalarProperty Name="ask_for_booking" ColumnName="ask_for_booking" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="p_name" ColumnName="p_name" />
           <ScalarProperty Name="p_description" ColumnName="p_description" />
@@ -341,6 +347,18 @@
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="p_status" ColumnName="p_status" />
+          <ScalarProperty Name="ask_for_booking" ColumnName="ask_for_booking" />
+          <ScalarProperty Name="current_pages" ColumnName="current_pages" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="properties_discounts">
+      <EntityTypeMapping TypeName="PPL3Model.properties_discounts">
+        <MappingFragment StoreEntitySet="properties_discounts">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="properties_id" ColumnName="properties_id" />
+          <ScalarProperty Name="discounts_id" ColumnName="discounts_id" />
+          <ScalarProperty Name="discounts_value" ColumnName="discounts_value" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -409,13 +427,13 @@
     <EntitySetMapping Name="room_type">
       <EntityTypeMapping TypeName="PPL3Model.room_type">
         <MappingFragment StoreEntitySet="room_type">
-          <ScalarProperty Name="describe" ColumnName="describe" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="rt_name" ColumnName="rt_name" />
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="rt_status" ColumnName="rt_status" />
           <ScalarProperty Name="icon_image" ColumnName="icon_image" />
+          <ScalarProperty Name="describe" ColumnName="describe" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -554,24 +572,6 @@
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="language_id" ColumnName="language_id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="discounts">
-      <EntityTypeMapping TypeName="PPL3Model.discount">
-        <MappingFragment StoreEntitySet="discounts">
-          <ScalarProperty Name="descride" ColumnName="descride" />
-          <ScalarProperty Name="id" ColumnName="id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="properties_discounts">
-      <EntityTypeMapping TypeName="PPL3Model.properties_discounts">
-        <MappingFragment StoreEntitySet="properties_discounts">
-          <ScalarProperty Name="discounts_value" ColumnName="discounts_value" />
-          <ScalarProperty Name="discounts_id" ColumnName="discounts_id" />
-          <ScalarProperty Name="properties_id" ColumnName="properties_id" />
-          <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

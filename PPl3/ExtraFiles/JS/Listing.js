@@ -6,6 +6,32 @@ const inboxBtn = document.querySelector('.inbox_btn')
 const searchBtn = document.querySelector('.search_btn')
 const search = document.querySelector('.search')
 const closeBtn = document.querySelector('.fa-circle-xmark')
+const mod = document.querySelector('.main')
+const earningBtn = document.querySelector('.earning_btn');
+function toggleMod(e) {
+    mod.classList.toggle('hide')
+}
+
+earningBtn.addEventListener('click', function () {
+    Object.assign(todayBtn.style, {
+        backgroundColor: '',
+        color: '',
+        fontWeight: ''
+    });
+    Object.assign(listingBtn.style, {
+        backgroundColor: '',
+        color: '',
+        fontWeight: ''
+    });
+    Object.assign(earningBtn.style, {
+        backgroundColor: 'rgba( 245, 245, 245, 1 )',
+        color: '#000',
+        fontWeight: '600'
+    });
+    pageListing.classList.remove('open');
+    mod.classList.remove('hide');
+});
+
 window.addEventListener('load', (event) => {
     Object.assign(todayBtn.style, {
         backgroundColor: 'rgba( 245, 245, 245, 1 )',
@@ -25,10 +51,16 @@ listingBtn.addEventListener('click', () => {
         color: '#000',
         fontWeight: '600'
     });
+    Object.assign(earningBtn.style, {
+        backgroundColor: '',
+        color: '',
+        fontWeight: ''
+    });
 })
 
 listingBtn.addEventListener('click', () => {
     pageListing.classList.add('open');
+    mod.classList.add('hide');
 })
 
 searchBtn.addEventListener('click', () => {
