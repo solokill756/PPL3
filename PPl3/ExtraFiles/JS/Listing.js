@@ -6,30 +6,30 @@ const inboxBtn = document.querySelector('.inbox_btn')
 const searchBtn = document.querySelector('.search_btn')
 const search = document.querySelector('.search')
 const closeBtn = document.querySelector('.fa-circle-xmark')
-window.addEventListener('load', (event) => {
-    Object.assign(todayBtn.style, {
-        backgroundColor: 'rgba( 245, 245, 245, 1 )',
-        color: '#000',
-        fontWeight: '600'
-    });
-});
+//window.addEventListener('load', (event) => {
+//    Object.assign(todayBtn.style, {
+//        backgroundColor: 'rgba( 245, 245, 245, 1 )',
+//        color: '#000',
+//        fontWeight: '600'
+//    });
+//});
 
-listingBtn.addEventListener('click', () => {
-    Object.assign(todayBtn.style, {
-        backgroundColor: '',
-        color: '',
-        fontWeight: ''
-    });
-    Object.assign(listingBtn.style, {
-        backgroundColor: 'rgba( 245, 245, 245, 1 )',
-        color: '#000',
-        fontWeight: '600'
-    });
-})
+//listingBtn.addEventListener('click', () => {
+//    Object.assign(todayBtn.style, {
+//        backgroundColor: '',
+//        color: '',
+//        fontWeight: ''
+//    });
+//    Object.assign(listingBtn.style, {
+//        backgroundColor: 'rgba( 245, 245, 245, 1 )',
+//        color: '#000',
+//        fontWeight: '600'
+//    });
+//})
 
-listingBtn.addEventListener('click', () => {
-    pageListing.classList.add('open');
-})
+//listingBtn.addEventListener('click', () => {
+//    pageListing.classList.add('open');
+//})
 
 searchBtn.addEventListener('click', () => {
     search.classList.add('open')

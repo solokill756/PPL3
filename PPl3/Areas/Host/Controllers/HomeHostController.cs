@@ -576,9 +576,6 @@ namespace PPl3.Areas.Host.Controllers
                 }
 
 
-
-
-
                 if (data.img_3 != null)
                 {
                     list_imgs[2].created = DateTime.Now;

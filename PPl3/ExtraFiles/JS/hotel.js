@@ -68,6 +68,7 @@ for (var i = 0; i < elements.length; i++) {
 //Chuyển trang
 
 const nextBtn = document.querySelector('.next_btn button')
+const saveBtn = document.querySelector('.save_btn button')
 const backBtn = document.querySelector('.back_btn button')
 const doneBtn = document.querySelector('.done_btn')
 const barStep1 = document.querySelector('.bg-black_step_1')
@@ -78,6 +79,7 @@ var video2 = document.getElementById('myVideo-5')
 var video3 = document.getElementById('myVideo-9')
 var page1 = document.getElementById('page_1');
 console.log(index);
+console.log(saveBtn);
 var barWith;
 var step;
 if (index == 1) {
@@ -136,27 +138,36 @@ nextBtn.addEventListener('click', () => {
         barWith = barWith + 33.333;
         barStep1.style.width = `${barWith}%`
         nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = 'none'
         if (index === 2) {
             const placeBtn = document.querySelectorAll('.list_place button')
             placeBtn.forEach((place) => {
-                if (place.classList.contains('selected'))
+                if (place.classList.contains('selected')) {
                     nextBtn.style.pointerEvents = ''
+                    saveBtn.style.pointerEvents = ''
+                }
+                    
                 place.addEventListener('focus', () => {
                     placeBtn.forEach((pla) => {
                         if (pla.classList.contains('selected')) {
                             pla.classList.remove('selected')
                             nextBtn.style.pointerEvents = ''
+                            saveBtn.style.pointerEvents = ''
                         }
                     })
                     place.classList.add('selected')
                     nextBtn.style.pointerEvents = ''
+                    saveBtn.style.pointerEvents = ''
                 })
             })
         } else if (index === 3) {
             const listTypeOf = document.querySelectorAll('.list_type_of button')
             listTypeOf.forEach((type) => {
-                if (type.classList.contains('selected'))
+                if (type.classList.contains('selected')) {
                     nextBtn.style.pointerEvents = ''
+                    saveBtn.style.pointerEvents = ''
+                }
+                   
                 type.addEventListener('focus', () => {
                     listTypeOf.forEach((typ) => {
                         if (typ.classList.contains('selected')) {
@@ -164,7 +175,8 @@ nextBtn.addEventListener('click', () => {
                         }
                     })
                     type.classList.add('selected')
-                     nextBtn.style.pointerEvents = ''
+                    nextBtn.style.pointerEvents = ''
+                    saveBtn.style.pointerEvents = ''
                 })
             })
         } else if (index === 4) {
@@ -175,8 +187,11 @@ nextBtn.addEventListener('click', () => {
                     checkInput++
                 }
                 console.log(checkInput)
-                if (checkInput === listInput.length)
+                if (checkInput === listInput.length) {
+                    saveBtn.style.pointerEvents = ''
                     nextBtn.style.pointerEvents = ''
+                }
+                    
             })
             checkInput = 0
             listInput.forEach((input) => {
@@ -189,10 +204,15 @@ nextBtn.addEventListener('click', () => {
                         else
                             checkInput--;
                     })
-                    if (checkInput === 4)
+                    if (checkInput === 4) {
+                        saveBtn.style.pointerEvents = ''
                         nextBtn.style.pointerEvents = ''
-                    else
+                    }
+                    else {
                         nextBtn.style.pointerEvents = 'none'
+                        saveBtn.style.pointerEvents = 'none'
+                    }
+                        
                     checkInput = 0
                 })
             })
@@ -212,6 +232,7 @@ nextBtn.addEventListener('click', () => {
     }
     else if (index > 5 && index < 9) {
         nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = 'none'
         if (index === 6) {
             barWith = 0;
             barWith = barWith + 33.333;
@@ -225,22 +246,28 @@ nextBtn.addEventListener('click', () => {
             console.log(check1)
             if (check1 === 6) {
                 nextBtn.style.pointerEvents = ''
+                saveBtn.style.pointerEvents = ''
             }
         } else {
             barWith = barWith + 33.333;
         }
         if (index === 7) {
             nextBtn.style.pointerEvents = ''
+            saveBtn.style.pointerEvents = ''
         }
         else if (index === 8) {
             offerBtns.forEach((offer) => {
                 if (offer.classList.contains('clicked')) {
                     nextBtn.style.pointerEvents = ''
+                    saveBtn.style.pointerEvents = 'none'
                     checkOffer++;
                 }
             })
-            if (checkOffer === 0)
+            if (checkOffer === 0) {
                 nextBtn.style.pointerEvents = 'none'
+                saveBtn.style.pointerEvents = 'none'
+            }
+                
             checkOffer = 0
         }
         barStep2.style.width = `${barWith}%`
@@ -291,10 +318,13 @@ nextBtn.addEventListener('click', () => {
                
                 
 
-                if (nameHotel.trim() !== '' && currentHigh === 2 && descrideHotel.trim() !== '' && startDate.trim() !== '' && endDate.trim() !== '')
-                    nextBtn.style.pointerEvents = ''
+            if (nameHotel.trim() !== '' && currentHigh === 2 && descrideHotel.trim() !== '' && startDate.trim() !== '' && endDate.trim() !== '') {
+                nextBtn.style.pointerEvents = ''
+                saveBtn.style.pointerEvents = ''
+            }
                 else {
-                    nextBtn.style.pointerEvents = 'none'
+                nextBtn.style.pointerEvents = 'none'
+                saveBtn.style.pointerEvents = 'none'
                 }
                    
             } else {
@@ -302,10 +332,14 @@ nextBtn.addEventListener('click', () => {
             }
             if (index === 11) {
                 nextBtn.style.pointerEvents = 'none'
+                saveBtn.style.pointerEvents = 'none'
                 const listConfirm = document.querySelectorAll('.confirm_list button')
                 listConfirm.forEach((confirm) => {
-                    if (confirm.classList.contains('selected'))
+                    if (confirm.classList.contains('selected')) {
                         nextBtn.style.pointerEvents = ''
+                        saveBtn.style.pointerEvents = ''
+                    }
+                        
                     confirm.addEventListener('focus', () => {
                         listConfirm.forEach((cf) => {
                             if (cf.classList.contains('selected')) {
@@ -314,6 +348,7 @@ nextBtn.addEventListener('click', () => {
                         })
                         confirm.classList.add('selected')
                         nextBtn.style.pointerEvents = ''
+                        saveBtn.style.pointerEvents = ''
                     })
                 })
             }
@@ -341,9 +376,12 @@ nextBtn.addEventListener('click', () => {
 
 
 
+
+
 backBtn.addEventListener('click', () =>{
     index--;
     nextBtn.style.pointerEvents = ''
+    saveBtn.style.pointerEvents = ''
     var pageShow = document.querySelector('#page_' + index);
     var pageHide = document.querySelector('#page_' + (index + 1));
     pageShow.classList.add('active')
@@ -472,12 +510,14 @@ offerBtns.forEach((btn) =>{
     }
     offerBtns.forEach((offer)=>{
       if(offer.classList.contains('clicked')){
-        nextBtn.style.pointerEvents = ''
+          nextBtn.style.pointerEvents = ''
+          saveBtn.style.pointerEvents = ''
         checkOffer++;
       }
     })
     if(checkOffer === 0)
       nextBtn.style.pointerEvents = 'none'
+      saveBtn.style.pointerEvents = 'none'
     checkOffer = 0
   })
 })
@@ -486,7 +526,8 @@ amenitiesBtns.forEach((btn) =>{
   btn.addEventListener('click',()=>{
     if(btn.classList.contains('clicked')){
       btn.classList.remove('clicked')
-      nextBtn.style.pointerEvents = ''
+        nextBtn.style.pointerEvents = ''
+        saveBtn.style.pointerEvents = ''
     }else{
       btn.classList.add('clicked')
     }
@@ -504,21 +545,39 @@ const nameHotel = document.getElementById('property_name')
 
 nameHotel.addEventListener('change', () => {
 
-    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
-      nextBtn.style.pointerEvents = ''
-    else nextBtn.style.pointerEvents = 'none'
+    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
+        nextBtn.style.pointerEvents = ''
+        saveBtn.style.pointerEvents = '';
+    }
+
+    else {
+        nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = 'none'
+    }
 })
 
 startDate.addEventListener('change', () => {
-    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
+    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
         nextBtn.style.pointerEvents = ''
-    else nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = '';
+    }
+
+    else {
+        nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = 'none'
+    }
 })
 
 endDate.addEventListener('change', () => {
-    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
+    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
         nextBtn.style.pointerEvents = ''
-    else nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = '';
+    }
+
+    else {
+        nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = 'none'
+    }
 })
 hightlightsBtns.forEach((btn) =>{
   btn.addEventListener('click',()=>{
@@ -538,15 +597,22 @@ hightlightsBtns.forEach((btn) =>{
           btn1.style.pointerEvents = 'none'
         }
       })
-        if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '')
+        if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
             nextBtn.style.pointerEvents = ''
-        else nextBtn.style.pointerEvents = 'none'
+            saveBtn.style.pointerEvents = '';
+        }
+
+        else {
+            nextBtn.style.pointerEvents = 'none'
+            saveBtn.style.pointerEvents = 'none'
+        }
     }else{
       hightlightsBtns.forEach((btn1) =>{
         btn1.style.opacity = 1
         btn1.style.pointerEvents = ''
       })
-      nextBtn.style.pointerEvents = 'none'
+        nextBtn.style.pointerEvents = 'none'
+        saveBtn.style.pointerEvents = 'none'
     }
   })
 })
@@ -572,7 +638,8 @@ for (let i = 1; i <= img.length; i++){
     imgProfile.style.backgroundRepeat = "";
     btnRemove.classList.remove('open')
     addImgBtn.classList.remove('close')
-    nextBtn.style.pointerEvents = 'none'
+      nextBtn.style.pointerEvents = 'none'
+      saveBtn.style.pointerEvents = 'none'
     fileUpLoad.value = null;
     e.stopPropagation();
   })
@@ -606,7 +673,8 @@ for (let i = 1; i <= img.length; i++){
         })
         console.log(check)
         if(check === 5 || check === 6){
-          nextBtn.style.pointerEvents = ''
+            nextBtn.style.pointerEvents = ''
+            saveBtn.style.pointerEvents = ''
         }
     }
   })

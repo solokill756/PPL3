@@ -27,7 +27,7 @@
                     <div class="col l-12 m-12 c-12">
                         <div class="header_container">
                             <div class="logo">
-                                <a href="index.html"><i class="fa-brands fa-think-peaks" style="color: red"></i></a>
+                                <a href="/host/homehost/listing"><i class="fa-brands fa-think-peaks" style="color: red"></i></a>
                             </div>
                             <div class="save_btn" onclick="sendData()">
                                 <button>Save & Exit</button>
@@ -245,7 +245,7 @@
                                         <h3>Guests</h3>
                                         <div class="quantity_guest">
                                             <button class="minus_btn minus_guest_btn"><i class="fa-solid fa-minus"></i></button>
-                                            <span class="number_guest">0</span>
+                                            <span class="number_guest">1</span>
                                             <button class="plus_btn plus_guest_btn"><i class="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
@@ -600,7 +600,7 @@
     <script>
         var index = 1;
     </script>
-    <script src="~/ExtraFiles/JS/hotel.js?v=11"></script>
+    <script src="~/ExtraFiles/JS/hotel.js?v=12"></script>
 </body>
 </html>
 
@@ -642,7 +642,7 @@
     function getData() {
         $(document).ready(function () {
 
-            //console.log(data);
+            console.log(data);
             // pages 2
             var get_property_type = $('.list_place .place_item .selected');
             if (get_property_type.length > 0) {
@@ -802,6 +802,7 @@
                 var classList = ask_for_booking.attr('class');
                 if (classList) {
                     data["ask_for_booking"] = classList.split(" ")[0];
+                  
                   
                 }
             }
