@@ -474,6 +474,8 @@
     <Content Include="Areas\User\Views\HomeUser\profile.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\userPersonalProfile.cshtml" />
     <Content Include="Areas\Host\Views\HomeHost\Listing.cshtml" />
+    <Content Include="Areas\Host\Views\HomeHost\addHotel.cshtml" />
+    <Content Include="Areas\Host\Views\HomeHost\editHotel.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -481,8 +483,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Host\Views\HomeHost\addHotel.cshtml" />
-    <Content Include="Areas\Host\Views\HomeHost\editHotel.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />

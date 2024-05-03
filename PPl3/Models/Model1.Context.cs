@@ -35,6 +35,7 @@ namespace PPl3.Models
         public virtual DbSet<component_rating> component_rating { get; set; }
         public virtual DbSet<country> countries { get; set; }
         public virtual DbSet<currency> currencies { get; set; }
+        public virtual DbSet<discount> discounts { get; set; }
         public virtual DbSet<dispute> disputes { get; set; }
         public virtual DbSet<email_content_languages> email_content_languages { get; set; }
         public virtual DbSet<email_contents> email_contents { get; set; }
@@ -51,6 +52,7 @@ namespace PPl3.Models
         public virtual DbSet<phone_number> phone_number { get; set; }
         public virtual DbSet<promo_codes> promo_codes { get; set; }
         public virtual DbSet<property> properties { get; set; }
+        public virtual DbSet<properties_discounts> properties_discounts { get; set; }
         public virtual DbSet<property_amenities> property_amenities { get; set; }
         public virtual DbSet<property_images> property_images { get; set; }
         public virtual DbSet<property_reviews> property_reviews { get; set; }
@@ -67,7 +69,5 @@ namespace PPl3.Models
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<users_interests> users_interests { get; set; }
         public virtual DbSet<users_languages> users_languages { get; set; }
-        public virtual DbSet<discount> discounts { get; set; }
-        public virtual DbSet<properties_discounts> properties_discounts { get; set; }
     }
 }

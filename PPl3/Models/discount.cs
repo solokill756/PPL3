@@ -23,9 +23,9 @@ namespace PPl3.Models
         public int id { get; set; }
         public string descride { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<properties_discounts> properties_discounts { get; set; }
         public virtual discount discounts1 { get; set; }
         public virtual discount discount1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<properties_discounts> properties_discounts { get; set; }
     }
 }
