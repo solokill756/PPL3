@@ -99,152 +99,156 @@
     }
     @foreach (var item in Model.Model2Data)
     {
-        <div class="col l-3 m-4 c-6 content_container">
-            <div class="content_item content_item_@position">
-                <div class="list_img list_img_@position" onclick="window.location.href='/user/homeuser/Detail?id=@item.id'">
-                    @foreach (var pic in item.property_images)
+        if (item.p_status == 1)
+        {
+            <div class="col l-3 m-4 c-6 content_container">
+                <div class="content_item content_item_@position">
+                    <div class="list_img list_img_@position" onclick="window.location.href='/user/homeuser/Detail?id=@item.id'">
+                        @foreach (var pic in item.property_images)
+                        {
+                            <img class="img_@position" src="@pic.pi_image" alt="">
+                        }
+                    </div>
+                    <div class="img_btns">
+                        <div class="btn_left btn_left_@position img_btn"><i class="fa-solid fa-angle-left"></i></div>
+                        <div class="btn_right btn_right_@position img_btn"><i class="fa-solid fa-angle-right"></i></div>
+                    </div>
+
+                    <div class="index_imgs">
+                        @{
+                            int pos_pic = 0;
+                            int check = 0;
+                        }
+                        @foreach (var pic in item.property_images)
+                        {
+                            if (check == 0)
+                            {
+                                <div class="index_item index-item-@(pos_pic)_@position active_@position"></div>
+                                check = 1;
+                            }
+                            else
+                            {
+                                <div class="index_item index-item-@(pos_pic)_@position"></div>
+                            }
+                            pos_pic++;
+                        }
+
+                    </div>
+
+                    @if (db.favourites.Any(row => row.userID == p_user.id && row.property_id == item.id) == true)
                     {
-                        <img class="img_@position" src="@pic.pi_image" alt="">
+                        <div class="heart_icon heart_icon_@position">
+                            <i class="fa-solid fa-heart loved"></i>
+                        </div>
                     }
-                </div>
-                <div class="img_btns">
-                    <div class="btn_left btn_left_@position img_btn"><i class="fa-solid fa-angle-left"></i></div>
-                    <div class="btn_right btn_right_@position img_btn"><i class="fa-solid fa-angle-right"></i></div>
+                    else
+                    {
+
+                        <div class="heart_icon heart_icon_@position" onclick="SubmitWishHotel('@item.id')">
+                            <i class="fa-solid fa-heart"></i>
+                        </div>
+                    }
+
+
+                    @{ foreach (var u in Model.Model3Data)
+                        {
+                            if (u.id == item.userId)
+                            {
+                                p_host = u;
+                                break;
+                            }
+                        }
+                    }
+
+                    <div class="profile_seller profile_seller_@position" data-userid="@item.userId">
+                        <div class="img_profile">
+                            <img class="img_seller" src="@p_host.user_profile.FirstOrDefault().user_avatar" alt="">
+                        </div>
+                        <div class="profile_behind">
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="index_imgs">
+                <div class="name_hotel name_hotel_@position">
+                    <p>@item.p_address</p>
                     @{
-                        int pos_pic = 0;
-                        int check = 0;
+
+                        double sum = 0;
+                        foreach (var row in item.property_reviews)
+                        {
+                            sum = sum + double.Parse(row.overall_rating);
+                        }
+                        sum = sum / item.property_reviews.ToArray().Length;
+
                     }
-                    @foreach (var pic in item.property_images)
+                    <span><i class="fa-solid fa-star"></i>@sum</span>
+                </div>
+
+                <div class="review_hotel review_hotel_@position">
+                    <p>@item.p_name</p>
+                    @if (item.startDate != null && item.end_date != null)
                     {
-                        if (check == 0)
-                        {
-                            <div class="index_item index-item-@(pos_pic)_@position active_@position"></div>
-                            check = 1;
-                        }
-                        else
-                        {
-                            <div class="index_item index-item-@(pos_pic)_@position"></div>
-                        }
-                        pos_pic++;
+                        <p>
+                            @item.startDate.Value.ToString("dd/MM/yyyy") - @item.end_date.Value.ToString("dd/MM/yyyy")
+                        </p>
+
                     }
 
                 </div>
 
-                @if (db.favourites.Any(row => row.userID == p_user.id && row.property_id == item.id) == true)
-                {
-                    <div class="heart_icon heart_icon_@position">
-                        <i class="fa-solid fa-heart loved"></i>
-                    </div>
-                }
-                else
-                {
-
-                    <div class="heart_icon heart_icon_@position" onclick="SubmitWishHotel('@item.id')">
-                        <i class="fa-solid fa-heart"></i>
-                    </div>
-                }
-
-
-                @{ foreach (var u in Model.Model3Data)
-                    {
-                        if (u.id == item.userId)
-                        {
-                            p_host = u;
-                            break;
-                        }
-                    }
-                }
-
-                <div class="profile_seller profile_seller_@position" data-userid="@item.userId">
-                    <div class="img_profile">
-                        <img class="img_seller" src="@p_host.user_profile.FirstOrDefault().user_avatar" alt="">
-                    </div>
-                    <div class="profile_behind">
-                    </div>
+                <div class="price_hotel price_hotel_@position">
+                    <span>$@item.price/ Night</span>
                 </div>
-
             </div>
-
-            <div class="name_hotel name_hotel_@position">
-                <p>@item.p_address</p>
-                @{
-
-                    double sum = 0;
-                    foreach (var row in item.property_reviews)
-                    {
-                        sum = sum + double.Parse(row.overall_rating);
-                    }
-                    sum = sum / item.property_reviews.ToArray().Length;
-
-                }
-                <span><i class="fa-solid fa-star"></i>@sum</span>
-            </div>
-
-            <div class="review_hotel review_hotel_@position">
-                <p>@item.p_name</p>
-                @if (item.startDate != null && item.end_date != null)
-                {
-                    <p>
-                        @item.startDate.Value.ToString("dd/MM/yyyy") - @item.end_date.Value.ToString("dd/MM/yyyy")
-                    </p>
-
-                }
-
-            </div>
-
-            <div class="price_hotel price_hotel_@position">
-                <span>$@item.price/ đêm</span>
-            </div>
-        </div>
-        <div id="seller_profile" class="seller_profile_@position">
-            <div class="seller seller_@position">
-                <div class="seller_profile_container seller_profile_container_left seller_profile_container_left_@position">
-                    <div class="logo_company">
-                        <i class="fa-brands fa-airbnb"></i>
-                        <h1>T|.|N|.|T</h1>
-                    </div>
-                    <div class="profile_left profile_left_@position">
-                        <div class="profile_left_box">
-                            <div class="img_seller_profile" style="background : url(@p_host.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/user/homeuser/profile?id=@p_host.id'">
-                            </div>
-                            <span class="logo_shield"><i class="fa-solid fa-shield"></i></span>
-                            <span class="name_seller">@p_host.user_personalInfor.FirstOrDefault().legal_name</span>
-                            <div class="contact_seller">
-                                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                            </div>
-                            <div class="page_arrow">
-                                <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
-                                <p>1</p>
-                                <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+            <div id="seller_profile" class="seller_profile_@position">
+                <div class="seller seller_@position">
+                    <div class="seller_profile_container seller_profile_container_left seller_profile_container_left_@position">
+                        <div class="logo_company">
+                            <i class="fa-brands fa-airbnb"></i>
+                            <h1>T|.|N|.|T</h1>
+                        </div>
+                        <div class="profile_left profile_left_@position">
+                            <div class="profile_left_box">
+                                <div class="img_seller_profile" style="background : url(@p_host.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/user/homeuser/profile?id=@p_host.id'">
+                                </div>
+                                <span class="logo_shield"><i class="fa-solid fa-shield"></i></span>
+                                <span class="name_seller">@p_host.user_personalInfor.FirstOrDefault().legal_name</span>
+                                <div class="contact_seller">
+                                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                                </div>
+                                <div class="page_arrow">
+                                    <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <p>1</p>
+                                    <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="seller_profile_container seller_profile_container_right">
-                    <div class="profile_right">
-                        <div class="profile_right_box">
-                            <div class="about_seller">
-                                <p>@p_host.user_profile.FirstOrDefault().user_about</p>
-                            </div>
+                    <div class="seller_profile_container seller_profile_container_right">
+                        <div class="profile_right">
+                            <div class="profile_right_box">
+                                <div class="about_seller">
+                                    <p>@p_host.user_profile.FirstOrDefault().user_about</p>
+                                </div>
 
-                            <div class="page_arrow">
-                                <button class="page_left_2_btn"><i class="fa-solid fa-chevron-left"></i></button>
-                                <p>2</p>
-                                <button class="page_right_2_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                                <div class="page_arrow">
+                                    <button class="page_left_2_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <p>2</p>
+                                    <button class="page_right_2_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        position++;
+            position++;
+        }
     }
+
 }
 
 

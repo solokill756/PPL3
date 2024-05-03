@@ -41,7 +41,7 @@ namespace PPl3.Controllers
             myView.Model1Data = list_amenites.ToList();
             if (id == -1 || checkID == id)
             {
-                List<property> list_property = db.properties.ToList();
+                List<property> list_property = db.properties.ToList().OrderByDescending(item => item.bookings.ToArray().Length).ToList();
                 myView.Model2Data = list_property;
             }
             else
@@ -52,7 +52,7 @@ namespace PPl3.Controllers
                 var list_property = from item in db.properties.ToList()
                                     where property_anmentitie.ToList().Find(value => value.property_id == item.id) != null
                                     select item;
-                myView.Model2Data = list_property.ToList();
+                myView.Model2Data = list_property.ToList().OrderByDescending(item => item.bookings.ToArray().Length).ToList();
                 ViewBag.AmenityId = id;
             }
             if (id != -1) ViewBag.checkId = id;

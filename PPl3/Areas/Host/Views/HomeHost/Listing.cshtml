@@ -125,11 +125,14 @@
                                             {
                                                 <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
                                                     <div class="in_progress">
-                                                        @if (item.availability_type == 1)
+                                                        @if (item.availability_type == 0)
                                                         {
+                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
+                                                            
 
+                                                        }
+                                                        else if(item.p_status == 1) { 
                                                             <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
-
                                                         }
                                                         else
                                                         {
@@ -153,11 +156,15 @@
                                             {
                                                 <div class="img_hotel" style="background: url(https://cdn2.iconfinder.com/data/icons/jetflat-multimedia/90/004_030_add_image_painting_photo_picture_gallery_album-1024.png) top center /cover no-repeat">
                                                     <div class="in_progress">
-                                                        @if (item.availability_type == 1)
+                                                        @if (item.availability_type == 0)
                                                         {
+                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
 
+
+                                                        }
+                                                        else if (item.p_status == 1)
+                                                        {
                                                             <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
-
                                                         }
                                                         else
                                                         {
@@ -231,33 +238,37 @@
                                                     </div>
                                                 </div>
                                             }
-                                            <div class="infor_hotel infor_hotel_2">
-                                                @if (item.created != null)
-                                                {
-                                                    <span>@(item.p_name != null ? $"{item.p_name}" : "") @(item.room_type != null ? $"{item.room_type.rt_name}" : "") , created @item.created.Value.ToString("dd/MM/yyyy")</span>
-                                                    <p>@item.p_address</p>
+                                        <div class="infor_hotel infor_hotel_2">
+                                            @if (item.created != null)
+                                            {
+                                                <span>@(item.p_name != null ? $"{item.p_name}" : "") @(item.room_type != null ? $"{item.room_type.rt_name}" : "") , created @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                <p>@item.p_address</p>
 
-                                                }
-                                                else
-                                                {
+                                            }
+                                            else
+                                            {
 
-                                                    <span>@item.p_name (@item.room_type.rt_name) </span>
-                                                    <p>@item.p_address</p>
-                                                }
-                                                @if (item.availability_type == 1)
-                                                {
+                                                <span>@item.p_name (@item.room_type.rt_name) </span>
+                                                <p>@item.p_address</p>
+                                            }
+                                            @if (item.availability_type == 0)
+                                            {
+                                                <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
 
-                                                    <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
 
-                                                }
-                                                else
-                                                {
+                                            }
+                                            else if (item.p_status == 1)
+                                            {
+                                                <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+                                            }
+                                            else
+                                            {
 
-                                                    <button><i class="fa-solid fa-circle text-warning check-room-1"></i> Unfinished</button>
+                                                <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
 
-                                                }
-                                                <i class="fa-solid fa-chevron-right"></i>
-                                            </div>
+                                            }
+                                            <i class="fa-solid fa-chevron-right"></i>
+                                        </div>
                                         </div>
                                     </div>
 

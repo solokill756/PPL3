@@ -161,7 +161,7 @@
                                 }
                                 sum = sum / property.property_reviews.ToArray().Length;
                             }
-                            <p><i class="fa-solid fa-star"></i>@sum - <a>@property.property_reviews.ToArray().Length</a></p>
+                            <p><i class="fa-solid fa-star"></i>@sum - <a>@property.property_reviews.ToArray().Length reviews</a></p>
                         </div>
 
                         <div class="seller_infor">
@@ -171,16 +171,34 @@
                                         <div class="img_seller" style="background : url(@property.user.user_profile.ToList().FirstOrDefault().user_avatar) top center /cover no-repeat" onclick="window.location.href='/user/homeuser/profile?id=@property.user.id'">
                                         </div>
                                         <div class="infor">
+                                            
                                             <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
                                             @{
-                                                int count = 0;
-                                                string currentDateTime = DateTime.Now.ToString("yyyy");
-                                                if (property.user.day_become_host != null) {
-                                                    count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
-                                                }
+                                                
+                                                    int count = 0;
+                                                    
 
+                                                    if (DateTime.Now.ToString("yyyy") != property.user.day_become_host.Value.ToString("yyyy"))
+                                                    {
+
+                                                        count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                        
+                                                        <p>@count Years hosting</p>
+                                                    }
+                                                    else if (DateTime.Now.ToString("MM") != property.user.day_become_host.Value.ToString("MM"))
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(property.user.day_become_host.Value.ToString("MM"));
+                                                       
+                                                        <p>@count Months hosting</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(property.user.day_become_host.Value.ToString("dd"));
+                                                        
+                                                        <p>@count Days hosting</p>
+                                                    }
+                                                
                                             }
-                                            <p>@count years hosting</p>
                                         </div>
                                     </div>
                                 </div>
@@ -486,7 +504,13 @@
                                         }
                                     </div>
                                 </div>
-                                @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
+                                @if(property.availability_type == 0) { 
+                                    <div class="pay_footer disapear">
+                                        <button>Reservation Expires</button>
+                                    </div>
+                                
+                                }
+                                else if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                 {
                                     <div class="pay_footer">
                                         <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Change Booking</button>
@@ -504,7 +528,7 @@
                                     <h2>Total: </h2>
                                     <div class="money_total">
                                         <h2>$@property.price </h2>
-                                        <p>night</p>
+                                        <p>Night</p>
                                     </div>
                                 </div>
                             </div>
@@ -608,38 +632,31 @@
                                                         <p>Rating</p>
                                                     </div>
                                                     <div class="infor_basic">
+
                                                         @{
                                                             count = 0;
-                                                            if (property.user.day_become_host != null)
-                                                            {
-                                                                if (DateTime.Now.ToString("yyyy") != property.user.day_become_host.Value.ToString("yyyy"))
-                                                                {
 
-                                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
-                                                                    <span>@count</span>
-                                                                    <p>Years hosting</p>
-                                                                }
-                                                                else if (DateTime.Now.ToString("MM") != property.user.day_become_host.Value.ToString("MM"))
-                                                                {
-                                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(property.user.day_become_host.Value.ToString("MM"));
-                                                                    <span>@count</span>
-                                                                    <p>Months hosting</p>
-                                                                }
-                                                                else
-                                                                {
-                                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(property.user.day_become_host.Value.ToString("dd"));
-                                                                    <span>@count</span>
-                                                                    <p>Days hosting</p>
-                                                                }
+                                                            if (DateTime.Now.ToString("yyyy") != property.user.day_become_host.Value.ToString("yyyy"))
+                                                            {
+
+                                                                count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+                                                                <span>@count</span>
+                                                                <p>Years hosting</p>
+                                                            }
+                                                            else if (DateTime.Now.ToString("MM") != property.user.day_become_host.Value.ToString("MM"))
+                                                            {
+                                                                count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(property.user.day_become_host.Value.ToString("MM"));
+                                                                <span>@count</span>
+                                                                <p>Months hosting</p>
                                                             }
                                                             else
                                                             {
+                                                                count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(property.user.day_become_host.Value.ToString("dd"));
                                                                 <span>@count</span>
                                                                 <p>Days hosting</p>
                                                             }
-
-
                                                         }
+
 
                                                     </div>
                                                 </div>
