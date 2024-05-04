@@ -107,14 +107,8 @@
                                                 <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyyy")</span></p>
                                             </div>
                                             <div class="price">
-                                                @{
-                                                    TimeSpan difference = (item.check_out_date.Value - item.check_in_date.Value);
-                                                    int daysDifference = (int)difference.TotalDays;
-
-                                                    sum = daysDifference * (double)item.property.price;
-
-                                                }
-                                                <p>Price: <span>$@sum</span></p>
+                                               
+                                                <p>Price: <span>$@item.amount_paid</span></p>
                                             </div>
                                         </div>
                                     </div>
@@ -145,14 +139,7 @@
                                                 <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyy")</span></p>
                                             </div>
                                             <div class="price">
-                                                @{
-                                                    TimeSpan difference = (item.check_out_date.Value - item.check_in_date.Value);
-                                                    int daysDifference = (int)difference.TotalDays;
-
-                                                    sum = daysDifference * (double)item.property.price;
-
-                                                }
-                                                <p>Price: <span>$@sum</span></p>
+                                                <p>Price: <span>$@item.amount_paid</span></p>
                                             </div>
                                         </div>
                                     </div>

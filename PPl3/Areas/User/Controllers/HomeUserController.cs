@@ -51,6 +51,7 @@ namespace PPl3.Areas.User.Controllers
                 var list_amenites = from item in db.amenities.ToList()
                                     where item.category_id == main_cate.id
                                     select item;
+               
                 myView.Model1Data = list_amenites.ToList();
                 if (id == -1 || checkID == id)
                 {
@@ -59,14 +60,12 @@ namespace PPl3.Areas.User.Controllers
                 }
                 else
                 {
-                    var property_anmentitie = from item in db.property_amenities.ToList()
-                                              where item.amenity_id == id
-                                              select item;
-                    var list_property = from item in db.properties.ToList()
-                                        where property_anmentitie.ToList().Find(value => value.property_id == item.id) != null
-                                        select item;
-                    myView.Model2Data = list_property.ToList().OrderByDescending(item => item.bookings.ToArray()).ToList();
+                    var property_amenities = db.property_amenities.Where(item => item.amenity_id == id).ToList();
+                    var property_ids = property_amenities.Select(item => item.property_id).ToList();
+                    var list_property = db.properties.Where(item => property_ids.Contains(item.id)).ToList();
+                    myView.Model2Data = list_property.OrderByDescending(item => item.bookings.ToArray().Length).ToList();
                     ViewBag.AmenityId = id;
+
                 }
                 if (id != -1) ViewBag.checkId = id;
                 
@@ -569,6 +568,15 @@ namespace PPl3.Areas.User.Controllers
         {
             PPL3Entities entities = new PPL3Entities();
             user_personalInfor find_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault();
+            foreach (var item in entities.properties.ToList())
+            {
+                if (item.end_date < DateTime.Now)
+                {
+                    item.availability_type = 0;
+                    item.current_pages = 10;
+                }
+            }
+            entities.SaveChanges();
             if (!IsGmailExists(email_address))
 
             {
@@ -622,7 +630,15 @@ namespace PPl3.Areas.User.Controllers
         {
             user_personalInfor user_PersonalInfor = new user_personalInfor();
             PPL3Entities db = new PPL3Entities();
-            
+            foreach (var item in db.properties.ToList())
+            {
+                if (item.end_date < DateTime.Now)
+                {
+                    item.availability_type = 0;
+                    item.current_pages = 10;
+                }
+            }
+            db.SaveChanges();
             if (IsGmailExists(email_address))
 
             {
@@ -693,12 +709,12 @@ namespace PPl3.Areas.User.Controllers
             {
                 user p_user = (user)Session["user"];
                 PPL3Entities db = new PPL3Entities();
-                while(db.bookings.Any(item => item.check_out_date < DateTime.Now))
-                {
-                    booking find_booking = db.bookings.FirstOrDefault(item => item.check_out_date < DateTime.Now);
-                    db.bookings.Remove(find_booking);
-                    db.SaveChanges();
-                }
+                //while(db.bookings.Any(item => item.check_out_date < DateTime.Now))
+                //{
+                //    booking find_booking = db.bookings.FirstOrDefault(item => item.check_out_date < DateTime.Now);
+                //    db.bookings.Remove(find_booking);
+                //    db.SaveChanges();
+                //}
                 var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ThenBy(item => item.id).ToList();
                 return View(list_booking_hotel);
             }
@@ -707,7 +723,7 @@ namespace PPl3.Areas.User.Controllers
 
         [HttpPost]
         [UserAuthorize(idChucNang = 11)]
-        public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId)
+        public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId , decimal price_hotel)
         {
             if (check_in_date > check_out_date) return  Json("error1", JsonRequestBehavior.AllowGet);
             if ((check_out_date.Month - check_in_date.Month >= 2 && check_out_date.Year == check_in_date.Year) || (check_out_date.Year != check_in_date.Year)) return Json("error2", JsonRequestBehavior.AllowGet);
@@ -718,6 +734,10 @@ namespace PPl3.Areas.User.Controllers
             if ((list_booking.Any(item => ((item.check_in_date <= check_in_date && item.check_out_date >= check_in_date) || (item.check_out_date >= check_out_date && item.check_in_date <= check_out_date) ||(check_in_date < item.check_in_date && check_out_date > item.check_out_date)) && item.userId == p_user.id && item.property_id == hotelId) == false && check_in_date >= DateTime.Now) || (find_hotel.check_in_date == check_in_date && find_hotel.check_out_date == check_out_date)) { 
                 find_hotel.check_in_date = check_in_date;
                 find_hotel.check_out_date = check_out_date;
+                TimeSpan difference = (find_hotel.check_out_date.Value - find_hotel.check_in_date.Value);
+                int daysDifference = (int)difference.TotalDays;
+                double sum = daysDifference * (double)find_hotel.price_per_day;
+                find_hotel.amount_paid = (decimal)sum;
                 db.SaveChanges();
                 while (db.booking_guests.Any(item => item.booking_id == bookingId))
                 {
@@ -749,7 +769,7 @@ namespace PPl3.Areas.User.Controllers
         //Pay Hotel
         [HttpPost]
         [UserAuthorize(idChucNang = 3)]
-        public JsonResult PayHotel(bool checkBook , int id , DateTime checkInDate , DateTime checkOutDate , int[] guest_count)
+        public JsonResult PayHotel(bool checkBook , int id , DateTime checkInDate , DateTime checkOutDate , int[] guest_count , decimal price_hotel)
         {
 
             if (checkInDate > checkOutDate) return Json(new
@@ -759,12 +779,12 @@ namespace PPl3.Areas.User.Controllers
             if ((checkOutDate.Month - checkInDate.Month >= 2 && checkOutDate.Year == checkInDate.Year) || (checkInDate.Year != checkOutDate.Year)) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
-            while (db.bookings.Any(item => item.check_out_date < DateTime.Now))
-            {
-                booking find_booking = db.bookings.FirstOrDefault(item => item.check_out_date < DateTime.Now);
-                db.bookings.Remove(find_booking);
-                db.SaveChanges();
-            }
+            //while (db.bookings.Any(item => item.check_out_date < DateTime.Now))
+            //{
+            //    booking find_booking = db.bookings.FirstOrDefault(item => item.check_out_date < DateTime.Now);
+            //    db.bookings.Remove(find_booking);
+            //    db.SaveChanges();
+            //}
             if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate) || (checkInDate < item.check_in_date && checkOutDate > item.check_out_date)) && item.userId ==  p_user.id && item.property_id == id) == false && checkInDate >= DateTime.Now)
             {
                 TempData["checkBook"] = checkBook;
@@ -774,7 +794,7 @@ namespace PPl3.Areas.User.Controllers
                 userBooking.userId = p_user.id;
                 userBooking.check_in_date = checkInDate;
                 userBooking.check_out_date = checkOutDate;
-                userBooking.price_per_day = findHotel.price;
+                userBooking.price_per_day = price_hotel;
                 TimeSpan difference = (userBooking.check_out_date.Value - userBooking.check_in_date.Value);
                 int daysDifference = (int)difference.TotalDays;
 

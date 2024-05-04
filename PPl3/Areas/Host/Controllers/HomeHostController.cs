@@ -488,17 +488,24 @@ namespace PPl3.Areas.Host.Controllers
             find_hotel.accomodates_count = data.number_guest;
             find_hotel.max_pets = data.number_pets;
             find_hotel.bed_count = data.number_beds;
-            if(current_page >= 12 || find_hotel.p_status == 1)
+            if(current_page >= 12)
             {
                 find_hotel.p_status = 1;
                 find_hotel.current_pages = 1;
+            }
+            else if(find_hotel.p_status == 1)
+            {
+                find_hotel.current_pages = current_page;
             }
             else
             {
                 find_hotel.p_status = 0;
                 find_hotel.current_pages = current_page;
             }
-            find_hotel.price = decimal.Parse(data.price);
+            if (data.price != null)
+            {
+                find_hotel.price = decimal.Parse(data.price);
+            }
             find_hotel.currency_id = 1;
             if (data.ask_for_booking != null) find_hotel.ask_for_booking = byte.Parse(data.ask_for_booking);
             if (data.check_in != null) find_hotel.startDate = DateTime.Parse(data.check_in);

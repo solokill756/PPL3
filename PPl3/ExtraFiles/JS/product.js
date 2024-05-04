@@ -337,18 +337,28 @@ if (document.getElementById("checkInDate") != null && document.getElementById("c
         if (checkInDateValue !== "Add date" && checkOutDateValue !== "Add date") {
 
             document.querySelector(".pay_footer").classList.remove("disapear");
-            //payFooterButton.addEventListener("click", function () {
-            //    //window.location.href = '/user/homeuser/payhotel?checkBook=true';
-            //});
+            var checkInDate = new Date(parseInt(checkInDateValue.split("/")[2], 10), parseInt(checkInDateValue.split("/")[1], 10) - 1, parseInt(checkInDateValue.split("/")[0], 10));
+            var checkOutDate = new Date(parseInt(checkOutDateValue.split("/")[2], 10), parseInt(checkOutDateValue.split("/")[1], 10) - 1, parseInt(checkOutDateValue.split("/")[0], 10));
+            var timeDiff = Math.abs(checkOutDate.getTime() - checkInDate.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Chia cho số miliseconds trong một ngày
+            console.log(diffDays);
+            if (diffDays + 1 >= 10 && discounts.length > 1) {
+                document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[1]) / 100 + "</h2>" + " <p>Night</p>";
+            } else if (diffDays + 1 >= 5 && discounts.length > 2) {
+                document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[2]) / 100 + "</h2>" + " <p>Night</p>";
+            }
+
         } else {
             document.querySelector(".pay_footer").classList.add("disapear");
+            if (booking_count < 3 && discounts.length > 0) {
+                document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100 + "</h2>" + " <p>Night</p>";
+            }
+            else document.querySelector('.money_total').innerHTML = "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice + "</h2>" + " <p>Night</p>";
             //payFooterButton.removeEventListener("click", function () {
             //    //window.location.href = '/user/homeuser/payhotel?checkBook=true';
             //});
         }
     }
 }
-
-
 
 

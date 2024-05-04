@@ -15,6 +15,15 @@
     {
         booking_id = ViewBag.bookingId;
     }
+    PPl3.Models.properties_discounts[] list_discounts = property.properties_discounts.ToArray();
+    decimal[] discount_values = new decimal[list_discounts.Length];
+    for (int j = 0; j < list_discounts.Length; j++)
+    {
+        discount_values[j] = (decimal)list_discounts[j].discounts_value;
+    }
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+    var discountsJson = serializer.Serialize(discount_values);
 }
 
 <!DOCTYPE html>
@@ -29,7 +38,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=16" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=17" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -504,11 +513,17 @@
                                         }
                                     </div>
                                 </div>
+                                
                                 @if(property.availability_type == 0) { 
-                                    <div class="pay_footer disapear">
+                                    <div class="pay_footer disapearForever">
                                         <button>Reservation Expires</button>
                                     </div>
                                 
+                                }
+                                else if(property.startDate > DateTime.Now) { 
+                                    <div class="pay_footer disapearForever">
+                                        <button>Reservations Not Yet Open</button>
+                                    </div>
                                 }
                                 else if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                 {
@@ -527,7 +542,41 @@
                                 <div class="total">
                                     <h2>Total: </h2>
                                     <div class="money_total">
-                                        <h2>$@property.price </h2>
+                                        @* Sử lí discount cho từng trường hợp *@
+                                        @{
+                                            decimal price_hotel = (decimal)(property.price);
+                                            if (property.bookings.ToArray().Length < 3)
+                                            {
+                                                price_hotel = (decimal)(property.price * (100 - property.properties_discounts.FirstOrDefault().discounts_value)) / 100;
+                                            }
+
+                                        }
+                                        @if (price_hotel == property.price)
+                                        {
+                                            if (booking_id != -1)
+                                            {
+                                                if (property.price != property.bookings.FirstOrDefault(item => item.id == booking_id).price_per_day)
+                                                {
+                                                    <h2 class="_1l85cgq">$@property.price</h2>
+                                                    <h2 class="_1y74zjx money_hotel">$@property.bookings.FirstOrDefault(item => item.id == booking_id).price_per_day</h2>
+                                                }
+                                                else
+                                                {
+                                                    <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                                }
+                                                
+                                            }
+                                            else { 
+                                                <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                            }
+                                            
+                                        }
+                                        else
+                                        {
+                                            <h2 class="_1l85cgq">$@property.price</h2>
+                                            <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                        }
+
                                         <p>Night</p>
                                     </div>
                                 </div>
@@ -816,7 +865,7 @@
                                 <p>- Accomodates : @property.accomodates_count guests</p>
                                 <p>- Max_pet : @property.max_pets</p>
                                 <p>- Prices : $@property.price</p>
-                                <p>- Dates : @property.startDate.Value.ToString("dd/MM/yyyy") - @property.end_date.Value.ToString("dd/MM/yyyy") </p>
+                                <p>- Dates Bookings : @property.startDate.Value.ToString("dd/MM/yyyy") - @property.end_date.Value.ToString("dd/MM/yyyy") </p>
                             </div>
                             <div class="note">
                                 <span>NOTE:</span>
@@ -932,7 +981,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/product.js?v=7"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=8"></script>
     @*<script src="~/ExtraFiles/JS/calendar.js?v=2"></script>*@
 
 </body>
@@ -941,6 +990,13 @@
 <script src="~/Scripts/jquery-3.7.1.js"></script>
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 <script>
+    var priceHotel = $('.money_hotel').text();
+    priceHotel = priceHotel.substring(1, priceHotel.length);
+    var discounts = JSON.parse('@Html.Raw(discountsJson)');
+    var propertyPrice = @Json.Encode(property.price);
+    var booking_count = @Json.Encode(property.bookings.ToArray().Length);
+    console.log(discounts);
+    console.log(priceHotel);
     function booking(hotelId , hotelGuest) {
         $(document).ready(function () {
             function isValidDate(dateString) {
@@ -984,7 +1040,8 @@
                     checkBook: true,
                     checkInDate: correctFormDateIn,
                     checkOutDate: correctFormDateOut,
-                    guest_count: guest_count1
+                    guest_count: guest_count1,
+                    price_hotel: priceHotel
                 };
                 $.ajax({
                     url: "/user/homeuser/payHotel",
@@ -1001,7 +1058,7 @@
                         else if (data.success == "error2") {
                             alert("You can only book for 2 consecutive months");
                         }
-                        
+
                     },
                     error: function (err) {
                         console.log(err);
@@ -1057,7 +1114,8 @@
                 check_in_date: correctFormDateIn,
                 check_out_date: correctFormDateOut,
                 guest_count: guest_count1,
-                bookingId: bookingId
+                bookingId: bookingId,
+                price_hotel: priceHotel
             };
             $.ajax({
                 url: "/user/homeuser/FixBookingHotel",
@@ -1078,7 +1136,7 @@
                                 $('.alert_complete').addClass('offActive')
                             }, 3000)
                         }
-                        
+
 
                     }
                 },
@@ -1097,7 +1155,7 @@
 
 
 <script>
-
+    
     $(document).ready(function () {
         let calendar = $('.calendar');
         let checkIn = $('.check_in span');

@@ -1467,3 +1467,16 @@ html {
         margin-right: 10px;
         background-color: chartreuse;
     }
+
+._1l85cgq {
+    color: rgb(106, 106, 106) !important;
+    text-decoration: line-through !important;
+    font-weight: var(--pricing-guest-primary-line-strikethrough-price-font-weight, 600) !important;
+    padding-right: 10px;
+}
+
+
+._1y74zjx {
+    color: rgb(34, 34, 34) !important;
+    font-weight: var(--pricing-guest-primary-line-unit-price-font-weight, 800) !important;
+}

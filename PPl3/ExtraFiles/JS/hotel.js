@@ -545,7 +545,7 @@ const nameHotel = document.getElementById('property_name')
 
 nameHotel.addEventListener('change', () => {
 
-    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
+    if (nameHotel.value.trim() !== '' && document.querySelectorAll('..highlights_list .clicked').length == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
         nextBtn.style.pointerEvents = ''
         saveBtn.style.pointerEvents = '';
     }
@@ -557,7 +557,8 @@ nameHotel.addEventListener('change', () => {
 })
 
 startDate.addEventListener('change', () => {
-    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
+    
+    if (nameHotel.value.trim() !== '' && document.querySelectorAll('..highlights_list .clicked').length == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
         nextBtn.style.pointerEvents = ''
         saveBtn.style.pointerEvents = '';
     }
@@ -569,7 +570,8 @@ startDate.addEventListener('change', () => {
 })
 
 endDate.addEventListener('change', () => {
-    if (nameHotel.value.trim() !== '' && current == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
+    console.log(endDate.value);
+    if (nameHotel.value.trim() !== '' && document.querySelectorAll('..highlights_list .clicked').length == 2 && descrideHotel.value.trim() !== '' && startDate.value.trim() !== '' && endDate.value.trim() !== '') {
         nextBtn.style.pointerEvents = ''
         saveBtn.style.pointerEvents = '';
     }

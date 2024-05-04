@@ -125,19 +125,21 @@
                                             {
                                                 <div class="img_hotel" style="background : url(@item.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
                                                     <div class="in_progress">
-                                                        @if (item.availability_type == 0)
+                                                        @if (item.p_status == 0)
+                                                        {
+                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+
+
+                                                        }
+                                                        else if (item.availability_type == 0)
                                                         {
                                                             <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
                                                             
-
-                                                        }
-                                                        else if(item.p_status == 1) { 
-                                                            <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
                                                         }
                                                         else
                                                         {
 
-                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
 
                                                         }
 
@@ -156,20 +158,21 @@
                                             {
                                                 <div class="img_hotel" style="background: url(https://cdn2.iconfinder.com/data/icons/jetflat-multimedia/90/004_030_add_image_painting_photo_picture_gallery_album-1024.png) top center /cover no-repeat">
                                                     <div class="in_progress">
-                                                        @if (item.availability_type == 0)
+                                                        @if (item.p_status == 0)
                                                         {
-                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
+                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
 
 
                                                         }
-                                                        else if (item.p_status == 1)
+                                                        else if (item.availability_type == 0)
                                                         {
-                                                            <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
+
                                                         }
                                                         else
                                                         {
 
-                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
 
                                                         }
 
@@ -251,20 +254,21 @@
                                                 <span>@item.p_name (@item.room_type.rt_name) </span>
                                                 <p>@item.p_address</p>
                                             }
-                                            @if (item.availability_type == 0)
+                                            @if (item.p_status == 0)
                                             {
-                                                <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
+                                                <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
 
 
                                             }
-                                            else if (item.p_status == 1)
+                                            else if (item.availability_type == 0)
                                             {
-                                                <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
+                                                <button><i class="fa-solid fa-circle check-room-2"></i> Reservation expires</button>
+
                                             }
                                             else
                                             {
 
-                                                <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                <button><i class="fa-solid fa-circle check-room-1"></i> Complete</button>
 
                                             }
                                             <i class="fa-solid fa-chevron-right"></i>

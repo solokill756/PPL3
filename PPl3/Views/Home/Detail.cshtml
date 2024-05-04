@@ -8,6 +8,15 @@
     int i = 0;
     PPl3.Models.property_images[] list_images = property.property_images.ToArray();
     PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
+    PPl3.Models.properties_discounts[] list_discounts = property.properties_discounts.ToArray();
+    decimal[] discount_values = new decimal[list_discounts.Length];
+    for (int j = 0; j < list_discounts.Length; j++)
+    {
+        discount_values[j] = (decimal)list_discounts[j].discounts_value;
+    }
+    var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+
+    var discountsJson = serializer.Serialize(discount_values);
 }
 
 <!DOCTYPE html>
@@ -22,7 +31,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=10" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=12" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -146,7 +155,7 @@
                                 }
                                 sum = sum / property.property_reviews.ToArray().Length;
                             }
-                            <p><i class="fa-solid fa-star"></i>@sum - <a>@property.property_reviews.ToArray().Length</a></p>
+                            <p><i class="fa-solid fa-star"></i>@sum - <a>@property.property_reviews.ToArray().Length Reviews</a></p>
                         </div>
 
                         <div class="seller_infor">
@@ -157,15 +166,33 @@
                                         </div>
                                         <div class="infor">
                                             <span>@property.user.user_personalInfor.FirstOrDefault().legal_name</span>
+
                                             @{
+
                                                 int count = 0;
-                                                string currentDateTime = DateTime.Now.ToString("yyyy");
-                                                if(property.user.day_become_host != null) {
-                                                    count = int.Parse(currentDateTime) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+
+
+                                                if (DateTime.Now.ToString("yyyy") != property.user.day_become_host.Value.ToString("yyyy"))
+                                                {
+
+                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(property.user.day_become_host.Value.ToString("yyyy"));
+
+                                                    <p>@count Years hosting</p>
                                                 }
-                                              
+                                                else if (DateTime.Now.ToString("MM") != property.user.day_become_host.Value.ToString("MM"))
+                                                {
+                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(property.user.day_become_host.Value.ToString("MM"));
+
+                                                    <p>@count Months hosting</p>
+                                                }
+                                                else
+                                                {
+                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(property.user.day_become_host.Value.ToString("dd"));
+
+                                                    <p>@count Days hosting</p>
+                                                }
+
                                             }
-                                            <p>@count years hosting</p>
                                         </div>
                                     </div>
                                 </div>
@@ -377,7 +404,27 @@
                                 <div class="total">
                                     <h2>Total: </h2>
                                     <div class="money_total">
-                                        <h2>$@property.price </h2>
+                                        @* Sử lí discount cho từng trường hợp *@
+                                        @{
+                                            decimal price_hotel = (decimal)(property.price);
+                                            if (property.bookings.ToArray().Length < 3)
+                                            {
+                                                price_hotel = (decimal)(property.price * (100 - property.properties_discounts.FirstOrDefault().discounts_value)) / 100;
+                                            }
+
+                                        }
+                                        @if (price_hotel == property.price)
+                                        {
+                                            
+                                                <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                            
+
+                                        }
+                                        else
+                                        {
+                                            <h2 class="_1l85cgq">$@property.price</h2>
+                                            <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                        }
                                         <p>night</p>
                                     </div>
                                 </div>
@@ -672,7 +719,7 @@
                                 <p>- Accomodates : @property.accomodates_count guests</p>
                                 <p>- Max_pet : @property.max_pets</p>
                                 <p>- Prices : $@property.price</p>
-                                <p>- Dates : @property.startDate.Value.ToString("dd/MM/yyyy") - @property.end_date.Value.ToString("dd/MM/yyyy") </p>
+                                <p>- Dates Bookings : @property.startDate.Value.ToString("dd/MM/yyyy") - @property.end_date.Value.ToString("dd/MM/yyyy") </p>
                             </div>
                             <div class="note">
                                 <span>NOTE:</span>
@@ -788,7 +835,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/product.js?v=1"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=2"></script>
     @* <script src="~/ExtraFiles/JS/calendar.js?v=1"></script>*@
 </body>
 </html>
@@ -799,7 +846,13 @@
 
 
 <script>
-
+    var priceHotel = $('.money_hotel').text();
+    priceHotel = priceHotel.substring(1, priceHotel.length);
+    var discounts = JSON.parse('@Html.Raw(discountsJson)');
+    var propertyPrice = @Json.Encode(property.price);
+    var booking_count = @Json.Encode(property.bookings.ToArray().Length);
+    console.log(discounts);
+    console.log(priceHotel);
     $(document).ready(function () {
         let calendar = $('.calendar');
         let checkIn = $('.check_in span');

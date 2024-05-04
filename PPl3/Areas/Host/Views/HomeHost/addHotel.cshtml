@@ -29,7 +29,7 @@
                             <div class="logo">
                                 <a href="/host/homehost/listing"><i class="fa-brands fa-think-peaks" style="color: red"></i></a>
                             </div>
-                            <div class="save_btn" onclick="sendData()">
+                            <div class="save_btn" onclick="SaveAndExit()">
                                 <button>Save & Exit</button>
                             </div>
                         </div>
@@ -639,197 +639,192 @@
         check_out: ""
     };
 
-    function getData() {
-        $(document).ready(function () {
+    function getData(callback) {
 
-            console.log(data);
-            // pages 2
-            var get_property_type = $('.list_place .place_item .selected');
-            if (get_property_type.length > 0) {
-                var classList = get_property_type.attr('class');
-                if (classList) {
-                    data["property_type"] = classList.split(" ")[0];
-              
-                    
-                }
-                console.log(data.property_type);
 
-            }
+        console.log(data);
+        
 
-            // pages 3
-            var get_room_type = $('.list_type_of .type_of_item .selected');
-            if (get_room_type.length > 0) {
-                var classList = get_room_type.attr('class');
-                if (classList) {
-                    data["room_type"] = classList.split(" ")[0];
-                
-               
-                }
+
+        // pages 6
+        var totalTasks = 5;
+
+        var tasksCompleted = 0;
+
+        function checkTaskCompletion() {
+
+            tasksCompleted++;
+
+            if (tasksCompleted === totalTasks) {
+
+                callback();
 
             }
 
-            // pages 4
-            var text_country = $('#Country');
-            var text_state = $('#State');
-            var text_city = $('#City');
-            var text_street_address = $('#Street_address');
-            data['Country'] = text_country.val().trim();
-            data['State'] = text_state.val().trim();
-            data['City'] = text_city.val().trim();
-            data['StreetAddress'] = text_street_address.val().trim();
+        }
+        // pages 2
+        var get_property_type = $('.list_place .place_item .selected');
+        if (get_property_type.length > 0) {
+            var classList = get_property_type.attr('class');
+            if (classList) {
+                data["property_type"] = classList.split(" ")[0];
 
 
-            // pages 6
+            }
+            console.log(data.property_type);
 
-            var fileUpload1 = document.getElementById("up_img_1").files[0];
-            if (fileUpload1) {
-                var reader1 = new FileReader();
-                reader1.readAsDataURL(fileUpload1);
-                reader1.onload = function (e) {
-                    var fileUploadful1 = e.target.result;
-                    data["img_1"] = fileUploadful1;
-                 /*   console.log(fileUploadful1);*/
-                };
+        }
+
+        // pages 3
+        var get_room_type = $('.list_type_of .type_of_item .selected');
+        if (get_room_type.length > 0) {
+            var classList = get_room_type.attr('class');
+            if (classList) {
+                data["room_type"] = classList.split(" ")[0];
+
+
             }
 
-            var fileUpload2 = document.getElementById("up_img_2").files[0];
-            if (fileUpload2) {
-                var reader2 = new FileReader();
-                reader2.readAsDataURL(fileUpload2);
-                reader2.onload = function (e) {
-                    var fileUploadful2 = e.target.result;
-                    data["img_2"] = fileUploadful2;
-                /*    console.log(fileUploadful2);*/
-                };
+        }
+
+        // pages 4
+        var text_country = $('#Country');
+        var text_state = $('#State');
+        var text_city = $('#City');
+        var text_street_address = $('#Street_address');
+        data['Country'] = text_country.val().trim();
+        data['State'] = text_state.val().trim();
+        data['City'] = text_city.val().trim();
+        data['StreetAddress'] = text_street_address.val().trim();
+
+        // pages 7
+        var number_guest = $('.number_guest').text();
+        var number_bedrooms = $('.number_bedrooms').text();
+        var number_bathrooms = $('.number_bathrooms').text();
+        var number_pets = $('.number_pets').text();
+        var number_beds = $('.number_beds').text();
+        data.number_guest = number_guest;
+        data.number_bedrooms = number_bedrooms;
+        data.number_bathrooms = number_bathrooms;
+        data.number_beds = number_beds;
+        data.number_pets = number_pets;
+
+        // pages 8
+        var list_main_amentities = $('.list_offer .offer_item .clicked').map(function () {
+            return $(this).attr('class').split(" ")[0];
+        }).get();
+        var list_other_amentities = $('.amenities_list .amenities_item .clicked').map(function () {
+            return $(this).attr('class').split(" ")[0];
+        }).get();
+
+        if (list_main_amentities.length > 0 || list_other_amentities.length > 0) {
+            if (list_main_amentities.length > 0) {
+                data['list_main_amentities'] = list_main_amentities;
             }
 
-            var fileUpload3 = document.getElementById("up_img_3").files[0];
-            if (fileUpload3) {
-                var reader3 = new FileReader();
-                reader3.readAsDataURL(fileUpload3);
-                reader3.onload = function (e) {
-                    var fileUploadful3 = e.target.result;
-                    data["img_3"] = fileUploadful3;
-         /*           console.log(fileUploadful3);*/
-                };
-            }
-
-
-            var fileUpload4 = document.getElementById("up_img_4").files[0];
-            if (fileUpload4) {
-                var reader4 = new FileReader();
-                reader4.readAsDataURL(fileUpload4);
-                reader4.onload = function (e) {
-                    var fileUploadful4 = e.target.result;
-                    data["img_4"] = fileUploadful4;
-              /*      console.log(fileUploadful4);*/
-                };
-            }
-
-
-            var fileUpload5 = document.getElementById("up_img_5").files[0];
-            if (fileUpload5) {
-                var reader5 = new FileReader();
-                reader5.readAsDataURL(fileUpload5);
-                reader5.onload = function (e) {
-                    var fileUploadful5 = e.target.result;
-                    data["img_5"] = fileUploadful5;
-        /*            console.log(fileUploadful5);*/
-                };
+            if (list_other_amentities.length > 0) {
+                data['list_other_amentities'] = list_other_amentities;
             }
 
 
-           
+        }
+        // pages 9
+        var property_name = $('#property_name').val();
+        if (property_name.length > 0) {
+            data["hotel_name"] = property_name;
+        }
 
-            // pages 7
-            var number_guest = $('.number_guest').text();
-            var number_bedrooms = $('.number_bedrooms').text();
-            var number_bathrooms = $('.number_bathrooms').text();
-            var number_pets = $('.number_pets').text();
-            var number_beds = $('.number_beds').text();
-            data.number_guest = number_guest;
-            data.number_bedrooms = number_bedrooms;
-            data.number_bathrooms = number_bathrooms;
-            data.number_beds = number_beds;
-            data.number_pets = number_pets;
-  
-            // pages 8
-            var list_main_amentities = $('.list_offer .offer_item .clicked').map(function () {
-                return $(this).attr('class').split(" ")[0];
-            }).get();
-            var list_other_amentities = $('.amenities_list .amenities_item .clicked').map(function () {
-                return $(this).attr('class').split(" ")[0];
-            }).get();
+        var list_highlight_amenities = $('.highlights_list .clicked').map(function () {
+            return $(this).attr('class').split(" ")[0];
+        }).get();
+        //console.log(list_highlight_amenities);
+        if (list_highlight_amenities.length > 0) {
+            data["listHighlight"] = list_highlight_amenities;
+        }
 
-            if (list_main_amentities.length > 0 || list_other_amentities.length > 0) {
-                if (list_main_amentities.length > 0) {
-                    data['list_main_amentities'] = list_main_amentities;
-                }
+        var property_describe = $('#property_describe').val();
+        if (property_describe.length > 0) {
+            data["hotelDescribe"] = property_describe.trim();
+        }
 
-                if (list_other_amentities.length > 0) {
-                    data['list_other_amentities'] = list_other_amentities;
-                }
-                 
-       
+        data["check_in"] = $('#Check_in').val();
+        data["check_out"] = $('#Check_out').val();
+
+
+
+        // pages 10
+        var ask_for_booking = $('.confirm_list .confirm_item .selected');
+        if (ask_for_booking.length > 0) {
+            var classList = ask_for_booking.attr('class');
+            if (classList) {
+                data["ask_for_booking"] = classList.split(" ")[0];
+
+
             }
-            // pages 9
-            var property_name = $('#property_name').val();
-            if (property_name.length > 0) {
-                data["hotel_name"] = property_name;
-            }
+        }
 
-            var list_highlight_amenities = $('.highlights_list .clicked').map(function () {
-                return $(this).attr('class').split(" ")[0];
-            }).get();
-            //console.log(list_highlight_amenities);
-            if (list_highlight_amenities.length > 0) {
-                data["listHighlight"] = list_highlight_amenities;
-            }
+        // pages 11 + 12
+        var price = $('.price span').text(); // Sử dụng .text() thay vì .val()
+        if (price > "0") {
+            data["price"] = price.trim();
+        }
 
-            var property_describe = $('#property_describe').val();
-            if (property_describe.length > 0) {
-                data["hotelDescribe"] = property_describe.trim();
-            }
+        // pages 11 + 12
+        var list_discounts = [];
 
-            data["check_in"] = $('#Check_in').val();
-            data["check_out"] = $('#Check_out').val();
-
-
-
-            // pages 10
-            var ask_for_booking = $('.confirm_list .confirm_item .selected');
-            if (ask_for_booking.length > 0) {
-                var classList = ask_for_booking.attr('class');
-                if (classList) {
-                    data["ask_for_booking"] = classList.split(" ")[0];
-                  
-                  
-                }
-            }
-
-            // pages 11 + 12
-            var price = $('.price span').text(); // Sử dụng .text() thay vì .val()
-            if (price > "0") {
-                data["price"] = price.trim();
-            }
-
-            // pages 11 + 12
-            var list_discounts = [];
-
-            $('.discounts_item').each(function () {
-                var $this = $(this);
-                discount = $this.find('.number p').text(); // Sửa thành $this.find()
-                list_discounts.push(discount);
-            });
-            data["listDiscounts"] = list_discounts;
-
+        $('.discounts_item').each(function () {
+            var $this = $(this);
+            discount = $this.find('.number p').text(); // Sửa thành $this.find()
+            list_discounts.push(discount);
         });
+        data["listDiscounts"] = list_discounts;
+
+        function readFile(file, index) {
+
+            if (file) {
+
+                var reader = new FileReader();
+
+                reader.readAsDataURL(file);
+
+                reader.onload = function (e) {
+
+                    var fileData = e.target.result;
+
+                    data["img_" + index] = fileData;
+
+                    checkTaskCompletion(); // Kiểm tra khi công việc hoàn tất
+
+                };
+
+            } else {
+
+                checkTaskCompletion(); // Nếu không có file, cũng cần kiểm tra
+
+            }
+
+        }
+
+        readFile(document.getElementById("up_img_1").files[0], 1);
+
+        readFile(document.getElementById("up_img_2").files[0], 2);
+
+        readFile(document.getElementById("up_img_3").files[0], 3);
+
+        readFile(document.getElementById("up_img_4").files[0], 4);
+
+        readFile(document.getElementById("up_img_5").files[0], 5);
+
+
+
+
+
+
+        
+
     }
 
     function sendData() {
-         getData();
-        $(document).ready(function () {
-            console.log(data);
             $.ajax({
                 url: "/host/homehost/addHotel",
                 type: "POST",
@@ -844,9 +839,15 @@
                     console.log(err);
                 }
             });
+    }
+    function SaveAndExit() {
 
+        getData(function () {
 
-        })
+            sendData();
+
+        });
+
     }
 
 </script>

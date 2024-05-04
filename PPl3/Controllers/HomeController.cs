@@ -46,13 +46,10 @@ namespace PPl3.Controllers
             }
             else
             {
-                var property_anmentitie = from item in db.property_amenities.ToList()
-                                          where item.amenity_id == id
-                                          select item;
-                var list_property = from item in db.properties.ToList()
-                                    where property_anmentitie.ToList().Find(value => value.property_id == item.id) != null
-                                    select item;
-                myView.Model2Data = list_property.ToList().OrderByDescending(item => item.bookings.ToArray().Length).ToList();
+                var property_amenities = db.property_amenities.Where(item => item.amenity_id == id).ToList();
+                var property_ids = property_amenities.Select(item => item.property_id).ToList();
+                var list_property = db.properties.Where(item => property_ids.Contains(item.id)).ToList();
+                myView.Model2Data = list_property.OrderByDescending(item => item.bookings.ToArray().Length).ToList();
                 ViewBag.AmenityId = id;
             }
             if (id != -1) ViewBag.checkId = id;
@@ -82,4 +79,5 @@ namespace PPl3.Controllers
             return View();
         }
     }
+    
 }
