@@ -100,6 +100,39 @@ namespace PPl3.Areas.Host.Controllers
 
         }
 
+        public ActionResult revenue()
+        {
+            if (Session["user"] != null)
+            {
+                user p_user = (user)Session["user"];
+                if (p_user.user_type == 3)
+                {
+                    PPL3Entities db = new PPL3Entities();
+                    List<property> properties = db.properties.Where(item => item.userId == p_user.id).ToList();
+                    return View(properties);
+                }
+                else if (checkHost(p_user) == true)
+                {
+                    PPL3Entities db = new PPL3Entities();
+                    user fix_user = db.users.FirstOrDefault(item => item.id == p_user.id);
+                    fix_user.user_type = 3;
+                    fix_user.day_become_host = DateTime.Now;
+                    db.SaveChanges();
+                    Session["user"] = fix_user;
+                    List<property> properties = db.properties.Where(item => item.userId == p_user.id).ToList();
+                    return View(properties);
+
+                }
+                else
+                {
+
+                    return RedirectToAction("userPersonalProfile", "homeuser", new { area = "user", error = true });
+                }
+
+            }
+            else return RedirectToAction("Login", "homeuser", new { area = "User" });
+        }
+
         [HttpPost]
         [HostAuthorize(idChucNang = 2)]
         public JsonResult DeleteListing(int id)
@@ -760,6 +793,86 @@ namespace PPl3.Areas.Host.Controllers
                 }
             }
             return Json(data, JsonRequestBehavior.AllowGet);
+        }
+        public class RevenueListData
+        {
+            public int year { get; set; }
+            public double money { get; set; }
+            public int renters { get; set; }
+
+        }
+        public class RevenueListData1
+        {
+            public int month { get; set; }
+            public double money { get; set; }
+            public int renters { get; set; }
+
+        }
+        [HttpGet]
+        public JsonResult GetListDataForRevenue()
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            List<RevenueListData> data = new List<RevenueListData>();
+            List<RevenueListData1> data1 = new List<RevenueListData1>();
+            DateTime currentDate = DateTime.Now;
+            string currentMonth = currentDate.ToString("MM");
+            string currentYear = currentDate.ToString("yyyy");
+            double monthRevenue = 0;
+            double totalRevenue = 0;
+            int monthRenter = 0;
+            int totalRenter = 0;
+            for(int i = 0; i < 12; i++)
+            {
+                RevenueListData1 revenueListData1 = new RevenueListData1()
+                {
+                    month = i + 1,
+                    money = 0,
+                    renters = 0,
+                };
+                data1.Add(revenueListData1);
+            }
+            for(int i = int.Parse(currentYear) - 6; i <= int.Parse(currentYear); i++)
+            {
+                RevenueListData revenueListData = new RevenueListData()
+                {
+                    year = i,
+                    money = 0,
+                    renters = 0,
+                };
+                data.Add(revenueListData);
+            }
+            int mocYear = int.Parse(currentYear) - 6;
+            foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
+            {
+
+                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+
+                if(int.Parse(item.transfer_on.Value.ToString("yyyy")) >= mocYear)
+                {
+                    data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].money = (double)item.amount;
+                    data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].renters++;
+                }
+
+                if(int.Parse(item.transfer_on.Value.ToString("MM")) == int.Parse(currentMonth) && int.Parse(item.transfer_on.Value.ToString("yyyy")) == int.Parse(currentYear))
+                {
+                    monthRenter++;
+                    monthRevenue += (double)item.amount;
+                }
+                totalRenter++;
+                totalRevenue += (double)item.amount;
+            }
+            var result = new
+            {
+                Data = data,
+                Data1 = data1,
+                MonthRenter = monthRenter,
+                MonthRevenue = monthRevenue,
+                TotalRenter = totalRenter,
+                TotalRevenue = totalRevenue,
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         // Fuction
