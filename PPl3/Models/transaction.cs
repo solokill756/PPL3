@@ -18,6 +18,7 @@ namespace PPl3.Models
         public transaction()
         {
             this.bookings = new HashSet<booking>();
+            this.property_reviews = new HashSet<property_reviews>();
         }
     
         public int id { get; set; }
@@ -41,6 +42,8 @@ namespace PPl3.Models
         public virtual currency currency { get; set; }
         public virtual promo_codes promo_codes { get; set; }
         public virtual property property { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<property_reviews> property_reviews { get; set; }
         public virtual user user { get; set; }
         public virtual user user1 { get; set; }
     }

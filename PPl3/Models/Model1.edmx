@@ -48,7 +48,7 @@
           <Property Name="effective_amount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="booking_date" Type="datetime" />
           <Property Name="created" Type="datetime" />
-          <Property Name="modified" Type="datetime" />
+          <Property Name="pay_status" Type="tinyint" />
           <Property Name="booking_status" Type="tinyint" />
         </EntityType>
         <EntityType Name="categories">
@@ -186,6 +186,15 @@
           <Property Name="property_id" Type="int" />
           <Property Name="added_date" Type="datetime" />
         </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId1" Type="int" />
+          <Property Name="UserId2" Type="int" />
+          <Property Name="Status" Type="tinyint" />
+        </EntityType>
         <EntityType Name="governmentID">
           <Key>
             <PropertyRef Name="id" />
@@ -257,6 +266,16 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="language_name" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderID" Type="int" />
+          <Property Name="ReceiverID" Type="int" />
+          <Property Name="MessageContent" Type="nvarchar(max)" />
+          <Property Name="Timestamp" Type="datetime" />
         </EntityType>
         <EntityType Name="neighbourhood">
           <Key>
@@ -368,7 +387,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="property_id" Type="int" />
           <Property Name="review_by_user" Type="int" />
-          <Property Name="booking_id" Type="int" />
+          <Property Name="transaction_id" Type="int" />
           <Property Name="comment" Type="text" />
           <Property Name="overall_rating" Type="varchar" MaxLength="10" />
           <Property Name="created" Type="datetime" />
@@ -578,7 +597,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="booking_transaction_id_id_FK">
-          <End Role="transactions" Type="Self.transactions" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="transactions">
@@ -811,6 +832,58 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Friendship_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="UserId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friendship_users1">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="UserId2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_users1">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ReceiverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_properties_discounts_discounts">
           <End Role="discounts" Type="Self.discounts" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -977,20 +1050,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="pr_booking_id_id_FK">
-          <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bookings">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="property_reviews">
-              <PropertyRef Name="booking_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="pr_property_id_id_FK">
           <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
           <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
@@ -1014,6 +1073,20 @@
             </Principal>
             <Dependent Role="property_reviews">
               <PropertyRef Name="review_by_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pr_transactions_id_id_FK">
+          <End Role="transactions" Type="Self.transactions" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transactions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="property_reviews">
+              <PropertyRef Name="transaction_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1162,9 +1235,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_property_id_id_FK">
-          <End Role="properties" Type="Self.properties" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="properties">
@@ -1360,6 +1431,7 @@
           <EntitySet Name="email_contents" EntityType="Self.email_contents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="emergency_contact" EntityType="Self.emergency_contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="favourite" EntityType="Self.favourite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="governmentID" EntityType="Self.governmentID" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="guest_type" EntityType="Self.guest_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="host_reviews" EntityType="Self.host_reviews" Schema="dbo" store:Type="Tables" />
@@ -1367,6 +1439,7 @@
           <EntitySet Name="interests" EntityType="Self.interests" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="languages" EntityType="Self.languages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="listLanguage" EntityType="Self.listLanguage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="neighbourhood" EntityType="Self.neighbourhood" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phone_number" EntityType="Self.phone_number" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="promo_codes" EntityType="Self.promo_codes" Schema="dbo" store:Type="Tables" />
@@ -1476,6 +1549,22 @@
             <End Role="discounts" EntitySet="discounts" />
             <End Role="discounts1" EntitySet="discounts" />
           </AssociationSet>
+          <AssociationSet Name="FK_Friendship_users" Association="Self.FK_Friendship_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friendship_users1" Association="Self.FK_Friendship_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="Friendship" EntitySet="Friendship" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_users" Association="Self.FK_Message_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_users1" Association="Self.FK_Message_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
           <AssociationSet Name="FK_properties_discounts_discounts" Association="Self.FK_properties_discounts_discounts">
             <End Role="discounts" EntitySet="discounts" />
             <End Role="properties_discounts" EntitySet="properties_discounts" />
@@ -1528,16 +1617,16 @@
             <End Role="users" EntitySet="users" />
             <End Role="phone_number" EntitySet="phone_number" />
           </AssociationSet>
-          <AssociationSet Name="pr_booking_id_id_FK" Association="Self.pr_booking_id_id_FK">
-            <End Role="bookings" EntitySet="bookings" />
-            <End Role="property_reviews" EntitySet="property_reviews" />
-          </AssociationSet>
           <AssociationSet Name="pr_property_id_id_FK" Association="Self.pr_property_id_id_FK">
             <End Role="properties" EntitySet="properties" />
             <End Role="property_reviews" EntitySet="property_reviews" />
           </AssociationSet>
           <AssociationSet Name="pr_reviews_by_user_id_FK" Association="Self.pr_reviews_by_user_id_FK">
             <End Role="users" EntitySet="users" />
+            <End Role="property_reviews" EntitySet="property_reviews" />
+          </AssociationSet>
+          <AssociationSet Name="pr_transactions_id_id_FK" Association="Self.pr_transactions_id_id_FK">
+            <End Role="transactions" EntitySet="transactions" />
             <End Role="property_reviews" EntitySet="property_reviews" />
           </AssociationSet>
           <AssociationSet Name="pro_city_id_id_FK" Association="Self.pro_city_id_id_FK">
@@ -1701,14 +1790,13 @@
           <Property Name="effective_amount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="booking_date" Type="DateTime" Precision="3" />
           <Property Name="created" Type="DateTime" Precision="3" />
-          <Property Name="modified" Type="DateTime" Precision="3" />
+          <Property Name="pay_status" Type="Byte" />
           <Property Name="booking_status" Type="Byte" />
           <NavigationProperty Name="booking_guests" Relationship="Self.bkg_booking_id_FK" FromRole="bookings" ToRole="booking_guests" />
           <NavigationProperty Name="property" Relationship="Self.booking_property_id_id_FK" FromRole="bookings" ToRole="properties" />
           <NavigationProperty Name="transaction" Relationship="Self.booking_transaction_id_id_FK" FromRole="bookings" ToRole="transactions" />
           <NavigationProperty Name="user" Relationship="Self.booking_userId_id_FK" FromRole="bookings" ToRole="users" />
           <NavigationProperty Name="disputes" Relationship="Self.disputes_booking_id_id_FK" FromRole="bookings" ToRole="disputes" />
-          <NavigationProperty Name="property_reviews" Relationship="Self.pr_booking_id_id_FK" FromRole="bookings" ToRole="property_reviews" />
           <NavigationProperty Name="transactions" Relationship="Self.transaction_booking_id_id_FK" FromRole="bookings" ToRole="transactions" />
         </EntityType>
         <EntityType Name="category">
@@ -1874,6 +1962,17 @@
           <NavigationProperty Name="property" Relationship="Self.favourite_property_id_id_FK" FromRole="favourite" ToRole="properties" />
           <NavigationProperty Name="user" Relationship="Self.favourite_userID_id_FK" FromRole="favourite" ToRole="users" />
         </EntityType>
+        <EntityType Name="Friendship">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId1" Type="Int32" />
+          <Property Name="UserId2" Type="Int32" />
+          <Property Name="Status" Type="Byte" />
+          <NavigationProperty Name="user" Relationship="Self.FK_Friendship_users" FromRole="Friendship" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="Self.FK_Friendship_users1" FromRole="Friendship" ToRole="users" />
+        </EntityType>
         <EntityType Name="governmentID">
           <Key>
             <PropertyRef Name="id" />
@@ -1955,6 +2054,18 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="language_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="users_languages" Relationship="Self.ul_language_id_FK" FromRole="listLanguage" ToRole="users_languages" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderID" Type="Int32" />
+          <Property Name="ReceiverID" Type="Int32" />
+          <Property Name="MessageContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="user" Relationship="Self.FK_Message_users" FromRole="Message" ToRole="users" />
+          <NavigationProperty Name="user1" Relationship="Self.FK_Message_users1" FromRole="Message" ToRole="users" />
         </EntityType>
         <EntityType Name="neighbourhood">
           <Key>
@@ -2091,16 +2202,16 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="property_id" Type="Int32" />
           <Property Name="review_by_user" Type="Int32" />
-          <Property Name="booking_id" Type="Int32" />
+          <Property Name="transaction_id" Type="Int32" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="overall_rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="created" Type="DateTime" Precision="3" />
           <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="pr_status" Type="Byte" />
-          <NavigationProperty Name="booking" Relationship="Self.pr_booking_id_id_FK" FromRole="property_reviews" ToRole="bookings" />
           <NavigationProperty Name="component_rating" Relationship="Self.cr_review_id_id_FK" FromRole="property_reviews" ToRole="component_rating" />
           <NavigationProperty Name="property" Relationship="Self.pr_property_id_id_FK" FromRole="property_reviews" ToRole="properties" />
           <NavigationProperty Name="user" Relationship="Self.pr_reviews_by_user_id_FK" FromRole="property_reviews" ToRole="users" />
+          <NavigationProperty Name="transaction" Relationship="Self.pr_transactions_id_id_FK" FromRole="property_reviews" ToRole="transactions" />
         </EntityType>
         <EntityType Name="property_type">
           <Key>
@@ -2174,6 +2285,7 @@
           <NavigationProperty Name="currency" Relationship="Self.transaction_currency_id_id_FK" FromRole="transactions" ToRole="currencies" />
           <NavigationProperty Name="promo_codes" Relationship="Self.transaction_promo_code_id_id_FK" FromRole="transactions" ToRole="promo_codes" />
           <NavigationProperty Name="property" Relationship="Self.transaction_property_id_id_FK" FromRole="transactions" ToRole="properties" />
+          <NavigationProperty Name="property_reviews" Relationship="Self.pr_transactions_id_id_FK" FromRole="transactions" ToRole="property_reviews" />
           <NavigationProperty Name="user" Relationship="Self.transaction_payer_id_id_FK" FromRole="transactions" ToRole="users" />
           <NavigationProperty Name="user1" Relationship="Self.transaction_receiver_id_id_FK" FromRole="transactions" ToRole="users" />
         </EntityType>
@@ -2276,9 +2388,13 @@
           <NavigationProperty Name="email_contents1" Relationship="Self.emct_sender_id_id_FK" FromRole="users" ToRole="email_contents" />
           <NavigationProperty Name="emergency_contact" Relationship="Self.ecc_userid_id_FK" FromRole="users" ToRole="emergency_contact" />
           <NavigationProperty Name="favourites" Relationship="Self.favourite_userID_id_FK" FromRole="users" ToRole="favourite" />
+          <NavigationProperty Name="Friendships" Relationship="Self.FK_Friendship_users" FromRole="users" ToRole="Friendship" />
+          <NavigationProperty Name="Friendships1" Relationship="Self.FK_Friendship_users1" FromRole="users" ToRole="Friendship" />
           <NavigationProperty Name="governmentIDs" Relationship="Self.gid_userID_id_FK" FromRole="users" ToRole="governmentID" />
           <NavigationProperty Name="host_reviews" Relationship="Self.hr_hostid_id_FK" FromRole="users" ToRole="host_reviews" />
           <NavigationProperty Name="host_reviews1" Relationship="Self.hr_rvbuser_id_FK" FromRole="users" ToRole="host_reviews" />
+          <NavigationProperty Name="Messages" Relationship="Self.FK_Message_users" FromRole="users" ToRole="Message" />
+          <NavigationProperty Name="Messages1" Relationship="Self.FK_Message_users1" FromRole="users" ToRole="Message" />
           <NavigationProperty Name="phone_number" Relationship="Self.pn_userID_id_FK" FromRole="users" ToRole="phone_number" />
           <NavigationProperty Name="properties" Relationship="Self.pro_userId_id_FK" FromRole="users" ToRole="properties" />
           <NavigationProperty Name="property_images" Relationship="Self.pi_added_by_user_id_FK" FromRole="users" ToRole="property_images" />
@@ -2381,7 +2497,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="booking_transaction_id_id_FK">
-          <End Role="transactions" Type="Self.transaction" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transaction" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="bookings" Type="Self.booking" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="transactions">
@@ -2414,20 +2532,6 @@
               <PropertyRef Name="id" />
             </Principal>
             <Dependent Role="disputes">
-              <PropertyRef Name="booking_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="pr_booking_id_id_FK">
-          <End Role="bookings" Type="Self.booking" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="bookings">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="property_reviews">
               <PropertyRef Name="booking_id" />
             </Dependent>
           </ReferentialConstraint>
@@ -2726,6 +2830,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Friendship_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="UserId1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Friendship_users1">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="Friendship" Type="Self.Friendship" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Friendship">
+              <PropertyRef Name="UserId2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="gid_userID_id_FK">
           <End Role="users" Type="Self.user" Multiplicity="0..1" />
           <End Role="governmentID" Type="Self.governmentID" Multiplicity="*" />
@@ -2795,6 +2925,32 @@
             </Principal>
             <Dependent Role="users_languages">
               <PropertyRef Name="language_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_users">
+          <End Role="users" Type="Self.user" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Message_users1">
+          <End Role="users" Type="Self.user" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="ReceiverID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2939,9 +3095,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="transaction_property_id_id_FK">
-          <End Role="properties" Type="Self.property" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
+          <End Role="properties" Type="Self.property" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="properties">
@@ -2975,6 +3129,20 @@
             </Principal>
             <Dependent Role="property_reviews">
               <PropertyRef Name="review_by_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pr_transactions_id_id_FK">
+          <End Role="transactions" Type="Self.transaction" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transactions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="property_reviews">
+              <PropertyRef Name="transaction_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3139,6 +3307,7 @@
           <EntitySet Name="email_contents" EntityType="Self.email_contents" />
           <EntitySet Name="emergency_contact" EntityType="Self.emergency_contact" />
           <EntitySet Name="favourites" EntityType="Self.favourite" />
+          <EntitySet Name="Friendships" EntityType="Self.Friendship" />
           <EntitySet Name="governmentIDs" EntityType="Self.governmentID" />
           <EntitySet Name="guest_type" EntityType="Self.guest_type" />
           <EntitySet Name="host_reviews" EntityType="Self.host_reviews" />
@@ -3146,6 +3315,7 @@
           <EntitySet Name="interests" EntityType="Self.interest" />
           <EntitySet Name="languages" EntityType="Self.language" />
           <EntitySet Name="listLanguages" EntityType="Self.listLanguage" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
           <EntitySet Name="neighbourhoods" EntityType="Self.neighbourhood" />
           <EntitySet Name="phone_number" EntityType="Self.phone_number" />
           <EntitySet Name="promo_codes" EntityType="Self.promo_codes" />
@@ -3198,10 +3368,6 @@
           <AssociationSet Name="disputes_booking_id_id_FK" Association="Self.disputes_booking_id_id_FK">
             <End Role="bookings" EntitySet="bookings" />
             <End Role="disputes" EntitySet="disputes" />
-          </AssociationSet>
-          <AssociationSet Name="pr_booking_id_id_FK" Association="Self.pr_booking_id_id_FK">
-            <End Role="bookings" EntitySet="bookings" />
-            <End Role="property_reviews" EntitySet="property_reviews" />
           </AssociationSet>
           <AssociationSet Name="transaction_booking_id_id_FK" Association="Self.transaction_booking_id_id_FK">
             <End Role="bookings" EntitySet="bookings" />
@@ -3299,6 +3465,14 @@
             <End Role="users" EntitySet="users" />
             <End Role="favourite" EntitySet="favourites" />
           </AssociationSet>
+          <AssociationSet Name="FK_Friendship_users" Association="Self.FK_Friendship_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="Friendship" EntitySet="Friendships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Friendship_users1" Association="Self.FK_Friendship_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="Friendship" EntitySet="Friendships" />
+          </AssociationSet>
           <AssociationSet Name="gid_userID_id_FK" Association="Self.gid_userID_id_FK">
             <End Role="users" EntitySet="users" />
             <End Role="governmentID" EntitySet="governmentIDs" />
@@ -3322,6 +3496,14 @@
           <AssociationSet Name="ul_language_id_FK" Association="Self.ul_language_id_FK">
             <End Role="listLanguage" EntitySet="listLanguages" />
             <End Role="users_languages" EntitySet="users_languages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_users" Association="Self.FK_Message_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="Message" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Message_users1" Association="Self.FK_Message_users1">
+            <End Role="users" EntitySet="users" />
+            <End Role="Message" EntitySet="Messages" />
           </AssociationSet>
           <AssociationSet Name="neighbourhood_property_id_id_FK" Association="Self.neighbourhood_property_id_id_FK">
             <End Role="properties" EntitySet="properties" />
@@ -3377,6 +3559,10 @@
           </AssociationSet>
           <AssociationSet Name="pr_reviews_by_user_id_FK" Association="Self.pr_reviews_by_user_id_FK">
             <End Role="users" EntitySet="users" />
+            <End Role="property_reviews" EntitySet="property_reviews" />
+          </AssociationSet>
+          <AssociationSet Name="pr_transactions_id_id_FK" Association="Self.pr_transactions_id_id_FK">
+            <End Role="transactions" EntitySet="transactions" />
             <End Role="property_reviews" EntitySet="property_reviews" />
           </AssociationSet>
           <AssociationSet Name="u_state_id_FK" Association="Self.u_state_id_FK">
@@ -3478,7 +3664,7 @@
                 <ScalarProperty Name="effective_amount" ColumnName="effective_amount" />
                 <ScalarProperty Name="booking_date" ColumnName="booking_date" />
                 <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="modified" ColumnName="modified" />
+                <ScalarProperty Name="pay_status" ColumnName="pay_status" />
                 <ScalarProperty Name="booking_status" ColumnName="booking_status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3631,6 +3817,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Friendships">
+            <EntityTypeMapping TypeName="PPL3Model.Friendship">
+              <MappingFragment StoreEntitySet="Friendship">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId1" ColumnName="UserId1" />
+                <ScalarProperty Name="UserId2" ColumnName="UserId2" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="governmentIDs">
             <EntityTypeMapping TypeName="PPL3Model.governmentID">
               <MappingFragment StoreEntitySet="governmentID">
@@ -3707,6 +3903,17 @@
               <MappingFragment StoreEntitySet="listLanguage">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="language_name" ColumnName="language_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="PPL3Model.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+                <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3826,7 +4033,7 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="property_id" ColumnName="property_id" />
                 <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
-                <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+                <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
                 <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="overall_rating" ColumnName="overall_rating" />
                 <ScalarProperty Name="created" ColumnName="created" />

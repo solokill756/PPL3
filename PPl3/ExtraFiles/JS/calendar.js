@@ -170,7 +170,7 @@ let currTemp = 0;
 
 
 document.querySelector('#prev-year').onclick = () => {
-     currentday = 0;
+    currentDay = 0;
     if (currTemp.value > currDate.getFullYear()) {
         --curr_year.value
     }

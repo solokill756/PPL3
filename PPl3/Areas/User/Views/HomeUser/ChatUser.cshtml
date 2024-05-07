@@ -1,0 +1,280 @@
+﻿@model List<PPl3.Models.Friendship>
+@{
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    Console.Write(Model);
+    int count = 1;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/message.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/headerGuest.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Message</title>
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="index.html" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></i></button>
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><button>Trips</button></li>
+                                <li class=""><button>Wishlist</button></li>
+                                <li><a href="#">Manage listings</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="l-4 m-2 c-12">
+                <div class="mess_box">
+                    <div class="tittle">
+                        <h1>Message</h1>
+                        <button><i class="fa-solid fa-ellipsis"></i></button>
+                    </div>
+                    <div class="search first_input">
+                        <input type="text" name="" id="" placeholder="Search...">
+                    </div>
+                    <div class="list_message">
+                        <ul>
+                            @foreach (var item in Model)
+                            {
+                                if (item.UserId1 == p_user.id)
+                                {
+                                    <li>
+                                        @if (item.user1.user_profile.FirstOrDefault().user_avatar != null)
+                                        {
+                                            <div class="avatar" style="background: url('@item.user1.user_profile.FirstOrDefault().user_avatar') top center /cover no-repeat;"></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="avatar" style="background: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Ftopnow.edu.vn%2Favatar-sieu-dep-a73155&psig=AOvVaw14tyuxRz31D_d4uuDdL5_v&ust=1715095774453000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJDEz-Wr-YUDFQAAAAAdAAAAABAQ') top center /cover no-repeat;"></div>
+                                        }
+                                        <div class="detail">
+                                            <div class="name">
+                                                <p>@item.user1.user_personalInfor.FirstOrDefault().legal_name</p>
+                                                <span>1 minute ago</span>
+                                            </div>
+                                            <div class="message mess_@count @item.user1.id">
+                                                <p>Wellcome to our hotel</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                else { 
+                                    <li>
+                                        @if (item.user.user_profile.FirstOrDefault().user_avatar != null)
+                                        {
+                                            <div class="avatar" style="background: url('@item.user.user_profile.FirstOrDefault().user_avatar') top center /cover no-repeat;"></div>
+                                        }
+                                        else
+                                        {
+                                            <div class="avatar" style="background: url('https://www.google.com/url?sa=i&url=https%3A%2F%2Ftopnow.edu.vn%2Favatar-sieu-dep-a73155&psig=AOvVaw14tyuxRz31D_d4uuDdL5_v&ust=1715095774453000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCJDEz-Wr-YUDFQAAAAAdAAAAABAQ') top center /cover no-repeat;"></div>
+                                        }
+                                        <div class="detail">
+                                            <div class="name">
+                                                <p>@item.user.user_personalInfor.FirstOrDefault().legal_name</p>
+                                                <span>1 minute ago</span>
+                                            </div>
+                                            <div class="message mess_@count @item.user.id">
+                                                <p>Wellcome to our hotel</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+                                count = count + 1;
+                            }
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="l-8 m-10 c-12">
+                <div class="container">
+                    <div class="l-8 m-12 c-12 mess_box mess_detail">
+                        <div class="header_mess">
+                            <div class="name_mess">
+                                <div class="avatar avatar_user">
+
+                                </div>
+                                <p class="name_user">Le Dinh Toan</p>
+                            </div>
+                            <div class="btn_detail">
+                                <button><i class="fa-solid fa-exclamation"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="list_body">
+                            @{
+                                count = 1;
+                            }
+                            @foreach (var item in Model)
+                            {
+                                if (item.UserId1 == p_user.id)
+                                {
+                                    <div class="body_mess mess_@count @item.UserId2">
+                                        <div class="chat_section @(count)p">
+                                            <div class="text text_user">
+                                                <p>Wellcome to our hotel</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else { 
+                                    <div class="body_mess mess_@count @item.UserId1">
+                                        <div class="chat_section @(count)p">
+                                            <div class="text text_user">
+                                                <p>Wellcome to our hotel</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                count = count + 1;
+                            }
+
+                            @*<div class="body_mess mess_2">
+            <div class="chat_section 2p">
+                <div class="text text_user">
+                    <p>Hello , i am Le Dinh Toan , i want to the hotel</p>
+                </div>
+            </div>
+        </div>
+        <div class="body_mess mess_3">
+            <div class="chat_section">
+                <div class="text text_user">
+                    <p>Hello , i am Le Dinh Toan , i want to the hotel</p>
+                </div>
+            </div>
+        </div>
+        <div class="body_mess mess_4">
+            <div class="chat_section">
+                <div class="text text_user">
+                    <p>Hello , i am Le Dinh Toan , i want to the hotel</p>
+                </div>
+            </div>
+        </div>
+        <div class="body_mess mess_5">
+            <div class="chat_section">
+                <div class="text text_user">
+                    <p>Hello , i am Le Dinh Toan , i want to the hotel</p>
+                </div>
+            </div>
+        </div>
+        <div class="body_mess mess_6">
+            <div class="chat_section">
+                <div class="text text_user">
+                    <p>Hello , i am Le Dinh Toan , i want to the hotel</p>
+                </div>
+            </div>
+        </div>*@
+                        </div>
+                        <div class="footer_mess">
+                            <div class="input_mess">
+                                <input type="file" hidden name="" id="">
+                                <button class="add_file_btn"><i class="fa-solid fa-circle-plus"></i></button>
+                                <input type="text" id="message_send" placeholder="Aa....">
+                                <button class="send_btn"><i class="fa-solid fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="l-4 m-12 c-12 mess_box user_detail">
+                        <div class="header_detail">
+                            <div class="avatar avatar_user">
+
+                            </div>
+                            <div class="name_detail">
+                                <h1 class="name_user">Le Dinh Toan</h1>
+                            </div>
+                        </div>
+                        <ul class="nav_bar">
+                            <li>
+                                <button><i class="fa-solid fa-user"></i></button>
+                                <p>Profile</p>
+                            </li>
+                            <li>
+                                <button><i class="fa-solid fa-clock-rotate-left"></i></button>
+                                <p>History</p>
+                            </li>
+                            <li>
+                                <button><i class="fa-solid fa-circle-minus"></i></button>
+                                <p>Block</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/ExtraFiles/JS/message.js?v=2"></script>
+    <script src="~/ExtraFiles/JS/menuGuest.js"></script>
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs?v=1"></script>
+</body>
+</html>
+
+<script>
+    $(function () {
+        var chat = $.connection.chat;
+        console.log(chat);
+        loadClient(chat);
+        $.connection.hub.start().done(function () {
+            $('.send_btn').on('click', function () {
+                var msg = $('#message_send').val();
+                var receiverID = $('.body_mess.open').attr("class").split(" ")[2]; // Sửa cách lấy ReceiverID
+                console.log(receiverID);
+                chat.server.message(receiverID, msg); // Sửa tên phương thức gọi
+            });
+        });
+    });
+
+    function loadClient(chat) {
+        chat.client.message = function (getID, msg) {
+            console.log(msg);
+            $(`.list_body .body_mess.${getID}`).each(function () {
+                var chatsection = $(this).find('.chat_section');
+                var text = msg;
+                if (text !== '') {
+                    chatsection.append(`<div class="text text_you">
+                                    <p>${text}</p>
+                                </div>`);
+                }
+            });
+            $('#message_send').val('');
+        }
+    }
+</script>

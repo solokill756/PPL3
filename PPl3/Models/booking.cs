@@ -19,7 +19,6 @@ namespace PPl3.Models
         {
             this.booking_guests = new HashSet<booking_guests>();
             this.disputes = new HashSet<dispute>();
-            this.property_reviews = new HashSet<property_reviews>();
             this.transactions = new HashSet<transaction>();
         }
     
@@ -40,7 +39,7 @@ namespace PPl3.Models
         public Nullable<decimal> effective_amount { get; set; }
         public Nullable<System.DateTime> booking_date { get; set; }
         public Nullable<System.DateTime> created { get; set; }
-        public Nullable<System.DateTime> modified { get; set; }
+        public Nullable<byte> pay_status { get; set; }
         public Nullable<byte> booking_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -50,8 +49,6 @@ namespace PPl3.Models
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dispute> disputes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<property_reviews> property_reviews { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transaction> transactions { get; set; }
     }

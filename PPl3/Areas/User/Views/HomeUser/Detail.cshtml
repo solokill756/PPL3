@@ -527,9 +527,12 @@
                                 }
                                 else if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                 {
+                                
                                     <div class="pay_footer">
-                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Change Booking</button>
+                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Booking Again</button>
                                     </div>
+                                   
+                                    
                                 }
                                 else
                                 {
@@ -545,7 +548,7 @@
                                         @* Sử lí discount cho từng trường hợp *@
                                         @{
                                             decimal price_hotel = (decimal)(property.price);
-                                            if (property.bookings.ToArray().Length < 3)
+                                            if (property.bookings.Where(item => item.pay_status == 1).ToArray().Length < 3)
                                             {
                                                 price_hotel = (decimal)(property.price * (100 - property.properties_discounts.FirstOrDefault().discounts_value)) / 100;
                                             }
@@ -626,7 +629,7 @@
 
                                                 </div>
                                                 <span>2 weeks ago</span>
-                                                <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                                <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                             </div>
 
                                             <div class="body_comment_detail">
@@ -961,7 +964,7 @@
 
                                             </div>
                                             <span>2 weeks ago</span>
-                                            <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                            <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                         </div>
 
                                         <div class="body_comment_detail">
@@ -1127,15 +1130,13 @@
                     else if (data == "error2") {
                         alert("You can only book for 2 consecutive months");
                     }
+                    else if (data == "error3") {
+                        alert("that day the hotel was booked");
+                    }
                     else {
-                        $('.success').html('<div class="alert_complete"><i class="fa-solid fa-check"></i><p>You have edited your booking !</p></div>');
-                        $('.pay_footer').addClass("disapear");
-                        if ($('.alert_complete')) {
-                            setInterval(() => {
-                                $('.alert_complete').addClass('offActive')
-                            }, 3000)
-                        }
-
+                       
+                        console.log(data);
+                        window.location.href = data.redirectUrl;
 
                     }
                 },
@@ -1359,7 +1360,8 @@
             generateCalendar(curr_month.value, curr_year.value);
             let currTemp = { value: 0 };
 
-            $('#prev-year').on('click', () => {
+        $('#prev-year').on('click', () => {
+            currentDay = 0;
                 if (currTemp.value > currDate.getFullYear()) {
                     --curr_year.value;
                 }
@@ -1367,7 +1369,7 @@
             });
 
             $('#next-year').on('click', () => {
-                currentDay = 1;
+                currentDay = 0;
                 ++curr_year.value;
                 currTemp.value = curr_year.value;
                 generateCalendar(curr_month.value, curr_year.value);

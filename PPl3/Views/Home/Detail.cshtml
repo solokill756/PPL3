@@ -407,7 +407,7 @@
                                         @* Sử lí discount cho từng trường hợp *@
                                         @{
                                             decimal price_hotel = (decimal)(property.price);
-                                            if (property.bookings.ToArray().Length < 3)
+                                            if (property.bookings.Where(item => item.pay_status == 1).ToArray().Length < 3)
                                             {
                                                 price_hotel = (decimal)(property.price * (100 - property.properties_discounts.FirstOrDefault().discounts_value)) / 100;
                                             }
@@ -475,7 +475,7 @@
 
                                                 </div>
                                                 <span>2 weeks ago</span>
-                                                <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                                <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                             </div>
 
                                             <div class="body_comment_detail">
@@ -816,7 +816,7 @@
 
                                             </div>
                                             <span>2 weeks ago</span>
-                                            <p>Stay Dates : @item.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                            <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                         </div>
 
                                         <div class="body_comment_detail">
@@ -1057,7 +1057,8 @@
             generateCalendar(curr_month.value, curr_year.value);
             let currTemp = { value: 0 };
 
-            $('#prev-year').on('click', () => {
+        $('#prev-year').on('click', () => {
+            currentDay = 0;
                 if (currTemp.value > currDate.getFullYear()) {
                     --curr_year.value;
                 }
@@ -1065,7 +1066,7 @@
             });
 
             $('#next-year').on('click', () => {
-                currentDay = 1;
+                currentDay = 0;
                 ++curr_year.value;
                 currTemp.value = curr_year.value;
                 generateCalendar(curr_month.value, curr_year.value);

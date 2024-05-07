@@ -65,7 +65,8 @@ namespace PPl3.Controllers
             List<booking> bookings = db.bookings.Where(item => item.property_id == id).ToList();
             string date = "";
             foreach (var item in bookings)
-            {
+           if (item.pay_status == 1)
+           {
                 date = date + item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy") + ",";
             }
             if(date.Trim() != "")  date = date.Substring(0, date.Length - 1);

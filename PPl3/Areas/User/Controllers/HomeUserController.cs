@@ -12,6 +12,9 @@ using PPl3.Models;
 using PPl3.App_Start;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Configuration;
+using PPl3.Models.Payments;
+using System.Data.Entity;
 
 
 namespace PPl3.Areas.User.Controllers
@@ -685,6 +688,7 @@ namespace PPl3.Areas.User.Controllers
                 else bookings = db.bookings.Where(item => item.property_id == id).ToList();
                 string date = "";
                 foreach (var item in bookings)
+                 if(item.pay_status == 1)
                 {
                     date = date + item.check_in_date.Value.ToString("dd/MM/yyyy") + "-" + item.check_out_date.Value.ToString("dd/MM/yyyy") + ",";
                 }
@@ -707,14 +711,16 @@ namespace PPl3.Areas.User.Controllers
            
             if (Session["user"] != null)
             {
+            
                 user p_user = (user)Session["user"];
                 PPL3Entities db = new PPL3Entities();
-                //while(db.bookings.Any(item => item.check_out_date < DateTime.Now))
-                //{
-                //    booking find_booking = db.bookings.FirstOrDefault(item => item.check_out_date < DateTime.Now);
-                //    db.bookings.Remove(find_booking);
-                //    db.SaveChanges();
-                //}
+                DateTime now = DateTime.Now;
+                while (db.bookings.Any(item =>(item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0)))
+                {
+                    booking find_booking = db.bookings.FirstOrDefault(item => (item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0));
+                    db.bookings.Remove(find_booking);
+                    db.SaveChanges();
+                }
                 var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ThenBy(item => item.id).ToList();
                 return View(list_booking_hotel);
             }
@@ -727,11 +733,16 @@ namespace PPl3.Areas.User.Controllers
         {
             if (check_in_date > check_out_date) return  Json("error1", JsonRequestBehavior.AllowGet);
             if ((check_out_date.Month - check_in_date.Month >= 2 && check_out_date.Year == check_in_date.Year) || (check_out_date.Year != check_in_date.Year)) return Json("error2", JsonRequestBehavior.AllowGet);
+           
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
             List<booking> list_booking = db.bookings.Where(item => item.id != bookingId).ToList();
-            if ((list_booking.Any(item => ((item.check_in_date <= check_in_date && item.check_out_date >= check_in_date) || (item.check_out_date >= check_out_date && item.check_in_date <= check_out_date) ||(check_in_date < item.check_in_date && check_out_date > item.check_out_date)) && item.userId == p_user.id && item.property_id == hotelId) == false && check_in_date >= DateTime.Now) || (find_hotel.check_in_date == check_in_date && find_hotel.check_out_date == check_out_date)) { 
+            if(list_booking.Any(item => item.pay_status == 1 && ((find_hotel.check_in_date >= item.check_in_date && find_hotel.check_in_date <= item.check_out_date) || (find_hotel.check_out_date >= item.check_in_date && find_hotel.check_out_date <= item.check_out_date)) && item.property_id == find_hotel.property_id))
+            {
+                return Json("error3", JsonRequestBehavior.AllowGet);
+            }
+            if ((list_booking.Any(item => ((item.check_in_date <= check_in_date && item.check_out_date >= check_in_date) || (item.check_out_date >= check_out_date && item.check_in_date <= check_out_date) ||(check_in_date < item.check_in_date && check_out_date > item.check_out_date)) && item.userId == p_user.id && item.property_id == hotelId && item.pay_status == 1) == false && check_in_date >= DateTime.Now) || (find_hotel.check_in_date == check_in_date && find_hotel.check_out_date == check_out_date)) { 
                 find_hotel.check_in_date = check_in_date;
                 find_hotel.check_out_date = check_out_date;
                 TimeSpan difference = (find_hotel.check_out_date.Value - find_hotel.check_in_date.Value);
@@ -754,7 +765,13 @@ namespace PPl3.Areas.User.Controllers
                     db.booking_guests.Add(booking_Guests);
                 }
                 db.SaveChanges();
-                return Json("true", JsonRequestBehavior.AllowGet);
+                var url = UrlPayment(bookingId);
+
+                return Json(new
+                {
+                    success = "true",
+                    redirectUrl = url,
+                }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -779,13 +796,14 @@ namespace PPl3.Areas.User.Controllers
             if ((checkOutDate.Month - checkInDate.Month >= 2 && checkOutDate.Year == checkInDate.Year) || (checkInDate.Year != checkOutDate.Year)) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
-            //while (db.bookings.Any(item => item.check_out_date < DateTime.Now))
-            //{
-            //    booking find_booking = db.bookings.FirstOrDefault(item => item.check_out_date < DateTime.Now);
-            //    db.bookings.Remove(find_booking);
-            //    db.SaveChanges();
-            //}
-            if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate) || (checkInDate < item.check_in_date && checkOutDate > item.check_out_date)) && item.userId ==  p_user.id && item.property_id == id) == false && checkInDate >= DateTime.Now)
+            DateTime now = DateTime.Now;
+            while (db.bookings.Any(item => (item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0)))
+            {
+                booking find_booking = db.bookings.FirstOrDefault(item => (item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0));
+                db.bookings.Remove(find_booking);
+                db.SaveChanges();
+            }
+            if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate) || (checkInDate < item.check_in_date && checkOutDate > item.check_out_date)) && item.userId ==  p_user.id && item.property_id == id && item.pay_status == 1) == false && checkInDate > DateTime.Now)
             {
                 TempData["checkBook"] = checkBook;
                 property findHotel = db.properties.Where(item => item.id == id).FirstOrDefault();
@@ -803,6 +821,8 @@ namespace PPl3.Areas.User.Controllers
                 userBooking.booking_date = DateTime.Now;
                 userBooking.is_refund = 1;
                 userBooking.booking_status = 1;
+                userBooking.created = DateTime.Now;
+                userBooking.pay_status = 0;
                 db.bookings.Add(userBooking);
                 for (int i = 0; i <= guest_count.Length - 1; ++i)
                 {
@@ -813,10 +833,15 @@ namespace PPl3.Areas.User.Controllers
                     db.booking_guests.Add(booking_Guests);
                 }
                 db.SaveChanges();
+
+                // pay hotel 
+
+                var url = UrlPayment(userBooking.id);
+
                 return Json(new
                 {
                     success = "true",
-                    redirectUrl = Url.Action("Index", "Homeuser", new { area = "user" })
+                    redirectUrl = url,
                 }, JsonRequestBehavior.AllowGet);
             }
             else
@@ -829,6 +854,155 @@ namespace PPl3.Areas.User.Controllers
             }
         }
 
+
+        public ActionResult ChatUser()
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            List<Friendship> list_friends = new List<Friendship>();
+            foreach(var item in db.Friendships.Where(item => item.UserId1 == p_user.id || item.UserId2 == p_user.id))
+            {
+                list_friends.Add(item);
+            }
+            return View(list_friends);
+        }
+
+
+        // Thanh toán Vnpay
+
+
+        public ActionResult PaymentSuccess()
+        {
+            ViewBag.Success = TempData["message"];
+            return View();
+        }
+
+        public ActionResult PaymentFail()
+        {
+            ViewBag.fail = TempData["message"];
+            return View();
+        }
+        public ActionResult VnpayReturn()
+        {
+            PPL3Entities db = new PPL3Entities();
+            if (Request.QueryString.Count > 0)
+            {
+                string vnp_HashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"]; //Chuoi bi mat
+                var vnpayData = Request.QueryString;
+                VnPayLibrary vnpay = new VnPayLibrary();
+
+                foreach (string s in vnpayData)
+                {
+                    //get all querystring data
+                    if (!string.IsNullOrEmpty(s) && s.StartsWith("vnp_"))
+                    {
+                        vnpay.AddResponseData(s, vnpayData[s]);
+                    }
+
+                }
+                long invoiceId = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
+                long vnpayTranId = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
+                string vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
+                string vnp_TransactionStatus = vnpay.GetResponseData("vnp_TransactionStatus");
+                String vnp_SecureHash = Request.QueryString["vnp_SecureHash"];
+                String TerminalID = Request.QueryString["vnp_TmnCode"];
+                long vnp_Amount = Convert.ToInt64(vnpay.GetResponseData("vnp_Amount")) / 100;
+                String bankCode = Request.QueryString["vnp_BankCode"];
+                bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, vnp_HashSecret);
+                if (checkSignature)
+                {
+                    if (vnp_ResponseCode == "00" && vnp_TransactionStatus == "00")
+                    {
+                        //Thanh toan thanh cong
+                        TempData["message"] = "The transaction was performed successfully. Thank you for using the service";
+                        var invoiceItem = db.bookings.FirstOrDefault(x => x.id == (int)invoiceId);
+                        invoiceItem.pay_status = 1;
+                        
+                       
+                        // kiểm tra coi hóa đơn có tồn tại hay không
+
+                        if(invoiceItem.transaction_id != null)
+                        {
+                            transaction find_transaction = db.transactions.FirstOrDefault(item => item.id == invoiceItem.transaction_id);
+                            find_transaction.transaction_status = 1;
+                            find_transaction.transfer_on = DateTime.Now;
+
+                        }
+                        else {
+                            // thêm hóa đơn
+                            transaction newTransaction = new transaction();
+                            newTransaction.property_id = invoiceItem.property_id;
+                            newTransaction.booking_id = invoiceItem.id;
+                            newTransaction.amount = invoiceItem.amount_paid;
+                            newTransaction.transfer_on = DateTime.Now;
+                            newTransaction.currency_id = 1;
+                            newTransaction.transaction_status = 1;
+                            db.transactions.Add(newTransaction);
+                            invoiceItem.transaction_id = newTransaction.id;
+                        }
+                      
+                       
+                        db.SaveChanges();
+
+
+                        return RedirectToAction("PaymentSuccess", "homeuser", new { area = "User" });
+                    }
+                    else
+                    {
+                        //Thanh toan khong thanh cong. Ma loi: vnp_ResponseCode
+                        TempData["message"] = "An error occurred during processing. Error code: " + vnp_ResponseCode;
+                        var invoiceItem = db.bookings.FirstOrDefault(x => x.id == (int)invoiceId);
+                        invoiceItem.pay_status = 0;
+                        db.SaveChanges();
+
+                        return RedirectToAction("PaymentFail", "homeuser", new { area = "User" });
+                        //log.InfoFormat("Thanh toan loi, OrderId={0}, VNPAY TranId={1},ResponseCode={2}", orderId, vnpayTranId, vnp_ResponseCode);
+                    }
+                    //    displayTmnCode.InnerText = "Mã Website (Terminal ID):" + TerminalID;
+                    //    displayTxnRef.InnerText = "Mã giao dịch thanh toán:" + orderId.ToString();
+                    //    displayVnpayTranNo.InnerText = "Mã giao dịch tại VNPAY:" + vnpayTranId.ToString();
+                    //    displayAmount.InnerText = "Số tiền thanh toán (VND):" + vnp_Amount.ToString();
+                    //    displayBankCode.InnerText = "Ngân hàng thanh toán:" + bankCode;
+                }
+            }
+            return View();
+        }
+
+        public string UrlPayment(int orderCode)
+        {
+            PPL3Entities db = new PPL3Entities();
+            var urlPayment = "";
+            var order = db.bookings.FirstOrDefault(item => item.id == orderCode);
+            //Get Config Info
+            string vnp_Returnurl = ConfigurationManager.AppSettings["vnp_Returnurl"]; //URL nhan ket qua tra ve 
+            string vnp_Url = ConfigurationManager.AppSettings["vnp_Url"]; //URL thanh toan cua VNPAY 
+            string vnp_TmnCode = ConfigurationManager.AppSettings["vnp_TmnCode"]; //Ma định danh merchant kết nối (Terminal Id)
+            string vnp_HashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"]; //Secret Key
+            
+
+            //Build URL for VNPAY
+            VnPayLibrary vnpay = new VnPayLibrary();
+            var Price = (long)order.amount_paid * 2500000;
+            vnpay.AddRequestData("vnp_Version", VnPayLibrary.VERSION);
+            vnpay.AddRequestData("vnp_Command", "pay");
+            vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
+            vnpay.AddRequestData("vnp_Amount", Price.ToString()); //Số tiền thanh toán. Số tiền không mang các ký tự phân tách thập phân, phần nghìn, ký tự tiền tệ. Để gửi số tiền thanh toán là 100,000 VND (một trăm nghìn VNĐ) thì merchant cần nhân thêm 100 lần (khử phần thập phân), sau đó gửi sang VNPAY là: 10000000
+            vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CurrCode", "VND");
+            vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
+            vnpay.AddRequestData("vnp_Locale", "vn");
+            vnpay.AddRequestData("vnp_OrderInfo", "Thanh toán đơn hàng :" + order.id);
+            vnpay.AddRequestData("vnp_OrderType", "other"); //default value: other
+            vnpay.AddRequestData("vnp_ReturnUrl", vnp_Returnurl);
+            vnpay.AddRequestData("vnp_TxnRef", order.id.ToString()); // Mã tham chiếu của giao dịch tại hệ thống của merchant. Mã này là duy nhất dùng để phân biệt các đơn hàng gửi sang VNPAY. Không được trùng lặp trong ngày
+
+            //Add Params of 2.1.0 Version
+            //Billing
+
+            urlPayment = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
+            //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
+            return urlPayment;
+        }
 
         //Function
         public bool IsGmailExists(string email_address)

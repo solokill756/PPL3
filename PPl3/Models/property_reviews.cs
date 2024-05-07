@@ -23,17 +23,17 @@ namespace PPl3.Models
         public int id { get; set; }
         public Nullable<int> property_id { get; set; }
         public Nullable<int> review_by_user { get; set; }
-        public Nullable<int> booking_id { get; set; }
+        public Nullable<int> transaction_id { get; set; }
         public string comment { get; set; }
         public string overall_rating { get; set; }
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> pr_status { get; set; }
     
-        public virtual booking booking { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<component_rating> component_rating { get; set; }
         public virtual property property { get; set; }
         public virtual user user { get; set; }
+        public virtual transaction transaction { get; set; }
     }
 }

@@ -41,6 +41,7 @@ namespace PPl3.Models
         public virtual DbSet<email_contents> email_contents { get; set; }
         public virtual DbSet<emergency_contact> emergency_contact { get; set; }
         public virtual DbSet<favourite> favourites { get; set; }
+        public virtual DbSet<Friendship> Friendships { get; set; }
         public virtual DbSet<governmentID> governmentIDs { get; set; }
         public virtual DbSet<guest_type> guest_type { get; set; }
         public virtual DbSet<host_reviews> host_reviews { get; set; }
@@ -48,6 +49,7 @@ namespace PPl3.Models
         public virtual DbSet<interest> interests { get; set; }
         public virtual DbSet<language> languages { get; set; }
         public virtual DbSet<listLanguage> listLanguages { get; set; }
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<neighbourhood> neighbourhoods { get; set; }
         public virtual DbSet<phone_number> phone_number { get; set; }
         public virtual DbSet<promo_codes> promo_codes { get; set; }

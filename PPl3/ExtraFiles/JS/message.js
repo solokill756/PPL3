@@ -32,23 +32,23 @@ listMess.forEach((mess)=>{
 })
 
 //Send Message
-const sendInput = document.getElementById('message_send')
-const sendBtn = document.querySelector('.send_btn')
+const sendinput = document.getElementById('message_send')
+//const sendbtn = document.queryselector('.send_btn')
 
-sendBtn.addEventListener('click', ()=>{
-    listBodyMess.forEach((bd) =>{
-        if(bd.classList.contains('open')){
-            const chatSection = bd.querySelector('.chat_section')
-            var text = sendInput.value;
-            if(text !== ''){
-                chatSection.innerHTML += `<div class="text text_you">
-                                        <p>${text}</p>
-                                    </div>`
-            }
-        }
-    })
-    sendInput.value = ''
-})
+//sendbtn.addeventlistener('click', ()=>{
+//    listbodymess.foreach((bd) =>{
+//        if(bd.classlist.contains('open')){
+//            const chatsection = bd.queryselector('.chat_section')
+//            var text = sendinput.value;
+//            if(text !== ''){
+//                chatsection.innerhtml += `<div class="text text_you">
+//                                        <p>${text}</p>
+//                                    </div>`
+//            }
+//        }
+//    })
+//    sendinput.value = ''
+//})
 
 document.addEventListener('keydown', (event)=>{
     if(event.key === 'Enter'){

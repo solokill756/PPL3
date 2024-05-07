@@ -45,7 +45,7 @@
           <ScalarProperty Name="effective_amount" ColumnName="effective_amount" />
           <ScalarProperty Name="booking_date" ColumnName="booking_date" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
+          <ScalarProperty Name="pay_status" ColumnName="pay_status" />
           <ScalarProperty Name="booking_status" ColumnName="booking_status" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -198,6 +198,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Friendships">
+      <EntityTypeMapping TypeName="PPL3Model.Friendship">
+        <MappingFragment StoreEntitySet="Friendship">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId1" ColumnName="UserId1" />
+          <ScalarProperty Name="UserId2" ColumnName="UserId2" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="governmentIDs">
       <EntityTypeMapping TypeName="PPL3Model.governmentID">
         <MappingFragment StoreEntitySet="governmentID">
@@ -274,6 +284,17 @@
         <MappingFragment StoreEntitySet="listLanguage">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="language_name" ColumnName="language_name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="PPL3Model.Message">
+        <MappingFragment StoreEntitySet="Message">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+          <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+          <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+          <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -393,7 +414,7 @@
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="property_id" ColumnName="property_id" />
           <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
-          <ScalarProperty Name="booking_id" ColumnName="booking_id" />
+          <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
           <ScalarProperty Name="comment" ColumnName="comment" />
           <ScalarProperty Name="overall_rating" ColumnName="overall_rating" />
           <ScalarProperty Name="created" ColumnName="created" />
