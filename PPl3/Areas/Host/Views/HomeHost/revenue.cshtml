@@ -39,7 +39,7 @@
 }
 
 @{ 
-    List<PPl3.Models.user_notification> uns = db.user_notification.Where(item => item.id == p_user.id).ToList();
+    List<PPl3.Models.user_notification> uns = db.user_notification.Where(item => item.userid == p_user.id).ToList();
 }
 
 
