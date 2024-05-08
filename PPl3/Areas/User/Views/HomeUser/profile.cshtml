@@ -57,7 +57,7 @@
                     </div>
                     <div class="nav_login">
                         <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
-                        @if (tmp_user.user_profile.FirstOrDefault() != null)
+                        @if (tmp_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
                         {
                             <button class="js_menuUser_btn icon_style" style="background : url(@tmp_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
                         }
@@ -109,7 +109,7 @@
                                         }
                                         else
                                         {
-                                            <div class="avatar">
+                                            <div class="avatar" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat; width: 160px; height: 160px ">
                                                 <i class="fa-solid fa-shield"></i>
                                             </div>
                                         }

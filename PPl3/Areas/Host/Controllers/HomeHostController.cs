@@ -202,6 +202,13 @@ namespace PPl3.Areas.Host.Controllers
             new_hotel.p_name = data.hotel_name;
             new_hotel.p_description = data.hotelDescribe;
             new_hotel.userId = p_user.id;
+            user_notification user_Notification = new user_notification();
+            user_Notification.userid = p_user.id;
+            user_Notification.created = DateTime.Now;
+            user_Notification.content = "The addition of the new hotel was successful. Please check the listing.";
+            user_Notification.un_status = 1;
+            user_Notification.un_url = "/host/homehost/listing";
+            db.user_notification.Add(user_Notification);
             Console.WriteLine(data.property_type);
             if (data.property_type != null)  new_hotel.property_type_id = int.Parse(data.property_type);
             if(data.room_type != null)   new_hotel.room_type_id = int.Parse(data.room_type);

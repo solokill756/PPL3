@@ -489,6 +489,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="user_notification">
+      <EntityTypeMapping TypeName="PPL3Model.user_notification">
+        <MappingFragment StoreEntitySet="user_notification">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="un_status" ColumnName="un_status" />
+          <ScalarProperty Name="created" ColumnName="created" />
+          <ScalarProperty Name="un_url" ColumnName="un_url" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="user_personalInfor">
       <EntityTypeMapping TypeName="PPL3Model.user_personalInfor">
         <MappingFragment StoreEntitySet="user_personalInfor">
