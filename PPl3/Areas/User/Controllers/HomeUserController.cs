@@ -18,6 +18,7 @@ using System.Data.Entity;
 using Microsoft.AspNet.SignalR;
 using PPl3.Hubs;
 using static System.Data.Entity.Infrastructure.Design.Executor;
+using System.Security.Policy;
 
 
 namespace PPl3.Areas.User.Controllers
@@ -798,7 +799,14 @@ namespace PPl3.Areas.User.Controllers
                 }
                 db.SaveChanges();
                 var url = UrlPayment(bookingId);
-
+                user_notification user_Notification = new user_notification();
+                user_Notification.userid = p_user.id;
+                user_Notification.created = DateTime.Now;
+                user_Notification.content = "Booking reset successful!. Please check in your trip!";
+                user_Notification.un_status = 1;
+                user_Notification.un_url = "/user/homeuser/trip";
+                db.user_notification.Add(user_Notification);
+                db.SaveChanges();
                 return Json(new
                 {
                     success = "true",
@@ -905,6 +913,14 @@ namespace PPl3.Areas.User.Controllers
                 // pay hotel 
 
                 var url = UrlPayment(userBooking.id);
+                user_notification user_Notification = new user_notification();
+                user_Notification.userid = p_user.id;
+                user_Notification.created = DateTime.Now;
+                user_Notification.content = "Booking successfully. Please check in your trip!";
+                user_Notification.un_status = 1;
+                user_Notification.un_url = "/user/homeuser/trip";
+                db.user_notification.Add(user_Notification);
+                db.SaveChanges();
 
                 return Json(new
                 {
@@ -975,11 +991,18 @@ namespace PPl3.Areas.User.Controllers
                         TempData["message"] = "The transaction was performed successfully. Thank you for using the service";
                         var invoiceItem = db.bookings.FirstOrDefault(x => x.id == (int)invoiceId);
                         invoiceItem.pay_status = 1;
-                        
-                       
+                        user_notification user_Notification = new user_notification();
+                        user_Notification.userid = p_user.id;
+                        user_Notification.created = DateTime.Now;
+                        user_Notification.content = "Payment successful!";
+                        user_Notification.un_status = 1;
+                        user_Notification.un_url = "#";
+                        db.user_notification.Add(user_Notification);
+                        db.SaveChanges();
+
                         // kiểm tra coi hóa đơn có tồn tại hay không
 
-                        if(invoiceItem.transaction_id != null)
+                        if (invoiceItem.transaction_id != null)
                         {
                             transaction find_transaction = db.transactions.FirstOrDefault(item => item.id == invoiceItem.transaction_id);
                             find_transaction.transaction_status = 1;
@@ -1013,6 +1036,14 @@ namespace PPl3.Areas.User.Controllers
                         TempData["message"] = "An error occurred during processing. Error code: " + vnp_ResponseCode;
                         var invoiceItem = db.bookings.FirstOrDefault(x => x.id == (int)invoiceId);
                         invoiceItem.pay_status = 0;
+                        db.SaveChanges();
+                        user_notification user_Notification = new user_notification();
+                        user_Notification.userid = p_user.id;
+                        user_Notification.created = DateTime.Now;
+                        user_Notification.content = "Payment failed!";
+                        user_Notification.un_status = 1;
+                        user_Notification.un_url = "#";
+                        db.user_notification.Add(user_Notification);
                         db.SaveChanges();
 
                         return RedirectToAction("PaymentFail", "homeuser", new { area = "User" });
@@ -1132,6 +1163,13 @@ namespace PPl3.Areas.User.Controllers
 
         }
 
+        //hoa don
+        public ActionResult invoice(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            transaction transaction = db.transactions.FirstOrDefault(item => item.id == id);
+            return View(transaction);
+        }
 
         //Function
         public bool IsGmailExists(string email_address)
