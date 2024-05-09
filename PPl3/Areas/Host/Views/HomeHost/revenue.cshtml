@@ -95,13 +95,15 @@
                                         <ul class="modal_box">
                                             @{
                                                 position = 0;
+                                                string tmpname = "";
                                                 foreach (var item in mess)
                                                 {
                                                     position++;
                                                     if (position == 5) { break; }
+                                                    tmpname = db.users.FirstOrDefault(find => find.id == item.SenderID).account_name;
                                                     <li>
                                                         <div class="mess_item">
-                                                            <h4>@item.SenderID</h4>
+                                                            <h4>@tmpname</h4>
                                                             <p>@item.MessageContent</p>
                                                         </div>
                                                     </li>
