@@ -15,9 +15,12 @@ namespace PPl3.Hubs
             Clients.All.hello();
         }
 
-        public void Message(string GetID, string message)
+        public void SendPrivateMessage(int sentUserId ,int toUserId, string message)
+
         {
-            Clients.All.message(GetID , message);
+
+            Clients.All.receiveMessage(sentUserId , toUserId , message);
+
         }
     }
 }

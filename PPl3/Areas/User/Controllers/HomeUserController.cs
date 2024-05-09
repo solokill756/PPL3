@@ -15,6 +15,9 @@ using System.Text.RegularExpressions;
 using System.Configuration;
 using PPl3.Models.Payments;
 using System.Data.Entity;
+using Microsoft.AspNet.SignalR;
+using PPl3.Hubs;
+using static System.Data.Entity.Infrastructure.Design.Executor;
 
 
 namespace PPl3.Areas.User.Controllers
@@ -603,6 +606,8 @@ namespace PPl3.Areas.User.Controllers
                 
                 var id_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (entities.users.Where(item => item.id ==  id_user).FirstOrDefault());
+                userInfor.user_status = 1;
+                entities.SaveChanges();
                 if(userInfor.user_type != 1) Session["user"] = userInfor;
                 else if(userInfor.user_type == 1) Session["admin"] = userInfor;
                 TempData["check"] = false;
@@ -618,6 +623,11 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult LogOut()
         {
+            PPL3Entities entities = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            user find_user = entities.users.FirstOrDefault(item => item.id == p_user.id);
+            find_user.user_status = 0;
+            entities.SaveChanges();
             Session.Remove("user");
             FormsAuthentication.SignOut();  
             return RedirectToAction("Index", "home", new { area = "" , checkLogOut = true});
@@ -662,8 +672,11 @@ namespace PPl3.Areas.User.Controllers
                 db.SaveChanges();
                 var id_user = db.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (db.users.Where(item => item.id == id_user).FirstOrDefault());
+                userInfor.user_status = 1;
+                db.SaveChanges();
                 if (userInfor.user_type != 1) Session["user"] = userInfor;
                 else if (userInfor.user_type == 1) Session["admin"] = userInfor;
+
                 TempData["check"] = false;
                if(Session["user"] != null) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1 , checkID = -1 });
                else
@@ -715,11 +728,15 @@ namespace PPl3.Areas.User.Controllers
                 user p_user = (user)Session["user"];
                 PPL3Entities db = new PPL3Entities();
                 DateTime now = DateTime.Now;
-                while (db.bookings.Any(item =>(item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0)))
+                foreach(var item in db.bookings)
                 {
-                    booking find_booking = db.bookings.FirstOrDefault(item => (item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0));
-                    db.bookings.Remove(find_booking);
-                    db.SaveChanges();
+                    TimeSpan duration = (TimeSpan)(item.check_in_date - now); // Tính toán khoảng cách
+                    int daysDifference = (int)duration.TotalDays; // Chuyển khoảng cách thành số ngày
+                    if ((item.check_out_date < now) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+                    {
+                        db.bookings.Remove(item);
+                        db.SaveChanges();
+                    }
                 }
                 var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ThenBy(item => item.id).ToList();
                 return View(list_booking_hotel);
@@ -738,7 +755,7 @@ namespace PPl3.Areas.User.Controllers
             user p_user = (user)Session["user"];
             booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
             List<booking> list_booking = db.bookings.Where(item => item.id != bookingId).ToList();
-            if(list_booking.Any(item => item.pay_status == 1 && ((find_hotel.check_in_date >= item.check_in_date && find_hotel.check_in_date <= item.check_out_date) || (find_hotel.check_out_date >= item.check_in_date && find_hotel.check_out_date <= item.check_out_date)) && item.property_id == find_hotel.property_id))
+            if(list_booking.Any(item => item.pay_status == 1 && ((find_hotel.check_in_date >= item.check_in_date && find_hotel.check_in_date <= item.check_out_date) || (find_hotel.check_out_date >= item.check_in_date && find_hotel.check_out_date <= item.check_out_date) || (find_hotel.check_in_date <= item.check_in_date && find_hotel.check_out_date >= item.check_out_date)) && item.property_id == find_hotel.property_id))
             {
                 return Json("error3", JsonRequestBehavior.AllowGet);
             }
@@ -788,20 +805,32 @@ namespace PPl3.Areas.User.Controllers
         [UserAuthorize(idChucNang = 3)]
         public JsonResult PayHotel(bool checkBook , int id , DateTime checkInDate , DateTime checkOutDate , int[] guest_count , decimal price_hotel)
         {
-
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
             if (checkInDate > checkOutDate) return Json(new
             {
                 success = "error1"
             }, JsonRequestBehavior.AllowGet);
-            if ((checkOutDate.Month - checkInDate.Month >= 2 && checkOutDate.Year == checkInDate.Year) || (checkInDate.Year != checkOutDate.Year)) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
-            PPL3Entities db = new PPL3Entities();
-            user p_user = (user)Session["user"];
-            DateTime now = DateTime.Now;
-            while (db.bookings.Any(item => (item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0)))
+          
+            if (db.bookings.Any(item => item.pay_status == 1 && ((checkInDate >= item.check_in_date && checkInDate <= item.check_out_date) || (checkOutDate >= item.check_in_date && checkOutDate <= item.check_out_date) || (checkInDate <= item.check_in_date && checkOutDate >= item.check_out_date)) && item.property_id == id))
             {
-                booking find_booking = db.bookings.FirstOrDefault(item => (item.check_out_date < now) || (DbFunctions.DiffDays(item.check_in_date, now) <= 3 && item.pay_status == 0));
-                db.bookings.Remove(find_booking);
-                db.SaveChanges();
+                return Json(new
+                {
+                    success = "error1"
+                }, JsonRequestBehavior.AllowGet);
+            }
+            if ((checkOutDate.Month - checkInDate.Month >= 2 && checkOutDate.Year == checkInDate.Year) || (checkInDate.Year != checkOutDate.Year)) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
+            
+            DateTime now = DateTime.Now;
+            foreach (var item in db.bookings)
+            {
+                TimeSpan duration = (TimeSpan)(item.check_in_date - now); // Tính toán khoảng cách
+                int daysDifference = (int)duration.TotalDays; // Chuyển khoảng cách thành số ngày
+                if ((item.check_out_date < now) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+                {
+                    db.bookings.Remove(item);
+                    db.SaveChanges();
+                }
             }
             if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate) || (checkInDate < item.check_in_date && checkOutDate > item.check_out_date)) && item.userId ==  p_user.id && item.property_id == id && item.pay_status == 1) == false && checkInDate > DateTime.Now)
             {
@@ -824,6 +853,7 @@ namespace PPl3.Areas.User.Controllers
                 userBooking.created = DateTime.Now;
                 userBooking.pay_status = 0;
                 db.bookings.Add(userBooking);
+                db.SaveChanges();
                 for (int i = 0; i <= guest_count.Length - 1; ++i)
                 {
                     booking_guests booking_Guests = new booking_guests();
@@ -855,18 +885,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
 
-        public ActionResult ChatUser()
-        {
-            PPL3Entities db = new PPL3Entities();
-            user p_user = (user)Session["user"];
-            List<Friendship> list_friends = new List<Friendship>();
-            foreach(var item in db.Friendships.Where(item => item.UserId1 == p_user.id || item.UserId2 == p_user.id))
-            {
-                list_friends.Add(item);
-            }
-            return View(list_friends);
-        }
-
+        
 
         // Thanh toán Vnpay
 
@@ -885,6 +904,7 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult VnpayReturn()
         {
             PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
             if (Request.QueryString.Count > 0)
             {
                 string vnp_HashSecret = ConfigurationManager.AppSettings["vnp_HashSecret"]; //Chuoi bi mat
@@ -937,6 +957,8 @@ namespace PPl3.Areas.User.Controllers
                             newTransaction.transfer_on = DateTime.Now;
                             newTransaction.currency_id = 1;
                             newTransaction.transaction_status = 1;
+                            newTransaction.receiver_id = invoiceItem.property.userId;
+                            newTransaction.payer_id = p_user.id;
                             db.transactions.Add(newTransaction);
                             invoiceItem.transaction_id = newTransaction.id;
                         }
@@ -1003,6 +1025,75 @@ namespace PPl3.Areas.User.Controllers
             //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
             return urlPayment;
         }
+
+        // Message 
+
+        public ActionResult ChatUser()
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            List<Friendship> list_friends = new List<Friendship>();
+          
+            foreach (var item in db.Friendships.Where(item => item.UserId1 == p_user.id || item.UserId2 == p_user.id))
+            {
+                list_friends.Add(item);
+            }
+            return View(list_friends);
+        }
+
+
+        [HttpPost]
+
+        public ActionResult SendMessage(int senderId, int receiverId, string content)
+
+        {
+            PPL3Entities db = new PPL3Entities();
+            // Lưu tin nhắn vào cơ sở dữ liệu
+
+            Message newMessage = new Message
+
+            {
+
+                SenderID = senderId,
+
+                ReceiverID = receiverId,
+
+                MessageContent = content,
+
+                Timestamp = DateTime.Now
+
+            };
+
+            db.Messages.Add(newMessage);
+
+            db.SaveChanges();
+
+            return RedirectToAction("ChatUser");
+
+        }
+
+        public ActionResult GetMessages(int senderId, int receiverId)
+
+        {
+            PPL3Entities db = new PPL3Entities();
+            // Lấy danh sách tin nhắn giữa sender và receiver
+
+            var messages = db.Messages.Where(m => (m.SenderID == senderId && m.ReceiverID == receiverId) || (m.SenderID == receiverId && m.ReceiverID == senderId))
+                          .OrderBy(m => m.ID)
+                          .Select(s => new {
+                              id = s.ID,
+                              SenderID = s.SenderID,
+                              ReceiverID = s.ReceiverID,
+                              MessageContent = s.MessageContent,
+                              Timestamp = s.Timestamp,
+                          })
+                          .ToList();
+
+
+            return Json(messages, JsonRequestBehavior.AllowGet);
+
+        }
+
 
         //Function
         public bool IsGmailExists(string email_address)

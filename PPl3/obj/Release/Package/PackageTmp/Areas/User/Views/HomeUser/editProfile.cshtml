@@ -1,0 +1,625 @@
+﻿
+@{
+    Layout = null;
+}
+
+@{
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    int pos = 0;
+    string tmpBD;
+    PPl3.Models.user_profile profile = new PPl3.Models.user_profile();
+    
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/editProfile.css?v=3">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <title>Edit Profile</title>
+    <style>
+
+        :root {
+            --gray-color: hsla(0, 0%, 80%, 1);
+            --black-color: #000000;
+        }
+
+        .open-mod-btn {
+            padding: 20px 10px;
+            border: 1px solid #ccc;
+            width: 350px;
+            outline: none;
+            border-radius: 10px;
+            position: relative;
+            font-size: 17px;
+        }
+
+        .mod {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            z-index: 9999;
+        }
+
+        .mod__inner {
+            width: 400px;
+            position: relative;
+            top: 38%;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mod__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--black-color);
+            color: white;
+        }
+
+        .mod__body {
+            padding: 15px;
+            overflow-y: scroll; 
+            max-height: 200px;
+        }
+
+            .mod__body h2 {
+                color: var(--black-color);
+            }
+
+        .mod__footer {
+            padding: 15px;
+            text-align: right;
+        }
+
+            .mod__footer button {
+                padding: 10px 20px;
+                color: white;
+                background: var(--black-color);
+                border-radius: 5px;
+                border: none;
+                outline: none;
+            }
+
+        .hide {
+            display: none;
+        }
+        .check-item {
+            list-style: none;
+            padding: 5px;
+        }
+
+            .check-item input[type="checkbox"] {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .check-item label {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @if (p_user.user_profile.FirstOrDefault() != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                                profile = p_user.user_profile.FirstOrDefault();
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                            }
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><a href="/user/homeuser/trip">Trip</a></li>
+                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                                <li><a href="Content">Manage listings</a></li>
+                                <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
+                                <li><a href="/host/homehost/listing">Manage listings</a></li>
+                                <li><a href="/user/homeuser/profile">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form action="/user/homeuser/editprofile" method="post" enctype="multipart/form-data">
+            <div id="content">
+                <div class="gird wide">
+                    <div class="row no-gutter">
+                        <div class="col l-4 m-12 c-12 center">
+                            @if (profile.user_avatar != null)
+                            {
+                                <div class="img_profile"
+                                     style="background : url(@profile.user_avatar) top center /cover no-repeat">
+                                    <div class="add_img">
+                                        <input type="file"
+                                               accept=".jpg, .png"
+                                               id="file_upload"
+                                               name="userAvatar"
+                                               hidden>
+                                        <button type="button" class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="img_profile">
+                                    <div class="add_img">
+                                        <input type="file"
+                                               accept=".jpg, .png"
+                                               id="file_upload"
+                                               name="userAvatar"
+                                               hidden>
+                                        <button type="button" class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
+                                    </div>
+                                </div>
+                            }
+
+                        </div>
+                        <div class="col l-8 m-12 c-12">
+                            <div class="tittle">
+                                <h1>Your profile</h1>
+                                <p>The information you share will be used across Airbnb to help other guests and Hosts get to know you. <a href=""> Learn more</a></p>
+                            </div>
+                            <div class="infor_list">
+                                <div class="infor_container">
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-graduation-cap"></i>Where I went to school:</p>
+                                        <input type="text"
+                                               id="user_school"
+                                               name="user_profile.user_school"
+                                               placeholder="Write something..."
+                                               value="@profile.user_school">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-earth-europe"></i>Where I live:</p>
+                                        <input type="text"
+                                               id="user_address"
+                                               name="user_profile.user_address"
+                                               placeholder="Write something..."
+                                               value="@profile.user_address">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-golf-ball-tee"></i>BirthDay:</p>
+                                        @{
+                                            tmpBD = "";
+                                            if (profile.user_birthday != null)
+                                            {
+                                                tmpBD = profile.user_birthday.Value.ToString("yyyy-MM-dd");
+                                            }
+                                        }
+                                        <input type="date"
+                                               id="My birthday"
+                                               name="user_profile.user_birthday"
+                                               placeholder="Write something..."
+                                               value="@tmpBD">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-regular fa-heart"></i>I'm obsessed with:</p>
+                                        <input type="text"
+                                               id="user_obsessed_with"
+                                               name="user_profile.user_obsessed_with"
+                                               placeholder="Write something..."
+                                               value="@profile.user_obsessed_with">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-wand-magic-sparkles"></i>My most useless skill:</p>
+                                        <input type="text"
+                                               id="user_unless_skill"
+                                               name="user_profile.user_unless_skill"
+                                               placeholder="Write something..."
+                                               value="@profile.user_unless_skill">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-regular fa-clock"></i>I spend too much time:</p>
+                                        <input type="text"
+                                               id="user_time_spend"
+                                               name="user_profile.user_time_spend"
+                                               placeholder="Write something..."
+                                               value="@profile.user_time_spend">
+                                    </div>
+                                </div>
+                                <div class="infor_container">
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-briefcase"></i>My work:</p>
+                                        <input type="text"
+                                               id="user_work"
+                                               name="user_profile.user_work"
+                                               placeholder="Write something..."
+                                               value="@profile.user_work">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-globe"></i>Languages I speak:</p>
+                                        @{
+                                            tmpBD = "";
+                                            pos = 0;
+                                            foreach (var item in p_user.users_languages.ToList())
+                                            {
+                                                if (pos == 0)
+                                                {
+                                                    tmpBD = tmpBD + item.listLanguage.language_name;
+                                                }
+                                                else
+                                                {
+                                                    tmpBD = tmpBD + ", " + item.listLanguage.language_name;
+                                                }
+                                                pos++;
+                                            }
+                                        }
+                                        <button type="button" class="open-mod-btn">Select your languages</button>
+
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-music"></i>My favorite song in hight school:</p>
+                                        <input type="text"
+                                               id="user_favourite_song"
+                                               name="user_profile.user_favourite_song"
+                                               placeholder="Write something..."
+                                               value="@profile.user_favourite_song">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-regular fa-lightbulb"></i>My fun fact:</p>
+                                        <input type="text"
+                                               id="user_fun_fact"
+                                               name="user_profile.user_fun_fact"
+                                               placeholder="Write something..."
+                                               value="@profile.user_fun_fact">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-book-open"></i>My biography title would be:</p>
+                                        <input type="text"
+                                               id="user_biography_title"
+                                               name="user_profile.user_biography_title"
+                                               placeholder="Write something..."
+                                               value="@profile.user_biography_title">
+                                    </div>
+                                    <div class="infor_item">
+                                        <p><i class="fa-solid fa-paw"></i>Pets:</p>
+                                        <input type="text"
+                                               id="user_pets"
+                                               name="user_profile.user_pets"
+                                               placeholder="Write something..."
+                                               value="@profile.user_pets">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="about_you">
+                                <div class="tittle">
+                                    <h1>About you</h1>
+                                </div>
+                                <div class="add_intro">
+                                    @{
+                                        tmpBD = "";
+                                        if (profile.user_about != null)
+                                        {
+                                            tmpBD = profile.user_about;
+                                        }
+                                        else
+                                        {
+                                            tmpBD = "Write something fun and punchy...";
+                                        }
+                                    }
+                                    <textarea id="user_about"
+                                              name="user_profile.user_about"
+                                              cols="30" rows="5">@tmpBD</textarea>
+                                </div>
+                            </div>
+
+                            <div class="interest">
+                                <div class="tittle_sub">
+                                    <span>What you’re into</span>
+                                    <p>Find common ground with other guests and Hosts by adding interests to your profile.</p>
+                                </div>
+                                <div class="list_button_add">
+                                    <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                    <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                    <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                    @*<button class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>*@
+                                </div>
+                            </div>
+
+                            <div class="place_went">
+                                <div class="container">
+                                    <div class="tittle_sub">
+                                        <span>Where you’ve been</span>
+                                        <p>Choose whether other people can see all the places you’ve been on Airbnb.</p>
+                                    </div>
+                                    <div class="open_btn">
+                                        <button type="button"><i class="fa-solid fa-check"></i></button>
+                                    </div>
+                                </div>
+                                <div class="container">
+                                    @foreach (var item in p_user.bookings.ToList())
+                                    {
+                                        <div class="place"
+                                             style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat"
+                                             onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id'">
+                                            <p>@item.booking_date.Value.ToString("yyyy")</p>
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+
+                            <div class="done_btn">
+                                <button id="donee_button" type="submit">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div id="footer">
+            <div class="gird wide">
+                <div class="row no-gutter infor_contact_list">
+                    <div class="col l-4 m-6 c-12 infor_contact_item support">
+                        <span>Support</span>
+                        <ul>
+                            <li><a href="">Help Center</a></li>
+                            <li><a href="">Get help with a safety issue</a></li>
+                            <li><a href="">AirCover</a></li>
+                            <li><a href="">Anti-discrimination</a></li>
+                            <li><a href="">Disability support</a></li>
+                            <li><a href="">Cancellation options</a></li>
+                            <li><a href="">Report neighborhood concern</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item hosting">
+                        <span>Hosting</span>
+                        <ul>
+                            <li><a href="">T|.|N|.|T your home</a></li>
+                            <li><a href="">AirCover for Hosts</a></li>
+                            <li><a href="">Hosting resources</a></li>
+                            <li><a href="">Community forum</a></li>
+                            <li><a href="">Hosting responsibly</a></li>
+                            <li><a href="">T|.|N|.|T-friendly apartments</a></li>
+                            <li><a href="">Join a free Hosting class</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item airbnb">
+                        <span>T|.|N|.|T</span>
+                        <ul>
+                            <li><a href="">Newsroom</a></li>
+                            <li><a href="">New features</a></li>
+                            <li><a href="">Careers</a></li>
+                            <li><a href="">Investors</a></li>
+                            <li><a href="">Gift cards</a></li>
+                            <li><a href="">T|.|N|.|T.org emergency stays</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mod hide">
+            <div class="mod__inner">
+                <div class="mod__header">
+                    <p>Languages you speak</p>
+                    <i class="far fa-window-close"></i>
+                </div>
+                <div class="mod__body">
+
+                    <ul class="dropdown-menu">
+                        @{
+                            foreach (var item in db.listLanguages.ToList())
+                            {
+                                bool isChecked = false;
+                                if (p_user.users_languages.FirstOrDefault() != null)
+                                {
+                                    if (p_user.users_languages.Any(itmc => itmc.language_id == item.id))
+                                    {
+                                        isChecked = true;
+                                    }
+                                }
+                                <li class="check-item">
+                                    <input type="checkbox" value="@item.id" @if (isChecked) { <text> checked</text> }>@item.language_name
+                                </li>
+                            }
+                        }
+                        @*<li class="check-item"><input type="checkbox">One</li>
+                            <li class="check-item"><input type="checkbox">One</li>
+                            <li class="check-item"><input type="checkbox">One</li>
+                            <li class="check-item"><input type="checkbox">One</li>*@
+                    </ul>
+                </div>
+                <div class="mod__footer">
+                    <button onclick="addUserLanguages()">Save</button>
+                </div>
+            </div>
+        </div>
+        <div class="interest_menu">
+            <div class="gird wide">
+                <div class="row no-gutter interest_box">
+                    <div class="col l-8 m-8 c-8">
+                        <div class="interest_container">
+                            <div class="list_box">
+                                <div class="tittle_inter">
+                                    <h2>What are you into?</h2>
+                                    <p>Pick up to 7 interests or sports you enjoy that you want to show on your profile.</p>
+                                </div>
+                                @{
+                                    List<int> interIdSelected = new List<int>();
+                                    if (p_user.users_interests != null)
+                                    {
+                                        foreach(var item in p_user.users_interests)
+                                        {
+                                            interIdSelected.Add((int)item.interest_id);
+                                        }
+                                    }
+                                    foreach (var item in db.interest_categories.ToList())
+                                    {
+                                        <div class="tittle_sub_inter">
+                                            <p>@item.cate_name</p>
+                                        </div>
+                                        <ul class="interest_list">
+                                            @foreach (var interest in db.interests.Where(row => (row.interest_cate_id == item.id)).ToList())
+                                            {
+                                                if (interIdSelected.Contains(interest.id))
+                                                {
+                                                    <li><button class="interest-button" data-interest-id="@interest.id" data-selected="true"><i class="@interest.icon"></i>@interest.interest_name</button></li>
+                                                }
+                                                else
+                                                {
+                                                    <li><button class="interest-button" data-interest-id="@interest.id" data-selected="false"><i class="@interest.icon"></i>@interest.interest_name</button></li>
+                                                }
+                                                @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>*@
+                                            }
+                                        </ul>
+                                    }
+                                }
+                            </div>
+                            <div class="save">
+                                <div class="quantity">
+                                    <p class="number">0/7 selected</p>
+                                    <p>Your selections will appear here</p>
+                                </div>
+                                <div class="save_btn">
+                                    <button id="saveButton" onclick="addUserInterests()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/ExtraFiles/JS/editProfile.js"></script>
+    <script src="~/ExtraFiles/JS/upLoadImg.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+        var btnOpen = document.querySelector('.open-mod-btn')
+        var mod = document.querySelector('.mod')
+        var iconClose = document.querySelector('.mod__header i')
+        var btnClose = document.querySelector('.mod__footer button')
+
+        function toggleMod(e) {
+            mod.classList.toggle('hide')
+        }
+        btnOpen.addEventListener('click', toggleMod)
+        btnClose.addEventListener('click', toggleMod)
+        iconClose.addEventListener('click', toggleMod)
+        mod.addEventListener('click', function (e) {
+            if (e.target == e.currentTarget) {
+                toggleMod()
+            }
+        })
+    </script>
+    <script>
+        function addUserLanguages() {
+            var checkboxes = document.querySelectorAll('.mod__body input[type="checkbox"]');
+            var selectedIds = [];
+            checkboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    selectedIds.push(parseInt(checkbox.value)); 
+                }
+            });
+
+            $.ajax({
+                url: '/user/homeuser/addUserLanguages',
+                type: 'POST',
+                dataType: 'json',
+                data: { list_id: selectedIds }, 
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    @*Sự kiện nút chon interest*@
+    <script>
+        const interButtons = document.querySelectorAll('.interest-button');
+
+        interButtons.forEach((button, index) => {
+            let isEvenClick = button.getAttribute('data-selected') === 'true';
+            button.addEventListener('click', (e) => {
+                isEvenClick = !isEvenClick;
+                button.setAttribute('data-selected', isEvenClick ? 'true' : 'false');
+            });
+        });
+    </script>
+    <script>
+        function addUserInterests() {
+            var selectedInterests = [];
+            var interestButtons = document.querySelectorAll('.interest-button');
+            interestButtons.forEach(function (button) {
+                if (button.getAttribute('data-selected') === 'true') {
+                    selectedInterests.push(parseInt(button.getAttribute('data-interest-id')));
+                }
+            });
+            $.ajax({
+                url: '/user/homeuser/addUserInterests',
+                type: 'POST',
+                dataType: 'json',
+                data: { list_id: selectedInterests },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+    @*Thiết lập lấy dữ liệu từ nút Done*@
+    <script>
+        const donee_button = document.getElementById('donee_button'); 
+        donee_button.addEventListener('click', () => {
+            addUserLanguages();
+            addUserInterests();
+        });
+    </script>
+</body>
+</html>

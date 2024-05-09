@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/gird.css">
+    <link rel="stylesheet" href="./assets/css/revenue.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Revenue</title>
+</head>
+<body>
+    <div class="main">
+      <div id="header">
+        <div class="gird wide">
+            <div class="row no-gutter nav">
+              <div class="col l-12 m-12 c-12">
+                <div class="nav_container">
+                  <div class="menu_btn">
+                    <button><i class="fa-brands fa-think-peaks" style="color: rgba(235, 22, 22, .7); font-size: 35px;"></i></button>
+                  </div>
+                  <div class="btn_list">
+                    <div class="btn_item">
+                      <button class="btn_mess"><i class="fa-solid fa-envelope"></i>
+                        <div class="number_alert">
+                          <p>4</p>
+                        </div>
+                      </button>
+                      <span>Message</span>
+                      <div class="modal mess">
+                        <ul class="modal_box">
+                          <li>
+                            <div class="mess_item">
+                              <h4>Davis Ngo</h4>
+                              <p>Hello Alnor :)))</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="mess_item">
+                              <h4>Davis Ngo</h4>
+                              <p>Very Good! Thank You </p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="mess_item">
+                              <h4>Davis Ngo</h4>
+                              <p>The service was amazing !!!</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="mess_item">
+                              <h4>Davis Ngo</h4>
+                              <p>Hello Alnor, Can you advise me further?</p>
+                            </div>
+                          </li>
+                          <a href="message.html">Show All</a>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="btn_item">
+                      <button class="btn_notifi"><i class="fa-solid fa-bell"></i>
+                        <div class="number_alert">
+                          <p>1</p>
+                        </div>
+                      </button>
+                      <span>Notificatin</span>
+                      <div class="modal notifi">
+                        <ul class="modal_box">
+                          <li>
+                            <div class="mess_item">
+                              <h4>Payment</h4>
+                              <p>Paid room fee of $300</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="mess_item">
+                              <h4>Michale Sane</h4>
+                              <p>Checked Out: 10/5/2024</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="mess_item">
+                              <h4>Liliana</h4>
+                              <p>Rented room 192, NewYork City on May 22, 2024</p>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="mess_item">
+                              <h4>Profile Update</h4>
+                              <p>Upgraded successfully!!!</p>
+                            </div>
+                          </li>
+                          <a href="notification.html">Show All</a>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="avatar">
+                        
+                    </div>
+              </div>
+              </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div id="content">
+        <div class="gird wide">
+          <div class="row no-gutter">
+            <div class="col l-8 m-8 c-12">
+              <div class="container">
+                <div class="col l-6 m-6 c-12">
+                  <div class="statistical_box">
+                    <div class="icon">
+                      <i class="fa fa-chart-line"></i>
+                    </div>
+                    <div class="infor">
+                      <span>Month Renter</span>
+                      <div class="number">
+                        <p>1234</p>
+                        <i class="fa-solid fa-user"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col l-6 m-6 c-12">
+                  <div class="statistical_box">
+                    <div class="icon">
+                      <i class="fa-solid fa-chart-area"></i>
+                    </div>
+                    <div class="infor">
+                      <span>Total Renter</span>
+                      <div class="number">
+                        <p>1234</p>
+                        <i class="fa-solid fa-user"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col l-6 m-6 c-12">
+                  <div class="statistical_box">
+                    <div class="icon">
+                      <i class="fa-solid fa-chart-column"></i>
+                    </div>
+                    <div class="infor">
+                      <span>Month Revenue</span>
+                      <div class="number">
+                        <span>$</span>
+                        <p>1234</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col l-6 m-6 c-12">
+                  <div class="statistical_box">
+                    <div class="icon">
+                      <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <div class="infor">
+                      <span>Total Revenue</span>
+                      <div class="number">
+                        <span>$</span>
+                        <p>1234</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="col l-6 m-12 c-12">
+                  <div class="box">
+                    <div class="tittle">
+                      <p>Statistics Of The Year</p>
+                    </div>
+                    <canvas id="renter_chart"></canvas>
+                  </div>
+                </div>
+                <div class="col l-6 m-12 c-12">
+                  <div class="box">
+                    <div class="tittle">
+                      <p>Statistics Of The Month</p>
+                    </div>
+                    <canvas id="revenue_chart"></canvas>
+                  </div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="col l-12 m-12 c-12">
+                  <div class="box_list">
+                    <div class="tittle">
+                      <p>List of room tenants</p>
+                      <button class="show_all_list_room">Show all</button>
+                    </div>
+                    <div class="table_render">
+                      <table>
+                        <thead>
+                          <th>Date</th>
+                          <th>Name</th>
+                          <th>Place</th>
+                          <th>Price</th>
+                          <th>Payments</th>
+                          <th>Action</th>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>12/4/2024</td>
+                            <td>Davis Ngo</td>
+                            <td>192 NewYork City</td>
+                            <td>400$</td>
+                            <td>Paid</td>
+                            <td>
+                              <button><a href="">Detail</a></button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>12/4/2024</td>
+                            <td>Davis Ngo</td>
+                            <td>192 NewYork City</td>
+                            <td>400$</td>
+                            <td>Paid</td>
+                            <td>
+                              <button><a href="">Detail</a></button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>12/4/2024</td>
+                            <td>Davis Ngo</td>
+                            <td>192 NewYork City</td>
+                            <td>400$</td>
+                            <td>Paid</td>
+                            <td>
+                              <button><a href="">Detail</a></button>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>12/4/2024</td>
+                            <td>Davis Ngo</td>
+                            <td>192 NewYork City</td>
+                            <td>400$</td>
+                            <td>Paid</td>
+                            <td>
+                              <button><a href="">Detail</a></button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col l-4 m-4 c-12">
+              <div class="container">
+                <div class="col l-12 m-12 c-12">
+                  <div class="box">
+                    <div class="avatar_hosting">
+  
+                    </div>
+                    <div class="name_hosting">
+                      <p>Alexander Alnor</p>
+                      <span>Hosting</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="col l-12 m-12 c-12">
+                  <div class="tittle">
+                    <p>My Hotel</p>
+                  </div>
+                  <div class="box">
+                    <div class="box_item focus">
+                      <i class="fa-solid fa-house"></i>
+                      <p>192, NewYork City</p>
+                      <span>In Progress</span>
+                    </div>
+                    <div class="box_item">
+                      <i class="fa-solid fa-house"></i>
+                      <p>192, NewYork City</p>
+                      <span>Return</span>
+                    </div>
+                    <div class="box_item">
+                      <i class="fa-solid fa-house"></i>
+                      <p>192, NewYork City</p>
+                      <span>Pending</span>
+                    </div>
+                    <div class="box_item">
+                      <i class="fa-solid fa-house"></i>
+                      <p>192, NewYork City</p>
+                      <span>In Progress</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="container">
+                <div class="col l-12 m-12 c-12">
+                  <a class="box_add" href="hotel.html"><i class="fa-solid fa-plus"></i>Add Hotel</a>
+                </div>
+              </div>
+            </div>
+            <div class="col l-6 m-6 c-12">
+              <div class="container">
+                <div class="col l-12 m-12 c-12">
+                  <div class="box_list">
+                    <div class="tittle">
+                      <p>Comments Of User</p>
+                      <button class="show_all_comment">Show all</button>
+                    </div>
+                    <ul class="comment_list">
+                      <li>
+                        <div class="avatar_user">
+                          <div class="icon_star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                          </div>
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>15 minutes ago</span>
+                          </div>
+                          <p>Short message goes here...</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="avatar_user">
+                          <div class="icon_star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                          </div>
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>15 minutes ago</span>
+                          </div>
+                          <p>Short message goes here...</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="avatar_user">
+                          <div class="icon_star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                          </div>
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>15 minutes ago</span>
+                          </div>
+                          <p>Short message goes here...</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="avatar_user">
+                          <div class="icon_star">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                          </div>
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>15 minutes ago</span>
+                          </div>
+                          <p>Short message goes here...</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col l-6 m-6 c-12">
+              <div class="container">
+                <div class="col l-12 m-12 c-12">
+                  <div class="box_list">
+                    <div class="tittle">
+                      <p>List Of Current Tenants</p>
+                      <button class="show_all_list_current">Show all</button>
+                    </div>
+                    <ul class="comment_list">
+                      <li>
+                        <div class="avatar_user">
+  
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>In Progress</span>
+                          </div>
+                          <p>Rent from May 1, 2024 to May 5, 2024</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="avatar_user">
+  
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>In Progress</span>
+                          </div>
+                          <p>Rent from May 1, 2024 to May 5, 2024</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="avatar_user">
+  
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>In Progress</span>
+                          </div>
+                          <p>Rent from May 1, 2024 to May 5, 2024</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="avatar_user">
+  
+                        </div>
+                        <div class="comment_details">
+                          <div class="item">
+                            <h4>Davis Ngo</h4>
+                            <span>In Progress</span>
+                          </div>
+                          <p>Rent from May 1, 2024 to May 5, 2024</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="comment_detail">
+        <div class="gird wide">
+            <div class="row no-gutter">
+                <div class="col l-o-2 l-8 m-o-1 m-10 c-o-1 c-10 comment_detail_container">
+                    <div class="comment_detail_tittle">
+                        <h2><i class="fa-regular fa-solid fa-star"></i> 4.84 · 55 reviews</h2>
+                    </div>
+                    <div class="comment_box">
+                        <div class="comment_item_detail comment_user_1">
+                            <div class="header_comment">
+                                <div class="avatar_user"></div>
+                                <div>
+                                    <span>Olivia</span>
+                                    <p>Pickerington, Ohio</p>
+                                </div>
+                            </div>
+                            <div class="time_comment">
+                                <div class="star_comment">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <span>2 weeks ago</span>
+    
+                            </div>
+
+                            <div class="body_comment_detail">
+                                <p>What a delightful and tranquil experience! I couldn’t recommend it more, 10/10! Lindsey is an incredibly responsive and warm host. The space was cozy, inviting, and user-friendly! Definitely book this gem!</p>
+                            </div>
+                        </div>
+
+                        <div class="comment_item_detail comment_user_2">
+                            <div class="header_comment">
+                                <div class="avatar_user"></div>
+                                <div>
+                                    <span>Olivia</span>
+                                    <p>Pickerington, Ohio</p>
+                                </div>
+                            </div>
+                            <div class="time_comment">
+                                <div class="star_comment">
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-solid fa-star"></i>
+                                  <i class="fa-regular fa-star"></i>
+                                  <i class="fa-regular fa-star"></i>
+                                  <i class="fa-regular fa-star"></i>
+                                </div>
+                                <span>2 weeks ago</span>
+                            </div>
+
+                            <div class="body_comment_detail">
+                                <p>What a delightful and tranquil experience! I couldn’t recommend it more, 10/10! Lindsey is an incredibly responsive and warm host. The space was cozy, inviting, and user-friendly! Definitely book this gem!</p>
+                            </div>
+                        </div>
+
+                        <div class="comment_item_detail comment_user_3">
+                            <div class="header_comment">
+                                <div class="avatar_user"></div>
+                                <div>
+                                    <span>Olivia</span>
+                                    <p>Pickerington, Ohio</p>
+                                </div>
+                            </div>
+                            <div class="time_comment">
+                                <div class="star_comment">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                </div>
+                                <span>2 weeks ago</span>
+    
+                            </div>
+
+                            <div class="body_comment_detail">
+                                <p>What a delightful and tranquil experience! I couldn’t recommend it more, 10/10! Lindsey is an incredibly responsive and warm host. The space was cozy, inviting, and user-friendly! Definitely book this gem!</p>
+                            </div>
+                        </div>
+
+                        <div class="comment_item_detail comment_user_4">
+                            <div class="header_comment">
+                                <div class="avatar_user"></div>
+                                <div>
+                                    <span>Olivia</span>
+                                    <p>Pickerington, Ohio</p>
+                                </div>
+                            </div>
+                            <div class="time_comment">
+                                <div class="star_comment">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                </div>
+                                <span>2 weeks ago</span>
+    
+                            </div>
+
+                            <div class="body_comment_detail">
+                                <p>What a delightful and tranquil experience! I couldn’t recommend it more, 10/10! Lindsey is an incredibly responsive and warm host. The space was cozy, inviting, and user-friendly! Definitely book this gem!</p>
+                            </div>
+                        </div>
+
+                        <div class="comment_item_detail comment_user_5">
+                            <div class="header_comment">
+                                <div class="avatar_user"></div>
+                                <div>
+                                    <span>Olivia</span>
+                                    <p>Pickerington, Ohio</p>
+                                </div>
+                            </div>
+                            <div class="time_comment">
+                                <div class="star_comment">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                </div>
+                                <span>2 weeks ago</span>
+    
+                            </div>
+
+                            <div class="body_comment_detail">
+                                <p>What a delightful and tranquil experience! I couldn’t recommend it more, 10/10! Lindsey is an incredibly responsive and warm host. The space was cozy, inviting, and user-friendly! Definitely book this gem!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div id="list_room">
+        <div class="gird wide">
+          <div class="row no-gutter">
+            <div class="col l-o-2 l-8 m-8 c-12">
+              <div class = "box list_room_container">
+                <div class="tittle">
+                  <p>List of room tenants</p>
+                </div>
+                <div class="list_room_box table_render">
+                  <table>
+                    <thead>
+                      <th>Date</th>
+                      <th>Name</th>
+                      <th>Place</th>
+                      <th>Price</th>
+                      <th>Payments</th>
+                      <th>Action</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>12/4/2024</td>
+                        <td>Davis Ngo</td>
+                        <td>192 NewYork City</td>
+                        <td>400$</td>
+                        <td>Paid</td>
+                        <td>
+                          <button><a href="">Detail</a></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="list_current">
+        <div class="gird wide">
+          <div class="row no-gutter">
+            <div class="col l-o-2 l-8 m-8 c-12">
+              <div class = "box list_room_container">
+                <div class="tittle">
+                  <p>List Of Current Tenants</p>
+                </div>
+                <div class="current_box">
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                  <div class="current_item">
+                    <div class="user_item">
+                      <div class="avatar_user">
+                         
+                      </div>
+                      <div class="name_user">
+                        <p>Davis Nop</p>
+                      </div>
+                    </div>
+                    <div class="name_hotel">
+                      <p>192, NewYork City</p>
+                    </div>
+                    <div class="date_check">
+                      <span class="dot_check_in"><i class="fa-solid fa-circle"></i>12/5/2024</span>
+                      <span class="dot_check_out"><i class="fa-solid fa-circle"></i>17/5/2024</span>
+                    </div>
+                    <div class="price">
+                      <span>400$</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./JS/revenue.js"></script>
+    <script src="./lib/chart/chart.min.js"></script>
+    <script>
+      const renter = document.getElementById('renter_chart');
+      const revenue = document.getElementById('revenue_chart');
+      var renterChart = new Chart(renter, {
+        type: "bar",
+        data: {
+            labels: ["2016", "2017", "2018", "2019", "2020", "2021", "2022"],
+            datasets: [{
+                    label: "Render",
+                    data: [15, 30, 55, 65, 60, 80, 95],
+                    backgroundColor: "rgba(235, 22, 22, .7)"
+                },
+                {
+                    label: "Revenue",
+                    data: [8, 35, 40, 60, 70, 55, 75],
+                    backgroundColor: "rgba(235, 22, 22, .5)"
+                },
+            ]
+            },
+        options: {
+            responsive: true
+        }
+      });
+      var revenueChart = new Chart(revenue, {
+        type: "line",
+            data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            datasets: [{
+                    label: "Renter",
+                    data: [15, 30, 55, 45, 70, 65, 85, 90, 24, 35, 40, 45],
+                    backgroundColor: "rgba(235, 22, 22, .7)",
+                    fill: true
+                },
+                {
+                    label: "Revenue",
+                    data: [99, 135, 170, 130, 190, 180, 270, 135, 234, 250, 400, 340],
+                    backgroundColor: "rgba(235, 22, 22, .5)",
+                    fill: true
+                }
+            ]
+            },
+        options: {
+            responsive: true
+        }
+      });
+    </script>
+</body>
+</html>

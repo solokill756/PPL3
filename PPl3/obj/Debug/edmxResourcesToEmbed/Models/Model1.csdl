@@ -546,6 +546,18 @@
     <NavigationProperty Name="user" Relationship="Self.transaction_payer_id_id_FK" FromRole="transactions" ToRole="users" />
     <NavigationProperty Name="user1" Relationship="Self.transaction_receiver_id_id_FK" FromRole="transactions" ToRole="users" />
   </EntityType>
+  <EntityType Name="user_notification">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userid" Type="Int32" />
+    <Property Name="content" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Name="un_status" Type="Byte" />
+    <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="un_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="user" Relationship="Self.unn_userid_id_FK" FromRole="user_notification" ToRole="users" />
+  </EntityType>
   <EntityType Name="user_personalInfor">
     <Key>
       <PropertyRef Name="id" />
@@ -658,6 +670,7 @@
     <NavigationProperty Name="property_reviews" Relationship="Self.pr_reviews_by_user_id_FK" FromRole="users" ToRole="property_reviews" />
     <NavigationProperty Name="transactions" Relationship="Self.transaction_payer_id_id_FK" FromRole="users" ToRole="transactions" />
     <NavigationProperty Name="transactions1" Relationship="Self.transaction_receiver_id_id_FK" FromRole="users" ToRole="transactions" />
+    <NavigationProperty Name="user_notification" Relationship="Self.unn_userid_id_FK" FromRole="users" ToRole="user_notification" />
     <NavigationProperty Name="user_personalInfor" Relationship="Self.up_userID_id_FK" FromRole="users" ToRole="user_personalInfor" />
     <NavigationProperty Name="user_profile" Relationship="Self.upp_userID_id_FK" FromRole="users" ToRole="user_profile" />
     <NavigationProperty Name="user_role" Relationship="Self.ur_create_by_id_FK" FromRole="users" ToRole="user_role" />
@@ -1439,6 +1452,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="unn_userid_id_FK">
+    <End Role="users" Type="Self.user" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="user_notification" Type="Self.user_notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_notification">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="up_userID_id_FK">
     <End Role="users" Type="Self.user" Multiplicity="0..1" />
     <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
@@ -1586,6 +1613,7 @@
     <EntitySet Name="room_type" EntityType="Self.room_type" />
     <EntitySet Name="states" EntityType="Self.state" />
     <EntitySet Name="transactions" EntityType="Self.transaction" />
+    <EntitySet Name="user_notification" EntityType="Self.user_notification" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" />
     <EntitySet Name="user_profile" EntityType="Self.user_profile" />
     <EntitySet Name="user_role" EntityType="Self.user_role" />
@@ -1833,6 +1861,10 @@
     <AssociationSet Name="transaction_receiver_id_id_FK" Association="Self.transaction_receiver_id_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="transactions" EntitySet="transactions" />
+    </AssociationSet>
+    <AssociationSet Name="unn_userid_id_FK" Association="Self.unn_userid_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="user_notification" EntitySet="user_notification" />
     </AssociationSet>
     <AssociationSet Name="up_userID_id_FK" Association="Self.up_userID_id_FK">
       <End Role="users" EntitySet="users" />

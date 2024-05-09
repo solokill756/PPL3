@@ -1,0 +1,566 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.center {
+    display: flex !important;
+    justify-content: center;
+}
+
+.open {
+    display: block !important;
+}
+
+.active {
+    display: flex !important;
+}
+
+.close {
+    display: none !important;
+}
+
+#header {
+    height: 100px;
+    background-color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+}
+
+    #header .nav {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 17px
+    }
+
+.nav_logo {
+    cursor: pointer;
+}
+
+    .nav_logo .logo_link {
+        display: flex;
+        flex-direction: row;
+        text-decoration: none;
+        cursor: pointer;
+        color: rgb(255, 56, 92);
+        margin-top: 5px;
+    }
+
+.logo_link i {
+    margin-right: 10px;
+    font-size: 38px;
+}
+
+.logo_link h1 {
+    align-self: center;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.nav_languages {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
+}
+
+    .nav_languages a {
+        font-size: 14px;
+        font-weight: 500;
+        color: #000;
+        text-decoration: none;
+        padding: 12px;
+        border-radius: 20px;
+        margin-top: 2px;
+    }
+
+        .nav_languages a:hover {
+            background-color: rgba( 245, 245, 245, 1 );
+        }
+
+    .nav_languages button {
+        border: transparent;
+        border-radius: 30px;
+        background-color: transparent;
+        font-size: 15px;
+        padding: 10px 20px 10px 20px;
+        cursor: pointer;
+        margin-bottom: 2px;
+    }
+
+        .nav_languages button:hover {
+            background-color: rgba( 245, 245, 245, 1 );
+        }
+
+.nav_login {
+    display: flex;
+    justify-content: center;
+    float: inline-end;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    height: 48px;
+    padding: 4px 10px 4px 10px;
+    border-radius: 30px;
+    margin-top: 5px
+}
+
+    .nav_login:hover {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav_login button {
+        border: transparent;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .nav_login i {
+        align-self: center;
+        font-size: 15px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .nav_login button:last-child {
+        display: block;
+        background-color: rgb(113, 113, 113);
+        color: #fff;
+        border-radius: 20px;
+        padding: 0 4px;
+        margin-right: -4px;
+        margin-left: 4px;
+    }
+
+.nav_menu {
+    display: flex !important;
+    justify-content: flex-end;
+}
+
+.sub_nav {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-top: 55px;
+    margin-left: 105px;
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.3);
+    z-index: 5;
+    transition: all 0.6s ease-in-out;
+}
+
+.sub_nav_guest.open {
+    display: block;
+}
+
+/* .sub_nav_guest{
+    display: block;
+} */
+
+.sub_nav .menu_user {
+    width: 245px;
+    padding: 0 10px;
+    list-style: none;
+    cursor: pointer;
+}
+
+.sub_nav li {
+    padding: 15px 30px 15px 10px;
+    font-size: 14px;
+}
+
+    .sub_nav li:hover {
+        background-color: rgba( 245, 245, 245, 1 );
+    }
+
+    .sub_nav li button {
+        font-size: 15px;
+        border: transparent;
+        background-color: transparent;
+        color: rgb(113, 113, 113);
+        cursor: pointer;
+    }
+
+    .sub_nav li a {
+        text-decoration: none;
+        color: rgb(113, 113, 113);
+    }
+
+#content {
+    margin-top: 160px;
+    margin-bottom: 50px;
+}
+
+.img_profile {
+    position: relative;
+    width: 214px;
+    height: 214px;
+    border-radius: 50%;
+    margin-bottom: 30px;
+    border: 2px solid #ccc;
+}
+
+.add_img {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+}
+
+    .add_img button {
+        padding: 10px;
+        font-size: 17px;
+        border-radius: 20px;
+        border: none;
+        background-color: #fff;
+        box-shadow: 0 7px 10px #ccc;
+        cursor: pointer;
+    }
+
+        .add_img button:hover {
+            padding: 15px;
+            border-radius: 30px;
+            font-size: 20px;
+        }
+
+.tittle h1 {
+    margin-bottom: 30px;
+    font-size: 40px;
+}
+
+.tittle p {
+    color: #a09d9d;
+    font-size: 17px;
+    margin-bottom: 40px;
+}
+
+.tittle a {
+    font-weight: 700;
+    color: #727171;
+}
+
+.infor_list {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.infor_item {
+    margin-bottom: 50px;
+}
+
+    .infor_item p {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .infor_item input {
+        padding: 20px 10px;
+        width: 350px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        font-size: 17px;
+    }
+
+    .infor_item i {
+        margin-right: 10px;
+    }
+
+.about_you {
+    padding-bottom: 50px;
+    border-bottom: 1px solid #ccc;
+}
+
+.add_intro textarea {
+    resize: none;
+    width: 100%;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 10px;
+    border: 1px dashed #ccc;
+    color: #a09d9d;
+}
+
+.interest {
+    padding-bottom: 60px;
+    border-bottom: 1px solid #ccc;
+}
+
+.tittle_sub {
+    margin: 30px 0;
+    line-height: 35px;
+}
+
+    .tittle_sub span {
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .tittle_sub p {
+        font-size: 17px;
+        color: #a09d9d;
+    }
+
+.list_button_add {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+    .list_button_add button {
+        padding: 15px 35px;
+        border-radius: 30px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        font-size: 17px;
+        color: #727171;
+        font-weight: 600;
+        background-color: transparent;
+        border: 3px dashed #ccc;
+        cursor: pointer;
+    }
+
+        .list_button_add button i {
+            margin-right: 10px;
+        }
+
+.place_went {
+    padding-bottom: 40px;
+    border-bottom: 1px solid #ccc;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.open_btn {
+    position: relative;
+    background-color: #000;
+    width: 70px;
+    height: 40px;
+    border-radius: 30px;
+    cursor: pointer;
+    opacity: 0.4;
+}
+
+    .open_btn:hover {
+        opacity: 1;
+    }
+
+    .open_btn button {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin-top: 3px;
+        margin-left: 3px;
+        padding: 9px 12px;
+        border-radius: 50%;
+        background-color: #fff;
+        color: #fff;
+        cursor: pointer;
+        transition: 0.7s;
+        /* transform: translateX(28px); */
+    }
+
+.place {
+    padding: 20px;
+    width: 33.333%;
+    margin-right: 15px;
+    height: 150px;
+    background-color: #f1f1f1;
+    border-radius: 20px;
+    opacity: 0.4;
+}
+
+.done_btn {
+    margin: 30px 0;
+    float: right;
+}
+
+    .done_btn button {
+        padding: 10px 25px;
+        font-size: 18px;
+        font-weight: 600;
+        border-radius: 10px;
+        border: none;
+        background-color: #000;
+        color: #fff;
+    }
+
+#footer {
+    background-color: #f8f8f8;
+    padding: 50px 25px;
+    border-top: 1px solid #ccc;
+}
+
+.infor_contact_list {
+    border-bottom: 1px solid #ccc;
+}
+
+.infor_contact_item {
+    margin-bottom: 25px;
+}
+
+    .infor_contact_item span {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .infor_contact_item li {
+        list-style: none;
+        margin: 15px 0;
+    }
+
+        .infor_contact_item li > a {
+            text-decoration: none;
+            color: #000000;
+            cursor: pointer;
+        }
+
+            .infor_contact_item li > a:hover {
+                border-bottom: 1px solid #000;
+            }
+
+
+.interest_menu {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    z-index: 4;
+}
+
+.interest_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.interest_container {
+    background-color: #fff;
+    border-radius: 30px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    position: relative;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    z-index: 2;
+    animation: modalFadein ease 0.5s;
+    padding: 40px 40px 0 40px;
+    overflow: hidden;
+}
+
+.list_box {
+    overflow: auto;
+    height: 350px;
+}
+
+    .list_box::-webkit-scrollbar {
+        display: none;
+    }
+
+.tittle_inter h2 {
+    margin-bottom: 10px;
+}
+
+.tittle_inter p {
+    color: #a09d9d;
+}
+
+.tittle_sub_inter {
+    padding: 40px 0 20px 10px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.interest_list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .interest_list li {
+        list-style: none;
+        margin-right: 5px;
+        margin-bottom: 5px
+    }
+
+    .interest_list button {
+        padding: 15px;
+        border-radius: 25px;
+        font-size: 15px;
+        background-color: #fff;
+        border: 1px solid #d1d1d1;
+        cursor: pointer;
+    }
+
+        .interest_list button:hover {
+            border: 1px solid #000;
+        }
+
+.focus {
+    color: #fff !important;
+    background-color: #000 !important;
+}
+
+
+.interest_list button > i {
+    margin-right: 10px;
+}
+
+.save {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+}
+
+.quantity p:first-child {
+    font-weight: 700;
+}
+
+.quantity p:last-child {
+    font-size: 12px;
+}
+
+.save_btn button {
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px 20px;
+    border-radius: 15px;
+    border: none;
+    background-color: #313131;
+    cursor: pointer;
+}
+
+    .save_btn button:hover {
+        background-color: #000;
+    }
+
+.icon_style {
+    display: inline-block;
+    width: 38px;
+    height: 35px;
+}

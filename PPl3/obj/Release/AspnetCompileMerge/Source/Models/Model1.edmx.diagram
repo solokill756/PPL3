@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e2aa3c0b4e614bf7b8d5103cd7eec190" Name="Diagram1">
+        <EntityTypeShape EntityType="PPL3Model.amenity" Width="1.5" PointX="14.25" PointY="53.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.booking_guests" Width="1.5" PointX="13.5" PointY="34.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.booking" Width="1.5" PointX="8.25" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.category" Width="1.5" PointX="12" PointY="53.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.city" Width="1.5" PointX="8" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.cms_page_languages" Width="1.5" PointX="7.5" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.cms_pages" Width="1.5" PointX="5.25" PointY="19.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.component_rating" Width="1.5" PointX="21" PointY="43.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.country" Width="1.5" PointX="3.5" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.currency" Width="1.5" PointX="9" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.discount" Width="1.5" PointX="14.25" PointY="32" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.dispute" Width="1.5" PointX="16.5" PointY="38.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.email_content_languages" Width="1.5" PointX="7.5" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.email_contents" Width="1.5" PointX="5.25" PointY="30.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.emergency_contact" Width="1.5" PointX="5.25" PointY="34.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.favourite" Width="1.5" PointX="8.25" PointY="43.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.Friendship" Width="1.5" PointX="5.25" PointY="41.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.governmentID" Width="1.5" PointX="5.25" PointY="44.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.guest_type" Width="1.5" PointX="11.25" PointY="27.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.host_reviews" Width="1.5" PointX="5.25" PointY="47.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.interest_categories" Width="1.5" PointX="6.75" PointY="62" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.interest" Width="1.5" PointX="9" PointY="61.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.language" Width="1.5" PointX="5.25" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.listLanguage" Width="1.5" PointX="6" PointY="65.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.Message" Width="1.5" PointX="5.25" PointY="51.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.neighbourhood" Width="1.5" PointX="13.5" PointY="38.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.phone_number" Width="1.5" PointX="5.25" PointY="54.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.promo_codes" Width="1.5" PointX="11.25" PointY="49.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property" Width="1.5" PointX="11.25" PointY="34.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.properties_discounts" Width="1.5" PointX="16.5" PointY="34.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_amenities" Width="1.5" PointX="16.5" PointY="42.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_images" Width="1.5" PointX="19.5" PointY="38.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_reviews" Width="1.5" PointX="18.75" PointY="42.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_type" Width="1.5" PointX="9" PointY="49.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.review_component" Width="1.5" PointX="18.75" PointY="47.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.room_type" Width="1.5" PointX="9" PointY="52.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.state" Width="1.5" PointX="5.75" PointY="26.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.transaction" Width="1.5" PointX="13.5" PointY="42.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_personalInfor" Width="1.5" PointX="10.25" PointY="29.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_profile" Width="1.5" PointX="5.25" PointY="72.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_role" Width="1.5" PointX="5.25" PointY="77.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_type" Width="1.5" PointX="0.75" PointY="39" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_type_user_role" Width="1.5" PointX="7.5" PointY="58.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user" Width="1.5" PointX="3" PointY="35.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.users_interests" Width="1.5" PointX="11.25" PointY="45.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.users_languages" Width="1.5" PointX="8.25" PointY="47" IsExpanded="true" />
+        <AssociationConnector Association="PPL3Model.FK_amenities_categories" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pa_amenity_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.bkg_booking_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.bkg_guest_type_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.booking_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.booking_transaction_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.booking_userId_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.disputes_booking_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.transaction_booking_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.cities_state_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pro_city_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.u_city_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.cpl_cms_page_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.cpl_language_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.cr_component_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.cr_review_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pro_country_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.states_country_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.up_country_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pro_currency_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.transaction_currency_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_discounts_discounts" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_properties_discounts_discounts" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.disputes_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.disputes_userId_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.ecl_email_content_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.ecl_language_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.emct_receiver_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.emct_sender_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.ecc_userid_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.favourite_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.favourite_userID_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_Friendship_users" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_Friendship_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.gid_userID_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.hr_hostid_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.hr_rvbuser_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.interest_cate_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.interest_idd_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.ul_language_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_Message_users" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_Message_users1" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.neighbourhood_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pn_userID_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.transaction_promo_code_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_properties_discounts_properties" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pa_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pi_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pr_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pro_property_type_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pro_room_type_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pro_state_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pro_userId_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.transaction_property_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pi_added_by_user_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pr_reviews_by_user_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.pr_transactions_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.u_state_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.transaction_payer_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.transaction_receiver_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.up_userID_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.upp_userID_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.ur_create_by_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.ur_update_by_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.utur_user_role_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.users_user_type_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.utur_user_type_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.ul_userID_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.useridddd_id_id_FK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -36,6 +36,7 @@ namespace PPl3.Models
             this.property_reviews = new HashSet<property_reviews>();
             this.transactions = new HashSet<transaction>();
             this.transactions1 = new HashSet<transaction>();
+            this.user_notification = new HashSet<user_notification>();
             this.user_personalInfor = new HashSet<user_personalInfor>();
             this.user_profile = new HashSet<user_profile>();
             this.user_role = new HashSet<user_role>();
@@ -94,6 +95,8 @@ namespace PPl3.Models
         public virtual ICollection<transaction> transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<transaction> transactions1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<user_notification> user_notification { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user_personalInfor> user_personalInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

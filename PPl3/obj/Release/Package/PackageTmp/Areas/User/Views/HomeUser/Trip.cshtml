@@ -1,0 +1,166 @@
+﻿@model List<PPl3.Models.booking>
+@{
+    Layout = null;
+}
+
+@{ 
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/ExtraFiles/assets/css/gird.css?v=1" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/Trip.css?v=1" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>T|.|N|.|T | Trip</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+</head>
+<body>
+    <div class="main">
+
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @if (p_user.user_profile.FirstOrDefault() != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                            }
+                        </div>
+                        <div class="sub_nav sub_nav_guest js_sub_nav_guest">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><a href="/user/homeuser/trip">Trips</a></li>
+                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                                <li><a href="/host/homehost/listing">Manage listings</a></li>
+                                <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
+                                <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div id="content">
+                <div class="gird wide">
+                    <div class="row no-gutter">
+                        <div class="col l-12 m-12 c-12">
+                            <div class="tool_trip">
+                                <div class="tittle">
+                                    <h1>Trips</h1>
+                                </div>
+                                <div class="add_hotel">
+                                    <button><a href="/user/homeuser/index"><i class="fa-solid fa-plus"></i></a></button>
+                                </div>
+                            </div>
+                        </div>
+                        @foreach (var item in Model.ToList())
+                        {
+                            if (item.booking_status == 1)
+                            {
+                                if (item.pay_status == 1)
+                                {
+                                    <div class="col l-12 m-12 c-12">
+                                        <div class="hotel_container">
+                                            <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat; cursor:default">
+
+                                            </div>
+                                            <div class="infor_hotel">
+                                                <div class="name_hotel">
+                                                    <span>@item.property.p_name , @item.property.p_address</span>
+                                                    @{
+                                                        double sum = 0;
+                                                        foreach (var row in item.property.property_reviews.ToList())
+                                                        {
+                                                            sum = sum + double.Parse(row.overall_rating);
+                                                        }
+                                                        sum = sum / item.property.property_reviews.ToArray().Length;
+                                                    }
+                                                    <p><i class="fa-solid fa-star"></i>@sum</p>
+                                                </div>
+                                                <div class="date_check">
+                                                    <p><i class="fa-solid fa-circle" style="color: greenyellow; margin-right: 5px; font-size: 10px;"></i>Check-In: <span class="check_in">@item.check_in_date.Value.ToString("dd/MM/yyyy")</span></p>
+                                                    <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyyy")</span></p>
+                                                </div>
+                                                <div class="price">
+
+                                                    <p>Price: <span>$@item.amount_paid</span></p>
+                                                    <p>Transaction : <span style="color:green">complete</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="col l-12 m-12 c-12">
+                                        <div class="hotel_container" onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id&bookingId=@item.id'">
+                                            <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
+
+                                            </div>
+                                            <div class="infor_hotel">
+                                                <div class="name_hotel">
+                                                    <span>@item.property.p_name , @item.property.p_address</span>
+                                                    @{
+                                                        double sum = 0;
+                                                        foreach (var row in item.property.property_reviews.ToList())
+                                                        {
+                                                            sum = sum + double.Parse(row.overall_rating);
+                                                        }
+                                                        sum = sum / item.property.property_reviews.ToArray().Length;
+                                                    }
+                                                    <p><i class="fa-solid fa-star"></i>@sum</p>
+                                                </div>
+                                                <div class="date_check">
+                                                    <p><i class="fa-solid fa-circle" style="color: greenyellow; margin-right: 5px; font-size: 10px;"></i>Check-In: <span class="check_in">@item.check_in_date.Value.ToString("dd/MM/yyyy")</span></p>
+                                                    <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyy")</span></p>
+                                                </div>
+                                                <div class="price">
+                                                    <p>Price: <span>$@item.amount_paid</span></p>
+                                            
+                                                    <p>Transaction : <span style="color:red">Not yet</span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+     </div>
+    <script src="~/ExtraFiles/JS/Trip.js?v=1"></script>
+</body>
+</html>

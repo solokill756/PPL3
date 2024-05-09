@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T|.|n|.|T</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/book_room.css?v=1" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/style_v1.css?v=5" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=2" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+</head>
+<body>
+    <div class="main">
+        <div id="first_header">
+            <div class="gird wide"> 
+                <div class="row sm-gutter first_nav">
+                    <div class="col l-2 m-1 c-2">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col l-6 m-7 c-4">
+                        <div class="first_experience_list">
+                            <button class="js_stays_btn">Stays</button>
+                            <button class="js_experience_btn">Experiences</button>
+                            <a href="#">Online Experiences</a>
+                        </div>
+                    </div>
+
+                    <div class="col l-4 m-4 c-6 nav_menuUser">
+                        <div class="nav_languages">
+                            <a href="">Airbnb your home</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+
+                        @RenderSection("Menu", required: false)
+                    </div>
+
+                </div>
+                <div class="row book_experience js_book_experience">
+                    <div class="l-o-2 l-8 m-12 c-10 book_container_experience js_book_container_experience">
+                        <button class="place_btn">Where<p>Search destinations</p></button>
+                        <span id="span1">|</span>
+                        <button class="date_btn">Date<p>Add dates</p></button>
+                        <span id="span2">|</span>
+                        <div class="search">
+                            <button class="people_btn">Who<p>Add guests</p></button>
+                            <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row book_stays js_book_stays">
+                    <div class="l-o-2 l-8 m-12 c-10 book_container_stays js_book_container_stays">
+                        <button class="place_btn">Where<p>Search destinations</p></button>
+                        <span id="span1">|</span>
+                        <button class="date_btn_in">Check in<p>Add dates</p></button>
+                        <span id="span2">|</span>
+                        <button class="date_btn_out">Check out<p>Add dates</p></button>
+                        <span id="span3">|</span>
+                        <div class="search_stays">
+                            <button class="people_btn">Who<p>Add guests</p></button>
+                            <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="room_classification">
+            <div class="gird wide">
+                <div class="row sm-gutter room_classifi_container">
+                    <div class="col l-12 m-12 c-12 room_classifi_list">
+                        @RenderSection("ListMainAmenity", required: false)
+
+                    </div>
+
+                    <div class="room_classifi_btns">
+                        <div class="btn_left_room classifi_btn"><i class="fa-solid fa-angle-left"></i></div>
+                        <div class="btn_right_room classifi_btn"><i class="fa-solid fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="header">
+            <div class="gird wide">
+                <div class="row sm-gutter nav">
+                    <div class="col l-3 m-1 c-2">
+                        <div class="nav_logo">
+                            <a href="/home/index" class="logo_link">
+                                <i class="fa-brands fa-airbnb"></i>
+                                <h1>airbnb</h1>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col l-5 m-6 c-4">
+                        <div class="experience_list">
+                            <button class="place_btn">Anywhere</button>
+                            <span>|</span>
+                            <button class="date_btn_in">Any week</button>
+                            <span>|</span>
+                            <button class="people_btn">Add Guests</button>
+                            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="col l-3 m-4 c-4">
+                        <div class="nav_languages">
+                            <a href="#">Airbnb your home</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="col l-1 m-1 c-2">
+                        <div class="nav_languages">
+                            <a href="#">Airbnb your home</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="gird wide">
+                <div class="row list_content">
+                    @RenderSection("ListHotel", required: false)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        @RenderBody()
+    </div>
+    <script src="~/ExtraFiles/JS/first_header.js?v=1"></script>
+    <script src="~/ExtraFiles/JS/imgSlide.js?v=2"></script>
+    <script src="~/ExtraFiles/JS/main_v1.js?v=2"></script>
+    <script src="~/ExtraFiles/JS/room_classifi_v1.js?v=1"></script>>
+    <script src="~/ExtraFiles/JS/seller_profile.js?v=2"></script>
+    <script src="~/ExtraFiles/JS/Sign_Log_v1.js?v=1"></script>
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <script src="~/Scripts/jquery-3.7.1.min.js"></script>
+</body>
+</html>
+
+@RenderSection("Scripts", required: false)

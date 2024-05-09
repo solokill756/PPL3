@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airbnb</title>
+    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="stylesheet" href="./assets/css/book_room.css">
+    <link rel="stylesheet" href="./assets/css/gird.css">
+    <link rel="stylesheet" href="./assets/css/seller_profile.css">
+    <link rel="stylesheet" href="./assets/css/Sign_Log.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="main">
+        <div id="first_header">
+            <div class="gird wide">
+                <div class="row sm-gutter first_nav">
+                    <div class="col l-2 m-1 c-2">
+                        <div class="nav_logo">
+                            <a href="index.html" class="logo_link">
+                                <i class="fa-brands fa-airbnb"></i>
+                                <h1>T|.|n|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col l-6 m-7 c-4">
+                        <div class="first_experience_list">
+                            <button class="js_stays_btn">Stays</button>
+                            <button class="js_experience_btn">Experiences</button>
+                            <a href="#">Online Experiences</a>
+                        </div>
+                    </div>
+
+                    <div class="col l-4 m-4 c-6 nav_menuUser">
+                        <div class="nav_languages">
+                            <a href="">Airbnb your home</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></i></button>
+                        </div>
+                        <div class="sub_nav sub_nav_guest js_sub_nav_guest">
+                            <ul class="menu_user js_menu_user">
+                                <li class="js_signUp_btn"><button>Sign In</button></li>
+                                <li class="js_logIn_btn"><button>Sign Up</button></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Airbnb your home</a></li>
+                                <li><a href="#">Help Center</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><button>Trips</button></li>
+                                <li class=""><button>Wishlist</button></li>
+                                <li><a href="#">Manage listings</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Log out</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="row book_experience js_book_experience">
+                    <div class="l-o-2 l-8 m-12 c-10 book_container_experience js_book_container_experience">
+                        <button class="place_btn">Where<p>Search destinations</p></button>
+                        <span id="span1">|</span>
+                        <button class="date_btn">Date<p>Add dates</p></button>
+                        <span id="span2">|</span>
+                        <div class="search">
+                            <button class="people_btn">Who<p>Add guests</p></button>
+                            <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row book_stays js_book_stays">
+                    <div class="l-o-2 l-8 m-12 c-10 book_container_stays js_book_container_stays">
+                        <button class="place_btn">Where<p>Search destinations</p></button>
+                        <span id="span1">|</span>
+                        <button class="date_btn_in">Check in<p>Add dates</p></button>
+                        <span id="span2">|</span>
+                        <button class="date_btn_out">Check out<p>Add dates</p></button>
+                        <span id="span3">|</span>
+                        <div class="search_stays">
+                            <button class="people_btn">Who<p>Add guests</p></button>
+                            <button class="search_btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="menu_places">
+            <div class="menu_places_container">
+                <header>Search by region</header>
+                <div class="menu_places_body">
+
+                </div>
+            </div>
+        </div> -->
+
+        </div>
+
+        <div id="room_classification">
+            <div class="gird wide">
+                <div class="row sm-gutter room_classifi_container">
+                    <div class="col l-12 m-12 c-12 room_classifi_list">
+                        <div class="room_classifi_item room_classifi_item_0 activeListRoom">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/10ce1091-c854-40f3-a2fb-defc2995bcaf.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_1">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/33848f9e-8dd6-4777-b905-ed38342bacb9.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_2">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/3fb523a0-b622-4368-8142-b5e03df7549b.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_3">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/5cdb8451-8f75-4c5f-a17d-33ee228e3db8.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_4">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/687a8682-68b3-4f21-8d71-3c3aef6c1110.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_5">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/732edad8-3ae0-49a8-a451-29a8010dcc0c (1).jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_6">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/732edad8-3ae0-49a8-a451-29a8010dcc0c.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_7">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/8b44f770-7156-4c7b-b4d3-d92549c8652f.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_8">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/8e507f16-4943-4be9-b707-59bd38d56309.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_9">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/8eccb972-4bd6-43c5-ac83-27822c0d3dcd.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_10">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c (1).jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_11">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/bcd1adc0-5cee-4d7a-85ec-f6730b0f8d0c.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_12">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/c027ff1a-b89c-4331-ae04-f8dee1cdc287.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_13">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/c0a24c04-ce1f-490c-833f-987613930eca.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_14">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/c5a4f6fc-c92c-4ae8-87dd-57f1ff1b89a6.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_15">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/c9157d0a-98fe-4516-af81-44022118fbc7.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_16">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/ddd13204-a5ae-4532-898c-2e595b1bb15f.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_17">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/ed8b9e47-609b-44c2-9768-33e6a22eccb2.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_18">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/f0c5ca0f-5aa0-4fe5-b38d-654264bacddf.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_19">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/f0c5ca0f-5aa0-4fe5-b38d-654264bacddf.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_20">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/f0c5ca0f-5aa0-4fe5-b38d-654264bacddf.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_21">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/f0c5ca0f-5aa0-4fe5-b38d-654264bacddf.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                        <div class="room_classifi_item room_classifi_item_22">
+                            <div class="box_room_classifi">
+                                <img src="./assets/img/room_classify/f0c5ca0f-5aa0-4fe5-b38d-654264bacddf.jpg" alt="">
+                                <span>Beach</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="room_classifi_btns">
+                        <div class="btn_left_room classifi_btn"><i class="fa-solid fa-angle-left"></i></div>
+                        <div class="btn_right_room classifi_btn"><i class="fa-solid fa-angle-right"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="header">
+            <div class="gird wide">
+                <div class="row sm-gutter nav">
+                    <div class="col l-3 m-1 c-2">
+                        <div class="nav_logo">
+                            <a href="index.html" class="logo_link">
+                                <i class="fa-brands fa-airbnb"></i>
+                                <h1>airbnb</h1>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="col l-5 m-6 c-4">
+                        <div class="experience_list">
+                            <button class="place_btn">Anywhere</button>
+                            <span>|</span>
+                            <button class="date_btn_in">Any week</button>
+                            <span>|</span>
+                            <button class="people_btn">Add Guests</button>
+                            <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="col l-3 m-4 c-4">
+                        <div class="nav_languages">
+                            <a href="#">Airbnb your home</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="col l-1 m-1 c-2">
+                        <div class="nav_languages">
+                            <a href="#">Airbnb your home</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></i></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="content">
+            <div class="gird wide">
+                <div class="row list_content">
+                    <div class="col l-3 m-4 c-6 content_container">
+                        <div class="content_item content_item_0">
+                            <div class="list_img list_img_0">
+                                <img class="img_0" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_0" src="./assets/img/Where_add/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.webp" alt="">
+                                <img class="img_0" src="./assets/img/Where_add/4e762891-75a3-4fe1-b73a-cd7e673ba915.webp" alt="">
+                                <img class="img_0" src="./assets/img/Where_add/924d2b73-6c65-4d04-a2ad-bbc028299658.webp" alt="">
+                                <img class="img_0" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_0" src="./assets/img/Where_add/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" alt="">
+                            </div>
+                            <div class="img_btns">
+                                <div class="btn_left btn_left_0 img_btn"><i class="fa-solid fa-angle-left"></i></div>
+                                <div class="btn_right btn_right_0 img_btn"><i class="fa-solid fa-angle-right"></i></div>
+                            </div>
+
+                            <div class="index_imgs">
+                                <div class="index_item index-item-0_0 active_0"></div>
+                                <div class="index_item index-item-1_0"></div>
+                                <div class="index_item index-item-2_0"></div>
+                                <div class="index_item index-item-3_0"></div>
+                                <div class="index_item index-item-4_0"></div>
+                                <div class="index_item index-item-5_0"></div>
+                            </div>
+
+                            <div class="heart_icon heart_icon_0">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+
+                            <div class="profile_seller profile_seller_0">
+                                <div class="img_profile">
+                                    <div class="img_seller img_seller_0">
+                                    </div>
+                                </div>
+                                <div class="profile_behind">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="name_hotel name_hotel_0">
+                            <p>Rome, Italy</p>
+                            <span><i class="fa-solid fa-star"></i> 4.9</span>
+                        </div>
+
+                        <div class="review_hotel review_hotel_0">
+                            <p>Hướng Biển và Biển</p>
+                            <p>Ngày 17 - Ngày 22 tháng 3</p>
+                        </div>
+
+                        <div class="price_hotel price_hotel_0">
+                            <span>$1.196 / đêm</span>
+                        </div>
+                    </div>
+
+                    <div class="col l-3 m-4 c-6 content_container">
+                        <div class="content_item content_item_1">
+                            <div class="list_img list_img_1">
+                                <img class="img_1" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_1" src="./assets/img/Where_add/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.webp" alt="">
+                                <img class="img_1" src="./assets/img/Where_add/4e762891-75a3-4fe1-b73a-cd7e673ba915.webp" alt="">
+                                <img class="img_1" src="./assets/img/Where_add/924d2b73-6c65-4d04-a2ad-bbc028299658.webp" alt="">
+                                <img class="img_1" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_1" src="./assets/img/Where_add/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" alt="">
+                            </div>
+                            <div class="img_btns">
+                                <div class="btn_left btn_left_1 img_btn"><i class="fa-solid fa-angle-left"></i></div>
+                                <div class="btn_right btn_right_1 img_btn"><i class="fa-solid fa-angle-right"></i></div>
+                            </div>
+
+                            <div class="index_imgs">
+                                <div class="index_item index-item-0_1 active_1"></div>
+                                <div class="index_item index-item-1_1"></div>
+                                <div class="index_item index-item-2_1"></div>
+                                <div class="index_item index-item-3_1"></div>
+                                <div class="index_item index-item-4_1"></div>
+                                <div class="index_item index-item-5_1"></div>
+                            </div>
+
+                            <div class="heart_icon heart_icon_1">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+
+                            <div class="profile_seller profile_seller_1">
+                                <div class="img_profile">
+                                    <div class="img_seller img_seller_1">
+                                    </div>
+                                </div>
+                                <div class="profile_behind">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="name_hotel name_hotel_1">
+                            <p>Rome, Italy</p>
+                            <span><i class="fa-solid fa-star"></i> 4.9</span>
+                        </div>
+
+                        <div class="review_hotel review_hotel_1">
+                            <p>Hướng Biển và Biển</p>
+                            <p>Ngày 17 - Ngày 22 tháng 3</p>
+                        </div>
+
+                        <div class="price_hotel price_hotel_1">
+                            <span>$1.196 / đêm</span>
+                        </div>
+                    </div>
+
+                    <div class="col l-3 m-4 c-6 content_container">
+                        <div class="content_item content_item_2">
+                            <div class="list_img list_img_2">
+                                <img class="img_2" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_2" src="./assets/img/Where_add/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.webp" alt="">
+                                <img class="img_2" src="./assets/img/Where_add/4e762891-75a3-4fe1-b73a-cd7e673ba915.webp" alt="">
+                                <img class="img_2" src="./assets/img/Where_add/924d2b73-6c65-4d04-a2ad-bbc028299658.webp" alt="">
+                                <img class="img_2" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_2" src="./assets/img/Where_add/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" alt="">
+                            </div>
+                            <div class="img_btns">
+                                <div class="btn_left btn_left_2 img_btn"><i class="fa-solid fa-angle-left"></i></div>
+                                <div class="btn_right btn_right_2 img_btn"><i class="fa-solid fa-angle-right"></i></div>
+                            </div>
+
+                            <div class="index_imgs">
+                                <div class="index_item index-item-0_2 active_2"></div>
+                                <div class="index_item index-item-1_2"></div>
+                                <div class="index_item index-item-2_2"></div>
+                                <div class="index_item index-item-3_2"></div>
+                                <div class="index_item index-item-4_2"></div>
+                                <div class="index_item index-item-5_2"></div>
+                            </div>
+
+                            <div class="heart_icon heart_icon_2">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+
+                            <div class="profile_seller profile_seller_2">
+                                <div class="img_profile">
+                                    <div class="img_seller img_seller_2">
+                                    </div>
+                                </div>
+                                <div class="profile_behind">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="name_hotel name_hotel_2">
+                            <p>Rome, Italy</p>
+                            <span><i class="fa-solid fa-star"></i> 4.9</span>
+                        </div>
+
+                        <div class="review_hotel review_hotel_2">
+                            <p>Hướng Biển và Biển</p>
+                            <p>Ngày 17 - Ngày 22 tháng 3</p>
+                        </div>
+
+                        <div class="price_hotel price_hotel_2">
+                            <span>$1.196 / đêm</span>
+                        </div>
+                    </div>
+
+                    <div class="col l-3 m-4 c-6 content_container">
+                        <div class="content_item content_item_3">
+                            <div class="list_img list_img_3">
+                                <img class="img_3" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_3" src="./assets/img/Where_add/42a1fb0f-214c-41ec-b9d7-135fbbdb8316.webp" alt="">
+                                <img class="img_3" src="./assets/img/Where_add/4e762891-75a3-4fe1-b73a-cd7e673ba915.webp" alt="">
+                                <img class="img_3" src="./assets/img/Where_add/924d2b73-6c65-4d04-a2ad-bbc028299658.webp" alt="">
+                                <img class="img_3" src="./assets/img/Where_add/c193e77c-0b2b-4f76-8101-b869348d8fc4.webp" alt="">
+                                <img class="img_3" src="./assets/img/Where_add/f9ec8a23-ed44-420b-83e5-10ff1f071a13.jpg" alt="">
+                            </div>
+                            <div class="img_btns">
+                                <div class="btn_left btn_left_3 img_btn"><i class="fa-solid fa-angle-left"></i></div>
+                                <div class="btn_right btn_right_3 img_btn"><i class="fa-solid fa-angle-right"></i></div>
+                            </div>
+
+                            <div class="index_imgs">
+                                <div class="index_item index-item-0_3 active_3"></div>
+                                <div class="index_item index-item-1_3"></div>
+                                <div class="index_item index-item-2_3"></div>
+                                <div class="index_item index-item-3_3"></div>
+                                <div class="index_item index-item-4_3"></div>
+                                <div class="index_item index-item-5_3"></div>
+                            </div>
+
+                            <div class="heart_icon heart_icon_3">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+
+                            <div class="profile_seller profile_seller_3">
+                                <div class="img_profile">
+                                    <div class="img_seller img_seller_3">
+                                    </div>
+                                </div>
+                                <div class="profile_behind">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="name_hotel name_hotel_3">
+                            <p>Rome, Italy</p>
+                            <span><i class="fa-solid fa-star"></i> 4.9</span>
+                        </div>
+
+                        <div class="review_hotel review_hotel_3">
+                            <p>Hướng Biển và Biển</p>
+                            <p>Ngày 17 - Ngày 22 tháng 3</p>
+                        </div>
+
+                        <div class="price_hotel price_hotel_3">
+                            <span>$1.196 / đêm</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="body_sign_log">
+            <div class="container" id="container">
+                <div class="form-container sign-up">
+                    <form>
+                        <h1>Create Account</h1>
+                        <div class="social-icons">
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
+                        <span>or use your email for registeration</span>
+                        <input type="text" required placeholder="Name">
+                        <input type="email" required placeholder="Email">
+                        <input type="password" required placeholder="Password">
+                        <button>Sign Up</button>
+                    </form>
+                </div>
+                <div class="form-container sign-in">
+                    <form>
+                        <h1>Sign In</h1>
+                        <div class="social-icons">
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
+                        <span>or use your email password</span>
+                        <input type="email" required placeholder="Email">
+                        <input type="password" required placeholder="Password">
+                        <a href="#">Forget Your Password?</a>
+                        <button>Sign In</button>
+                    </form>
+                </div>
+                <div class="toggle-container">
+                    <div class="toggle">
+                        <div class="toggle-panel toggle-left">
+                            <h1>Welcome Back!</h1>
+                            <p>Enter your personal details to use all of site features</p>
+                            <button class="hidden" id="login">Sign In</button>
+                        </div>
+                        <div class="toggle-panel toggle-right">
+                            <h1>Hello, Friend!</h1>
+                            <p>Register with your personal details to use all of site features</p>
+                            <button class="hidden" id="register">Sign Up</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="seller_profile">
+            <div class="seller">
+                <div class="seller_profile_container seller_profile_container_left">
+                    <div class="logo_company">
+                        <i class="fa-brands fa-airbnb"></i>
+                        <h1>T|.|N|.|T</h1>
+                    </div>
+
+                    <div class="profile_left">
+                        <div class="profile_left_box">
+                            <div class="img_seller_profile"></div>
+                            <div class="logo_shield"><i class="fa-solid fa-shield"></i></i></div>
+                            <span class="name_seller">Thomas Henrry</span>
+                            <div class="contact_seller">
+                                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                                <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                            </div>
+
+                            <div class="page_arrow">
+                                <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                                <p>1</p>
+                                <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="seller_profile_container seller_profile_container_right">
+                    <div class="profile_right">
+                        <div class="profile_right_box">
+                            <div class="about_seller">
+                                <p>i am  a vietnamese woman, my lovely job is take care of my family , my husband is an architecter, he made my homestay, so i proud of this, i want to take care of my homestay like take care of my daughter (i have two son now) :)), i alway help my guests , i want them comfortable in my home, like their house, i want them come back to my homestay and we  welcome them like friend visit my house....thanks so much to read ...</p>
+                            </div>
+
+                            <div class="page_arrow">
+                                <button class="page_left_2_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                                <p>2</p>
+                                <button class="page_right_2_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                            </div>
+
+                            <!-- <div class="img_seller_profile"></div>
+                        <div class="logo_shield"><i class="fa-solid fa-shield"></i></i></div>
+                        <span class="name_seller">Thomas Henrry</span>
+                        <div class="contact_seller">
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>
+
+                        <div class="page_arrow">
+                            <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>
+                            <p>1</p>
+                            <button class="page_right_1_btn"><i class="fa-solid fa-chevron-right"></i></button>
+                        </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="alert_complete">
+            <i class="fa-solid fa-check"></i>
+            <p>Complete !</p>
+        </div>
+
+    </div>
+    <script src="./JS/main.js"></script>
+    <script src="./JS/Sign_Log.js"></script>
+    <script src="./JS/first_header.js"></script>
+    <script src="./JS/imgSlide.js"></script>
+    <script src="./JS/room_classifi.js"></script>
+    <script src="./JS/seller_profile.js"></script>
+</body>
+</html>

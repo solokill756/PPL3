@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/editProfile.css">
+    <link rel="stylesheet" href="./assets/css/gird.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <title>Edit Profile</title>
+    <style>
+
+        :root {
+            --gray-color: hsla(0, 0%, 80%, 1);
+            --black-color: #000000;
+        }
+
+        .open-mod-btn {
+            padding: 20px 40px;
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 25px;
+        }
+
+        .mod {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: 100vw;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .mod__inner {
+            width: 400px;
+            /* position: relative; */
+            /* top: 50%; */
+            /* margin: auto; */
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .mod__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--black-color);
+            color: white;
+        }
+
+        .mod__body {
+            padding: 15px;
+        }
+
+            .mod__body h2 {
+                color: var(--black-color);
+            }
+
+        .mod__footer {
+            padding: 15px;
+            text-align: right;
+        }
+
+            .mod__footer button {
+                padding: 10px 20px;
+                color: white;
+                background: var(--black-color);
+                border-radius: 5px;
+                border: none;
+                outline: none;
+            }
+
+        .hide {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="index.html" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></i></button>
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><button>Trips</button></li>
+                                <li class=""><button>Wishlist</button></li>
+                                <li><a href="#">Manage listings</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="col l-4 m-12 c-12 center">
+                        <div class="img_profile">
+                            <div class="add_img">
+                                <input type="file" accept=".jpg, .png" name="" id="file_upload" hidden required>
+                                <button class="add_img_btn"><i class="fa-solid fa-camera"></i> Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l-8 m-12 c-12">
+                        <div class="tittle">
+                            <h1>Your profile</h1>
+                            <p>The information you share will be used across Airbnb to help other guests and Hosts get to know you. <a href=""> Learn more</a></p>
+                        </div>
+                        <div class="infor_list">
+                            <div class="infor_container">
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-graduation-cap"></i>Where I went to school:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-earth-europe"></i>Where I live:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-golf-ball-tee"></i>Decade I was born:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-regular fa-heart"></i>I'm obsessed with:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-wand-magic-sparkles"></i>My most useless skill:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-regular fa-clock"></i>I spend too much time:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                            </div>
+                            <div class="infor_container">
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-briefcase"></i>My work:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-globe"></i>Languages I speak:</p>
+                                    <div class="mod hide">
+                                        <div class="mod__inner">
+                                            <div class="mod__header">
+
+                                                <i class="far fa-window-close"></i>
+                                            </div>
+                                            <div class="mod__body">
+                                                <h2>Languages you speak</h2>
+                                                <ul class="dropdown-menu dropdown-menu-form">
+                                                    <li><label class="checkbox"><input type="checkbox">One</label></li>
+                                                    <li><label class="checkbox"><input type="checkbox">Two</label></li>
+                                                </ul>
+                                            </div>
+                                            <div class="mod__footer">
+                                                <button>Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-music"></i>My favorite song in hight school:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-regular fa-lightbulb"></i>My fun fact:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-book-open"></i>My biography title would be:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                                <div class="infor_item">
+                                    <p><i class="fa-solid fa-paw"></i>Pets:</p>
+                                    <input type="text" placeholder="Where....">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="about_you">
+                            <div class="tittle">
+                                <h1>About you</h1>
+                            </div>
+                            <div class="add_intro">
+                                <textarea name="about_you" id="" cols="30" rows="5">Write something fun and punchy...</textarea>
+                            </div>
+                        </div>
+
+                        <div class="interest">
+                            <div class="tittle_sub">
+                                <span>What you’re into</span>
+                                <p>Find common ground with other guests and Hosts by adding interests to your profile.</p>
+                            </div>
+                            <div class="list_button_add">
+                                <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                                <button type="button" class="add_inter_btn"><i class="fa-solid fa-plus"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="place_went">
+                            <div class="container">
+                                <div class="tittle_sub">
+                                    <span>Where you’ve been</span>
+                                    <p>Choose whether other people can see all the places you’ve been on Airbnb.</p>
+                                </div>
+                                <div class="open_btn">
+                                    <button><i class="fa-solid fa-check"></i></button>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <div class="place">
+                                    <p>Year</p>
+                                    <h3>Your next destination</h3>
+                                </div>
+                                <div class="place">
+                                    <p>Year</p>
+                                    <h3>Your next destination</h3>
+                                </div>
+                                <div class="place">
+                                    <p>Year</p>
+                                    <h3>Your next destination</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="done_btn">
+                            <button>Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="footer">
+            <div class="gird wide">
+                <div class="row no-gutter infor_contact_list">
+                    <div class="col l-4 m-6 c-12 infor_contact_item support">
+                        <span>Support</span>
+                        <ul>
+                            <li><a href="">Help Center</a></li>
+                            <li><a href="">Get help with a safety issue</a></li>
+                            <li><a href="">AirCover</a></li>
+                            <li><a href="">Anti-discrimination</a></li>
+                            <li><a href="">Disability support</a></li>
+                            <li><a href="">Cancellation options</a></li>
+                            <li><a href="">Report neighborhood concern</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item hosting">
+                        <span>Hosting</span>
+                        <ul>
+                            <li><a href="">T|.|N|.|T your home</a></li>
+                            <li><a href="">AirCover for Hosts</a></li>
+                            <li><a href="">Hosting resources</a></li>
+                            <li><a href="">Community forum</a></li>
+                            <li><a href="">Hosting responsibly</a></li>
+                            <li><a href="">T|.|N|.|T-friendly apartments</a></li>
+                            <li><a href="">Join a free Hosting class</a></li>
+                        </ul>
+                    </div>
+                    <div class="col l-4 m-6 c-12 infor_contact_item airbnb">
+                        <span>T|.|N|.|T</span>
+                        <ul>
+                            <li><a href="">Newsroom</a></li>
+                            <li><a href="">New features</a></li>
+                            <li><a href="">Careers</a></li>
+                            <li><a href="">Investors</a></li>
+                            <li><a href="">Gift cards</a></li>
+                            <li><a href="">T|.|N|.|T.org emergency stays</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="interest_menu">
+            <div class="gird wide">
+                <div class="row no-gutter interest_box">
+                    <div class="col l-8 m-8 c-8">
+                        <div class="interest_container">
+                            <div class="list_box">
+
+                                <div class="tittle_inter">
+                                    <h2>What are you into?</h2>
+                                    <p>Pick up to 7 interests or sports you enjoy that you want to show on your profile.</p>
+                                </div>
+
+                                <div class="tittle_sub_inter">
+                                    <p>Interests</p>
+                                </div>
+                                <ul class="interest_list">
+                                    <li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
+                                    <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
+                                    <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
+                                    <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
+                                    <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
+                                    <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
+                                    <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>
+                                    <li><button><i class="fa-solid fa-clapperboard"></i>Movies</button></li>
+                                    <li><button><i class="fa-solid fa-suitcase"></i>Travel</button></li>
+                                    <li><button><i class="fa-solid fa-chess"></i>Board game</button></li>
+                                    <li><button><i class="fa-solid fa-person-walking"></i>Walking</button></li>
+                                    <li><button><i class="fa-solid fa-microchip"></i>Technology</button></li>
+                                    <li><button><i class="fa-solid fa-spa"></i>Spa</button></li>
+                                    <li><button><i class="fa-solid fa-basket-shopping"></i>Shopping</button></li>
+                                    <li><button><i class="fa-solid fa-camera-retro"></i>Photography</button></li>
+                                    <li><button><i class="fa-solid fa-microphone"></i>Podcasts</button></li>
+                                    <li><button><i class="fa-solid fa-headphones"></i>Music</button></li>
+                                    <li><button><i class="fa-solid fa-palette"></i>Art</button></li>
+                                </ul>
+
+                                <div class="tittle_sub_inter">
+                                    <p>Sports</p>
+                                </div>
+                                <ul class="interest_list">
+                                    <li><button><i class="fa-solid fa-baseball"></i>Baseball</button></li>
+                                    <li><button><i class="fa-solid fa-bicycle"></i>Cycling</button></li>
+                                    <li><button><i class="fa-solid fa-dumbbell"></i>Weight lifting</button></li>
+                                    <li><button><i class="fa-solid fa-person-snowboarding"></i>Figue skating</button></li>
+                                    <li><button><i class="fa-solid fa-futbol"></i>Football</button></li>
+                                    <li><button><i class="fa-solid fa-football"></i>America football</button></li>
+                                    <li><button><i class="fa-solid fa-motorcycle"></i>Motor sporting</button></li>
+                                    <li><button><i class="fa-solid fa-bowling-ball"></i>Bowling</button></li>
+                                    <li><button><i class="fa-solid fa-volleyball"></i>Volleyball</button></li>
+                                    <li><button><i class="fa-solid fa-table-tennis-paddle-ball"></i>Table tennis</button></li>
+                                    <li><button><i class="fa-solid fa-golf-ball-tee"></i>Golf</button></li>
+                                    <li><button><i class="fa-solid fa-fish"></i>Fishing</button></li>
+                                    <li><button><i class="fa-solid fa-hockey-puck"></i>Hockey</button></li>
+                                    <li><button><i class="fa-solid fa-horse"></i>Horse racing</button></li>
+                                    <li><button><i class="fa-solid fa-person-running"></i>Running</button></li>
+                                    <li><button><i class="fa-solid fa-person-swimming"></i>Swimming</button></li>
+                                    <li><button><i class="fa-solid fa-person-skiing"></i>Skiing</button></li>
+                                    <li><button><i class="fa-solid fa-person-hiking"></i>Hiking</button></li>
+                                </ul>
+                            </div>
+                            <div class="save">
+                                <div class="quantity">
+                                    <p class="number">0/7 selected</p>
+                                    <p>Your selections will appear here</p>
+                                </div>
+                                <div class="save_btn">
+                                    <button>Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./JS/editProfile.js"></script>
+    <script src="./JS/upLoadImg.js"></script>
+</body>
+</html>

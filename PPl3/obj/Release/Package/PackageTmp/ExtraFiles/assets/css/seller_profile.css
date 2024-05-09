@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#seller_profile {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.3);
+    height: 100vh;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: 1;
+    z-index: 3;
+}
+
+#seller_profile.open1{
+    display: flex;
+}
+
+.seller {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    width: 100%;
+    animation: profileActive ease-in-out 0.5s;
+}
+
+@keyframes profileActive {
+    from{
+        transform: rotate(45deg);
+    }to{
+        transform: rotate(0);
+    }
+}
+
+.seller_profile_container {
+    position: absolute;
+    width: 360px;
+    max-width: 100%;
+    min-height: 500px;
+}
+
+.seller_profile_container_left {
+    z-index: 4;
+    border-radius: 10px 0 0 10px;
+    right: 50%;
+    background: linear-gradient(to left, rgb(230 0 42), rgb(255, 56, 92));
+    transition: transform 1s cubic-bezier(.645, .045, .355, .1);
+    transform-origin: right;
+    transform: rotateY(180deg);
+}
+
+.seller_profile_container_left.openProfile{
+    transform: rotateY(0deg);
+}
+
+.logo_company i{
+    position: absolute;
+    top: 30%;
+    left: 39%;
+    font-size: 90px;
+    color: #fff;
+}
+
+.logo_company h1{
+    position: absolute;
+    top: 50%;
+    left: 33%;
+    color: #fff;
+}
+
+.seller_profile_container_right {
+    border-radius: 0 10px 10px 0;
+    left: 50%;
+    background: linear-gradient(to right, rgb(230 0 42), rgb(255, 56, 92));
+}
+
+.profile_left {
+    display: none;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 0;
+    bottom: 20px;
+    width: 340px;
+    border: 1px solid #ccc;
+    border-radius: 10px 0 0 10px;
+    box-shadow: -5px 0 10px #6d6d6d;
+    background: linear-gradient(to left, rgb(191 191 191), rgb(255 255 255));
+    transform-origin: right;
+    transform: rotateY(0);
+}
+
+.profile_left.turn{
+    display: block;
+}
+
+.profile_right_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100%;
+}
+
+.about_seller{
+    animation: aboutChange ease-in-out 2s;
+}
+
+@keyframes aboutChange {
+    from{
+        transform: translateY(-90px);
+    }to{
+        transform: translateY(0);
+    }
+}
+
+.about_seller p{
+    text-align: justify;
+    padding: 10px 15px;
+    margin: 33px 29px;
+    font-size: 14px;
+    border: 1px solid #000;
+    line-height: 22px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.profile_right {
+    /* display: none; */
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    left: 0;
+    bottom: 20px;
+    width: 340px;
+    border-radius: 0 10px 10px 0;
+    box-shadow: 4px 0 20px #6b6969;
+    background: linear-gradient(to right,  rgb(207 207 207), rgb(255 255 255));
+    transform-origin: left;
+    transition: transform 1s cubic-bezier(.645, .045, .355, .1);
+    /* transform: rotateY(180deg); */
+}
+
+.profile_left_box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 250px;
+    border-radius: 10px 0 0 0;
+    text-align: center;
+    width: 100%;
+}
+
+.img_seller_profile{
+    position: absolute;
+    align-self: center;
+    border-radius: 50%;
+    top: 40%;
+    width: 30%;
+    height: 105px;
+    border: 3px solid #fff;
+    box-shadow: 10px 0 20px #999;
+    animation: inforChange ease-in-out 2s;
+}
+
+
+.logo_shield{
+    position: absolute;
+    top: 58%;
+    right: 45%;
+    color: #fff;
+    padding: 5px 8px;
+    border-radius: 50%;
+    background-color: rgb(207 40 70);
+    animation: inforChange ease-in-out 2s;
+}
+
+@keyframes inforChange{
+    from{
+        transform: translateY(-120px);
+    }to{
+        transform: translateY(0);
+    }
+}
+
+.name_seller{
+    position: absolute;
+    top: 65%;
+    font-size: 16px;
+    font-weight: 600;
+    animation: nameChange ease-in-out 2s;
+}
+
+@keyframes nameChange{
+    from{
+        transform: translateY(-140px);
+    }to{
+        transform: translateY(0);
+    }
+}
+
+.contact_seller{
+    position: absolute;
+    top: 72%;
+    animation: contactChange ease-in-out 2s;
+}
+
+@keyframes contactChange{
+    from{
+        transform: translateY(-160px);
+    }to{
+        transform: translateY(0);
+    }
+}
+
+.contact_seller i{
+    padding: 10px;
+    border: 1px solid #6b6969;
+    border-radius: 10px;
+    color: #000;
+}
+
+.page_arrow{
+    position: absolute;
+    display: flex;
+    justify-content: space-around;
+    bottom: 5%;
+    width: 100%;
+}
+
+.page_arrow button{
+    border:none;
+    background-color: transparent;
+}
+
+.page_arrow i{
+    display: none;
+    background-color: transparent;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.page_arrow p{
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.page_arrow:hover i{
+    display: block;
+}
+
+@keyframes leftChange {
+    from{
+        transform: rotateY(180deg);
+    }to{
+        transform: rotateY(0deg);
+    }
+}
