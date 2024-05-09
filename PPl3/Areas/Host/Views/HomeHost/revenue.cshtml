@@ -352,9 +352,23 @@
                                             if (position == 1)
                                             {
                                                 <div class="box_item focus">
-                                                    <i class="fa-solid fa-house"></i>
-                                                    <p>@item.p_address</p>
-                                                    <span>In Progress</span>
+                                                     <i class="fa-solid fa-house"></i>
+                                                     <p>@item.p_address</p>
+                                                     @{
+                                                         if (item.p_status != 1)
+                                                         {
+                                                             <span style="background-color:red !important">Unfinished</span>
+                                                         }
+                                                         else if (item.availability_type == 0)
+                                                         {
+                                                             <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
+                                                         }
+                                                         else if (item.p_status == 1)
+                                                         {
+                                                             <span style="background-color: green !important">Complete</span>
+
+                                                         }
+                                                     }
                                                 </div>
                                             }
                                             else
@@ -362,21 +376,22 @@
                                                 <div class="box_item">
                                                     <i class="fa-solid fa-house"></i>
                                                     <p>@item.p_address</p>
-                                                    @{ 
-                                                        if (item.p_status == null || item.p_status != 1)
+                                                    @{
+                                                        if (item.p_status != 1)
                                                         {
-                                                            <span>Pending</span>
+                                                            <span style="background-color:red !important">Unfinished</span>
                                                         }
-                                                        else if(item.availability_type == 1)
+                                                        else if (item.availability_type == 0)
                                                         {
-                                                            <span>In Progress</span>
+                                                            <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
                                                         }
-                                                        else if(item.availability_type == 0)
-                                                        { 
-                                                            <span>Reservation expires</span>
+                                                        else if (item.p_status == 1)
+                                                        {
+                                                            <span style="background-color: green !important">Complete</span>
+
                                                         }
                                                     }
-                                                    
+
                                                 </div>
                                             }
                                         }
