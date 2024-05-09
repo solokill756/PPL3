@@ -103,6 +103,14 @@ namespace PPl3.Areas.User.Controllers
                 fa.property_id = id;
                 fa.added_date = DateTime.Now;
                 fa.userID = p_user.id;
+                property tmp = db.properties.FirstOrDefault(item => item.id == fa.property_id);
+                user_notification user_Notification = new user_notification();
+                user_Notification.userid = p_user.id;
+                user_Notification.created = DateTime.Now;
+                user_Notification.content = "Successfully added "+ tmp.p_name +" to wishlist! Please check your wishlist.";
+                user_Notification.un_status = 1;
+                user_Notification.un_url = "/user/homeuser/wishlist";
+                db.user_notification.Add(user_Notification);
                 db.favourites.Add(fa);
                 db.SaveChanges();
             }
@@ -249,7 +257,6 @@ namespace PPl3.Areas.User.Controllers
             db.SaveChanges();
             var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
             Session["user"] = userInfor;
-
             return RedirectToAction("profile", "HomeUser", new { id = p_user.id });
         }
         [HttpPost]
@@ -642,6 +649,7 @@ namespace PPl3.Areas.User.Controllers
         public ActionResult SignUp(user model , string email_address)
         {
             user_personalInfor user_PersonalInfor = new user_personalInfor();
+            user_notification user_Notification = new user_notification();
             PPL3Entities db = new PPL3Entities();
             foreach (var item in db.properties.ToList())
             {
@@ -665,11 +673,18 @@ namespace PPl3.Areas.User.Controllers
             {
                 if (model.user_type == null) model.user_type = 2;
                 model.created = DateTime.Now;
+                user_Notification.userid = model.id;
+                user_Notification.created = DateTime.Now;
+                user_Notification.content = "Registration successful! Please complete your profile.";
+                user_Notification.un_status = 1;
+                user_Notification.un_url = "/user/homeuser/profile?id=" + model.id;
+                db.user_notification.Add(user_Notification);
                 user_PersonalInfor.email_address = email_address;
                 user_PersonalInfor.userID = model.id;
                 db.user_personalInfor.Add(user_PersonalInfor);
                 db.users.Add(model);
                 db.SaveChanges();
+                
                 var id_user = db.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (db.users.Where(item => item.id == id_user).FirstOrDefault());
                 userInfor.user_status = 1;
@@ -797,8 +812,31 @@ namespace PPl3.Areas.User.Controllers
 
         }
 
+        //notification
+        public ActionResult notification()
+        {
+            if (Session["user"] != null)
+            {
+                user p_user = (user)Session["user"];
+                PPL3Entities db = new PPL3Entities();
+                List<user_notification> un = db.user_notification.Where(item => item.userid == p_user.id).ToList();
+                return View(un);
+            }
+            else return RedirectToAction("login");
+        }
 
-       
+        [HttpPost]
+        public JsonResult DeleteNotification(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            user_notification un = db.user_notification.FirstOrDefault(item => item.id == id);
+            db.user_notification.Remove(un);
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
 
         //Pay Hotel
         [HttpPost]

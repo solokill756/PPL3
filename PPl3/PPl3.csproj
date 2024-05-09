@@ -410,6 +410,7 @@
     <Content Include="ExtraFiles\assets\css\hotel.css" />
     <Content Include="ExtraFiles\assets\css\Listing.css" />
     <Content Include="ExtraFiles\assets\css\message.css" />
+    <Content Include="ExtraFiles\assets\css\notification.css" />
     <Content Include="ExtraFiles\assets\css\payfailstyle.css" />
     <Content Include="ExtraFiles\assets\css\paysuccessstyle.css" />
     <Content Include="ExtraFiles\assets\css\product.css" />
@@ -551,6 +552,7 @@
     <Content Include="Areas\User\Views\HomeUser\VnpayReturn.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\PaymentSuccess.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\PaymentFail.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\notification.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>

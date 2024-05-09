@@ -38,6 +38,10 @@
     }
 }
 
+@{ 
+    List<PPl3.Models.user_notification> uns = db.user_notification.Where(item => item.userid == p_user.id).ToList();
+}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -108,31 +112,24 @@
                                     <span>Notification</span>
                                     <div class="modal notifi">
                                         <ul class="modal_box">
-                                            <li>
+                                            @{ 
+                                                foreach(var item in uns)
+                                                {
+                                                    <li>
+                                                        <div class="mess_item">
+                                                            @*<h4>Payment</h4>*@
+                                                            <p>@item.content</p>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            @*<li>
                                                 <div class="mess_item">
                                                     <h4>Payment</h4>
                                                     <p>Paid room fee of $300</p>
                                                 </div>
-                                            </li>
-                                            <li>
-                                                <div class="mess_item">
-                                                    <h4>Michale Sane</h4>
-                                                    <p>Checked Out: 10/5/2024</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="mess_item">
-                                                    <h4>Liliana</h4>
-                                                    <p>Rented room 192, NewYork City on May 22, 2024</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="mess_item">
-                                                    <h4>Profile Update</h4>
-                                                    <p>Upgraded successfully!!!</p>
-                                                </div>
-                                            </li>
-                                            <a href="notification.html">Show All</a>
+                                            </li>*@
+                                            <a href="/user/homeuser/notification">Show All</a>
                                         </ul>
                                     </div>
                                 </div>
@@ -370,9 +367,13 @@
                                                         {
                                                             <span>Pending</span>
                                                         }
-                                                        else
+                                                        else if(item.availability_type == 1)
                                                         {
                                                             <span>In Progress</span>
+                                                        }
+                                                        else if(item.availability_type == 0)
+                                                        { 
+                                                            <span>Reservation expires</span>
                                                         }
                                                     }
                                                     
@@ -792,11 +793,8 @@
                                     </thead>
                                     <tbody>
                                         @{
-                                            position = 0;
                                             foreach (var tmp in listUserBooking)
                                             {
-                                                position++;
-                                                if (position == 5) { break; }
                                                 <tr>
                                                     <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
                                                     <td>@tmp.user.account_name</td>
@@ -1042,7 +1040,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/revenue.js"></script>
-    <script src="~/ExtraFiles/lib/chart/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
 

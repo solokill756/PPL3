@@ -1,67 +1,67 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-html{
+html {
     scroll-behavior: smooth;
     font-family: 'Montserrat', sans-serif;
 }
 
-.center{
+.center {
     display: flex !important;
     justify-content: center;
 }
 
-.open{
+.open {
     display: block !important;
 }
 
-.active{
-    display: flex !important; 
+.active {
+    display: flex !important;
 }
 
-.close{
+.close {
     display: none !important;
 }
 
-.clicked{
+.clicked {
     border: 3px solid #000 !important;
     background-color: rgb(208, 208, 208) !important;
     color: #727171;
 }
 
-#content{
+#content {
     margin-top: 120px;
 }
 
-.tittle{
+.tittle {
     margin-bottom: 50px;
 }
 
-.container{
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
 }
 
-.notifications_list{
+.notifications_list {
     width: 100%;
 }
 
-.notifications_list li{
-    display: flex;
-    list-style: none;
-    cursor: pointer;
-    margin-bottom: 40px;
-    padding: 20px;
-}
+    .notifications_list li {
+        display: flex;
+        list-style: none;
+        cursor: pointer;
+        margin-bottom: 40px;
+        padding: 20px;
+    }
 
-.logo i{
+.logo i {
     padding: 10px;
     background-color: rgb(3, 129, 129);
     border-radius: 100%;
@@ -71,29 +71,34 @@ html{
     border: 1px solid #ccc;
 }
 
-.notification p{
+.notification p {
     font-size: 15px;
     line-height: 23px;
     font-weight: 600;
     margin-bottom: 10px;
 }
 
-.time span{
+.time span {
     font-size: 15px;
     color: #a7a4a4;
     font-weight: 600;
 }
 
-.remove{
+.remove {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-left: 20px;
 }
 
-.remove button{
-    border: none;
-    background-color: transparent;
-    font-size: 17px;
-    cursor: pointer;
+    .remove button {
+        border: none;
+        background-color: transparent;
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+.notification p a {
+    text-decoration: none; 
+    color: inherit; 
 }
