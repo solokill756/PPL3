@@ -236,30 +236,7 @@
                                 <div class="row no-gutter">
                                     <div class="col l-8 m-8 c-12 about_container">
                                         <span>@property.p_description</span>
-                                        @*<div class="first_about">
-                                                <p>@property.p_description.Substring(0 , 50)</p>
-                                            </div>
-                                            <div class="article_body">
-                                                <span>...............</span>
-                                                <p>@property.p_description</p>
-                                            </div>
-                                            <div class="other">
-                                                <span>Other things to note</span>
-                                                <p>-We strictly DO NOT allow a group of more than 8 people. In case of a group of 4 or more, you might be purposefully allotted different dorm rooms. Further, if the group behaviour is deemed unfit at the property, the Zostel Property Manager, upon subjective evaluation, retains the full right to take required action which may also result in an on-spot cancellation without refunds.</p>
-                                                <p>- Children below 18 years of age are not permitted entry/stay at any of our hostels, with or without guardians. We do not recommend families.</p>
-                                                <p>- Our standard check-in time is 12 PM and the standard check-out time is 10 AM.</p>
-                                                <p>- We only accept a government ID as valid identification proof. No local IDs shall be accepted at the time of check-in.</p>
-                                                <p>- Guests are not permitted to bring outsiders inside the hostel campus.</p>
-                                                <p>- We believe in self-help and do not provide luggage assistance or room services.</p>
-                                                <p>- Drugs and any substance abuse is strictly banned inside and around the property.</p>
-                                                <p>- Alcohol consumption is strictly prohibited in and around the property premises.</p>
-                                                <p>- Right to admission reserved. </p>
-                                            </div>*@
-
-                                        @*<div class="note">
-                                                <span>NOTE:</span>
-                                                <p>Online maps are hardly reliable in the valley. Don’t hesitate to call the property for directions. You will receive the relevant contact details and detailed directions along with your booking confirmation voucher.</p>
-                                            </div>*@
+                                        
                                     </div>
                                     <div class="col l-12 m-12 c-12 show_more_about">
                                         <button>Show more<i class="fa-solid fa-chevron-right"></i></button>
@@ -280,7 +257,7 @@
                                             <div class="img_bedroom" style="background : url(@item.pa_description) top center /cover no-repeat">
                                             </div>
                                             <span>@item.amenity.amenity_name</span>
-                                            @*<p>@item.</p>*@
+                                           
                                         </div>
 
                                     }
@@ -309,14 +286,7 @@
                                             }
                                             count++;
                                         }
-                                        @*<div class="offer_item">
-                                                <i class="fa-solid fa-car"></i>
-                                                <span>Free parking on premises</span>
-                                            </div>
-                                            <div class="offer_item">
-                                                <i class="fa-solid fa-smoking"></i>
-                                                <span>Smoking allowed</span>
-                                            </div>*@
+                                      
                                     </div>
                                     <div class="col l-4 m-12 c-12 offer_list">
                                         @{
@@ -529,7 +499,7 @@
                                 {
                                 
                                     <div class="pay_footer">
-                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Booking Again</button>
+                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Check Availability</button>
                                     </div>
                                    
                                     
@@ -761,7 +731,7 @@
                                                     <p>Responds within an hour</p>
                                                 </div>
                                                 <div class="evaluate_message_btn">
-                                                    <button>Message Host</button>
+                                                    <button onclick="window.location.href = '/user/homeuser/addFriend?userID=@property.userId'">Message Host</button>
                                                 </div>
                                             </div>
                                         </div>

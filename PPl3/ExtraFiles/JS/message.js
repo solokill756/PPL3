@@ -1,4 +1,4 @@
-const listMess = document.querySelectorAll('.list_message li')
+﻿const listMess = document.querySelectorAll('.list_message li')
 const listBody = document.querySelector('.list_body')
 const listBodyMess = document.querySelectorAll('.list_body .body_mess')
 const avatar = document.querySelectorAll('.avatar_user')
@@ -81,5 +81,37 @@ btnDetail.addEventListener('click', () =>{
         messDetail.classList.add('l-8')
         messDetail.classList.remove('l-12')
         userDetail.classList.add('open')
+        // Lấy NodeList chứa tất cả các phần tử <li> trong .user_detail.open .nav_bar
+        const listItems = document.querySelectorAll('.user_detail.open .nav_bar li');
+
+        // Lấy phần tử <li> đầu tiên (index 0)
+        const firstListItem = listItems[0];
+
+        firstListItem.addEventListener('click', () => {
+            let host_id = document.querySelector('.body_mess.open').className;
+            window.location.href = `/user/homeuser/profile?id=${host_id.split(" ")[2]}`
+        })
+
+        // Lấy phần tử <li> thứ hai (index 1)
+        const secondListItem = listItems[1];
+
+
+        secondListItem.addEventListener('click', () => {
+            var chatSection = document.querySelector('.body_mess.open');
+            chatSection.scrollTop = 0;
+            messDetail.classList.remove('l-8')
+            messDetail.classList.add('l-12')
+            userDetail.classList.remove('open');
+        })
+
+        // Lấy phần tử <li> thứ ba (index 2)
+        const thirdListItem = listItems[2];
+
+        thirdListItem.addEventListener('click', () => {
+            let host_id = document.querySelector('.body_mess.open').className;
+            window.location.href = `/user/homeuser/BlockUser?userID=${host_id.split(" ")[2]}`
+        })
+
+
     }
 })

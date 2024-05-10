@@ -136,7 +136,7 @@
                         </div>
                         <div class="nav_login">
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
-                            @if (p_user.user_profile.FirstOrDefault() != null)
+                            @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
                             {
                                 <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
                                 profile = p_user.user_profile.FirstOrDefault();
@@ -151,15 +151,14 @@
 
                         <div class="sub_nav sub_nav_user js_sub_nav_user">
                             <ul class="menu_user js_menu_user">
-                                <li class=""><button>Messages</button></li>
-                                <li class=""><button>Notifications</button></li>
+                                <li class=""><a href="/user/homeuser/chatuser">Messages</a></li>
+                                <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="Content">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
                                 <li><a href="/host/homehost/listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile">Account</a></li>
-                                <li><a href="#">Gift Cards</a></li>
                                 <li><a href="#">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
