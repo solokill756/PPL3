@@ -99,8 +99,9 @@
                                     <h1>Notification</h1>
                                 </div>
                                 @{
-                                    foreach (var item in Model)
+                                    for (int i = Model.Count - 1; i >= 0; i--)
                                     {
+                                        var item = Model[i];
                                         <li>
                                             <div class="logo">
                                                 <i class="fa-brands fa-think-peaks"></i>
@@ -120,19 +121,19 @@
                                     }
                                 }
                                 @*<li>
-                                        <div class="logo">
-                                            <i class="fa-brands fa-think-peaks"></i>
-                                        </div>
-                                        <div class="notification">
-                                            <p><a href="/user/homeuser/profile?id=@p_user.id">Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</a></p>
-                                            <div class="time">
-                                                <span>May 6, 2024</span>
-                                            </div>
-                                        </div>
-                                        <div class="remove">
-                                            <button><i class="fa-solid fa-close"></i></button>
-                                        </div>
-                                    </li>*@
+            <div class="logo">
+                <i class="fa-brands fa-think-peaks"></i>
+            </div>
+            <div class="notification">
+                <p><a href="/user/homeuser/profile?id=@p_user.id">Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</a></p>
+                <div class="time">
+                    <span>May 6, 2024</span>
+                </div>
+            </div>
+            <div class="remove">
+                <button><i class="fa-solid fa-close"></i></button>
+            </div>
+        </li>*@
                             </ul>
                         </div>
                     </div>
@@ -160,8 +161,11 @@
                 type: 'POST',
                 dataType: 'json',
                 data: { id: id },
-                success: function (response) {
-                    console.log(response);
+                success: function (data) {
+                    if (data.success == "true") {
+                        console.log(data.success);
+                        $('.notification_badge').text(data.count);
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
