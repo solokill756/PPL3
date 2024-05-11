@@ -17,10 +17,10 @@ using PPl3.Models.Payments;
 using System.Data.Entity;
 using Microsoft.AspNet.SignalR;
 using PPl3.Hubs;
+using System.Text;
 using static System.Data.Entity.Infrastructure.Design.Executor;
 using System.Security.Policy;
 using System.Net;
-
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -748,21 +748,53 @@ namespace PPl3.Areas.User.Controllers
            
             if (Session["user"] != null)
             {
-            
-                user p_user = (user)Session["user"];
+
                 PPL3Entities db = new PPL3Entities();
+
                 DateTime now = DateTime.Now;
-                foreach(var item in db.bookings)
+
+                List<booking> bookingsToRemove = new List<booking>();
+
+                user p_user = (user)Session["user"];
+
+                foreach (var item in db.bookings.ToList())
+
                 {
-                    TimeSpan duration = (TimeSpan)(item.check_in_date - now); // Tính toán khoảng cách
-                    int daysDifference = (int)duration.TotalDays; // Chuyển khoảng cách thành số ngày
+
+                    TimeSpan duration = (TimeSpan)(item.check_in_date - now);
+
+                    int daysDifference = (int)duration.TotalDays;
+
                     if ((item.check_out_date < now) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+
                     {
-                        db.bookings.Remove(item);
-                        db.SaveChanges();
+
+                        bookingsToRemove.Add(item);
+
                     }
+
                 }
-                var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id).OrderBy(item => item.check_in_date).ThenBy(item => item.check_out_date).ThenBy(item => item.id).ToList();
+
+                foreach (var itemToRemove in bookingsToRemove)
+
+                {
+
+                    db.bookings.Remove(itemToRemove);
+
+                }
+
+                db.SaveChanges();
+
+                var list_booking_hotel = db.bookings.Where(item => item.userId == p_user.id)
+
+                                                    .OrderBy(item => item.check_in_date)
+
+                                                    .ThenBy(item => item.check_out_date)
+
+                                                    .ThenBy(item => item.id)
+
+                                                    .ToList();
+
                 return View(list_booking_hotel);
             }
             else return RedirectToAction("login");
@@ -778,8 +810,10 @@ namespace PPl3.Areas.User.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             booking find_hotel = db.bookings.Where(item => item.id == bookingId).FirstOrDefault();
+            if (check_in_date == null) check_in_date = (DateTime)find_hotel.check_in_date;
+            if (check_out_date == null) check_out_date = (DateTime)find_hotel.check_out_date;
             List<booking> list_booking = db.bookings.Where(item => item.id != bookingId).ToList();
-            if(list_booking.Any(item => item.pay_status == 1 && ((find_hotel.check_in_date >= item.check_in_date && find_hotel.check_in_date <= item.check_out_date) || (find_hotel.check_out_date >= item.check_in_date && find_hotel.check_out_date <= item.check_out_date) || (find_hotel.check_in_date <= item.check_in_date && find_hotel.check_out_date >= item.check_out_date)) && item.property_id == find_hotel.property_id))
+            if (list_booking.Any(item => item.pay_status == 1 && ((check_in_date >= item.check_in_date && check_in_date <= item.check_out_date) || (check_out_date >= item.check_in_date && check_out_date <= item.check_out_date) || (check_in_date <= item.check_in_date && check_out_date >= item.check_out_date)) && item.property_id == find_hotel.property_id))
             {
                 return Json("error3", JsonRequestBehavior.AllowGet);
             }
@@ -807,14 +841,7 @@ namespace PPl3.Areas.User.Controllers
                 }
                 db.SaveChanges();
                 var url = UrlPayment(bookingId);
-                user_notification user_Notification = new user_notification();
-                user_Notification.userid = p_user.id;
-                user_Notification.created = DateTime.Now;
-                user_Notification.content = "Booking reset successful!. Please check in your trip!";
-                user_Notification.un_status = 1;
-                user_Notification.un_url = "/user/homeuser/trip";
-                db.user_notification.Add(user_Notification);
-                db.SaveChanges();
+
                 return Json(new
                 {
                     success = "true",
@@ -926,14 +953,6 @@ namespace PPl3.Areas.User.Controllers
                 // pay hotel 
 
                 var url = UrlPayment(userBooking.id);
-                user_notification user_Notification = new user_notification();
-                user_Notification.userid = p_user.id;
-                user_Notification.created = DateTime.Now;
-                user_Notification.content = "Booking successfully. Please check in your trip!";
-                user_Notification.un_status = 1;
-                user_Notification.un_url = "/user/homeuser/trip";
-                db.user_notification.Add(user_Notification);
-                db.SaveChanges();
 
                 return Json(new
                 {
@@ -1004,6 +1023,7 @@ namespace PPl3.Areas.User.Controllers
                         TempData["message"] = "The transaction was performed successfully. Thank you for using the service";
                         var invoiceItem = db.bookings.FirstOrDefault(x => x.id == (int)invoiceId);
                         invoiceItem.pay_status = 1;
+
                         user_notification user_Notification = new user_notification();
                         user_Notification.userid = p_user.id;
                         user_Notification.created = DateTime.Now;
@@ -1012,9 +1032,10 @@ namespace PPl3.Areas.User.Controllers
                         user_Notification.un_url = "#";
                         db.user_notification.Add(user_Notification);
                         db.SaveChanges();
+
                         // kiểm tra coi hóa đơn có tồn tại hay không
 
-                        if (invoiceItem.transaction_id != null)
+                        if(invoiceItem.transaction_id != null)
                         {
                             transaction find_transaction = db.transactions.FirstOrDefault(item => item.id == invoiceItem.transaction_id);
                             find_transaction.transaction_status = 1;
@@ -1052,14 +1073,6 @@ namespace PPl3.Areas.User.Controllers
                         var invoiceItem = db.bookings.FirstOrDefault(x => x.id == (int)invoiceId);
                         invoiceItem.pay_status = 0;
                         db.SaveChanges();
-                        user_notification user_Notification = new user_notification();
-                        user_Notification.userid = p_user.id;
-                        user_Notification.created = DateTime.Now;
-                        user_Notification.content = "Payment failed!";
-                        user_Notification.un_status = 1;
-                        user_Notification.un_url = "#";
-                        db.user_notification.Add(user_Notification);
-                        db.SaveChanges();
 
                         return RedirectToAction("PaymentFail", "homeuser", new { area = "User" });
                         //log.InfoFormat("Thanh toan loi, OrderId={0}, VNPAY TranId={1},ResponseCode={2}", orderId, vnpayTranId, vnp_ResponseCode);
@@ -1094,6 +1107,7 @@ namespace PPl3.Areas.User.Controllers
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
             vnpay.AddRequestData("vnp_Amount", Price.ToString()); //Số tiền thanh toán. Số tiền không mang các ký tự phân tách thập phân, phần nghìn, ký tự tiền tệ. Để gửi số tiền thanh toán là 100,000 VND (một trăm nghìn VNĐ) thì merchant cần nhân thêm 100 lần (khử phần thập phân), sau đó gửi sang VNPAY là: 10000000
             vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            //vnpay.AddRequestData("vnp_CreateDate", DateTime.UtcNow.ToString("yyyyMMddHHmmss"));
             vnpay.AddRequestData("vnp_CurrCode", "VND");
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
             vnpay.AddRequestData("vnp_Locale", "vn");
@@ -1112,7 +1126,7 @@ namespace PPl3.Areas.User.Controllers
 
         // Message 
 
-        public ActionResult ChatUser()
+        public ActionResult ChatUser(int openUser = -1)
         {
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
@@ -1122,6 +1136,7 @@ namespace PPl3.Areas.User.Controllers
             {
                 list_friends.Add(item);
             }
+            ViewBag.openUser = openUser;
             return View(list_friends);
         }
 
@@ -1178,6 +1193,57 @@ namespace PPl3.Areas.User.Controllers
 
         }
 
+        public ActionResult BlockUser(int userID) {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            while(db.Messages.Any(item => (item.SenderID == p_user.id && item.ReceiverID == userID) || (item.SenderID == userID && item.ReceiverID == p_user.id)))
+            {
+                Message find_message = db.Messages.FirstOrDefault(item => (item.SenderID == p_user.id && item.ReceiverID == userID) || (item.SenderID == userID && item.ReceiverID == p_user.id));
+                db.Messages.Remove(find_message);
+                db.SaveChanges();
+            }
+            db.Friendships.Remove(db.Friendships.FirstOrDefault(item => (item.UserId1 == p_user.id && item.UserId2 == userID) || (item.UserId1 == userID && item.UserId2 == p_user.id)));
+            db.SaveChanges();
+            return RedirectToAction("ChatUser");
+        }
+
+
+        public JsonResult SearchUser(string content)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+
+            List<Friendship> list_friends = new List<Friendship>();
+
+            foreach (var item in db.Friendships.Where(item => item.UserId1 == p_user.id || item.UserId2 == p_user.id))
+            {
+                list_friends.Add(item);
+            }
+
+            var friendships = from item in list_friends
+                              where (item.UserId1 != p_user.id && Unicode(item.user.user_personalInfor.FirstOrDefault().legal_name).Contains(content)) || (item.UserId2 != p_user.id && Unicode(item.user1.user_personalInfor.FirstOrDefault().legal_name).Contains(content))
+                              select new
+                              {
+                                  item.Id,
+                                  item.UserId1,
+                                  item.UserId2,
+                                  item.Status
+                              };
+            return Json(friendships , JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AddFriend(int userID)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            Friendship newFriendship = new Friendship();
+            newFriendship.UserId1 = p_user.id;
+            newFriendship.UserId2 = userID;
+            newFriendship.Status = 1;
+            db.Friendships.Add(newFriendship);
+            db.SaveChanges();
+            return RedirectToAction("ChatUser", "HomeUser", new { area = "User", openUser = userID });
+        }
         //hoa don
         public ActionResult invoice(int id)
         {
@@ -1185,7 +1251,6 @@ namespace PPl3.Areas.User.Controllers
             transaction transaction = db.transactions.FirstOrDefault(item => item.id == id);
             return View(transaction);
         }
-
         private void SendEmail(string recipientEmail, string subject, string body)
         {
             using (MailMessage mailMessage = new MailMessage())
@@ -1218,6 +1283,26 @@ namespace PPl3.Areas.User.Controllers
         }
 
         //Function
+
+        public string Unicode(string originalString)
+        {
+
+            // Loại bỏ dấu Unicode
+            var normalizedString = originalString.Normalize(NormalizationForm.FormKD);
+
+            // Loại bỏ kí tự không phải kí tự chữ cái hoặc số
+            var stringBuilder = new StringBuilder();
+            foreach (var c in normalizedString)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            // Chuỗi đã loại bỏ dấu Unicode
+            return stringBuilder.ToString().ToLower();
+        }
         public bool IsGmailExists(string email_address)
 
         {

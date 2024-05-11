@@ -18,7 +18,7 @@
 @section Menu {
     <div class="nav_login">
         <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
-        @if (p_user.user_profile.FirstOrDefault() != null)
+        @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
         {
             <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
 
@@ -33,7 +33,7 @@
     <div class="sub_nav sub_nav_guest js_sub_nav_guest">
         <ul class="menu_user js_menu_user">
             <li class=""><a href="/user/homeuser/chatUser">Messages</a></li>
-            <li class=""><button>Notifications</button></li>
+            <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
             <li class=""><a href="/user/homeuser/trip">Trip</a></li>
             <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
             <li><a href="/host/homehost/listing">Manage listings</a></li>

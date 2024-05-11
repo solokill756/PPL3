@@ -2,7 +2,7 @@
 @{
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
     PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
-    Console.Write(Model);
+    
     int count = 1;
 }
 
@@ -91,7 +91,7 @@
                         <button><i class="fa-solid fa-ellipsis"></i></button>
                     </div>
                     <div class="search first_input">
-                        <input type="text" name="" id="" placeholder="Search...">
+                        <input type="text" name="" id="search_user" placeholder="Search...">
                     </div>
                     <div class="list_message">
                         <ul>
@@ -181,7 +181,7 @@
             </div>
             <div class="l-8 m-10 c-12">
                 <div class="container">
-                    <div class="l-8 m-12 c-12 mess_box mess_detail">
+                    <div class="l-8 m-12 c-12 mess_box mess_detail ">
                         <div class="header_mess">
                             <div class="name_mess">
                                 <div class="avatar avatar_user">
@@ -245,14 +245,14 @@
                                 <button><i class="fa-solid fa-user"></i></button>
                                 <p>Profile</p>
                             </li>
-                            @*<li>
+                            <li>
                                 <button><i class="fa-solid fa-clock-rotate-left"></i></button>
                                 <p>History</p>
                             </li>
                             <li>
                                 <button><i class="fa-solid fa-circle-minus"></i></button>
                                 <p>Block</p>
-                            </li>*@
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -260,7 +260,7 @@
         </div>
     </div>
 
-    <script src="~/ExtraFiles/JS/message.js?v=3"></script>
+    <script src="~/ExtraFiles/JS/message.js?v=5"></script>
     <script src="~/ExtraFiles/JS/menuGuest.js"></script>
     <script src="~/Scripts/jquery-3.7.1.js"></script>
     <script src="~/Scripts/jquery-3.7.1.min.js"></script>
@@ -270,6 +270,10 @@
 </html>
 
 <script>
+    var openUser = '@ViewBag.openUser';
+    if (openUser != '-1') {
+        $(`.list_message .${openUser}`).trigger("click");
+    }
     $(function () {
     var chatHub = $.connection.chat;
     console.log(chatHub);
@@ -299,7 +303,7 @@
             chatHub.server.sendPrivateMessage(senderId, receiverId, content);
         });
 
-        $(document).keypress(function (e) {
+        $('#message_send').keypress(function (e) {
             if (e.which == 13) {
                 var content = $("#message_send").val();
                 var senderId = "@p_user.id"; // Thay bằng id của người gửi
@@ -332,50 +336,74 @@
         console.log(2);
         loadMessages(toUserId, sentUserId);
         $(`.detail .${sentUserId} p`).text(message);
-        sendinput.value = '';   
+        sendinput.value = '';
     };
 }
 
-function loadMessages(senderId, receiverId) {
-    $.ajax({
-        type: "GET",
-        url: "@Url.Action("GetMessages", "homeUser", new { area = "User" })",
-        data: { senderId: senderId, receiverId: receiverId },
-        success: function (data) {
-            // Hiển thị tin nhắn
-            console.log(data);
-            $(`.list_body .body_mess.${receiverId}`).find('.chat_section').html('');
-            $.each(data, function (i, message) {
-                $(`.list_body .body_mess.${receiverId}`).each(function () {
-                    if (message.SenderID == senderId) {
-                        var chatsection = $(this).find('.chat_section');
-                        var text = message.MessageContent;
-                        if (text !== '') {
-                            chatsection.append(`<div class="text text_you">
-                                <p>${text}</p>
-                            </div>`);
+    function loadMessages(senderId, receiverId) {
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("GetMessages", "homeUser", new { area = "User" })",
+            data: { senderId: senderId, receiverId: receiverId },
+            success: function (data) {
+                // Hiển thị tin nhắn
+                console.log(data);
+                $(`.list_body .body_mess.${receiverId}`).find('.chat_section').html('');
+                $.each(data, function (i, message) {
+                    $(`.list_body .body_mess.${receiverId}`).each(function () {
+                        if (message.SenderID == senderId) {
+                            var chatsection = $(this).find('.chat_section');
+                            var text = message.MessageContent;
+                            if (text !== '') {
+                                chatsection.append(`<div class="text text_you">
+                                    <p>${text}</p>
+                                </div>`);
+                            }
                         }
-                    }
-                    else {
+                        else {
 
-                        var chatsection = $(this).find('.chat_section');
-                        var text = message.MessageContent;
-                        if (text !== '') {
-                            chatsection.append(`<div class="text text_user">
-                                <p class="color_user">${text}</p>
-                            </div>`);
+                            var chatsection = $(this).find('.chat_section');
+                            var text = message.MessageContent;
+                            if (text !== '') {
+                                chatsection.append(`<div class="text text_user">
+                                    <p class="color_user">${text}</p>
+                                </div>`);
+                            }
                         }
-                    }
+                    });
                 });
-            });
-        }
-    });
-}
+                var chatSection = $(`.body_mess.open`);
+                chatSection.scrollTop(chatSection.prop("scrollHeight"));
+            }
+        });
+    }
 
-$('.list_message li').click(function () {
-    var senderId = "@p_user.id"; // Thay bằng id của người gửi
-    var receiverId = $('.body_mess.open').attr("class").split(" ")[2]; // Thay bằng id của người nhận
-    loadMessages(senderId, receiverId);
+    $('.list_message li').click(function () {
+        var senderId = "@p_user.id"; // Thay bằng id của người gửi
+        var receiverId = $('.body_mess.open').attr("class").split(" ")[2]; // Thay bằng id của người nhận
+        loadMessages(senderId, receiverId);
+    });
+
+
+
+    $('#search_user').keypress(function (e) {
+    if (e.which == 13) {
+        var text = $(this).val().trim();
+        // Mã hóa giá trị text trước khi gửi qua Ajax
+        var encodedText = encodeURIComponent(text).toLowerCase();
+        $.ajax({
+            type: "GET",
+            url: "@Url.Action("SearchUser", "homeUser", new { area = "User" })",
+            data: { content: encodedText },
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    }
 });
+
+
+
+
 
 </script>

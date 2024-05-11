@@ -1,0 +1,157 @@
+﻿@model List<PPl3.Models.user_notification>
+
+@{
+    Layout = null;
+}
+
+@{
+    int index = 0;
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/notification.css">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/headerGuest.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Notification</title>
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                            }
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><a href="/user/homeuser/chatUser">Messages</a></li>
+                                <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
+                                <li class=""><a href="/user/homeuser/trip">Trip</a></li>
+                                <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
+                                <li><a href="/host/homehost/listing">Manage listings</a></li>
+                                <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
+                                <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="container">
+                        <div class="col l-8 m-10 c-12">
+                            <ul class="notifications_list">
+                                <div class="tittle">
+                                    <h1>Notification</h1>
+                                </div>
+                                @{
+                                    foreach (var item in Model)
+                                    {
+                                        <li>
+                                            <div class="logo">
+                                                <i class="fa-brands fa-think-peaks"></i>
+                                            </div>
+                                            <div class="notification">
+                                                <p><a href="@item.un_url">@item.content</a></p>
+                                                <div class="time">
+                                                    <span>@item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                </div>
+                                            </div>
+                                            <div class="remove">
+                                                <button class="delete_notification" value="@item.id" onclick="DeleteNotification(this.value)">
+                                                    <i class="fa-solid fa-close"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                    }
+                                }
+                                @*<li>
+                                        <div class="logo">
+                                            <i class="fa-brands fa-think-peaks"></i>
+                                        </div>
+                                        <div class="notification">
+                                            <p><a href="/user/homeuser/profile?id=@p_user.id">Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</a></p>
+                                            <div class="time">
+                                                <span>May 6, 2024</span>
+                                            </div>
+                                        </div>
+                                        <div class="remove">
+                                            <button><i class="fa-solid fa-close"></i></button>
+                                        </div>
+                                    </li>*@
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/ExtraFiles/JS/menuGuest.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const removeBtns = document.querySelectorAll('.remove button')
+        removeBtns.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                var remove = btn.parentNode;
+                var notification = remove.parentNode;
+                notification.style.display = 'none'
+            })
+        })
+    </script>
+    <script>
+        function DeleteNotification(id) {
+            $.ajax({
+                url: '/user/homeuser/DeleteNotification',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (response) {
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

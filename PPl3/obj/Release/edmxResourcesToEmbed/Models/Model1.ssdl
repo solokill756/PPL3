@@ -450,6 +450,17 @@
     <Property Name="modified" Type="datetime" />
     <Property Name="transaction_status" Type="tinyint" />
   </EntityType>
+  <EntityType Name="user_notification">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userid" Type="int" />
+    <Property Name="content" Type="nvarchar" MaxLength="150" />
+    <Property Name="un_status" Type="tinyint" />
+    <Property Name="created" Type="datetime" />
+    <Property Name="un_url" Type="varchar(max)" />
+  </EntityType>
   <EntityType Name="user_personalInfor">
     <Key>
       <PropertyRef Name="id" />
@@ -1301,6 +1312,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="unn_userid_id_FK">
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="user_notification" Type="Self.user_notification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_notification">
+        <PropertyRef Name="userid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="up_country_id_id_FK">
     <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
     <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
@@ -1448,6 +1473,7 @@
     <EntitySet Name="room_type" EntityType="Self.room_type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_notification" EntityType="Self.user_notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_profile" EntityType="Self.user_profile" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_role" EntityType="Self.user_role" Schema="dbo" store:Type="Tables" />
@@ -1695,6 +1721,10 @@
     <AssociationSet Name="ul_userID_id_FK" Association="Self.ul_userID_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="users_languages" EntitySet="users_languages" />
+    </AssociationSet>
+    <AssociationSet Name="unn_userid_id_FK" Association="Self.unn_userid_id_FK">
+      <End Role="users" EntitySet="users" />
+      <End Role="user_notification" EntitySet="user_notification" />
     </AssociationSet>
     <AssociationSet Name="up_country_id_id_FK" Association="Self.up_country_id_id_FK">
       <End Role="countries" EntitySet="countries" />

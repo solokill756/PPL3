@@ -83,7 +83,7 @@ html{
 }
 
 .avatar{
-    background: url('/assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg') top center /cover no-repeat;
+    /*background: url('/assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg') top center /cover no-repeat;*/
     width: 45px;
     height: 45px;
     border-radius: 50%;
@@ -320,7 +320,7 @@ html{
 }
 
 .avatar_hosting{
-    background: url('/assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg') top center /cover no-repeat;
+    /*background: url('/assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg') top center /cover no-repeat;*/
     width: 150px;
     height: 150px;
     border-radius: 50%;
