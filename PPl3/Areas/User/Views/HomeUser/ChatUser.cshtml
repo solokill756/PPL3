@@ -278,6 +278,8 @@
     var chatHub = $.connection.chat;
     console.log(chatHub);
     loadClient(chatHub);
+    var user = { id: "@p_user.id", name: "@p_user.account_name" }; 
+    $.connection.hub.qs = "userId=" + user.id + "&userName=" + user.name;
     $.connection.hub.start().done(function () {
 
 
@@ -300,7 +302,7 @@
                 }
             });
             sendinput.value = '';
-            chatHub.server.sendPrivateMessage(senderId, receiverId, content);
+            chatHub.server.sendMessage(receiverId, content);
         });
 
         $('#message_send').keypress(function (e) {
@@ -323,7 +325,7 @@
                     }
                 });
                 sendinput.value = '';
-                chatHub.server.sendPrivateMessage(receiverId, content);
+                chatHub.server.sendMessage(receiverId, content);
 
             }
         });
@@ -331,12 +333,14 @@
     });
 
     function loadClient(chatHub) {
-    chatHub.client.receiveMessage = function (sentUserId, toUserId, message) {
-        // Load lại tin nhắn
+        chatHub.client.receiveMessage = function (senderId, receiverUserId , message) {
+         //Load lại tin nhắn
         console.log(2);
-        loadMessages(toUserId, sentUserId);
-        $(`.detail .${sentUserId} p`).text(message);
-        sendinput.value = '';
+            loadMessages(receiverUserId, senderId);
+            $(`.detail .${senderId} p`).text(message);
+            $(`.detail .${receiverUserId} p`).text(message);
+          sendinput.value = '';
+           // console.log("Tin nhắn từ " + senderId + ": " + message);
     };
 }
 

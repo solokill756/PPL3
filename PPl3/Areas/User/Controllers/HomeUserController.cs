@@ -1055,13 +1055,14 @@ namespace PPl3.Areas.User.Controllers
                             newTransaction.payer_id = p_user.id;
                             db.transactions.Add(newTransaction);
                             invoiceItem.transaction_id = newTransaction.id;
+                           
                         }
-
+                        db.SaveChanges();
                         transaction transaction = db.transactions.FirstOrDefault(item => item.id == invoiceItem.transaction_id);
                         string emailHtml = RenderRazorViewToString("Invoice", transaction);
-                        SendEmail("thanhtyu147@gmail.com", "Invoice for Transaction #" + invoiceItem.transaction_id, emailHtml);
+                        SendEmail("hosithao1622004@gmail.com", "Invoice for Transaction #" + transaction.id , emailHtml);
 
-                        db.SaveChanges();
+                      
 
 
                         return RedirectToAction("PaymentSuccess", "homeuser", new { area = "User" });
