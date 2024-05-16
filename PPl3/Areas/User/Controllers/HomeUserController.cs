@@ -110,14 +110,14 @@ namespace PPl3.Areas.User.Controllers
                 user_Notification.userid = p_user.id;
                 user_Notification.created = DateTime.Now;
                 user_Notification.content = "Successfully added "+ tmp.p_name +" to wishlist! Please check your wishlist.";
-                user_Notification.un_status = 1;
+                user_Notification.un_status = 0;
                 user_Notification.un_url = "/user/homeuser/wishlist";
                 db.user_notification.Add(user_Notification);
                 db.favourites.Add(fa);
                 db.SaveChanges();
                 
             }
-            int cun = db.user_notification.Where(item => item.userid == p_user.id).Count();
+            int cun = db.user_notification.Where(item => item.userid == p_user.id && item.un_status == 0).Count();
             var data = new
             {
                 success = "true",
@@ -145,7 +145,21 @@ namespace PPl3.Areas.User.Controllers
                 db.favourites.Remove(find_favourite);
                 db.SaveChanges();
             }
-            return Json("true", JsonRequestBehavior.AllowGet);
+            user_notification user_Notification = new user_notification();
+            user_Notification.userid = p_user.id;
+            user_Notification.created = DateTime.Now;
+            user_Notification.content = "Favorite hotel successfully deleted";
+            user_Notification.un_status = 0;
+            user_Notification.un_url = "/user/homeuser/wishlist";
+            db.user_notification.Add(user_Notification);
+            db.SaveChanges();
+            int cun = db.user_notification.Where(item => item.userid == p_user.id && item.un_status == 0).Count();
+            var data = new
+            {
+                success = "true",
+                count = cun,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -685,7 +699,7 @@ namespace PPl3.Areas.User.Controllers
                 user_Notification.userid = model.id;
                 user_Notification.created = DateTime.Now;
                 user_Notification.content = "Registration successful! Please complete your profile.";
-                user_Notification.un_status = 1;
+                user_Notification.un_status = 0;
                 user_Notification.un_url = "/user/homeuser/profile?id=" + model.id;
                 db.user_notification.Add(user_Notification);
                 user_PersonalInfor.email_address = email_address;
@@ -710,6 +724,8 @@ namespace PPl3.Areas.User.Controllers
 
             }
         }
+
+
 
 
         // Detail
@@ -772,6 +788,7 @@ namespace PPl3.Areas.User.Controllers
                         bookingsToRemove.Add(item);
 
                     }
+                    
 
                 }
 
@@ -805,7 +822,7 @@ namespace PPl3.Areas.User.Controllers
         public JsonResult FixBookingHotel(int bookingId , DateTime check_in_date, DateTime check_out_date, int[] guest_count , int hotelId , decimal price_hotel)
         {
             if (check_in_date > check_out_date) return  Json("error1", JsonRequestBehavior.AllowGet);
-            if ((check_out_date.Month - check_in_date.Month >= 2 && check_out_date.Year == check_in_date.Year) || (check_out_date.Year != check_in_date.Year)) return Json("error2", JsonRequestBehavior.AllowGet);
+          
            
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
@@ -862,6 +879,11 @@ namespace PPl3.Areas.User.Controllers
             {
                 user p_user = (user)Session["user"];
                 PPL3Entities db = new PPL3Entities();
+                foreach(var item in db.user_notification.ToList())
+                {
+                    item.un_status = 1;
+                }
+                db.SaveChanges();
                 List<user_notification> un = db.user_notification.Where(item => item.userid == p_user.id).ToList();
                 return View(un);
             }
@@ -905,7 +927,7 @@ namespace PPl3.Areas.User.Controllers
                     success = "error1"
                 }, JsonRequestBehavior.AllowGet);
             }
-            if ((checkOutDate.Month - checkInDate.Month >= 2 && checkOutDate.Year == checkInDate.Year) || (checkInDate.Year != checkOutDate.Year)) return Json(new { success = "error2" }, JsonRequestBehavior.AllowGet);
+           
             
             DateTime now = DateTime.Now;
             foreach (var item in db.bookings)
@@ -1028,7 +1050,7 @@ namespace PPl3.Areas.User.Controllers
                         user_Notification.userid = p_user.id;
                         user_Notification.created = DateTime.Now;
                         user_Notification.content = "Payment successful!";
-                        user_Notification.un_status = 1;
+                        user_Notification.un_status = 0;
                         user_Notification.un_url = "#";
                         db.user_notification.Add(user_Notification);
                         db.SaveChanges();

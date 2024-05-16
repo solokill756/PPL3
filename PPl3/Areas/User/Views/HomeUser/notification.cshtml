@@ -46,7 +46,7 @@
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
                             @{
                                 int countNoti = 0;
-                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
                                 {
                                     countNoti++;
                                 }
@@ -58,17 +58,27 @@
                                     {
                                         <span class="notification_badge">@countNoti</span>
                                     }
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
                                 </button>
                             }
                             else
                             {
-                                <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
-                                    @*<i class="fa-solid fa-user"></i>*@
-                                    @if (countNoti != 0)
-                                    {
-                                        <span class="notification_badge">@countNoti</span>
-                                    }
-                                </button>
+                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                            @*<i class="fa-solid fa-user"></i>*@
+                            @if (countNoti != 0)
+                            {
+                                <span class="notification_badge">@countNoti</span>
+                            }
+                            else
+                            {
+
+                                <span class="notification_badge" style="background-color:transparent"></span>
+                            }
+                        </button>
                             }
                         </div>
 
@@ -165,6 +175,9 @@
                     if (data.success == "true") {
                         console.log(data.success);
                         $('.notification_badge').text(data.count);
+                        $('.notification_badge').css({
+                            'background-color': 'red'
+                        });
                     }
                 },
                 error: function (xhr, status, error) {

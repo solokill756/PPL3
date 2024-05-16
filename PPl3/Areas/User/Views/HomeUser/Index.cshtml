@@ -20,7 +20,7 @@
         <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
         @{
             int countNoti = 0;
-            foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+            foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
             {
                 countNoti++;
             }
@@ -32,6 +32,11 @@
                 {
                     <span class="notification_badge">@countNoti</span>
                 }
+                else
+                {
+
+                    <span class="notification_badge" style="background-color:transparent"></span>
+                }
             </button>
         }
         else
@@ -41,6 +46,10 @@
                 @if (countNoti != 0)
                 {
                     <span class="notification_badge">@countNoti</span>
+                }
+                else { 
+                
+                    <span class="notification_badge" style="background-color:transparent"></span>
                 }
             </button>
         }
@@ -279,7 +288,12 @@
             success: function (data) {
                 if (data.success == "true") {
                     console.log(data.success);
+                    console.log(data.count);
+                    $('.notification_badge').css({
+                        'background-color': 'red'
+                    });
                     $('.notification_badge').text(data.count);
+                    
                 }
             },
             error: function (err) {

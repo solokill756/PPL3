@@ -52,17 +52,27 @@
                                     {
                                         <span class="notification_badge">@countNoti</span>
                                     }
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
                                 </button>
                             }
                             else
                             {
-                                <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
-                                    @*<i class="fa-solid fa-user"></i>*@
-                                    @if (countNoti != 0)
-                                    {
-                                        <span class="notification_badge">@countNoti</span>
-                                    }
-                                </button>
+                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                            @*<i class="fa-solid fa-user"></i>*@
+                            @if (countNoti != 0)
+                            {
+                                <span class="notification_badge">@countNoti</span>
+                            }
+                            else
+                            {
+
+                                <span class="notification_badge" style="background-color:transparent"></span>
+                            }
+                        </button>
                             }
                         </div>
 
