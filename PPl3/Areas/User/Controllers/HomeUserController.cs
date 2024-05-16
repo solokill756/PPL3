@@ -19,7 +19,8 @@ using Microsoft.AspNet.SignalR;
 using PPl3.Hubs;
 using System.Text;
 using static System.Data.Entity.Infrastructure.Design.Executor;
-
+using System.Security.Policy;
+using System.Net;
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -114,8 +115,15 @@ namespace PPl3.Areas.User.Controllers
                 db.user_notification.Add(user_Notification);
                 db.favourites.Add(fa);
                 db.SaveChanges();
+                
             }
-            return Json("true", JsonRequestBehavior.AllowGet);
+            int cun = db.user_notification.Where(item => item.userid == p_user.id).Count();
+            var data = new
+            {
+                success = "true",
+                count = cun,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
             
         }
 
@@ -870,7 +878,12 @@ namespace PPl3.Areas.User.Controllers
             db.SaveChanges();
             var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
             Session["user"] = userInfor;
-            return Json("true", JsonRequestBehavior.AllowGet);
+            var data = new
+            {
+                success = "true",
+                count = db.user_notification.Where(item => item.userid == p_user.id).Count(),
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         //Pay Hotel
@@ -1010,8 +1023,16 @@ namespace PPl3.Areas.User.Controllers
                         TempData["message"] = "The transaction was performed successfully. Thank you for using the service";
                         var invoiceItem = db.bookings.FirstOrDefault(x => x.id == (int)invoiceId);
                         invoiceItem.pay_status = 1;
-                        
-                       
+
+                        user_notification user_Notification = new user_notification();
+                        user_Notification.userid = p_user.id;
+                        user_Notification.created = DateTime.Now;
+                        user_Notification.content = "Payment successful!";
+                        user_Notification.un_status = 1;
+                        user_Notification.un_url = "#";
+                        db.user_notification.Add(user_Notification);
+                        db.SaveChanges();
+
                         // kiểm tra coi hóa đơn có tồn tại hay không
 
                         if(invoiceItem.transaction_id != null)
@@ -1035,8 +1056,11 @@ namespace PPl3.Areas.User.Controllers
                             db.transactions.Add(newTransaction);
                             invoiceItem.transaction_id = newTransaction.id;
                         }
-                      
-                       
+
+                        transaction transaction = db.transactions.FirstOrDefault(item => item.id == invoiceItem.transaction_id);
+                        string emailHtml = RenderRazorViewToString("Invoice", transaction);
+                        SendEmail("thanhtyu147@gmail.com", "Invoice for Transaction #" + invoiceItem.transaction_id, emailHtml);
+
                         db.SaveChanges();
 
 
@@ -1219,6 +1243,43 @@ namespace PPl3.Areas.User.Controllers
             db.Friendships.Add(newFriendship);
             db.SaveChanges();
             return RedirectToAction("ChatUser", "HomeUser", new { area = "User", openUser = userID });
+        }
+        //hoa don
+        public ActionResult invoice(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            transaction transaction = db.transactions.FirstOrDefault(item => item.id == id);
+            return View(transaction);
+        }
+        private void SendEmail(string recipientEmail, string subject, string body)
+        {
+            using (MailMessage mailMessage = new MailMessage())
+            {
+                mailMessage.From = new MailAddress("thanhlongtivip@gmail.com"); 
+                mailMessage.To.Add(recipientEmail);
+                mailMessage.Subject = subject;
+                mailMessage.Body = body;
+                mailMessage.IsBodyHtml = true;
+                string appPassword = "strm orqd egqw oqrx";
+                using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtpClient.Credentials = new NetworkCredential("thanhlongtivip@gmail.com", appPassword);
+                    smtpClient.EnableSsl = true;
+                    smtpClient.Send(mailMessage);
+                }
+            }
+        }
+        private string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
         }
 
         //Function

@@ -277,7 +277,10 @@
             type: "POST",
             data: { id: hotelId },
             success: function (data) {
-                console.log(data);
+                if (data.success == "true") {
+                    console.log(data.success);
+                    $('.notification_badge').text(data.count);
+                }
             },
             error: function (err) {
                 console.log(err);
