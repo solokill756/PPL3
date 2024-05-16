@@ -35,7 +35,7 @@
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/book_room.css?v=1" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/style_v1.css?v=4" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/product.css?v=17" rel="stylesheet" />
@@ -106,7 +106,7 @@
                         </div>
                         <div class="sub_nav sub_nav_guest js_sub_nav_guest">
                             <ul class="menu_user js_menu_user">
-                                <li class=""><button>Messages</button></li>
+                                <li class=""><a href="/user/homeuser/chatuser">Messages</a></li>
                                 <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
@@ -746,9 +746,11 @@
                                                     <p>Response rate: 100%</p>
                                                     <p>Responds within an hour</p>
                                                 </div>
-                                                <div class="evaluate_message_btn">
-                                                    <button onclick="window.location.href = '/user/homeuser/addFriend?userID=@property.userId'">Message Host</button>
-                                                </div>
+                                                @if(property.userId != p_user.id) { 
+                                                    <div class="evaluate_message_btn">
+                                                        <button onclick="window.location.href = '/user/homeuser/addFriend?userID=@property.userId'">Message Host</button>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>

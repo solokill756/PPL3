@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/message.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/headerGuest.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/headerGuest.css?v=1" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <title>Message</title>
@@ -323,7 +323,7 @@
                     }
                 });
                 sendinput.value = '';
-                chatHub.server.sendPrivateMessage(senderId, receiverId, content);
+                chatHub.server.sendPrivateMessage(receiverId, content);
 
             }
         });
