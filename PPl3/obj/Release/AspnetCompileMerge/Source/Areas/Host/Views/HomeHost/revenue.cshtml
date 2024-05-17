@@ -51,7 +51,13 @@
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/revenue.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
     <title>Revenue</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
 </head>
 <body>
     <div class="main">
@@ -66,55 +72,104 @@
                             <div class="btn_list">
                                 <div class="btn_item">
                                     <button class="btn_mess">
-                                        <i class="fa-solid fa-envelope"></i>
-                                        @*<div class="number_alert">
-                                            <p>4</p>
-                                        </div>*@
+                                        @{
+                                            var mess = db.Messages.Where(tmp => tmp.ReceiverID == p_user.id).ToList();
+                                            if (mess.Count == 0)
+                                            {
+                                                <i class="fa-solid fa-envelope"></i>
+                                                <div class="number_alert hide">
+                                                    <p>@mess.Count</p>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <i class="fa-solid fa-envelope"></i>
+                                                <div class="number_alert">
+                                                    <p>@mess.Count</p>
+                                                </div>
+                                            }
+                                        }
                                     </button>
                                     <span>message</span>
                                     <div class="modal mess">
                                         <ul class="modal_box">
-                                            <li>
-                                                <div class="mess_item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <p>Hello Alnor :)))</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="mess_item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <p>Very Good! Thank You </p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="mess_item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <p>The service was amazing !!!</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="mess_item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <p>Hello Alnor, Can you advise me further?</p>
-                                                </div>
-                                            </li>
-                                            <a href="message.html">Show All</a>
+                                            @{
+                                                position = 0;
+                                                string tmpname = "";
+                                                foreach (var item in mess)
+                                                {
+                                                    position++;
+                                                    if (position == 5) { break; }
+                                                    tmpname = db.users.FirstOrDefault(find => find.id == item.SenderID).account_name;
+                                                    <li>
+                                                        <div class="mess_item">
+                                                            <h4>@tmpname</h4>
+                                                            <p>@item.MessageContent</p>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            }
+                                            @*<li>
+            <div class="mess_item">
+                <h4>Davis Ngo</h4>
+                <p>Hello Alnor :)))</p>
+            </div>
+        </li>
+        <li>
+            <div class="mess_item">
+                <h4>Davis Ngo</h4>
+                <p>Very Good! Thank You </p>
+            </div>
+        </li>
+        <li>
+            <div class="mess_item">
+                <h4>Davis Ngo</h4>
+                <p>The service was amazing !!!</p>
+            </div>
+        </li>
+        <li>
+            <div class="mess_item">
+                <h4>Davis Ngo</h4>
+                <p>Hello Alnor, Can you advise me further?</p>
+            </div>
+        </li>*@
+                                            <a href="/user/homeuser/chatUser">Show All</a>
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="btn_item">
                                     <button class="btn_notifi">
-                                        <i class="fa-solid fa-bell"></i>
-                                        @*<div class="number_alert">
-                                            <p>1</p>
-                                        </div>*@
+                                        @{
+                                            int countNoti = 0;
+                                            foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                            {
+                                                countNoti++;
+                                            }
+                                        }
+                                        @if (countNoti != 0)
+                                        {
+                                            <i class="fa-solid fa-bell"></i>
+                                            <div class="number_alert">
+                                                <p>@countNoti</p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <i class="fa-solid fa-bell"></i>
+                                            <div class="number_alert hide">
+                                                <p>@countNoti</p>
+                                            </div>
+                                        }
                                     </button>
                                     <span>Notification</span>
                                     <div class="modal notifi">
                                         <ul class="modal_box">
                                             @{ 
+                                                position = 0;
                                                 foreach(var item in uns)
                                                 {
+                                                    position++;
+                                                    if(position == 5) { break; }
                                                     <li>
                                                         <div class="mess_item">
                                                             @*<h4>Payment</h4>*@
@@ -259,11 +314,12 @@
                                                                 else
                                                                 {
                                                                     <td>Paid</td>
+                                                                    <td>
+                                                                        <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                    </td>
                                                                 }
                                                             }
-                                                            <td>
-                                                                <button><a href="">Detail</a></button>
-                                                            </td>
+                                                            
                                                         </tr>
                                                     }
                                                 }
@@ -823,11 +879,12 @@
                                                         else
                                                         {
                                                             <td>Paid</td>
+                                                            <td>
+                                                                <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                            </td>
                                                         }
                                                     }
-                                                    <td>
-                                                        <button><a href="">Detail</a></button>
-                                                    </td>
+                                                    
                                                 </tr>
                                             }
                                         }

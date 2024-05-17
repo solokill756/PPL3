@@ -1259,12 +1259,15 @@ namespace PPl3.Areas.User.Controllers
         {
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
-            Friendship newFriendship = new Friendship();
-            newFriendship.UserId1 = p_user.id;
-            newFriendship.UserId2 = userID;
-            newFriendship.Status = 1;
-            db.Friendships.Add(newFriendship);
-            db.SaveChanges();
+
+            if(db.Friendships.Any(item => (p_user.id == item.UserId1 && item.UserId2 == userID) ||(item.UserId1 == userID && p_user.id == item.UserId2))) {
+                Friendship newFriendship = new Friendship();
+                newFriendship.UserId1 = p_user.id;
+                newFriendship.UserId2 = userID;
+                newFriendship.Status = 1;
+                db.Friendships.Add(newFriendship);
+                db.SaveChanges();
+            }
             return RedirectToAction("ChatUser", "HomeUser", new { area = "User", openUser = userID });
         }
         //hoa don

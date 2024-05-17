@@ -19,9 +19,10 @@
     <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/notification.css">
-    <link rel="stylesheet" href="~/ExtraFiles/assets/css/headerGuest.css">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/headerGuest.css?v=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <title>Notification</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
 </head>
 <body>
     <div class="main">
@@ -43,16 +44,41 @@
                         </div>
                         <div class="nav_login">
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @{
+                                int countNoti = 0;
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
+                                {
+                                    countNoti++;
+                                }
+                            }
                             @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
                             {
-                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                    @if (countNoti != 0)
+                                    {
+                                        <span class="notification_badge">@countNoti</span>
+                                    }
+                                    else
+                                    {
 
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
+                                </button>
                             }
                             else
                             {
-                                <button class="js_menuUser_btn">
-                                    <i class="fa-solid fa-user"></i>
-                                </button>
+                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                            @*<i class="fa-solid fa-user"></i>*@
+                            @if (countNoti != 0)
+                            {
+                                <span class="notification_badge">@countNoti</span>
+                            }
+                            else
+                            {
+
+                                <span class="notification_badge" style="background-color:transparent"></span>
+                            }
+                        </button>
                             }
                         </div>
 
@@ -83,8 +109,9 @@
                                     <h1>Notification</h1>
                                 </div>
                                 @{
-                                    foreach (var item in Model)
+                                    for (int i = Model.Count - 1; i >= 0; i--)
                                     {
+                                        var item = Model[i];
                                         <li>
                                             <div class="logo">
                                                 <i class="fa-brands fa-think-peaks"></i>
@@ -104,19 +131,19 @@
                                     }
                                 }
                                 @*<li>
-                                        <div class="logo">
-                                            <i class="fa-brands fa-think-peaks"></i>
-                                        </div>
-                                        <div class="notification">
-                                            <p><a href="/user/homeuser/profile?id=@p_user.id">Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</a></p>
-                                            <div class="time">
-                                                <span>May 6, 2024</span>
-                                            </div>
-                                        </div>
-                                        <div class="remove">
-                                            <button><i class="fa-solid fa-close"></i></button>
-                                        </div>
-                                    </li>*@
+            <div class="logo">
+                <i class="fa-brands fa-think-peaks"></i>
+            </div>
+            <div class="notification">
+                <p><a href="/user/homeuser/profile?id=@p_user.id">Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</a></p>
+                <div class="time">
+                    <span>May 6, 2024</span>
+                </div>
+            </div>
+            <div class="remove">
+                <button><i class="fa-solid fa-close"></i></button>
+            </div>
+        </li>*@
                             </ul>
                         </div>
                     </div>
@@ -144,8 +171,14 @@
                 type: 'POST',
                 dataType: 'json',
                 data: { id: id },
-                success: function (response) {
-                    console.log(response);
+                success: function (data) {
+                    if (data.success == "true") {
+                        console.log(data.success);
+                        $('.notification_badge').text(data.count);
+                        $('.notification_badge').css({
+                            'background-color': 'red'
+                        });
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error(error);

@@ -14,10 +14,15 @@
     <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
     <link href="~/ExtraFiles/assets/css/book_room.css?v=1" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/gird.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/style_v1.css?v=1" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/style_v1.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=1" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div id="body_sign_log" class="open">
@@ -26,16 +31,20 @@
                 <form method="post" action="/user/homeUser/SignUp">
                     <h1>Create Account</h1>
                     @*<div class="social-icons">
-                        <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                        <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                    </div>*@
+            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div>*@
                     <span class="content">or use your email for registeration</span>
                     <input type="text" required placeholder="Account Name" name="account_name">
                     <input type="email" required placeholder="Email" name="email_address">
                     @Html.ValidationMessage("Gmail", new { @class = "error-message" })
                     <input type="password" required placeholder="Password" name="user_password">
+                    @*<div style="display: flex;">
+                        <input type="text" placeholder="verification code" name="verification_code" />
+                        <button>Create code</button>
+                    </div>*@
                     <button>Sign Up</button>
                 </form>
             </div>
@@ -77,7 +86,7 @@
     <script src="~/ExtraFiles/JS/first_header.js?v=1"></script>
     <script src="~/ExtraFiles/JS/imgSlide.js?v=1"></script>
     <script src="~/ExtraFiles/JS/main_v1.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/room_classifi_v1.js?v=1"></script>>
+    <script src="~/ExtraFiles/JS/room_classifi_v1.js?v=1"></script>
     <script src="~/ExtraFiles/JS/seller_profile.js?v=1"></script>
     <script src="~/ExtraFiles/JS/Sign_Log_v1.js?v=1"></script>
 </body>

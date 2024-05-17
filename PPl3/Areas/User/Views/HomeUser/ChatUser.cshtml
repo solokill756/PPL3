@@ -40,7 +40,7 @@
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
                             @{
                                 int countNoti = 0;
-                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
                                 {
                                     countNoti++;
                                 }
@@ -349,7 +349,6 @@
             loadMessages(receiverUserId, senderId);
             $(`.detail .${senderId} p`).text(message);
             $(`.detail .${receiverUserId} p`).text(message);
-          sendinput.value = '';
            // console.log("Tin nhắn từ " + senderId + ": " + message);
     };
 }

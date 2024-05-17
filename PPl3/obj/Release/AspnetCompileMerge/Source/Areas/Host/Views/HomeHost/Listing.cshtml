@@ -20,7 +20,7 @@
     <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Listing.css?v=1" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link href="~/ExtraFiles/assets/css/headerGuest.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/headerGuest.css?v=1" rel="stylesheet" />
     <style>
         .hide {
             display: none;
@@ -64,14 +64,30 @@
                         </div>
                         <div class="nav_login">
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @{
+                                int countNoti = 0;
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                {
+                                    countNoti++;
+                                }
+                            }
                             @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
                             {
-                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                    @if (countNoti != 0)
+                                    {
+                                        <span class="notification_badge">@countNoti</span>
+                                    }
+                                </button>
                             }
                             else
                             {
-                                <button class="js_menuUser_btn">
-                                    <i class="fa-solid fa-user"></i>
+                                <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                                    @*<i class="fa-solid fa-user"></i>*@
+                                    @if (countNoti != 0)
+                                    {
+                                        <span class="notification_badge">@countNoti</span>
+                                    }
                                 </button>
                             }
                         </div>

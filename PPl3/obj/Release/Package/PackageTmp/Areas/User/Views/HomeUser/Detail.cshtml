@@ -35,7 +35,7 @@
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/book_room.css?v=1" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/gird.css?v=2" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/style_v1.css?v=3" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/style_v1.css?v=4" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/product.css?v=17" rel="stylesheet" />
@@ -73,24 +73,50 @@
                         </div>
                         <div class="nav_login">
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
-                            @if (p_user.user_profile.FirstOrDefault() != null)
+                            @{
+                                int countNoti = 0;
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
+                                {
+                                    countNoti++;
+                                }
+                            }
+                            @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
                             {
-                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat"></button>
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                    @if (countNoti != 0)
+                                    {
+                                        <span class="notification_badge">@countNoti</span>
+                                    }
+                                    else
+                                    {
 
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
+                                </button>
                             }
                             else
                             {
-                                <button class="js_menuUser_btn">
-                                    <i class="fa-solid fa-user"></i>
-                                </button>
+                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                            @*<i class="fa-solid fa-user"></i>*@
+                            @if (countNoti != 0)
+                            {
+                                <span class="notification_badge">@countNoti</span>
+                            }
+                            else
+                            {
+
+                                <span class="notification_badge" style="background-color:transparent"></span>
+                            }
+                        </button>
                             }
                         </div>
+
                         <div class="success">
 
                         </div>
                         <div class="sub_nav sub_nav_guest js_sub_nav_guest">
                             <ul class="menu_user js_menu_user">
-                                <li class=""><button>Messages</button></li>
+                                <li class=""><a href="/user/homeuser/chatuser">Messages</a></li>
                                 <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
@@ -236,30 +262,7 @@
                                 <div class="row no-gutter">
                                     <div class="col l-8 m-8 c-12 about_container">
                                         <span>@property.p_description</span>
-                                        @*<div class="first_about">
-                                                <p>@property.p_description.Substring(0 , 50)</p>
-                                            </div>
-                                            <div class="article_body">
-                                                <span>...............</span>
-                                                <p>@property.p_description</p>
-                                            </div>
-                                            <div class="other">
-                                                <span>Other things to note</span>
-                                                <p>-We strictly DO NOT allow a group of more than 8 people. In case of a group of 4 or more, you might be purposefully allotted different dorm rooms. Further, if the group behaviour is deemed unfit at the property, the Zostel Property Manager, upon subjective evaluation, retains the full right to take required action which may also result in an on-spot cancellation without refunds.</p>
-                                                <p>- Children below 18 years of age are not permitted entry/stay at any of our hostels, with or without guardians. We do not recommend families.</p>
-                                                <p>- Our standard check-in time is 12 PM and the standard check-out time is 10 AM.</p>
-                                                <p>- We only accept a government ID as valid identification proof. No local IDs shall be accepted at the time of check-in.</p>
-                                                <p>- Guests are not permitted to bring outsiders inside the hostel campus.</p>
-                                                <p>- We believe in self-help and do not provide luggage assistance or room services.</p>
-                                                <p>- Drugs and any substance abuse is strictly banned inside and around the property.</p>
-                                                <p>- Alcohol consumption is strictly prohibited in and around the property premises.</p>
-                                                <p>- Right to admission reserved. </p>
-                                            </div>*@
-
-                                        @*<div class="note">
-                                                <span>NOTE:</span>
-                                                <p>Online maps are hardly reliable in the valley. Don’t hesitate to call the property for directions. You will receive the relevant contact details and detailed directions along with your booking confirmation voucher.</p>
-                                            </div>*@
+                                        
                                     </div>
                                     <div class="col l-12 m-12 c-12 show_more_about">
                                         <button>Show more<i class="fa-solid fa-chevron-right"></i></button>
@@ -280,7 +283,7 @@
                                             <div class="img_bedroom" style="background : url(@item.pa_description) top center /cover no-repeat">
                                             </div>
                                             <span>@item.amenity.amenity_name</span>
-                                            @*<p>@item.</p>*@
+                                           
                                         </div>
 
                                     }
@@ -309,14 +312,7 @@
                                             }
                                             count++;
                                         }
-                                        @*<div class="offer_item">
-                                                <i class="fa-solid fa-car"></i>
-                                                <span>Free parking on premises</span>
-                                            </div>
-                                            <div class="offer_item">
-                                                <i class="fa-solid fa-smoking"></i>
-                                                <span>Smoking allowed</span>
-                                            </div>*@
+                                      
                                     </div>
                                     <div class="col l-4 m-12 c-12 offer_list">
                                         @{
@@ -529,7 +525,7 @@
                                 {
                                 
                                     <div class="pay_footer">
-                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Booking Again</button>
+                                        <button id="checkAvailabilityButton" onclick="FixBookingHotel('@booking_id' , '@property.id' , '@property.accomodates_count')">Check Availability</button>
                                     </div>
                                    
                                     
@@ -760,9 +756,11 @@
                                                     <p>Response rate: 100%</p>
                                                     <p>Responds within an hour</p>
                                                 </div>
-                                                <div class="evaluate_message_btn">
-                                                    <button onclick="window.location.href = '/user/homeuser/addFriend?userID=@property.userId'">Message Host</button>
-                                                </div>
+                                                @if(property.userId != p_user.id) { 
+                                                    <div class="evaluate_message_btn">
+                                                        <button onclick="window.location.href = '/user/homeuser/addFriend?userID=@property.userId'">Message Host</button>
+                                                    </div>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -1156,226 +1154,245 @@
 
 
 <script>
-    
+
     $(document).ready(function () {
-        let calendar = $('.calendar');
-        let checkIn = $('.check_in span');
-        let checkOut = $('.check_out span');
-        const monthPicker = calendar.find('#month-picker');
-        let currentDay = 0;
-        var data = @Html.Raw(Json.Encode(ViewBag.dataJson).Replace("'", "\'"));
-        data = data.substring(1, data.length - 1);
-        let dayChecked = [];
-        $.each(data.split(","), function (index, value) {
-            dayChecked.push(value);
-        });
-        console.log(dayChecked);
-        
-        const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    let calendar = $('.calendar');
+    let checkIn = $('.check_in span');
+    let checkOut = $('.check_out span');
+    const monthPicker = calendar.find('#month-picker');
+    let currentDay = 0;
+    var data = @Html.Raw(Json.Encode(ViewBag.dataJson).Replace("'", "\'"));
+    data = data.substring(1, data.length - 1);
+    let dayChecked = [];
+    $.each(data.split(","), function (index, value) {
+        dayChecked.push(value);
+    });
+    console.log(dayChecked);
 
-        isLeapYear = (year) => {
-            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
-        };
+    const month_names = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-        getFebDays = (year) => {
-            return isLeapYear(year) ? 29 : 28;
-        };
+    isLeapYear = (year) => {
+        return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+    };
 
-        generateCalendar = (month, year) => {
-            let calendar_days = calendar.find('.calendar-days');
-            let calendar_header_year = calendar.find('#year');
-            let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    getFebDays = (year) => {
+        return isLeapYear(year) ? 29 : 28;
+    };
 
-            calendar_days.html('');
+    generateCalendar = (month, year) => {
+        let calendar_days = calendar.find('.calendar-days');
+        let calendar_header_year = calendar.find('#year');
+        let days_of_month = [31, getFebDays(year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
-            let currDate = new Date();
-            if (!year) year = currDate.getFullYear();
+        calendar_days.html('');
 
-            let curr_month = month_names[month];
-            monthPicker.html(curr_month);
-            calendar_header_year.html(year);
+        let currDate = new Date();
+        if (!year) year = currDate.getFullYear();
 
-            let first_day = new Date(year, month, 1);
+        let curr_month = month_names[month];
+        monthPicker.html(curr_month);
+        calendar_header_year.html(year);
 
-            let dayCheckIn = 0;
-            let monthCheckIn = 0;
-            let yearCheckIn = 0;
-            let dayCheckOut = 0;
-            let monthCheckOut = 0;
-            let yearCheckOut = 0;
+        let first_day = new Date(year, month, 1);
 
-            for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
-                const day = $('<div></div>');
-                if (i >= first_day.getDay()) {
-                    day.addClass('calendar-day-hover');
-                    day.html(i - first_day.getDay() + 1);
-                    day.append('<span></span><span></span><span></span><span></span>');
+        let dayCheckIn = 0;
+        let monthCheckIn = 0;
+        let yearCheckIn = 0;
+        let dayCheckOut = 0;
+        let monthCheckOut = 0;
+        let yearCheckOut = 0;
 
-                    day.on('click', () => {
-                        currentDay++;
-                        if (currentDay <= 2) {
-                            if (currentDay == 1) {
+        for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
+            const day = $('<div></div>');
+            if (i >= first_day.getDay()) {
+                day.addClass('calendar-day-hover');
+                day.html(i - first_day.getDay() + 1);
+                day.append('<span></span><span></span><span></span><span></span>');
+
+                day.on('click', () => {
+                    currentDay++;
+                    if (currentDay <= 2) {
+                        if (currentDay == 1) {
+                            day.addClass('curr-date');
+                            dayCheckIn = parseInt(day.text());
+                            monthCheckIn = month + 1;
+                            yearCheckIn = year;
+                            if (month + 1 >= 10) {
+                                if (day.text() >= 10) {
+                                    checkIn.html(`${day.text()}/${month + 1}/${year}`);
+                                } else {
+                                    checkIn.html(`0${day.text()}/${month + 1}/${year}`);
+                                }
+                            } else {
+                                if (day.text() >= 10) {
+                                    checkIn.html(`${day.text()}/0${month + 1}/${year}`);
+                                } else {
+                                    checkIn.html(`0${day.text()}/0${month + 1}/${year}`);
+                                }
+                            }
+                            let daysBeforeCheckIn = calendar.find('.calendar-days div');
+                            for (let j = 0; j < i; j++) {
+                                daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                            }
+                            for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                                daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                            }
+                        } else if (currentDay == 2) {
+                            dayCheckOut = parseInt(day.text());
+                            monthCheckOut = month + 1;
+                            yearCheckOut = year;
+                            if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
                                 day.addClass('curr-date');
-                                dayCheckIn = parseInt(day.text());
-                                monthCheckIn = month + 1;
-                                yearCheckIn = year;
                                 if (month + 1 >= 10) {
                                     if (day.text() >= 10) {
-                                        checkIn.html(`${day.text()}/${month + 1}/${year}`);
-                                    }
-                                    else {
-                                        checkIn.html(`0${day.text()}/${month + 1}/${year}`);
-                                    }
-                                }
-                                else {
-                                    if (day.text() >= 10) {
-                                        checkIn.html(`${day.text()}/0${month + 1}/${year}`);
-                                    }
-                                    else {
-                                        checkIn.html(`0${day.text()}/0${month + 1}/${year}`);
-                                    }
-                                }
-                                let daysBeforeCheckIn = calendar.find('.calendar-days div');
-                                for (let j = 0; j < i; j++) {
-                                    daysBeforeCheckIn.eq(j).addClass('before-check-in');
-                                }
-                                for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                                    daysBeforeCheckIn.eq(j).addClass('before-check-in');
-                                }
-                            } else if (currentDay == 2) {
-                                dayCheckOut = parseInt(day.text());
-                                monthCheckOut = month + 1;
-                                yearCheckOut = year;
-                                if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
-                                    day.addClass('curr-date');
-                                    if (month + 1 >= 10) {
-                                        if (day.text() >= 10) {
-                                            checkOut.html(`${day.text()}/${month + 1}/${year}`);
-                                        }
-                                        else {
-                                            checkOut.html(`0${day.text()}/${month + 1}/${year}`);
-                                        }
-                                    }
-                                    else {
-                                        if (day.text() >= 10) {
-                                            checkOut.html(`${day.text()}/0${month + 1}/${year}`);
-                                        }
-                                        else {
-                                            checkOut.html(`0${day.text()}/0${month + 1}/${year}`);
-                                        }
+                                        checkOut.html(`${day.text()}/${month + 1}/${year}`);
+                                    } else {
+                                        checkOut.html(`0${day.text()}/${month + 1}/${year}`);
                                     }
                                 } else {
-                                    currentDay = 1;
+                                    if (day.text() >= 10) {
+                                        checkOut.html(`${day.text()}/0${month + 1}/${year}`);
+                                    } else {
+                                        checkOut.html(`0${day.text()}/0${month + 1}/${year}`);
+                                    }
                                 }
+                            } else {
+                                currentDay = 1;
                             }
-                        } else {
-                            calendar.find('.calendar-days div').removeClass('curr-date');
-                            let daysBeforeCheckIn = calendar.find('.calendar-days div');
-                            for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                                daysBeforeCheckIn.eq(j).removeClass('before-check-in');
-                            }
-                            currentDay = 0;
-                            checkOut.html('Add date');
                         }
-                    });
-                }
-                calendar_days.append(day);
+                    } else {
+                        calendar.find('.calendar-days div').removeClass('curr-date');
+                        let daysBeforeCheckIn = calendar.find('.calendar-days div');
+                        for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                            daysBeforeCheckIn.eq(j).removeClass('before-check-in');
+                        }
+                        currentDay = 0;
+                        checkOut.html('Add date');
+                    }
+                });
             }
-            $.each(dayChecked, function (index, range) {
-                let [start, end] = range.split('-');
-                let [startDay, startMonth, startYear] = start.split('/').map(Number);
-                let [endDay, endMonth, endYear] = end.split('/').map(Number);
-                console.log(startMonth + "-" + month + "," + startYear + "-" + year);
-                if ((startMonth - 1 === month && startYear === year) || (endMonth - 1 === month && endYear === year)) {
-                    const startDate = new Date(startYear, startMonth - 1, startDay);
-                    const endDate = new Date(endYear, endMonth - 1, endDay);
-                 
-                    if (startMonth === endMonth) {
-                      
-                        for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
-                            let dayIndex = date.getDate() + first_day.getDay() - 1;
+            calendar_days.append(day);
+        }
 
-                            if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay()) {
-                               
-                                calendar_days.children().eq(dayIndex).addClass('checked');
-                            }
+        $.each(dayChecked, function (index, range) {
+            let [start, end] = range.split('-');
+            let [startDay, startMonth, startYear] = start.split('/').map(Number);
+            let [endDay, endMonth, endYear] = end.split('/').map(Number);
+            console.log(startMonth + "-" + month + "," + startYear + "-" + year);
+            if ((startMonth - 1 === month && startYear === year) || (endMonth - 1 === month && endYear === year)) {
+                const startDate = new Date(startYear, startMonth - 1, startDay);
+                const endDate = new Date(endYear, endMonth - 1, endDay);
+
+                if (startMonth === endMonth) {
+
+                    for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
+                        let dayIndex = date.getDate() + first_day.getDay() - 1;
+
+                        if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay()) {
+
+                            calendar_days.children().eq(dayIndex).addClass('checked');
                         }
-                    } else if (startMonth !== endMonth) {
-                        let nextMonthFirstDay = new Date(startYear, startMonth, 1);
-                        let lastDayOfMonth = new Date(nextMonthFirstDay - 1);
+                    }
+                } else if (startMonth !== endMonth) {
+                    let nextMonthFirstDay = new Date(startYear, startMonth, 1);
+                    let lastDayOfMonth = new Date(nextMonthFirstDay - 1);
 
-                        for (let date = startDate; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
-                            let dayIndex = date.getDate() + first_day.getDay() - 1;
+                    for (let date = startDate; date <= lastDayOfMonth; date.setDate(date.getDate() + 1)) {
+                        let dayIndex = date.getDate() + first_day.getDay() - 1;
 
-                            if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay() && startMonth === month + 1) {
-                                calendar_days.children().eq(dayIndex).addClass('checked');
-                            }
+                        if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay() && startMonth === month + 1) {
+                            calendar_days.children().eq(dayIndex).addClass('checked');
                         }
+                    }
 
-                        for (let date = nextMonthFirstDay; date <= endDate; date.setDate(date.getDate() + 1)) {
-                            let dayIndex = date.getDate() + first_day.getDay() - 1;
+                    for (let date = nextMonthFirstDay; date <= endDate; date.setDate(date.getDate() + 1)) {
+                        let dayIndex = date.getDate() + first_day.getDay() - 1;
 
-                            if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay() && endMonth === month + 1) {
-                                calendar_days.children().eq(dayIndex).addClass('checked');
-                            }
+                        if (dayIndex >= 0 && dayIndex < days_of_month[month] + first_day.getDay() && endMonth === month + 1) {
+                            calendar_days.children().eq(dayIndex).addClass('checked');
                         }
                     }
                 }
-            });
-            let clearDate = $('.clear_date_btn');
+            }
+        });
 
-            clearDate.on('click', () => {
-                calendar.find('.calendar-days div').removeClass('curr-date');
-                let daysBeforeCheckIn = calendar.find('.calendar-days div');
-                for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                    daysBeforeCheckIn.eq(j).removeClass('before-check-in');
-                }
-                currentDay = 0;
-                checkOut.html('Add date');
-            });
-        }
+        let clearDate = $('.clear_date_btn');
 
-            let month_list = calendar.find('.month-list');
-
-            month_names.forEach((e, index) => {
-                let month = $('<div></div>');
-                month.html(`<div data-month="${index}">${e}</div>`);
-                month.find('div').on('click', () => {
-                    month_list.removeClass('show');
-                    curr_month.value = index;
-                    generateCalendar(index, curr_year.value);
-                });
-                month_list.append(month);
-            });
-
-            let month_picker = calendar.find('#month-picker');
-
-            month_picker.on('click', () => {
-                month_list.addClass('show');
-            });
-
-            let currDate = new Date();
-
-            let curr_month = { value: currDate.getMonth() };
-            let curr_year = { value: currDate.getFullYear() };
-            generateCalendar(curr_month.value, curr_year.value);
-            let currTemp = { value: 0 };
-
-        $('#prev-year').on('click', () => {
+        clearDate.on('click', () => {
+            calendar.find('.calendar-days div').removeClass('curr-date');
+            let daysBeforeCheckIn = calendar.find('.calendar-days div');
+            for (let j = 0; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                daysBeforeCheckIn.eq(j).removeClass('before-check-in');
+            }
             currentDay = 0;
-                if (currTemp.value > currDate.getFullYear()) {
-                    --curr_year.value;
-                }
-                generateCalendar(curr_month.value, curr_year.value);
-            });
+            checkOut.html('Add date');
+        });
+    };
 
-            $('#next-year').on('click', () => {
-                currentDay = 0;
-                ++curr_year.value;
-                currTemp.value = curr_year.value;
-                generateCalendar(curr_month.value, curr_year.value);
-            });
-    })
+    let month_list = calendar.find('.month-list');
+
+    month_names.forEach((e, index) => {
+        let month = $('<div></div>');
+        month.html(`<div data-month="${index}">${e}</div>`);
+        month.find('div').on('click', () => {
+            month_list.removeClass('show');
+            curr_month.value = index;
+            generateCalendar(index, curr_year.value);
+        });
+        month_list.append(month);
+    });
+
+    let month_picker = calendar.find('#month-picker');
+
+    month_picker.on('click', () => {
+        month_list.addClass('show');
+    });
+
+    let currDate = new Date();
+
+    let curr_month = { value: currDate.getMonth() };
+    let curr_year = { value: currDate.getFullYear() };
+    generateCalendar(curr_month.value, curr_year.value);
+    let currTemp = { value: 0 };
+
+    $('#prev-year').on('click', () => {
+        currentDay = 0;
+        if (currTemp.value > currDate.getFullYear()) {
+            --curr_year.value;
+        }
+        generateCalendar(curr_month.value, curr_year.value);
+    });
+
+    $('#next-year').on('click', () => {
+        currentDay = 0;
+        ++curr_year.value;
+        currTemp.value = curr_year.value;
+        generateCalendar(curr_month.value, curr_year.value);
+    });
+
+    $('#prev-month').on('click', () => {
+        currentDay = 0;
+        if (curr_month.value > 0) {
+            curr_month.value--;
+        } else {
+            curr_month.value = 11;
+            curr_year.value--;
+        }
+        generateCalendar(curr_month.value, curr_year.value);
+    });
+
+    $('#next-month').on('click', () => {
+        currentDay = 0;
+        if (curr_month.value < 11) {
+            curr_month.value++;
+        } else {
+            curr_month.value = 0;
+            curr_year.value++;
+        }
+        generateCalendar(curr_month.value, curr_year.value);
+    });
+});
+
 
 </script>
 

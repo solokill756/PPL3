@@ -166,6 +166,29 @@ html {
         margin-left: 4px;
     }
 
+
+.notification_badge {
+    position: relative; 
+    top: -12px; 
+    right: -12px; 
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 5px;
+    border-radius: 50%;
+}
+
+.nav_login button {
+    position: relative; 
+}
+
+@media screen and (max-width: 768px) {
+    .notification_badge {
+        top: -5px; 
+        right: -5px; 
+    }
+}
+
 .nav_menuUser {
     display: flex !important;
     justify-content: flex-end;
