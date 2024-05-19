@@ -431,6 +431,16 @@
     <Property Name="code" Type="nvarchar" MaxLength="5" />
     <Property Name="state_status" Type="tinyint" />
   </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
   <EntityType Name="transactions">
     <Key>
       <PropertyRef Name="id" />
@@ -729,7 +739,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ecc_userid_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="emergency_contact" Type="Self.emergency_contact" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -919,7 +931,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="gid_userID_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="governmentID" Type="Self.governmentID" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -931,7 +945,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="hr_hostid_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="host_reviews" Type="Self.host_reviews" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1045,7 +1061,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pn_userID_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="phone_number" Type="Self.phone_number" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1069,9 +1087,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pr_reviews_by_user_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+    <End Role="users" Type="Self.users" Multiplicity="0..1" />
     <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1169,7 +1185,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="pro_userId_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1189,18 +1207,6 @@
       </Principal>
       <Dependent Role="states">
         <PropertyRef Name="country_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="transaction_booking_id_id_FK">
-    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1" />
-    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="bookings">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="transactions">
-        <PropertyRef Name="booking_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1301,7 +1307,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ul_userID_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1339,7 +1347,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="up_userID_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1351,7 +1361,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="upp_userID_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="user_profile" Type="Self.user_profile" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1363,7 +1375,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="ur_create_by_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1387,7 +1401,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="useridddd_id_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="users_interests" Type="Self.users_interests" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="users">
@@ -1399,7 +1415,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="users_user_type_id_FK">
-    <End Role="user_type" Type="Self.user_type" Multiplicity="0..1" />
+    <End Role="user_type" Type="Self.user_type" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="users" Type="Self.users" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="user_type">
@@ -1472,6 +1490,7 @@
     <EntitySet Name="review_component" EntityType="Self.review_component" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="room_type" EntityType="Self.room_type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_notification" EntityType="Self.user_notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" Schema="dbo" store:Type="Tables" />
@@ -1681,10 +1700,6 @@
     <AssociationSet Name="states_country_id_id_FK" Association="Self.states_country_id_id_FK">
       <End Role="countries" EntitySet="countries" />
       <End Role="states" EntitySet="states" />
-    </AssociationSet>
-    <AssociationSet Name="transaction_booking_id_id_FK" Association="Self.transaction_booking_id_id_FK">
-      <End Role="bookings" EntitySet="bookings" />
-      <End Role="transactions" EntitySet="transactions" />
     </AssociationSet>
     <AssociationSet Name="transaction_currency_id_id_FK" Association="Self.transaction_currency_id_id_FK">
       <End Role="currencies" EntitySet="currencies" />

@@ -1006,22 +1006,24 @@ namespace PPl3.Areas.User.Controllers
         }
 
 
-        
+
 
         // Thanh toán Vnpay
 
-
+        [UserAuthorize(idChucNang = 8)]
         public ActionResult PaymentSuccess()
         {
             ViewBag.Success = TempData["message"];
             return View();
         }
 
+        [UserAuthorize(idChucNang = 8)]
         public ActionResult PaymentFail()
         {
             ViewBag.fail = TempData["message"];
             return View();
         }
+    
         public ActionResult VnpayReturn()
         {
             PPL3Entities db = new PPL3Entities();
@@ -1163,7 +1165,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         // Message 
-
+        [UserAuthorize(idChucNang = 13)]
         public ActionResult ChatUser(int openUser = -1)
         {
             PPL3Entities db = new PPL3Entities();
@@ -1286,6 +1288,7 @@ namespace PPl3.Areas.User.Controllers
             return RedirectToAction("ChatUser", "HomeUser", new { area = "User", openUser = userID });
         }
         //hoa don
+        [UserAuthorize(idChucNang = 8)]
         public ActionResult invoice(int id)
         {
             PPL3Entities db = new PPL3Entities();

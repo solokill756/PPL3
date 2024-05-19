@@ -524,7 +524,13 @@
                                     }
                                     <p>0.01% booking fee</p>
                                 </div>
-                                @if(property.availability_type == 0) { 
+                                @if(p_user.id == property.userId) { 
+                                    <div class="pay_footer" style="display:none">
+                                        <button>Reservation Expires</button>
+                                    </div>
+                                    
+                                }
+                                else if(property.availability_type == 0) { 
                                     <div class="pay_footer disapearForever">
                                         <button>Reservation Expires</button>
                                     </div>

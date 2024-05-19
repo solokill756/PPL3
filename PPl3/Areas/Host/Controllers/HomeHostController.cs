@@ -99,7 +99,7 @@ namespace PPl3.Areas.Host.Controllers
             else return RedirectToAction("Login", "homeuser", new { area = "User" });
 
         }
-
+        [HostAuthorize(idChucNang = 7)]
         public ActionResult revenue()
         {
             if (Session["user"] != null)
@@ -183,7 +183,7 @@ namespace PPl3.Areas.Host.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-
+        [HostAuthorize(idChucNang = 3)]
         public ActionResult addHotel()
         {
             return View();
@@ -438,7 +438,7 @@ namespace PPl3.Areas.Host.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-
+        [HostAuthorize(idChucNang = 5)]
         public ActionResult editHotel(int id)
         {
             PPL3Entities db = new PPL3Entities();
