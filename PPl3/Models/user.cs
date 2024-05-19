@@ -51,11 +51,11 @@ namespace PPl3.Models
         public Nullable<byte> user_type { get; set; }
         public Nullable<System.DateTime> date_of_birth { get; set; }
         public Nullable<byte> login_with { get; set; }
-        public Nullable<byte> receive_coupon { get; set; }
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> user_status { get; set; }
         public Nullable<System.DateTime> day_become_host { get; set; }
+        public string passport_code { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<booking> bookings { get; set; }

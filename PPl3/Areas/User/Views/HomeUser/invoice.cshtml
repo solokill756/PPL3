@@ -1,6 +1,7 @@
 ﻿
 @{
     Layout = null;
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
 }
 
 @model PPl3.Models.transaction
@@ -200,7 +201,7 @@
                                                     <td align="left" style="padding:0;Margin:0;width:298px">
                                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
                                                             <tr>
-                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>Transaction value</strong></p></td>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>Passport Code</strong></p></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -211,7 +212,7 @@
                                                     <td align="left" style="padding:0;Margin:0;width:302px">
                                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
                                                             <tr>
-                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><br></p></td>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@Model.user.passport_code<em></em></p></td>
                                                             </tr>
                                                         </table>
                                                     </td>

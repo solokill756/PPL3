@@ -634,7 +634,7 @@ namespace PPl3.Areas.Host.Controllers
                 if (data.img_2 != null)
                 {
                     list_imgs[1].created = DateTime.Now;
-                    list_imgs[1].pi_image = data.img_1;
+                    list_imgs[1].pi_image = data.img_2;
                     db.SaveChanges();
                 }
 
@@ -642,7 +642,7 @@ namespace PPl3.Areas.Host.Controllers
                 if (data.img_3 != null)
                 {
                     list_imgs[2].created = DateTime.Now;
-                    list_imgs[2].pi_image = data.img_1;
+                    list_imgs[2].pi_image = data.img_3;
                     db.SaveChanges();
                 }
 
@@ -650,7 +650,7 @@ namespace PPl3.Areas.Host.Controllers
                 if (data.img_4 != null)
                 {
                     list_imgs[3].created = DateTime.Now;
-                    list_imgs[3].pi_image = data.img_1;
+                    list_imgs[3].pi_image = data.img_4;
                     db.SaveChanges();
                 }
 
@@ -658,7 +658,7 @@ namespace PPl3.Areas.Host.Controllers
                 if (data.img_5 != null)
                 {
                     list_imgs[4].created = DateTime.Now;
-                    list_imgs[4].pi_image = data.img_1;
+                    list_imgs[4].pi_image = data.img_5;
                     db.SaveChanges();
                 }
 

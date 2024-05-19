@@ -646,7 +646,6 @@
     <Property Name="user_type" Type="Byte" />
     <Property Name="date_of_birth" Type="DateTime" Precision="0" />
     <Property Name="login_with" Type="Byte" />
-    <Property Name="receive_coupon" Type="Byte" />
     <Property Name="created" Type="DateTime" Precision="3" />
     <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="user_status" Type="Byte" />
@@ -678,6 +677,7 @@
     <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
     <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
     <NavigationProperty Name="users_interests" Relationship="Self.useridddd_id_id_FK" FromRole="users" ToRole="users_interests" />
+    <Property Name="passport_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="users_interests">
     <Key>

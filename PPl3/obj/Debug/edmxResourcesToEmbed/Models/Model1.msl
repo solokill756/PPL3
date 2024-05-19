@@ -575,13 +575,13 @@
     <EntitySetMapping Name="users">
       <EntityTypeMapping TypeName="PPL3Model.user">
         <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="passport_code" ColumnName="passport_code" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="account_name" ColumnName="account_name" />
           <ScalarProperty Name="user_password" ColumnName="user_password" />
           <ScalarProperty Name="user_type" ColumnName="user_type" />
           <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
           <ScalarProperty Name="login_with" ColumnName="login_with" />
-          <ScalarProperty Name="receive_coupon" ColumnName="receive_coupon" />
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="user_status" ColumnName="user_status" />

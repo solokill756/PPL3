@@ -596,12 +596,15 @@ namespace PPl3.Areas.User.Controllers
         // Login and Logout and Sign up
         public ActionResult Login()
         {
-            return View();
+            user new_user = new user();
+            return View(new_user);
         }
 
         [HttpPost]
         public ActionResult Login(user model , string email_address)
         {
+            ViewBag.email_address = email_address;
+            ViewBag.signUpOrLogin = 2;
             PPL3Entities entities = new PPL3Entities();
             user_personalInfor find_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault();
             foreach (var item in entities.properties.ToList())
@@ -617,7 +620,7 @@ namespace PPl3.Areas.User.Controllers
 
             {
 
-                ModelState.AddModelError("checkGmail", "Gmail này không tồn tại");
+                ModelState.AddModelError("checkGmail", "This Gmail does not exist");
 
                 return View(model);
 
@@ -626,7 +629,7 @@ namespace PPl3.Areas.User.Controllers
 
             {
 
-                ModelState.AddModelError("Password", "Mật khẩu bạn nhập không đúng");
+                ModelState.AddModelError("Password", "The password you entered is incorrect");
                 return View(model);
 
             }
@@ -665,12 +668,16 @@ namespace PPl3.Areas.User.Controllers
 
         public ActionResult SignUp()
         {
-            return View();
+            user new_user = new user();
+            return View(new_user);
+           
         }
 
         [HttpPost]
         public ActionResult SignUp(user model , string email_address)
         {
+            ViewBag.email_address = email_address;
+            ViewBag.signUpOrLogin = 1;
             user_personalInfor user_PersonalInfor = new user_personalInfor();
             user_notification user_Notification = new user_notification();
             PPL3Entities db = new PPL3Entities();
@@ -687,10 +694,15 @@ namespace PPl3.Areas.User.Controllers
 
             {
 
-                ModelState.AddModelError("Gmail", "Gmail đã được sử dụng");
+                ModelState.AddModelError("Gmail", "Gmail is already in use");
 
                 return View(model);
 
+            }
+            else if(!IsCorrectPassportCode(model.passport_code))
+            {
+                ModelState.AddModelError("Passport", "Passport Invalid");
+                return View(model);
             }
             else
             {
@@ -1260,7 +1272,7 @@ namespace PPl3.Areas.User.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
 
-            if(db.Friendships.Any(item => (p_user.id == item.UserId1 && item.UserId2 == userID) ||(item.UserId1 == userID && p_user.id == item.UserId2))) {
+            if(!db.Friendships.Any(item => (p_user.id == item.UserId1 && item.UserId2 == userID) ||(item.UserId1 == userID && p_user.id == item.UserId2))) {
                 Friendship newFriendship = new Friendship();
                 newFriendship.UserId1 = p_user.id;
                 newFriendship.UserId2 = userID;
@@ -1346,7 +1358,15 @@ namespace PPl3.Areas.User.Controllers
             return db.users.Any(u => u.user_password == password && u.id == id);
 
         }
-
+        public static bool IsCorrectPassportCode(string passportCode)
+        {
+            if (string.IsNullOrEmpty(passportCode))
+            {
+                return false;
+            }
+            string pattern = @"^[A-Za-z]{1,2}[0-9]{6,9}$";
+            return Regex.IsMatch(passportCode, pattern);
+        }
         public bool IsImageUrl(string imagePath)
         {
             // Kiểm tra xem đường dẫn có bắt đầu bằng "http://" hoặc "https://"

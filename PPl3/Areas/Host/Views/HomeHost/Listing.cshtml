@@ -66,7 +66,7 @@
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
                             @{
                                 int countNoti = 0;
-                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
                                 {
                                     countNoti++;
                                 }
@@ -78,23 +78,33 @@
                                     {
                                         <span class="notification_badge">@countNoti</span>
                                     }
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
                                 </button>
                             }
                             else
                             {
-                                <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
                                     @*<i class="fa-solid fa-user"></i>*@
                                     @if (countNoti != 0)
                                     {
                                         <span class="notification_badge">@countNoti</span>
                                     }
-                                </button>
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
+                        </button>
                             }
                         </div>
 
                         <div class="sub_nav sub_nav_user js_sub_nav_user">
                             <ul class="menu_user js_menu_user">
-                                <li class=""><button>Messages</button></li>
+                                <li class=""><a href="/user/homeuser/chatUser">Messages</a></li>
                                 <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
                                 <li><a href="/user/homeuser/index">Switch to guest</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -542,11 +542,11 @@
           <Property Name="user_type" Type="tinyint" />
           <Property Name="date_of_birth" Type="date" />
           <Property Name="login_with" Type="tinyint" />
-          <Property Name="receive_coupon" Type="tinyint" />
           <Property Name="created" Type="datetime" />
           <Property Name="modified" Type="datetime" />
           <Property Name="user_status" Type="tinyint" />
           <Property Name="day_become_host" Type="datetime" />
+          <Property Name="passport_code" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="users_interests">
           <Key>
@@ -1768,8 +1768,7 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2419,7 +2418,6 @@
           <Property Name="user_type" Type="Byte" />
           <Property Name="date_of_birth" Type="DateTime" Precision="0" />
           <Property Name="login_with" Type="Byte" />
-          <Property Name="receive_coupon" Type="Byte" />
           <Property Name="created" Type="DateTime" Precision="3" />
           <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="user_status" Type="Byte" />
@@ -2451,6 +2449,7 @@
           <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
           <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
           <NavigationProperty Name="users_interests" Relationship="Self.useridddd_id_id_FK" FromRole="users" ToRole="users_interests" />
+          <Property Name="passport_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="users_interests">
           <Key>
@@ -4256,13 +4255,13 @@
           <EntitySetMapping Name="users">
             <EntityTypeMapping TypeName="PPL3Model.user">
               <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="passport_code" ColumnName="passport_code" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="account_name" ColumnName="account_name" />
                 <ScalarProperty Name="user_password" ColumnName="user_password" />
                 <ScalarProperty Name="user_type" ColumnName="user_type" />
                 <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
                 <ScalarProperty Name="login_with" ColumnName="login_with" />
-                <ScalarProperty Name="receive_coupon" ColumnName="receive_coupon" />
                 <ScalarProperty Name="created" ColumnName="created" />
                 <ScalarProperty Name="modified" ColumnName="modified" />
                 <ScalarProperty Name="user_status" ColumnName="user_status" />

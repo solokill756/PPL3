@@ -9,6 +9,7 @@
     int pos = 0;
     string tmpBD;
     PPl3.Models.user_profile profile = new PPl3.Models.user_profile();
+    profile = p_user.user_profile.FirstOrDefault();
     
 }
 
@@ -138,7 +139,7 @@
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
                             @{
                                 int countNoti = 0;
-                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
                                 {
                                     countNoti++;
                                 }
@@ -168,7 +169,7 @@
                             else
                             {
 
-                                <span class="notification_badge" style="background-color:transparent"</span>
+                                <span class="notification_badge" style="background-color:transparent"></span>
                             }
                         </button>
                             }

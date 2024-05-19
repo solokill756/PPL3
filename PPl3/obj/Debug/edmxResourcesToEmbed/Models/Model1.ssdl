@@ -537,11 +537,11 @@
     <Property Name="user_type" Type="tinyint" />
     <Property Name="date_of_birth" Type="date" />
     <Property Name="login_with" Type="tinyint" />
-    <Property Name="receive_coupon" Type="tinyint" />
     <Property Name="created" Type="datetime" />
     <Property Name="modified" Type="datetime" />
     <Property Name="user_status" Type="tinyint" />
     <Property Name="day_become_host" Type="datetime" />
+    <Property Name="passport_code" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="users_interests">
     <Key>
