@@ -638,6 +638,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="bt_transaction_id_id_FK">
+    <End Role="transactions" Type="Self.transactions" Multiplicity="0..1" />
+    <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="transactions">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="bookings">
+        <PropertyRef Name="transaction_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="cities_state_id_id_FK">
     <End Role="states" Type="Self.states" Multiplicity="0..1" />
     <End Role="cities" Type="Self.cities" Multiplicity="*" />
@@ -1519,6 +1531,10 @@
     </AssociationSet>
     <AssociationSet Name="booking_userId_id_FK" Association="Self.booking_userId_id_FK">
       <End Role="users" EntitySet="users" />
+      <End Role="bookings" EntitySet="bookings" />
+    </AssociationSet>
+    <AssociationSet Name="bt_transaction_id_id_FK" Association="Self.bt_transaction_id_id_FK">
+      <End Role="transactions" EntitySet="transactions" />
       <End Role="bookings" EntitySet="bookings" />
     </AssociationSet>
     <AssociationSet Name="cities_state_id_id_FK" Association="Self.cities_state_id_id_FK">

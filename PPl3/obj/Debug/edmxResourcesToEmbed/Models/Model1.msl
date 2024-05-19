@@ -575,7 +575,6 @@
     <EntitySetMapping Name="users">
       <EntityTypeMapping TypeName="PPL3Model.user">
         <MappingFragment StoreEntitySet="users">
-          <ScalarProperty Name="passport_code" ColumnName="passport_code" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="account_name" ColumnName="account_name" />
           <ScalarProperty Name="user_password" ColumnName="user_password" />
@@ -586,6 +585,7 @@
           <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="user_status" ColumnName="user_status" />
           <ScalarProperty Name="day_become_host" ColumnName="day_become_host" />
+          <ScalarProperty Name="passport_code" ColumnName="passport_code" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
