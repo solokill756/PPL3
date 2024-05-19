@@ -1480,3 +1480,28 @@ html {
     color: rgb(34, 34, 34) !important;
     font-weight: var(--pricing-guest-primary-line-unit-price-font-weight, 800) !important;
 }
+
+
+.hotel_discount {
+    background-color: #f9f9f9; /* Light background color for the container */
+    padding: 20px; /* Padding around the content */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width:100%;
+    margin: 0 auto; /* Center the container */
+}
+
+.hotel_discount p {
+        font-weight: 800;
+        background-color: #ffffff; /* White background for discount items */
+        padding: 10px 15px; /* Padding inside each discount item */
+        margin-bottom: 10px; /* Space between discount items */
+        border-left: 5px solid #4CAF50; /* Accent border on the left */
+        border-radius: 5px; /* Rounded corners for discount items */
+        font-size: 16px; /* Font size for text */
+        color: #333; /* Text color */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    }
+.hotel_discount p:last-child {
+            margin-bottom: 0; /* Remove bottom margin for the last item */
+}

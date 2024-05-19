@@ -122,6 +122,7 @@
         <AssociationConnector Association="PPL3Model.utur_user_type_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.ul_userID_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.useridddd_id_id_FK" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="PPL3Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

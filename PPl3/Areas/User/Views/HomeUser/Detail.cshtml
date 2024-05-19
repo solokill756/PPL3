@@ -38,7 +38,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=4" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=17" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=18" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -277,15 +277,21 @@
                                     <div class="col l-12 m-12 c-12 room_tittle">
                                         <h2>Where you'll sleep</h2>
                                     </div>
-                                    @foreach (var item in property.property_amenities.Where(row => row.amenity.category_id == 38))
+                                    @{ 
+                                        count = 0;
+                                    }
+                                    @foreach (var item in property.property_images)
                                     {
-                                        <div class="col l-4 m-8 c-12">
-                                            <div class="img_bedroom" style="background : url(@item.pa_description) top center /cover no-repeat">
-                                            </div>
-                                            <span>@item.amenity.amenity_name</span>
-                                           
-                                        </div>
+                                        if(count <= 1) { 
+                                            <div class="col l-4 m-8 c-12">
+                                                <div class="img_bedroom" style="background : url(@item.pi_image) top center /cover no-repeat">
+                                                </div>
+                                                <span>Overview</span>
 
+                                            </div>
+                                        } 
+                                        
+                                        count++;
                                     }
                                 </div>
                             </div>
@@ -401,6 +407,7 @@
                                                 <button id="checkOutButton">Check Out</button>
                                                 <span id="checkOutDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id && item.id == booking_id).FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</span>
                                             </div>
+                                            
 
                                         }
                                         else
@@ -413,6 +420,7 @@
                                                 <button id="checkOutButton">Check Out</button>
                                                 <span id="checkOutDate">Add date</span>
                                             </div>
+                                           
                                         }
 
 
@@ -509,7 +517,13 @@
                                         }
                                     </div>
                                 </div>
-                                
+                                <div class="hotel_discount">
+                                    @foreach (var item in property.properties_discounts)
+                                    {
+                                        <p>@item.discounts_value% @item.discount.descride</p>
+                                    }
+                                    <p>0.01% booking fee</p>
+                                </div>
                                 @if(property.availability_type == 0) { 
                                     <div class="pay_footer disapearForever">
                                         <button>Reservation Expires</button>
@@ -554,29 +568,57 @@
                                         {
                                             if (booking_id != -1)
                                             {
-                                                if (property.price != property.bookings.FirstOrDefault(item => item.id == booking_id).price_per_day)
+
+                                                PPl3.Models.booking find_booking = property.bookings.FirstOrDefault(item => item.id == booking_id);
+                                                TimeSpan difference = (TimeSpan)(find_booking.check_out_date - find_booking.check_in_date);
+
+                                                if (property.price != find_booking.price_per_day)
                                                 {
-                                                    <h2 class="_1l85cgq">$@property.price</h2>
-                                                    <h2 class="_1y74zjx money_hotel">$@property.bookings.FirstOrDefault(item => item.id == booking_id).price_per_day</h2>
+                                                    <h2 class="_1l85cgq">$@(property.price * (decimal)difference.TotalDays)</h2>
+                                                    <h2 class="_1y74zjx money_hotel">$@find_booking.amount_paid</h2>
                                                 }
                                                 else
                                                 {
-                                                    <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                                    <h2 class="_1y74zjx money_hotel">$@(property.price * (decimal)difference.TotalDays)</h2>
                                                 }
-                                                
+
                                             }
-                                            else { 
-                                                <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                            else
+                                            {
+                                                <h2 class="_1y74zjx money_hotel">$@property.price</h2>
+                                                <p>/ 1 Night</p>
                                             }
-                                            
+
                                         }
                                         else
                                         {
-                                            <h2 class="_1l85cgq">$@property.price</h2>
-                                            <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                            if (booking_id != -1)
+                                            {
+
+                                                PPl3.Models.booking find_booking = property.bookings.FirstOrDefault(item => item.id == booking_id);
+                                                TimeSpan difference = (TimeSpan)(find_booking.check_out_date - find_booking.check_in_date);
+
+                                                if (property.price != find_booking.price_per_day)
+                                                {
+                                                    <h2 class="_1l85cgq">$@(property.price * (decimal)difference.TotalDays)</h2>
+                                                    <h2 class="_1y74zjx money_hotel">$@find_booking.amount_paid</h2>
+                                                }
+                                                else
+                                                {
+                                                    <h2 class="_1y74zjx money_hotel">$@(property.price * (decimal)difference.TotalDays)</h2>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <h2 class="_1l85cgq">$@property.price</h2>
+                                                <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                                <p>/ 1 Night</p>
+                                            }
+
                                         }
 
-                                        <p>Night</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -981,7 +1023,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/product.js?v=8"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=10"></script>
     @*<script src="~/ExtraFiles/JS/calendar.js?v=2"></script>*@
 
 </body>
@@ -990,14 +1032,15 @@
 <script src="~/Scripts/jquery-3.7.1.js"></script>
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 <script>
-    var priceHotel = $('.money_hotel').text();
-    priceHotel = priceHotel.substring(1, priceHotel.length);
+
     var discounts = JSON.parse('@Html.Raw(discountsJson)');
     var propertyPrice = @Json.Encode(property.price);
     var booking_count = @Json.Encode(property.bookings.ToArray().Length);
     console.log(discounts);
     console.log(priceHotel);
-    function booking(hotelId , hotelGuest) {
+    function booking(hotelId, hotelGuest) {
+        var priceHotel = $('.money_hotel').text();
+        priceHotel = priceHotel.substring(1, priceHotel.length);
         $(document).ready(function () {
             function isValidDate(dateString) {
                 var regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -1074,7 +1117,9 @@
     }
 
 
-    function FixBookingHotel(bookingId, id , hotelGuest) {
+    function FixBookingHotel(bookingId, id, hotelGuest) {
+        var priceHotel = $('.money_hotel').text();
+        priceHotel = priceHotel.substring(1, priceHotel.length);
           $(document).ready(function () {
         function isValidDate(dateString) {
             var regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -1230,18 +1275,18 @@
                                     checkIn.html(`0${day.text()}/0${month + 1}/${year}`);
                                 }
                             }
-                            let daysBeforeCheckIn = calendar.find('.calendar-days div');
-                            for (let j = 0; j < i; j++) {
-                                daysBeforeCheckIn.eq(j).addClass('before-check-in');
-                            }
-                            for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                                daysBeforeCheckIn.eq(j).addClass('before-check-in');
-                            }
+                            //let daysBeforeCheckIn = calendar.find('.calendar-days div');
+                            //for (let j = 0; j < i; j++) {
+                            //    daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                            //}
+                            //for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                            //    daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                            //}
                         } else if (currentDay == 2) {
                             dayCheckOut = parseInt(day.text());
                             monthCheckOut = month + 1;
                             yearCheckOut = year;
-                            if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
+                            if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut)) {
                                 day.addClass('curr-date');
                                 if (month + 1 >= 10) {
                                     if (day.text() >= 10) {

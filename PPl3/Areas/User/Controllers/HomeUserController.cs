@@ -851,8 +851,8 @@ namespace PPl3.Areas.User.Controllers
                 find_hotel.check_out_date = check_out_date;
                 TimeSpan difference = (find_hotel.check_out_date.Value - find_hotel.check_in_date.Value);
                 int daysDifference = (int)difference.TotalDays;
-                double sum = daysDifference * (double)find_hotel.price_per_day;
-                find_hotel.amount_paid = (decimal)sum;
+                find_hotel.price_per_day = price_hotel / daysDifference;
+                find_hotel.amount_paid = price_hotel;
                 db.SaveChanges();
                 while (db.booking_guests.Any(item => item.booking_id == bookingId))
                 {
@@ -961,12 +961,13 @@ namespace PPl3.Areas.User.Controllers
                 userBooking.userId = p_user.id;
                 userBooking.check_in_date = checkInDate;
                 userBooking.check_out_date = checkOutDate;
-                userBooking.price_per_day = price_hotel;
                 TimeSpan difference = (userBooking.check_out_date.Value - userBooking.check_in_date.Value);
                 int daysDifference = (int)difference.TotalDays;
+                userBooking.price_per_day = price_hotel / daysDifference;
+              
 
-                double sum = daysDifference * (double)userBooking.price_per_day;
-                userBooking.amount_paid = (decimal)sum;
+               
+                userBooking.amount_paid = (decimal)price_hotel;
                 userBooking.booking_date = DateTime.Now;
                 userBooking.is_refund = 1;
                 userBooking.booking_status = 1;
@@ -1087,6 +1088,7 @@ namespace PPl3.Areas.User.Controllers
                             newTransaction.transaction_status = 1;
                             newTransaction.receiver_id = invoiceItem.property.userId;
                             newTransaction.payer_id = p_user.id;
+                            newTransaction.site_fees = (decimal?)((int)invoiceItem.amount_paid * 0.01);
                             db.transactions.Add(newTransaction);
                             invoiceItem.transaction_id = newTransaction.id;
                            
@@ -1137,6 +1139,7 @@ namespace PPl3.Areas.User.Controllers
             //Build URL for VNPAY
             VnPayLibrary vnpay = new VnPayLibrary();
             var Price = (long)order.amount_paid * 2500000;
+            Price = (long)(Price + Price * 0.01);
             vnpay.AddRequestData("vnp_Version", VnPayLibrary.VERSION);
             vnpay.AddRequestData("vnp_Command", "pay");
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
