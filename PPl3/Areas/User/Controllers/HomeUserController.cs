@@ -1389,5 +1389,21 @@ namespace PPl3.Areas.User.Controllers
             return false;
         }
 
+        static bool IsImage(string url)
+        {
+            // Danh sách các phần mở rộng ảnh hợp lệ
+            string[] imageExtensions = { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp" };
+
+            // Kiểm tra URL hợp lệ
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri uriResult)
+                && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            {
+                // Kiểm tra phần mở rộng tệp tin
+                return imageExtensions.Contains(System.IO.Path.GetExtension(uriResult.AbsolutePath).ToLower());
+            }
+
+            return false;
+        }
+
     }
 }

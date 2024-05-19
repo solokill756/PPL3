@@ -140,7 +140,14 @@
 
                                                     .FirstOrDefault()?.MessageContent ?? "";
                                                 }
-                                                <p>@messageContent</p>
+                                                @if(messageContent.Contains("data:image/jpeg")) { 
+                                                    <p>Pictrue</p>
+                                                
+                                                }
+                                                else { 
+                                                    <p>@messageContent</p>
+                                                }
+                                                
                                             </div>
                                         </div>
                                     </li>
@@ -234,7 +241,8 @@
                         </div>
                         <div class="footer_mess">
                             <div class="input_mess">
-                                <input type="file" hidden name="" id="">
+                                
+                                <input type="file" hidden accept="img/*" id="img_mess">
                                 <button class="add_file_btn"><i class="fa-solid fa-circle-plus"></i></button>
                                 <input type="text" id="message_send" placeholder="Aa....">
                                 <button class="send_btn"><i class="fa-solid fa-paper-plane"></i></button>
@@ -280,6 +288,7 @@
 </html>
 
 <script>
+
     var openUser = '@ViewBag.openUser';
     if (openUser != '-1') {
         $(`.list_message .${openUser}`).trigger("click");
@@ -288,7 +297,7 @@
     var chatHub = $.connection.chat;
     console.log(chatHub);
     loadClient(chatHub);
-    var user = { id: "@p_user.id", name: "@p_user.account_name" }; 
+    var user = { id: "@p_user.id", name: "@p_user.account_name" };
     $.connection.hub.qs = "userId=" + user.id + "&userName=" + user.name;
     $.connection.hub.start().done(function () {
 
@@ -321,7 +330,7 @@
                 var senderId = "@p_user.id"; // Thay bằng id của người gửi
                 var receiverId = $('.body_mess.open').attr("class").split(" ")[2]; // Thay bằng id của người nhận
 
-                $(`.detail .${receiverId} p`).text(content);
+                /*$(`.detail .${receiverId} p`).text(content);*/
 
                 $.ajax({
                     type: "POST",
@@ -339,9 +348,44 @@
 
             }
         });
-    });
-    });
+        document.querySelector('.add_file_btn').addEventListener('click', function () {
+            document.getElementById('img_mess').click(() => {
 
+            });
+        });
+        document.getElementById('img_mess').addEventListener('change', function (event) {
+            var senderId = "@p_user.id"; // Thay bằng id của người gửi
+            var receiverId = $('.body_mess.open').attr("class").split(" ")[2]; // Thay bằng id của người nhận
+            const fileInput = document.getElementById('img_mess');
+            const file = fileInput.files[0];
+            if (file) {
+                var readerLeft = new FileReader();
+                readerLeft.readAsDataURL(file);
+                readerLeft.onload = function (e) {
+                    var fileUpload = e.target.result;
+                    console.log(fileUpload);
+                     $.ajax({
+                         type: "POST",
+                         url: "@Url.Action("SendMessage", "homeUser", new { area = "User" })",
+                         data: { senderId: senderId, receiverId: receiverId, content: fileUpload },
+                         success: function () {
+                             // Load lại tin nhắn
+                             console.log(1);
+                             loadMessages(senderId, receiverId);
+                             $(`.detail .${receiverId} p`).text("Picture");
+                             
+                         }
+                     });
+                    chatHub.server.sendMessage(receiverId, content);
+                };
+            }
+        });
+    });
+    });
+    function isBase64Image(base64Image) {
+        var regex = /^data:image\/(png|jpg|jpeg|gif|webp);base64,/;
+        return regex.test(base64Image);
+    }
     function loadClient(chatHub) {
         chatHub.client.receiveMessage = function (senderId, receiverUserId , message) {
          //Load lại tin nhắn
@@ -349,8 +393,8 @@
             loadMessages(receiverUserId, senderId);
             $(`.detail .${senderId} p`).text(message);
             $(`.detail .${receiverUserId} p`).text(message);
-            if (!$(`.list_message .${receiverUserId}`).hasClass('selected')) {
-                $(`.list_message .${receiverUserId}`).addClass('Unread');
+            if (!$(`.list_message .${senderId}`).first().hasClass('selected')) {
+                $(`.list_message .${senderId}`).first().addClass('Unread');
             }
            // console.log("Tin nhắn từ " + senderId + ": " + message);
     };
@@ -367,24 +411,18 @@
                 $(`.list_body .body_mess.${receiverId}`).find('.chat_section').html('');
                 $.each(data, function (i, message) {
                     $(`.list_body .body_mess.${receiverId}`).each(function () {
-                        if (message.SenderID == senderId) {
-                            var chatsection = $(this).find('.chat_section');
-                            var text = message.MessageContent;
-                            if (text !== '') {
-                                chatsection.append(`<div class="text text_you">
-                                    <p>${text}</p>
-                                </div>`);
-                            }
-                        }
-                        else {
+                        var chatsection = $(this).find('.chat_section');
+                        var text = message.MessageContent;
+                        var isSender = message.SenderID == senderId;
 
-                            var chatsection = $(this).find('.chat_section');
-                            var text = message.MessageContent;
-                            if (text !== '') {
-                                chatsection.append(`<div class="text text_user">
-                                    <p class="color_user">${text}</p>
-                                </div>`);
-                            }
+                        if (isBase64Image(text)) {
+                            chatsection.append(`<div class="text ${isSender ? 'text_you' : 'text_user'}">
+                                <img src="${text}" alt="Ảnh" />
+                            </div>`);
+                        } else {
+                            chatsection.append(`<div class="text ${isSender ? 'text_you' : 'text_user'}">
+                                <p${!isSender ? ' class="color_user"' : ''}>${text}</p>
+                            </div>`);
                         }
                     });
                 });
