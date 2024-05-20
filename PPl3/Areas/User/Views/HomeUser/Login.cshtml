@@ -31,11 +31,11 @@
                 <form method="post" action="/user/homeUser/SignUp">
                     <h1>Create Account</h1>
                     @*<div class="social-icons">
-            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-        </div>*@
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>*@
                     <span class="content">or use your email for registeration</span>
                     @if (Model.account_name != null)
                     {
@@ -47,12 +47,12 @@
                     }
                     @if (ViewBag.email_address != null && ViewBag.signUpOrLogin == 1)
                     {
-                        <input type="email" required placeholder="Email" name="email_address" value="@ViewBag.email_address ">
+                        <input id="email_name" type="email" required placeholder="Email" name="email_address" value="@ViewBag.email_address ">
                         @Html.ValidationMessage("Gmail", new { @class = "error-message" })
                     }
                     else
                     {
-                        <input type="email" required placeholder="Email" name="email_address">
+                        <input id="email_name" type="email" required placeholder="Email" name="email_address">
                         @Html.ValidationMessage("Gmail", new { @class = "error-message" })
                     }
                     @if (Model.user_password != null && ViewBag.signUpOrLogin == 1)
@@ -74,6 +74,10 @@
                         @Html.ValidationMessage("Passport", new { @class = "error-message" })
 
                     }
+                    <div style="display: flex; align-items: center;">
+                        <input id="check_code_input" type="text" required placeholder="Verification email" name="verification_code" style="flex: 1;" maxlength="6">
+                        <button type="button" id="resend_code" style="margin-left: 10px; align-items: center; align-self: stretch; height: 64%; padding: 4px 8px;">Resend Code</button>
+                    </div>
                     <button>Sign Up</button>
                 </form>
             </div>
@@ -81,35 +85,35 @@
                 <form method="post" action="/user/homeUser/login">
                     <h1>Sign In</h1>
                     @*<div class="social-icons">
-            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-        </div>*@
+                            <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
+                            <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        </div>*@
                     <span>or use your email password</span>
                     @if (ViewBag.email_address != null && ViewBag.signUpOrLogin == 2)
                     {
-                        <input type="email" required placeholder="Email" name="email_address" value="@ViewBag.email_address ">
+                        <input id="email_login" type="email" required placeholder="Email" name="email_address" value="@ViewBag.email_address ">
                         @Html.ValidationMessage("CheckGmail", new { @class = "error-message" })
                     }
                     else
                     {
-                        <input type="email" required placeholder="Email" name="email_address">
+                        <input id="email_login" type="email" required placeholder="Email" name="email_address">
                         @Html.ValidationMessage("CheckGmail", new { @class = "error-message" })
                     }
                     @if (Model.user_password != null && ViewBag.signUpOrLogin == 2)
                     {
-                        <input type="password" required placeholder="Password" name="user_password" value="@Model.user_password">
+                        <input id="pass_login" type="password" required placeholder="Password" name="user_password" value="@Model.user_password">
                         @Html.ValidationMessage("Password", new { @class = "error-message" })
                     }
                     else
                     {
-                        <input type="password" required placeholder="Password" name="user_password">
+                        <input id="pass_login" type="password" required placeholder="Password" name="user_password">
                         @Html.ValidationMessage("Password", new { @class = "error-message" })
 
                     }
 
-                    <a href="#">Forget Your Password?</a>
+                    <a id="forget_pass" href="#">Forget Your Password?</a>
                     <button>Sign In</button>
                 </form>
             </div>
@@ -136,5 +140,94 @@
     <script src="~/ExtraFiles/JS/room_classifi_v1.js?v=1"></script>
     <script src="~/ExtraFiles/JS/seller_profile.js?v=1"></script>
     <script src="~/ExtraFiles/JS/Sign_Log_v1.js?v=1"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        let vericode = "";
+        function showVerificationAlert(content) {
+            alert(content);
+        }
+        function verificationEmail() {
+            var emailName = document.getElementById("email_name").value;
+            if (emailName) {
+                showVerificationAlert("Please wait while we send the email.");
+                $.ajax({
+                    url: '/user/homeuser/verificationEmail?newEmail=' + emailName,
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (resendcode) {
+                        if (resendcode != "Error") {
+                            vericode = resendcode.code;
+                            showVerificationAlert("Verification code has been sent to your email.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+            else {
+                showVerificationAlert("You haven't entered an email.");
+            }
+        }
+    </script>
+    <script>
+        const resendCode = document.getElementById('resend_code');
+        resendCode.addEventListener('click', () => {
+            verificationEmail();
+        });
+    </script>
+    <script>
+        document.getElementById("check_code_input").addEventListener("input", function () {
+            if (this.value.length === 6) {
+                setTimeout(checkVerificationCode, 100);
+            }
+        });
+    </script>
+    <script>
+        function checkVerificationCode() {
+            var verificationCode = document.getElementById("check_code_input").value;
+            if (verificationCode === vericode) {
+                alert("Verification code is valid.");
+            } else {
+                alert("Verification code is invalid.");
+                document.getElementById("check_code_input").value = "";
+            }
+        }
+    </script>
+    @*quên mật khẩu*@
+    <script>
+        function sendPassMail() {
+            var emailLogin = document.getElementById("email_login").value;
+            if (emailLogin) {
+                showVerificationAlert("Please wait while we send the email.");
+                $.ajax({
+                    url: '/user/homeuser/sendPassMail?email=' + emailLogin,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (resendcode) {
+                        if (resendcode == "Success") {
+                            showVerificationAlert("Your password has been sent to your email");
+                        }
+                        else if (resendcode == "Incorrect email") {
+                            showVerificationAlert("The email is incorrect.");
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+            else {
+                showVerificationAlert("You haven't entered an email.");
+            }
+        }
+    </script>
+    <script>
+        const forgetPass = document.getElementById('forget_pass');
+        forgetPass.addEventListener('click', () => {
+            document.getElementById("pass_login").value = "";
+            sendPassMail();
+        });
+    </script>
 </body>
 </html>

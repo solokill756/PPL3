@@ -38,7 +38,6 @@ namespace PPl3.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<booking> bookings { get; set; }
-        public virtual booking booking { get; set; }
         public virtual currency currency { get; set; }
         public virtual promo_codes promo_codes { get; set; }
         public virtual property property { get; set; }

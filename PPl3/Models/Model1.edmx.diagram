@@ -4,54 +4,54 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="7f4f3404a1c045debe65e71c5e31ccec" Name="Diagram1" ZoomLevel="88">
-        <EntityTypeShape EntityType="PPL3Model.amenity" Width="1.5" PointX="14.25" PointY="55.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.booking_guests" Width="1.5" PointX="13.5" PointY="36.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.booking" Width="1.5" PointX="8.25" PointY="38.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.category" Width="1.5" PointX="12" PointY="55.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.city" Width="1.5" PointX="9" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.cms_page_languages" Width="1.5" PointX="11.5" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.cms_pages" Width="1.5" PointX="9.25" PointY="16.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.component_rating" Width="1.5" PointX="21" PointY="44.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.country" Width="1.5" PointX="4.5" PointY="19.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.currency" Width="1.5" PointX="9" PointY="28" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.discount" Width="1.5" PointX="14.25" PointY="33.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.dispute" Width="1.5" PointX="16.5" PointY="40" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.email_content_languages" Width="1.5" PointX="7.5" PointY="31.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.email_contents" Width="1.5" PointX="5.25" PointY="31" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.emergency_contact" Width="1.5" PointX="5.25" PointY="34.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.favourite" Width="1.5" PointX="8.25" PointY="35.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.Friendship" Width="1.5" PointX="5.25" PointY="41.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.governmentID" Width="1.5" PointX="5.25" PointY="44.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.guest_type" Width="1.5" PointX="11.25" PointY="30.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.host_reviews" Width="1.5" PointX="5.25" PointY="48" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.interest_categories" Width="1.5" PointX="6.75" PointY="23.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.interest" Width="1.5" PointX="9" PointY="23.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.language" Width="1.5" PointX="5.25" PointY="27.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.listLanguage" Width="1.5" PointX="9" PointY="57.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.Message" Width="1.5" PointX="5.25" PointY="51.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.neighbourhood" Width="1.5" PointX="13.5" PointY="40.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.phone_number" Width="1.5" PointX="5.25" PointY="54.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.promo_codes" Width="1.5" PointX="11.25" PointY="51.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.property" Width="1.5" PointX="11.25" PointY="36.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.properties_discounts" Width="1.5" PointX="16.5" PointY="36.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.property_amenities" Width="1.5" PointX="16.5" PointY="44.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.property_images" Width="1.5" PointX="19.5" PointY="40.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.property_reviews" Width="1.5" PointX="18.75" PointY="44.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.property_type" Width="1.5" PointX="9" PointY="51.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.review_component" Width="1.5" PointX="18.75" PointY="49" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.room_type" Width="1.5" PointX="9" PointY="54.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.state" Width="1.5" PointX="6.75" PointY="19.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.transaction" Width="1.5" PointX="13.5" PointY="44" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.user_notification" Width="1.5" PointX="5.25" PointY="68.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.user_personalInfor" Width="1.5" PointX="8.25" PointY="45.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.user_profile" Width="1.5" PointX="5.25" PointY="76.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.user_role" Width="1.5" PointX="5.25" PointY="81.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.user_type" Width="1.5" PointX="0.75" PointY="40.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.user_type_user_role" Width="1.5" PointX="7.5" PointY="61.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.user" Width="1.5" PointX="3" PointY="37.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.users_interests" Width="1.5" PointX="11.25" PointY="33.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="PPL3Model.users_languages" Width="1.5" PointX="11.25" PointY="47.75" IsExpanded="true" />
+      <Diagram DiagramId="31ec4cc8fcc84bf7a0a3379605d123b4" Name="Diagram1">
+        <EntityTypeShape EntityType="PPL3Model.amenity" Width="1.5" PointX="14.25" PointY="28.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.booking_guests" Width="1.5" PointX="13.5" PointY="38.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.booking" Width="1.5" PointX="8.25" PointY="41.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.category" Width="1.5" PointX="12" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.city" Width="1.5" PointX="9" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.cms_page_languages" Width="1.5" PointX="11.5" PointY="25.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.cms_pages" Width="1.5" PointX="9.25" PointY="18.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.component_rating" Width="1.5" PointX="21.75" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.country" Width="1.5" PointX="4.5" PointY="21.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.currency" Width="1.5" PointX="9" PointY="29.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.discount" Width="1.5" PointX="11.25" PointY="52.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.dispute" Width="1.5" PointX="16.5" PointY="42.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.email_content_languages" Width="1.5" PointX="7.5" PointY="33.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.email_contents" Width="1.5" PointX="5.25" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.emergency_contact" Width="1.5" PointX="5.25" PointY="37" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.favourite" Width="1.5" PointX="8.25" PointY="37.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.Friendship" Width="1.5" PointX="5.25" PointY="43.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.governmentID" Width="1.5" PointX="5.25" PointY="46.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.guest_type" Width="1.5" PointX="11.25" PointY="33.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.host_reviews" Width="1.5" PointX="5.25" PointY="50" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.interest_categories" Width="1.5" PointX="6.75" PointY="25.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.interest" Width="1.5" PointX="9" PointY="25.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.language" Width="1.5" PointX="5.25" PointY="29.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.listLanguage" Width="1.5" PointX="9" PointY="60.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.Message" Width="1.5" PointX="5.25" PointY="53.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.neighbourhood" Width="1.5" PointX="13.5" PointY="42.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.phone_number" Width="1.5" PointX="5.25" PointY="56.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.promo_codes" Width="1.5" PointX="17.25" PointY="34.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property" Width="1.5" PointX="11.25" PointY="38.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.properties_discounts" Width="1.5" PointX="13.5" PointY="46.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_amenities" Width="1.5" PointX="16.5" PointY="38.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_images" Width="1.5" PointX="16.5" PointY="46.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_reviews" Width="1.5" PointX="19.5" PointY="42.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.property_type" Width="1.5" PointX="9" PointY="53.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.review_component" Width="1.5" PointX="19.5" PointY="46.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.room_type" Width="1.5" PointX="9" PointY="56.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.state" Width="1.5" PointX="6.75" PointY="21.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.transaction" Width="1.5" PointX="19.5" PointY="35.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_notification" Width="1.5" PointX="5.25" PointY="70.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_personalInfor" Width="1.5" PointX="8.25" PointY="47.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_profile" Width="1.5" PointX="5.25" PointY="78.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_role" Width="1.5" PointX="5.25" PointY="83.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_type" Width="1.5" PointX="0.75" PointY="42.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user_type_user_role" Width="1.5" PointX="7.5" PointY="63.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.user" Width="1.5" PointX="3" PointY="39.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.users_interests" Width="1.5" PointX="11.25" PointY="35.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PPL3Model.users_languages" Width="1.5" PointX="11.25" PointY="49.875" IsExpanded="true" />
         <AssociationConnector Association="PPL3Model.FK_amenities_categories" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.pa_amenity_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.bkg_booking_id_FK" ManuallyRouted="false" />
@@ -60,7 +60,6 @@
         <AssociationConnector Association="PPL3Model.booking_transaction_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.booking_userId_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.disputes_booking_id_id_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="PPL3Model.transaction_booking_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.cities_state_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.pro_city_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.u_city_id_FK" ManuallyRouted="false" />
