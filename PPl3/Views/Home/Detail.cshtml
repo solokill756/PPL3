@@ -489,7 +489,7 @@
 
                                                 </div>
                                                 <span>2 weeks ago</span>
-                                                <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                                <p>Stay Dates : @item.transaction.bookings.FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.bookings.FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                             </div>
 
                                             <div class="body_comment_detail">
@@ -830,7 +830,7 @@
 
                                             </div>
                                             <span>2 weeks ago</span>
-                                            <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                            <p>Stay Dates : @item.transaction.bookings.FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.bookings.FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                         </div>
 
                                         <div class="body_comment_detail">
