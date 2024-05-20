@@ -12,7 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/message.css?v=2" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/message.css?v=3" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/headerGuest.css?v=1" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
@@ -174,7 +174,7 @@
                                                 }
                                             </div>
                                             <div class="message mess_@count @item.user.id">
-                                                @{ 
+                                                @{
                                                     var messageContent = db.Messages
 
                                                     .Where(row => (row.ReceiverID == item.UserId1 && row.SenderID == p_user.id) || (row.SenderID == item.UserId1 && row.ReceiverID == p_user.id))
@@ -182,8 +182,16 @@
                                                     .OrderByDescending(row => row.ID)
 
                                                     .FirstOrDefault()?.MessageContent ?? "";
-                                                  }
-                                                <p>@messageContent</p>
+                                                }
+                                                @if (messageContent.Contains("data:image/jpeg"))
+                                                {
+                                                    <p>Pictrue</p>
+
+                                                }
+                                                else
+                                                {
+                                                    <p>@messageContent</p>
+                                                }
                                             </div>
                                         </div>
                                     </li>
@@ -316,7 +324,10 @@
                 success: function () {
                     // Load lại tin nhắn
                     console.log(1);
-                    loadMessages(senderId, receiverId);
+                    var chatsection = $('.body_mess.open').find('.chat_section');
+                    chatsection.append(`<div class="text text_you">
+                        <p>${content}</p>
+                    </div>`);
                     $(`.detail .${receiverId} p`).text(content);
                 }
             });
@@ -339,7 +350,10 @@
                     success: function () {
                         // Load lại tin nhắn
                         console.log(1);
-                        loadMessages(senderId, receiverId);
+                        var chatsection = $('.body_mess.open').find('.chat_section');
+                        chatsection.append(`<div class="text text_you">
+                             <p>${content}</p>
+                         </div>`);
                         $(`.detail .${receiverId} p`).text(content);
                     }
                 });
@@ -371,12 +385,15 @@
                          success: function () {
                              // Load lại tin nhắn
                              console.log(1);
-                             loadMessages(senderId, receiverId);
+                             var chatsection = $('.body_mess.open').find('.chat_section');
+                             chatsection.append(`<div class="text text_you">
+                                 <img src="${fileUpload}" class = \"picture_css"\ alt="Ảnh" />
+                             </div>`);
                              $(`.detail .${receiverId} p`).text("Picture");
                              
                          }
                      });
-                    chatHub.server.sendMessage(receiverId, content);
+                    chatHub.server.sendMessage(receiverId, fileUpload);
                 };
             }
         });
@@ -390,9 +407,21 @@
         chatHub.client.receiveMessage = function (senderId, receiverUserId , message) {
          //Load lại tin nhắn
         console.log(2);
-            loadMessages(receiverUserId, senderId);
-            $(`.detail .${senderId} p`).text(message);
-            $(`.detail .${receiverUserId} p`).text(message);
+            //loadMessages(receiverUserId, senderId);
+            var chatsection = $('.body_mess.open').find('.chat_section');
+            if (isBase64Image(message)) {
+                chatsection.append(`<div class="text text_user">
+                    <img src="${message}" class = \"picture_css"\ alt="Ảnh" />
+                </div>`);
+                $(`.detail .${receiverUserId} p`).text("Picture");
+            }
+            else {
+                chatsection.append(`<div class="text text_user">
+                    <p class="color_user">${message}</p>
+                </div>`);
+                $(`.detail .${receiverUserId} p`).text(message);
+            }
+          
             if (!$(`.list_message .${senderId}`).first().hasClass('selected')) {
                 $(`.list_message .${senderId}`).first().addClass('Unread');
             }
@@ -417,7 +446,7 @@
 
                         if (isBase64Image(text)) {
                             chatsection.append(`<div class="text ${isSender ? 'text_you' : 'text_user'}">
-                                <img src="${text}" alt="Ảnh" />
+                                <img src="${text}" class = \"picture_css"\ alt="Ảnh" />
                             </div>`);
                         } else {
                             chatsection.append(`<div class="text ${isSender ? 'text_you' : 'text_user'}">

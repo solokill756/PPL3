@@ -335,3 +335,7 @@ html{
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+.picture_css {
+    width:300px;
+    height:200px;
+}
