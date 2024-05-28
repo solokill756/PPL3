@@ -152,7 +152,15 @@
                                                     <div class="in_progress">
                                                         @if (item.p_status == 0)
                                                         {
-                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            if(item.Browse_hotel_listings.FirstOrDefault() != null) { 
+                                                                <button><i class="fa-solid fa-circle check-room-2" style="color:darkgoldenrod"></i> Pending</button>
+                                                                
+                                                            }
+                                                            else { 
+                                                                <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            
+                                                            }
+                                                            
 
 
                                                         }

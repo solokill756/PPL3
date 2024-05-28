@@ -21,6 +21,7 @@ using System.Text;
 using static System.Data.Entity.Infrastructure.Design.Executor;
 using System.Security.Policy;
 using System.Net;
+using System.Security.Cryptography;
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -641,10 +642,9 @@ namespace PPl3.Areas.User.Controllers
                 var userInfor = (entities.users.Where(item => item.id ==  id_user).FirstOrDefault());
                 userInfor.user_status = 1;
                 entities.SaveChanges();
-                if(userInfor.user_type != 1) Session["user"] = userInfor;
-                else if(userInfor.user_type == 1) Session["admin"] = userInfor;
+                Session["user"] = userInfor;
                 TempData["check"] = false;
-                if (Session["user"] != null)  return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
+                if (userInfor.user_type  != 1)  return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
                 else
                 {
                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin"});
@@ -724,11 +724,11 @@ namespace PPl3.Areas.User.Controllers
                 var userInfor = (db.users.Where(item => item.id == id_user).FirstOrDefault());
                 userInfor.user_status = 1;
                 db.SaveChanges();
-                if (userInfor.user_type != 1) Session["user"] = userInfor;
-                else if (userInfor.user_type == 1) Session["admin"] = userInfor;
+                Session["user"] = userInfor;
+                
 
                 TempData["check"] = false;
-               if(Session["user"] != null) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1 , checkID = -1 });
+               if(userInfor.user_type != 1) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1 , checkID = -1 });
                else
                 {
                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin"});
@@ -737,8 +737,56 @@ namespace PPl3.Areas.User.Controllers
             }
         }
 
+        [HttpGet]
+        public JsonResult verificationEmail(string newEmail)
+        {
+            string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            Random random = new Random();
+            char[] resendcode = new char[6];
+            for (int i = 0; i < 6; i++)
+            {
+                resendcode[i] = characters[random.Next(characters.Length)];
+            }
+            var data = new
+            {
+                code = new string(resendcode)
+            };
+            string emailHtml = RenderRazorViewToString("comfirmEmailForm", data.code);
+            if(SendEmail(newEmail, "Verification Email", emailHtml) == 0)
+            {
+                Console.WriteLine("errrrrrorororororo");
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
-
+        
+        public ActionResult comfirmEmailForm(string verificationCode)
+        {
+            return View(verificationCode);
+        }
+        [HttpPost]
+        public JsonResult sendPassMail(string email)
+        {
+            PPL3Entities db = new PPL3Entities();
+            var check = db.user_personalInfor.Where(item => item.email_address ==  email).FirstOrDefault();
+            if(check == null)
+            {
+                return Json("Incorrect email", JsonRequestBehavior.AllowGet);
+            }
+            string pass = check.user.user_password;
+            string emailHtml = RenderRazorViewToString("sendPassword", pass);
+            if (SendEmail(email, "Your password", emailHtml) == 0)
+            {
+                Console.WriteLine("errrrrrorororororo");
+                return Json("Error", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+        public ActionResult sendPassword(string currentPass)
+        {
+            return View(currentPass);
+        }
 
         // Detail
         public ActionResult Detail(int id , int bookingId = -1)
@@ -942,16 +990,35 @@ namespace PPl3.Areas.User.Controllers
            
             
             DateTime now = DateTime.Now;
-            foreach (var item in db.bookings)
+            List<booking> bookingsToRemove = new List<booking>();
+            foreach (var item in db.bookings.ToList())
+
             {
-                TimeSpan duration = (TimeSpan)(item.check_in_date - now); // Tính toán khoảng cách
-                int daysDifference = (int)duration.TotalDays; // Chuyển khoảng cách thành số ngày
+
+                TimeSpan duration = (TimeSpan)(item.check_in_date - now);
+
+                int daysDifference = (int)duration.TotalDays;
+
                 if ((item.check_out_date < now) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+
                 {
-                    db.bookings.Remove(item);
-                    db.SaveChanges();
+
+                    bookingsToRemove.Add(item);
+
                 }
+
+
             }
+
+            foreach (var itemToRemove in bookingsToRemove)
+
+            {
+
+                db.bookings.Remove(itemToRemove);
+
+            }
+
+            db.SaveChanges();
             if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate) || (checkInDate < item.check_in_date && checkOutDate > item.check_out_date)) && item.userId ==  p_user.id && item.property_id == id && item.pay_status == 1) == false && checkInDate > DateTime.Now)
             {
                 TempData["checkBook"] = checkBook;
@@ -1242,7 +1309,8 @@ namespace PPl3.Areas.User.Controllers
                 db.Messages.Remove(find_message);
                 db.SaveChanges();
             }
-            db.Friendships.Remove(db.Friendships.FirstOrDefault(item => (item.UserId1 == p_user.id && item.UserId2 == userID) || (item.UserId1 == userID && item.UserId2 == p_user.id)));
+            var find_friendship = db.Friendships.FirstOrDefault(item => (item.UserId1 == p_user.id && item.UserId2 == userID) || (item.UserId1 == userID && item.UserId2 == p_user.id));
+            if(find_friendship != null) db.Friendships.Remove(find_friendship);
             db.SaveChanges();
             return RedirectToAction("ChatUser");
         }
@@ -1295,22 +1363,38 @@ namespace PPl3.Areas.User.Controllers
             transaction transaction = db.transactions.FirstOrDefault(item => item.id == id);
             return View(transaction);
         }
-        private void SendEmail(string recipientEmail, string subject, string body)
+        private int SendEmail(string recipientEmail, string subject, string body)
         {
-            using (MailMessage mailMessage = new MailMessage())
+            try
             {
-                mailMessage.From = new MailAddress("thanhlongtivip@gmail.com"); 
-                mailMessage.To.Add(recipientEmail);
-                mailMessage.Subject = subject;
-                mailMessage.Body = body;
-                mailMessage.IsBodyHtml = true;
-                string appPassword = "strm orqd egqw oqrx";
-                using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                using (MailMessage mailMessage = new MailMessage())
                 {
-                    smtpClient.Credentials = new NetworkCredential("thanhlongtivip@gmail.com", appPassword);
-                    smtpClient.EnableSsl = true;
-                    smtpClient.Send(mailMessage);
+                    mailMessage.From = new MailAddress("thanhlongtivip@gmail.com");
+                    mailMessage.To.Add(recipientEmail);
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body;
+                    mailMessage.IsBodyHtml = true;
+                    string appPassword = "strm orqd egqw oqrx";
+                    using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtpClient.Credentials = new NetworkCredential("thanhlongtivip@gmail.com", appPassword);
+                        smtpClient.EnableSsl = true;
+                        smtpClient.Send(mailMessage);
+                    }
                 }
+                return 1;
+            }
+            catch (SmtpFailedRecipientException)
+            {
+                return 0;
+            }
+            catch (SmtpException)
+            {
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 0;
             }
         }
         private string RenderRazorViewToString(string viewName, object model)
@@ -1388,6 +1472,8 @@ namespace PPl3.Areas.User.Controllers
             }
             return false;
         }
+
+        
 
     }
 }

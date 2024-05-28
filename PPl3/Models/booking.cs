@@ -19,7 +19,6 @@ namespace PPl3.Models
         {
             this.booking_guests = new HashSet<booking_guests>();
             this.disputes = new HashSet<dispute>();
-            this.transactions = new HashSet<transaction>();
         }
     
         public int id { get; set; }
@@ -49,7 +48,5 @@ namespace PPl3.Models
         public virtual user user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dispute> disputes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<transaction> transactions { get; set; }
     }
 }

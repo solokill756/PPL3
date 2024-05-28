@@ -24,7 +24,7 @@
   align-items: center;
 }
 .mg-bt{
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 .sidebar{
   position: fixed;
@@ -412,6 +412,8 @@
 .avatar img{
   width: 50px;
   border-radius: 100%;
+  object-fit:cover;
+  height:50px;
   border: 3px solid #ccc;
 }
 
@@ -535,12 +537,14 @@
 
 .avatar_infor{
   width: 100%;
-  padding: 30px;
+  padding: 10px;
 }
 
 .avatar_infor img{
   width: 150px;
-  border-radius: 100%;
+  border-radius: 80%;
+  object-fit:cover;
+  height:150px;
 }
 
 .infor_box{
@@ -558,6 +562,7 @@
 .img_cmnd img{
   width: 150px;
   border-radius: 10px;
+  height:100px;
 }
 
 .info_emergency{
@@ -679,7 +684,7 @@
 
 .text_desciption{
   overflow: auto;
-  height: 300px;
+  height: 200px;
   border: 1px solid #000;
   border-radius: 10px;
   padding: 5px 20px;
@@ -771,70 +776,4 @@
 }
 .btn_img button:hover{
   color: #424242;
-}
-
-#user{
-  display: none;
-}
-
-.container_user{
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 20px;
-  margin-bottom: 20px;
-}
-
-.item_user:first-child{
-  text-align: center;
-  flex: 1;
-}
-
-.number_box{
-  background-color: #1d1b31;
-  padding: 45px 25px;
-  border-radius: 10px;
-  color: #fff;
-  margin-bottom: 30px;
-}
-
-.search{
-  display: flex;
-  align-items: center;
-}
-
-.search input{
-  padding: 10px;
-    font-size: 17px;
-    border: none;
-    border-radius: 10px;
-    background-color: #1d1b31;
-    color: #fff;
-}
-
-.search button{
-  font-size: 25px;
-  padding: 3px 5px;
-  margin-right: 15px;
-  border-radius: 10px;
-  border: none;
-  color: #fff;
-  background-color: #1d1b31;
-}
-
-.item_user:last-child{
-  flex: 4;
-  height: 285px;
-  margin: 0 20px;
-  border-radius: 10px;
-  overflow: auto;
-  border: 1px solid #000;
-}
-
-
-#notification{
-  display: none;
-}
-
-#analytics{
-  display: none;
 }
