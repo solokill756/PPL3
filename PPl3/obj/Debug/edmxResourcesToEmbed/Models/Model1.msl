@@ -619,5 +619,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Browse_hotel_listings">
+      <EntityTypeMapping TypeName="PPL3Model.Browse_hotel_listings">
+        <MappingFragment StoreEntitySet="Browse_hotel_listings">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="property_id" ColumnName="property_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="browser_becomes_host">
+      <EntityTypeMapping TypeName="PPL3Model.browser_becomes_host">
+        <MappingFragment StoreEntitySet="browser_becomes_host">
+          <ScalarProperty Name="status" ColumnName="status" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="user_id" ColumnName="user_id" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

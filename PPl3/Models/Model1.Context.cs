@@ -73,5 +73,7 @@ namespace PPl3.Models
         public virtual DbSet<users_interests> users_interests { get; set; }
         public virtual DbSet<users_languages> users_languages { get; set; }
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<Browse_hotel_listings> Browse_hotel_listings { get; set; }
+        public virtual DbSet<browser_becomes_host> browser_becomes_host { get; set; }
     }
 }

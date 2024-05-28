@@ -70,24 +70,44 @@ namespace PPl3.Areas.Host.Controllers
             if (Session["user"] != null)
             {
                 user p_user = (user)Session["user"];
-                if(p_user.user_type == 3) {
-                    PPL3Entities db = new PPL3Entities();
+                PPL3Entities db = new PPL3Entities();
+                if (p_user.user_type == 3) {
+                    
                     List<property> properties = db.properties.Where(item => item.userId == p_user.id).ToList();
                     return View(properties);
                 }
-                else if (checkHost(p_user) == true)
+                else if(checkHost(p_user))
                 {
-
-
-                    PPL3Entities db = new PPL3Entities();
-                    user fix_user = db.users.FirstOrDefault(item => item.id == p_user.id);
-                    fix_user.user_type = 3;
-                    fix_user.day_become_host = DateTime.Now;
-                    db.SaveChanges();
-                    Session["user"] = fix_user;
-                    List<property> properties = db.properties.Where(item => item.userId == p_user.id).ToList();
-                    return View(properties);
-
+                    if(!db.browser_becomes_host.Any(item => item.user_id == p_user.id))
+                    {
+                        user_notification user_Notification = new user_notification();
+                        user_Notification.userid = p_user.id;
+                        user_Notification.created = DateTime.Now;
+                        user_Notification.content = "Your request to become a host has been sent successfully";
+                        user_Notification.un_status = 1;
+                        user_Notification.un_url = "#";
+                        db.user_notification.Add(user_Notification);
+                        db.SaveChanges();
+                        browser_becomes_host browser_Becomes_Host = new browser_becomes_host();
+                        browser_Becomes_Host.user_id = p_user.id;
+                        browser_Becomes_Host.Date = DateTime.Now;
+                        browser_Becomes_Host.status = false;
+                        db.browser_becomes_host.Add(browser_Becomes_Host);
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        user_notification user_Notification = new user_notification();
+                        user_Notification.userid = p_user.id;
+                        user_Notification.created = DateTime.Now;
+                        user_Notification.content = "You have already sent a request to become a host";
+                        user_Notification.un_status = 1;
+                        user_Notification.un_url = "#";
+                        db.user_notification.Add(user_Notification);
+                        db.SaveChanges();
+                    }
+                    
+                    return RedirectToAction("notification", "homeuser", new { area = "User" });
                 }
                 else
                 {
@@ -111,18 +131,7 @@ namespace PPl3.Areas.Host.Controllers
                     List<property> properties = db.properties.Where(item => item.userId == p_user.id).ToList();
                     return View(properties);
                 }
-                else if (checkHost(p_user) == true)
-                {
-                    PPL3Entities db = new PPL3Entities();
-                    user fix_user = db.users.FirstOrDefault(item => item.id == p_user.id);
-                    fix_user.user_type = 3;
-                    fix_user.day_become_host = DateTime.Now;
-                    db.SaveChanges();
-                    Session["user"] = fix_user;
-                    List<property> properties = db.properties.Where(item => item.userId == p_user.id).ToList();
-                    return View(properties);
-
-                }
+                
                 else
                 {
 
@@ -282,8 +291,9 @@ namespace PPl3.Areas.Host.Controllers
             new_hotel.bed_count = data.number_beds;
             if (current_pages >= 12)
             {
-                new_hotel.p_status = 1;
+               
                 new_hotel.current_pages = 1;
+
             }
             else
             {
@@ -306,8 +316,24 @@ namespace PPl3.Areas.Host.Controllers
             }
             db.properties.Add(new_hotel);
             db.SaveChanges();
+            if (!db.Browse_hotel_listings.Any(item => item.property_id == new_hotel.id) && current_pages >= 12)
+            {
+                user_Notification = new user_notification();
+                user_Notification.userid = p_user.id;
+                user_Notification.created = DateTime.Now;
+                user_Notification.content = "The room approval request has been sent, please wait a moment";
+                user_Notification.un_status = 0;
+                user_Notification.un_url = "#";
+                db.user_notification.Add(user_Notification);
+                Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
+                browse_Hotel_.property_id = new_hotel.id;
+                browse_Hotel_.status = false;
+                browse_Hotel_.Date = DateTime.Now;
+                db.Browse_hotel_listings.Add(browse_Hotel_);
+                db.SaveChanges();
 
-            if(data.listDiscounts != null) {
+            }
+            if (data.listDiscounts != null) {
                 
                 for (int i = 0; i < data.listDiscounts.Length; ++i)
                 {
@@ -530,7 +556,22 @@ namespace PPl3.Areas.Host.Controllers
             find_hotel.bed_count = data.number_beds;
             if(current_page >= 12)
             {
-                find_hotel.p_status = 1;
+                if(!db.Browse_hotel_listings.Any(item => item.property_id == find_hotel.id))
+                {
+                    user_notification user_Notification = new user_notification();
+                    user_Notification.userid = p_user.id;
+                    user_Notification.created = DateTime.Now;
+                    user_Notification.content = "The room approval request has been sent, please wait a moment";
+                    user_Notification.un_status = 0;
+                    user_Notification.un_url = "#";
+                    db.user_notification.Add(user_Notification);
+                    Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
+                    browse_Hotel_.property_id = find_hotel.id;
+                    browse_Hotel_.status = false;
+                    browse_Hotel_.Date = DateTime.Now;
+                    db.Browse_hotel_listings.Add(browse_Hotel_);
+                    db.SaveChanges();
+                }
                 find_hotel.current_pages = 1;
             }
             else if(find_hotel.p_status == 1)
@@ -623,6 +664,7 @@ namespace PPl3.Areas.Host.Controllers
             property_images[] list_imgs = db.property_images.Where(item => item.property_id == id).ToArray();
             if(list_imgs.Length > 0)
             {
+                int length = list_imgs.Length;
                 if (data.img_1 != null)
                 {
                     list_imgs[0].created = DateTime.Now;
@@ -633,33 +675,91 @@ namespace PPl3.Areas.Host.Controllers
 
                 if (data.img_2 != null)
                 {
-                    list_imgs[1].created = DateTime.Now;
-                    list_imgs[1].pi_image = data.img_2;
-                    db.SaveChanges();
+                    if(length > 1)
+                    {
+                        list_imgs[1].created = DateTime.Now;
+                        list_imgs[1].pi_image = data.img_2;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        property_images new_image = new property_images();
+                        new_image.pi_status = 1;
+                        new_image.property_id = find_hotel.id;
+                        new_image.added_by_user = p_user.id;
+                        new_image.created = DateTime.Now;
+                        new_image.pi_image = data.img_2;
+                        db.property_images.Add(new_image);
+                        db.SaveChanges();
+                    }
+                   
+                    
                 }
 
 
                 if (data.img_3 != null)
                 {
-                    list_imgs[2].created = DateTime.Now;
-                    list_imgs[2].pi_image = data.img_3;
-                    db.SaveChanges();
+                    if (length > 2)
+                    {
+                        list_imgs[2].created = DateTime.Now;
+                        list_imgs[2].pi_image = data.img_3;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        property_images new_image = new property_images();
+                        new_image.pi_status = 1;
+                        new_image.property_id = find_hotel.id;
+                        new_image.added_by_user = p_user.id;
+                        new_image.created = DateTime.Now;
+                        new_image.pi_image = data.img_3;
+                        db.property_images.Add(new_image);
+                        db.SaveChanges();
+                    }
                 }
 
 
                 if (data.img_4 != null)
                 {
-                    list_imgs[3].created = DateTime.Now;
-                    list_imgs[3].pi_image = data.img_4;
-                    db.SaveChanges();
+                    if (length > 3)
+                    {
+                        list_imgs[3].created = DateTime.Now;
+                        list_imgs[3].pi_image = data.img_4;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        property_images new_image = new property_images();
+                        new_image.pi_status = 1;
+                        new_image.property_id = find_hotel.id;
+                        new_image.added_by_user = p_user.id;
+                        new_image.created = DateTime.Now;
+                        new_image.pi_image = data.img_4;
+                        db.property_images.Add(new_image);
+                        db.SaveChanges();
+                    }
                 }
 
 
                 if (data.img_5 != null)
                 {
-                    list_imgs[4].created = DateTime.Now;
-                    list_imgs[4].pi_image = data.img_5;
-                    db.SaveChanges();
+                    if (length > 4)
+                    {
+                        list_imgs[4].created = DateTime.Now;
+                        list_imgs[4].pi_image = data.img_5;
+                        db.SaveChanges();
+                    }
+                    else
+                    {
+                        property_images new_image = new property_images();
+                        new_image.pi_status = 1;
+                        new_image.property_id = find_hotel.id;
+                        new_image.added_by_user = p_user.id;
+                        new_image.created = DateTime.Now;
+                        new_image.pi_image = data.img_5;
+                        db.property_images.Add(new_image);
+                        db.SaveChanges();
+                    }
                 }
 
             }

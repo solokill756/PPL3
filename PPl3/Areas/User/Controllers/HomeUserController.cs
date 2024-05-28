@@ -642,10 +642,9 @@ namespace PPl3.Areas.User.Controllers
                 var userInfor = (entities.users.Where(item => item.id ==  id_user).FirstOrDefault());
                 userInfor.user_status = 1;
                 entities.SaveChanges();
-                if(userInfor.user_type != 1) Session["user"] = userInfor;
-                else if(userInfor.user_type == 1) Session["admin"] = userInfor;
+                Session["user"] = userInfor;
                 TempData["check"] = false;
-                if (Session["user"] != null)  return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
+                if (userInfor.user_type  != 1)  return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
                 else
                 {
                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin"});
@@ -725,11 +724,11 @@ namespace PPl3.Areas.User.Controllers
                 var userInfor = (db.users.Where(item => item.id == id_user).FirstOrDefault());
                 userInfor.user_status = 1;
                 db.SaveChanges();
-                if (userInfor.user_type != 1) Session["user"] = userInfor;
-                else if (userInfor.user_type == 1) Session["admin"] = userInfor;
+                Session["user"] = userInfor;
+                
 
                 TempData["check"] = false;
-               if(Session["user"] != null) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1 , checkID = -1 });
+               if(userInfor.user_type != 1) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1 , checkID = -1 });
                else
                 {
                     return RedirectToAction("Index", "HomeAdmin", new { area = "Admin"});
@@ -991,16 +990,35 @@ namespace PPl3.Areas.User.Controllers
            
             
             DateTime now = DateTime.Now;
-            foreach (var item in db.bookings)
+            List<booking> bookingsToRemove = new List<booking>();
+            foreach (var item in db.bookings.ToList())
+
             {
-                TimeSpan duration = (TimeSpan)(item.check_in_date - now); // Tính toán khoảng cách
-                int daysDifference = (int)duration.TotalDays; // Chuyển khoảng cách thành số ngày
+
+                TimeSpan duration = (TimeSpan)(item.check_in_date - now);
+
+                int daysDifference = (int)duration.TotalDays;
+
                 if ((item.check_out_date < now) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+
                 {
-                    db.bookings.Remove(item);
-                    db.SaveChanges();
+
+                    bookingsToRemove.Add(item);
+
                 }
+
+
             }
+
+            foreach (var itemToRemove in bookingsToRemove)
+
+            {
+
+                db.bookings.Remove(itemToRemove);
+
+            }
+
+            db.SaveChanges();
             if (db.bookings.Any(item => ((item.check_in_date <= checkInDate && item.check_out_date >= checkInDate) || (item.check_out_date >= checkOutDate && item.check_in_date <= checkOutDate) || (checkInDate < item.check_in_date && checkOutDate > item.check_out_date)) && item.userId ==  p_user.id && item.property_id == id && item.pay_status == 1) == false && checkInDate > DateTime.Now)
             {
                 TempData["checkBook"] = checkBook;
@@ -1291,7 +1309,8 @@ namespace PPl3.Areas.User.Controllers
                 db.Messages.Remove(find_message);
                 db.SaveChanges();
             }
-            db.Friendships.Remove(db.Friendships.FirstOrDefault(item => (item.UserId1 == p_user.id && item.UserId2 == userID) || (item.UserId1 == userID && item.UserId2 == p_user.id)));
+            var find_friendship = db.Friendships.FirstOrDefault(item => (item.UserId1 == p_user.id && item.UserId2 == userID) || (item.UserId1 == userID && item.UserId2 == p_user.id));
+            if(find_friendship != null) db.Friendships.Remove(find_friendship);
             db.SaveChanges();
             return RedirectToAction("ChatUser");
         }

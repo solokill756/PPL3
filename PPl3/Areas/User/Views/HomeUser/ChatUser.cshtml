@@ -311,38 +311,12 @@
 
 
         $(".send_btn").click(function () {
+
             var content = $("#message_send").val();
             var senderId = "@p_user.id"; // Thay bằng id của người gửi
             var receiverId = $('.body_mess.open').attr("class").split(" ")[2]; // Thay bằng id của người nhận
 
-
-
-            $.ajax({
-                type: "POST",
-                url: "@Url.Action("SendMessage", "homeUser", new { area = "User" })",
-                data: { senderId: senderId, receiverId: receiverId, content: content },
-                success: function () {
-                    // Load lại tin nhắn
-                    console.log(1);
-                    var chatsection = $('.body_mess.open').find('.chat_section');
-                    chatsection.append(`<div class="text text_you">
-                        <p>${content}</p>
-                    </div>`);
-                    $(`.detail .${receiverId} p`).text(content);
-                }
-            });
-            sendinput.value = '';
-            chatHub.server.sendMessage(receiverId, content);
-        });
-
-        $('#message_send').keypress(function (e) {
-            if (e.which == 13) {
-                var content = $("#message_send").val();
-                var senderId = "@p_user.id"; // Thay bằng id của người gửi
-                var receiverId = $('.body_mess.open').attr("class").split(" ")[2]; // Thay bằng id của người nhận
-
-                /*$(`.detail .${receiverId} p`).text(content);*/
-
+            if (content.trim() != "") {
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("SendMessage", "homeUser", new { area = "User" })",
@@ -352,13 +326,48 @@
                         console.log(1);
                         var chatsection = $('.body_mess.open').find('.chat_section');
                         chatsection.append(`<div class="text text_you">
-                             <p>${content}</p>
-                         </div>`);
+                            <p>${content}</p>
+                        </div>`);
                         $(`.detail .${receiverId} p`).text(content);
+                        chatSection = $(`.body_mess.open`);
+                        chatSection.scrollTop(chatSection.prop("scrollHeight"));
                     }
                 });
                 sendinput.value = '';
                 chatHub.server.sendMessage(receiverId, content);
+            }
+
+
+        });
+
+        $('#message_send').keypress(function (e) {
+            if (e.which == 13) {
+                var content = $("#message_send").val();
+                var senderId = "@p_user.id"; // Thay bằng id của người gửi
+                var receiverId = $('.body_mess.open').attr("class").split(" ")[2]; // Thay bằng id của người nhận
+
+                /*$(`.detail .${receiverId} p`).text(content);*/
+                if (content.trim() != "") {
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("SendMessage", "homeUser", new { area = "User" })",
+                        data: { senderId: senderId, receiverId: receiverId, content: content },
+                        success: function () {
+                            // Load lại tin nhắn
+                            console.log(1);
+                            var chatsection = $('.body_mess.open').find('.chat_section');
+                            chatsection.append(`<div class="text text_you">
+                                <p>${content}</p>
+                            </div>`);
+                            $(`.detail .${receiverId} p`).text(content);
+                            chatSection = $(`.body_mess.open`);
+                            chatSection.scrollTop(chatSection.prop("scrollHeight"));
+                        }
+                    });
+                    sendinput.value = '';
+                    chatHub.server.sendMessage(receiverId, content);
+                }
+
 
             }
         });
@@ -390,7 +399,8 @@
                                  <img src="${fileUpload}" class = \"picture_css"\ alt="Ảnh" />
                              </div>`);
                              $(`.detail .${receiverId} p`).text("Picture");
-                             
+                             chatSection = $(`.body_mess.open`);
+                             chatSection.scrollTop(chatSection.prop("scrollHeight"));
                          }
                      });
                     chatHub.server.sendMessage(receiverId, fileUpload);
@@ -421,10 +431,12 @@
                 </div>`);
                 $(`.detail .${receiverUserId} p`).text(message);
             }
-          
+
             if (!$(`.list_message .${senderId}`).first().hasClass('selected')) {
                 $(`.list_message .${senderId}`).first().addClass('Unread');
             }
+            chatSection = $(`.body_mess.open`);
+            chatSection.scrollTop(chatSection.prop("scrollHeight"));
            // console.log("Tin nhắn từ " + senderId + ": " + message);
     };
 }

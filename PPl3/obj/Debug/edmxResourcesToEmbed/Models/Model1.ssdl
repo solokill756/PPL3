@@ -46,6 +46,24 @@
     <Property Name="pay_status" Type="tinyint" />
     <Property Name="booking_status" Type="tinyint" />
   </EntityType>
+  <EntityType Name="Browse_hotel_listings">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="property_id" Type="int" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="status" Type="bit" />
+  </EntityType>
+  <EntityType Name="browser_becomes_host">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_id" Type="int" />
+    <Property Name="Date" Type="datetime" />
+    <Property Name="status" Type="bit" />
+  </EntityType>
   <EntityType Name="categories">
     <Key>
       <PropertyRef Name="id" />
@@ -638,18 +656,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="bt_transaction_id_id_FK">
-    <End Role="transactions" Type="Self.transactions" Multiplicity="0..1" />
-    <End Role="bookings" Type="Self.bookings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="transactions">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="bookings">
-        <PropertyRef Name="transaction_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="cities_state_id_id_FK">
     <End Role="states" Type="Self.states" Multiplicity="0..1" />
     <End Role="cities" Type="Self.cities" Multiplicity="*" />
@@ -847,6 +853,32 @@
       </Principal>
       <Dependent Role="amenities">
         <PropertyRef Name="category_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_become_a_host_users">
+    <End Role="users" Type="Self.users" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="browser_becomes_host" Type="Self.browser_becomes_host" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="browser_becomes_host">
+        <PropertyRef Name="user_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Browse_hotel_listings_properties">
+    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
+    <End Role="Browse_hotel_listings" Type="Self.Browse_hotel_listings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Browse_hotel_listings">
+        <PropertyRef Name="property_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1468,6 +1500,8 @@
     <EntitySet Name="amenities" EntityType="Self.amenities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="bookings" EntityType="Self.bookings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Browse_hotel_listings" EntityType="Self.Browse_hotel_listings" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="browser_becomes_host" EntityType="Self.browser_becomes_host" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cms_page_languages" EntityType="Self.cms_page_languages" Schema="dbo" store:Type="Tables" />
@@ -1533,10 +1567,6 @@
       <End Role="users" EntitySet="users" />
       <End Role="bookings" EntitySet="bookings" />
     </AssociationSet>
-    <AssociationSet Name="bt_transaction_id_id_FK" Association="Self.bt_transaction_id_id_FK">
-      <End Role="transactions" EntitySet="transactions" />
-      <End Role="bookings" EntitySet="bookings" />
-    </AssociationSet>
     <AssociationSet Name="cities_state_id_id_FK" Association="Self.cities_state_id_id_FK">
       <End Role="states" EntitySet="states" />
       <End Role="cities" EntitySet="cities" />
@@ -1600,6 +1630,14 @@
     <AssociationSet Name="FK_amenities_categories" Association="Self.FK_amenities_categories">
       <End Role="categories" EntitySet="categories" />
       <End Role="amenities" EntitySet="amenities" />
+    </AssociationSet>
+    <AssociationSet Name="FK_become_a_host_users" Association="Self.FK_become_a_host_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="browser_becomes_host" EntitySet="browser_becomes_host" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Browse_hotel_listings_properties" Association="Self.FK_Browse_hotel_listings_properties">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="Browse_hotel_listings" EntitySet="Browse_hotel_listings" />
     </AssociationSet>
     <AssociationSet Name="FK_discounts_discounts" Association="Self.FK_discounts_discounts">
       <End Role="discounts" EntitySet="discounts" />
