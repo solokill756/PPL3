@@ -17,7 +17,6 @@ namespace PPl3.Models
         public int id { get; set; }
         public Nullable<int> property_id { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
-        public Nullable<bool> status { get; set; }
     
         public virtual property property { get; set; }
     }

@@ -1191,11 +1191,7 @@ namespace PPl3.Areas.User.Controllers
                         return RedirectToAction("PaymentFail", "homeuser", new { area = "User" });
                         //log.InfoFormat("Thanh toan loi, OrderId={0}, VNPAY TranId={1},ResponseCode={2}", orderId, vnpayTranId, vnp_ResponseCode);
                     }
-                    //    displayTmnCode.InnerText = "Mã Website (Terminal ID):" + TerminalID;
-                    //    displayTxnRef.InnerText = "Mã giao dịch thanh toán:" + orderId.ToString();
-                    //    displayVnpayTranNo.InnerText = "Mã giao dịch tại VNPAY:" + vnpayTranId.ToString();
-                    //    displayAmount.InnerText = "Số tiền thanh toán (VND):" + vnp_Amount.ToString();
-                    //    displayBankCode.InnerText = "Ngân hàng thanh toán:" + bankCode;
+                    
                 }
             }
             return View();

@@ -91,7 +91,7 @@ namespace PPl3.Areas.Host.Controllers
                         browser_becomes_host browser_Becomes_Host = new browser_becomes_host();
                         browser_Becomes_Host.user_id = p_user.id;
                         browser_Becomes_Host.Date = DateTime.Now;
-                        browser_Becomes_Host.status = false;
+                        
                         db.browser_becomes_host.Add(browser_Becomes_Host);
                         db.SaveChanges();
                     }
@@ -327,7 +327,7 @@ namespace PPl3.Areas.Host.Controllers
                 db.user_notification.Add(user_Notification);
                 Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
                 browse_Hotel_.property_id = new_hotel.id;
-                browse_Hotel_.status = false;
+                
                 browse_Hotel_.Date = DateTime.Now;
                 db.Browse_hotel_listings.Add(browse_Hotel_);
                 db.SaveChanges();
@@ -567,7 +567,6 @@ namespace PPl3.Areas.Host.Controllers
                     db.user_notification.Add(user_Notification);
                     Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
                     browse_Hotel_.property_id = find_hotel.id;
-                    browse_Hotel_.status = false;
                     browse_Hotel_.Date = DateTime.Now;
                     db.Browse_hotel_listings.Add(browse_Hotel_);
                     db.SaveChanges();

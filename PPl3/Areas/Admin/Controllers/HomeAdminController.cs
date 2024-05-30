@@ -6,6 +6,12 @@ using System.Web;
 using System.Web.Mvc;
 using static System.Collections.Specialized.BitVector32;
 using System.Web.Security;
+using System.IO;
+using System.Net.Mail;
+using System.Net;
+using System.Web.Management;
+using System.Data;
+using WebGrease;
 
 namespace PPl3.Areas.Admin.Controllers
 {
@@ -30,9 +36,9 @@ namespace PPl3.Areas.Admin.Controllers
                     }
                     
                 }
-                foreach(var item in db.Browse_hotel_listings)
+                foreach(var item in db.properties)
                 {
-                    if (item.Date.Value.Month == i && item.status == true) count2++;
+                    if (item.Date_Post.Value.Month == i && item.p_status == 1) count2++;
                 }
                 result1 = result1 + count1.ToString() + ",";
                 result2 = result2 + count2.ToString() + ",";
@@ -47,9 +53,10 @@ namespace PPl3.Areas.Admin.Controllers
         {
             PPL3Entities db = new PPL3Entities();
             browser_becomes_host find_user = db.browser_becomes_host.FirstOrDefault(item => item.user_id == user_id);
-            find_user.status = true;
             find_user.user.user_type = 3;
+           
             db.SaveChanges();
+            db.browser_becomes_host.Remove(find_user);
             user_notification user_Notification = new user_notification();
             user_Notification.userid = user_id;
             user_Notification.created = DateTime.Now;
@@ -58,6 +65,9 @@ namespace PPl3.Areas.Admin.Controllers
             user_Notification.un_url = "/host/homehost/Listing";
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
+            user find_host = db.users.FirstOrDefault(item => item.id == user_id);
+            string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
+            SendEmail("hosithao1622004@gmail.com" , "Congrats on becoming a host!" , emailHtml);
             return Json("true", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -73,6 +83,7 @@ namespace PPl3.Areas.Admin.Controllers
             user_Notification.content = "You have been rejected to become a host";
             user_Notification.un_status = 0;
             user_Notification.un_url = "#";
+            
             db.users.FirstOrDefault(item => item.id == user_id).day_become_host = DateTime.Now;
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
@@ -84,9 +95,12 @@ namespace PPl3.Areas.Admin.Controllers
         {
             PPL3Entities db = new PPL3Entities();
             Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == hotel_id);
-            find_hotel.status = true;
-            find_hotel.property.p_status  = 1;
+            find_hotel.property.p_status = 1;
+            find_hotel.property.Date_Post = DateTime.Now;
+            
+           
             db.SaveChanges();
+            db.Browse_hotel_listings.Remove(find_hotel);
             user_notification user_Notification = new user_notification();
             user_Notification.userid = user_id;
             user_Notification.created = DateTime.Now;
@@ -123,6 +137,71 @@ namespace PPl3.Areas.Admin.Controllers
             Session.Remove("user");
             FormsAuthentication.SignOut();
             return RedirectToAction("login", "homeuser", new { area = "user", checkLogOut = true });
+        }
+
+
+        public ActionResult AccpectHost(int user_id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user find_user = db.users.FirstOrDefault(item => item.id == user_id);
+
+            return View(find_user);
+        }
+
+        public ActionResult AccpectHotel(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            Browse_hotel_listings hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.id == id);
+            return View(hotel);
+        }
+
+        // Send Email
+
+        private int SendEmail(string recipientEmail, string subject, string body)
+        {
+            try
+            {
+                using (MailMessage mailMessage = new MailMessage())
+                {
+                    mailMessage.From = new MailAddress("tnthotel2004@gmail.com");
+                    mailMessage.To.Add(recipientEmail);
+                    mailMessage.Subject = subject;
+                    mailMessage.Body = body;
+                    mailMessage.IsBodyHtml = true;
+                    string appPassword = "tsjp dydc eexq rgik";
+                    using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtpClient.Credentials = new NetworkCredential("tnthotel2004@gmail.com", appPassword);
+                        smtpClient.EnableSsl = true;
+                        smtpClient.Send(mailMessage);
+                    }
+                }
+                return 1;
+            }
+            catch (SmtpFailedRecipientException)
+            {
+                return 0;
+            }
+            catch (SmtpException)
+            {
+                return 0;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+        private string RenderRazorViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (var sw = new StringWriter())
+            {
+                var viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                var viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+                viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
+                return sw.GetStringBuilder().ToString();
+            }
         }
     }
     

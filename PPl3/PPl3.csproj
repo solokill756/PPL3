@@ -579,6 +579,7 @@
     </Content>
     <Content Include="Areas\User\Views\HomeUser\comfirmEmailForm.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\sendPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\AccpectHost.cshtml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />

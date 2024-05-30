@@ -413,6 +413,7 @@
     <NavigationProperty Name="user" Relationship="Self.pro_userId_id_FK" FromRole="properties" ToRole="users" />
     <NavigationProperty Name="transactions" Relationship="Self.transaction_property_id_id_FK" FromRole="properties" ToRole="transactions" />
     <NavigationProperty Name="Browse_hotel_listings" Relationship="PPL3Model.FK_Browse_hotel_listings_properties" FromRole="property" ToRole="Browse_hotel_listings" />
+    <Property Name="Date_Post" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="properties_discounts">
     <Key>
@@ -1935,7 +1936,6 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="property_id" Type="Int32" />
     <Property Name="Date" Type="DateTime" Precision="3" />
-    <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="property" Relationship="PPL3Model.FK_Browse_hotel_listings_properties" FromRole="Browse_hotel_listings" ToRole="property" />
   </EntityType>
   <EntityType Name="browser_becomes_host">
@@ -1945,7 +1945,6 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="user_id" Type="Int32" />
     <Property Name="Date" Type="DateTime" Precision="3" />
-    <Property Name="status" Type="Boolean" />
     <NavigationProperty Name="user" Relationship="PPL3Model.FK_become_a_host_users" FromRole="browser_becomes_host" ToRole="user" />
   </EntityType>
   <Association Name="FK_Browse_hotel_listings_properties">

@@ -127,8 +127,8 @@ console.log(btnDetailsHost);
 btnDetailsHost.forEach((btn) =>{
     btn.addEventListener('click', () => {
         let select_id = btn.classList.value.split(" ")[1];
-        var inforHostDetail = document.querySelector(`.info_host_detail.${select_id}`)
-        var containerInforHost = document.querySelector(`.container_info_host.${select_id}`)
+        var inforHostDetail = document.querySelector(`.info_host_detail[class*="${select_id}"]`)
+        var containerInforHost = document.querySelector(`.container_info_host[class*="${select_id}"]`)
         containerInforHost.classList.remove(`animationInfor`)
         inforHostDetail.classList.add('openHost');
   })
