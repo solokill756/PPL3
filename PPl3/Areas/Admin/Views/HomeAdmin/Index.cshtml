@@ -23,6 +23,9 @@
     {
         hotel_rate = (decimal)db.properties.Where(item => item.p_status == 1).Count() / totalProperties * 100;
     }
+    List<PPl3.Models.user> lstUser = db.users.Where(item => item.user_type == 2).ToList();
+    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3).ToList();
+    List<PPl3.Models.property> lstHotel = db.properties.Where(item => item.p_status == 1).ToList();
 
 }
 
@@ -36,9 +39,80 @@
     <link href="~/ExtraFiles/assets/css/admin.css?v=4" rel="stylesheet" />
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css?v=3">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style id="img-style">
+    </style>
+    <style>
+
+
+        :root {
+            --gray-color: hsla(0, 0%, 80%, 1);
+            --black-color: #000000;
+        }
+
+        .mod {
+            position: fixed;
+            top: 0;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            z-index: 9999;
+        }
+
+        .mod__inner {
+            width: 1050px;
+            height: 700px;
+            position: relative;
+            top: 12%;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mod__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--black-color);
+            color: white;
+        }
+
+        .mod__body {
+            padding: 15px;
+            overflow-y: scroll;
+            max-height: 650px;
+        }
+
+            .mod__body h2 {
+                color: var(--black-color);
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .check-item {
+            list-style: none;
+            padding: 5px;
+        }
+
+            .check-item input[type="checkbox"] {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .check-item label {
+                display: inline-block;
+                vertical-align: middle;
+            }
     </style>
 </head>
 <body>
@@ -354,9 +428,9 @@
                                         </div>
                                     </div>
                                     @*<div class="mg-bt confirm_reservations">
-                                        <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
-                                        <span><img src="" alt="">Use Instant Book</span>
-                                    </div>*@
+                                            <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                            <span><img src="" alt="">Use Instant Book</span>
+                                        </div>*@
 
                                 </div>
                                 <div class="item_info">
@@ -469,7 +543,7 @@
             <div class="container_user">
                 <div class="item_user">
                     <div class="number_box">
-                        <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                        <h2 id="userCount" >@lstUser.Count() <i class="fa-solid fa-user"></i></h2>
                         <span>People</span>
                     </div>
                     <div class="search">
@@ -482,176 +556,69 @@
                         <thead>
                         <th></th>
                         <th>Name</th>
-                        <th>CMND</th>
+                        <th>Passport</th>
                         <th>Address</th>
                         <th>Email</th>
                         <th></th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
+                            @{
+                                if (lstUser != null)
+                                {
+                                    foreach (var tmp in lstUser.ToList())
+                                    {
+                                        <tr id="userRow-@tmp.id">
+                                            <td>
+                                                <div class="avatar">
+                                                    @{
+                                                        if (tmp.user_profile.FirstOrDefault() != null && tmp.user_profile.FirstOrDefault().user_avatar != null)
+                                                        {
+                                                            <img src="@tmp.user_profile.FirstOrDefault().user_avatar" alt="">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="">
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>@tmp.account_name</td>
+                                            @{
+                                                if (tmp.passport_code != null)
+                                                {
+                                                    <td>@tmp.passport_code</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+                                            @{
+                                                string address = "";
+                                                if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
+                                                {
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                    if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
+                                                    {
+                                                        address = tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
+                                                        {
+                                                            address = tmp.user_personalInfor.FirstOrDefault().city.city_name + ", " + tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            <td>@address</td>
+                                            <td>@tmp.user_personalInfor.FirstOrDefault().email_address</td>
+                                            <td>
+                                                <button id="@tmp.id" class="details_user">Detail</button>
+                                                <button id="@tmp.id" class="delete_btns">Delete</button>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -660,7 +627,7 @@
             <div class="container_user">
                 <div class="item_user">
                     <div class="number_box">
-                        <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                        <h2 id="hostCount">@lstHost.Count() <i class="fa-solid fa-user"></i></h2>
                         <span>People</span>
                     </div>
                     <div class="search">
@@ -673,176 +640,68 @@
                         <thead>
                         <th></th>
                         <th>Name</th>
-                        <th>CMND</th>
+                        <th>Passport</th>
                         <th>Address</th>
                         <th>Email</th>
                         <th></th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
+                            @{
+                                if (lstHost != null)
+                                {
+                                    foreach (var tmp in lstHost.ToList())
+                                    {
+                                        <tr id="hostRow-@tmp.id">
+                                            <td>
+                                                <div class="avatar">
+                                                    @{
+                                                        if (tmp.user_profile.FirstOrDefault() != null && tmp.user_profile.FirstOrDefault().user_avatar != null)
+                                                        {
+                                                            <img src="@tmp.user_profile.FirstOrDefault().user_avatar" alt="">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="">
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>@tmp.user_personalInfor.FirstOrDefault().legal_name</td>
+                                            @{
+                                                if (tmp.passport_code != null)
+                                                {
+                                                    <td>@tmp.passport_code</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+                                            @{
+                                                string address = "";
+                                                if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
+                                                {
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                    if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
+                                                    {
+                                                        address = tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
+                                                        {
+                                                            address = tmp.user_personalInfor.FirstOrDefault().city.city_name + ", " + tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            <td>@address</td>
+                                            <td>@tmp.user_personalInfor.FirstOrDefault().email_address</td>
+                                            <td>
+                                                <button id="@tmp.id" class="details_host">Detail</button>
+                                                <button id="@tmp.id" class="delete_Hostbtns">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -851,8 +710,8 @@
             <div class="container_user">
                 <div class="item_user">
                     <div class="number_box">
-                        <h2>1450 <i class="fa-solid fa-user"></i></h2>
-                        <span>People</span>
+                        <h2 id="hotelCount" >@lstHotel.Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <span>Hotel</span>
                     </div>
                     <div class="search">
                         <button><i class='bx bx-search'></i></button>
@@ -862,178 +721,55 @@
                 <div class="list_item item_user">
                     <table>
                         <thead>
-                        <th></th>
+                        <th>Hotel Id</th>
                         <th>Name</th>
-                        <th>CMND</th>
+                        <th>Host</th>
                         <th>Address</th>
                         <th>Email</th>
+                        <th>Day post</th>
                         <th></th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            <tr>
-                                <td>
-                                    <div class="avatar">
-                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
-                                    </div>
-                                </td>
-                                <td>Le Dinh Toan</td>
-                                <td>110203830298</td>
-                                <td>192, New York City</td>
-                                <td>toanledinh76@gmail.com</td>
-                                <td>
-                                    <button class="details_host">Detail</button>
-                                    <button>Delete</button>
-                                </td>
-                            </tr>
+                            @{
+                                if (lstHotel != null)
+                                {
+                                    foreach (var tmp in lstHotel)
+                                    {
+                                        <tr id="hotelRow-@tmp.id">
+                                            <td>
+                                                @tmp.id
+                                            </td>
+                                            <td>@tmp.p_name</td>
+                                            <td>@tmp.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                            @{
+                                                string address = "";
+                                                if (tmp.country_id != null)
+                                                {
+                                                    address = tmp.country.ct_name;
+                                                    if (tmp.state_id != null)
+                                                    {
+                                                        address = tmp.state.state_name + ", " + tmp.country.ct_name;
+                                                        if (tmp.city_id != null)
+                                                        {
+                                                            address = tmp.city.city_name + ", " + tmp.state.state_name + ", " + tmp.country.ct_name;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            <td>@address</td>
+                                            <td>@tmp.user.user_personalInfor.FirstOrDefault().email_address</td>
+                                            <td>@tmp.Date_Post.Value.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                @{
+                                                    string hotelid = "hotel_" + tmp.id.ToString();
+                                                }
+                                                <button id="@hotelid" class="details_hotel">Detail</button>
+                                                <button id="@tmp.id" class="delete_Hotelbtns">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -1046,8 +782,909 @@
 
         </div>
     </section>
+    @{
+        if (db.users != null)
+        {
+            string tmpBD = "";
+            int count = 0;
+            double sum = 0;
+            int pos = 0;
+            foreach (var tmp in db.users.Where(item => item.user_type != 1).ToList())
+            {
+                var p_user = tmp;
+                bool is_host = false;
+                if (p_user.user_type == 3)
+                { is_host = true; }
+                string name = p_user.account_name;
+                if (p_user.user_personalInfor.FirstOrDefault().legal_name != null)
+                {
+                    name = p_user.user_personalInfor.FirstOrDefault().legal_name;
+                }
+                <div id="myModal-@tmp.id" class="mod hide">
+                    <div class="mod__inner">
+                        <div class="mod__header">
+                            <p>Detail</p>
+                            <i class="far fa-window-close close-modal" data-modal-id="@tmp.id"></i>
+                        </div>
+                        <div class="mod__body">
+                            @{
+                                if (p_user.user_profile.FirstOrDefault() != null)
+                                {
+                                    <div id="content">
+                                        <div class="gird wide">
+                                            <div class="row no-gutter">
+                                                <div class="col l-4 m-12 c-12">
+                                                    <div class="information">
+                                                        <div class="infor_container">
+                                                            <div class="review_guest">
+                                                                @{
+                                                                    if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+                                                                    {
+
+                                                                        <div class="avatar" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat; width: 160px; height:160px">
+                                                                            <i class="fa-solid fa-shield"></i>
+                                                                        </div>
+
+
+
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="avatar" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat; width: 160px; height: 160px ">
+                                                                            <i class="fa-solid fa-shield"></i>
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                                <h2>@p_user.user_personalInfor.FirstOrDefault().legal_name</h2>
+                                                                @{
+                                                                    if (is_host)
+                                                                    {
+                                                                        <p>Host</p>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <p>Guest</p>
+                                                                    }
+                                                                }
+                                                            </div>
+                                                            <div class="infor_basics">
+                                                                @{
+                                                                    if (is_host)
+                                                                    {
+                                                                        <div class="infor_basics_item">
+                                                                            <span>@p_user.host_reviews.ToArray().Length</span>
+                                                                            <p>Review</p>
+                                                                        </div>
+                                                                        <div class="infor_basics_item">
+                                                                            @{
+                                                                                sum = 0;
+                                                                                foreach (var item in p_user.host_reviews.ToList())
+                                                                                {
+                                                                                    sum = sum + double.Parse(item.rating);
+                                                                                }
+                                                                                if (p_user.host_reviews.ToArray().Length != 0)
+                                                                                { sum = sum / p_user.host_reviews.ToArray().Length; }
+                                                                                else { sum = 0; }
+                                                                            }
+                                                                            <span>@sum<i class="fa-solid fa-star"></i></span>
+                                                                            <p>Rating</p>
+                                                                        </div>
+                                                                        <div class="infor_basic">
+                                                                            @{
+                                                                                count = 0;
+
+                                                                                if (DateTime.Now.ToString("yyyy") != p_user.day_become_host.Value.ToString("yyyy"))
+                                                                                {
+
+                                                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(p_user.day_become_host.Value.ToString("yyyy"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Years hosting</p>
+                                                                                }
+                                                                                else if (DateTime.Now.ToString("MM") != p_user.day_become_host.Value.ToString("MM"))
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(p_user.day_become_host.Value.ToString("MM"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Months hosting</p>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(p_user.day_become_host.Value.ToString("dd"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Days hosting</p>
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="infor_basics_item">
+                                                                            @{
+                                                                                count = 0;
+                                                                                count = p_user.property_reviews.Where(item => item.review_by_user == p_user.id).ToArray().Length;
+                                                                                count += p_user.host_reviews.Where(item => (item.review_by_user == p_user.id)).ToArray().Length;
+                                                                            }
+                                                                            <span>@count</span>
+                                                                            <p>Comment</p>
+                                                                        </div>
+                                                                        <div class="infor_basics_item">
+                                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                                            <p>Newbie</p>
+                                                                        </div>
+                                                                        <div class="infor_basic">
+
+                                                                            @{
+                                                                                count = 0;
+                                                                                if (DateTime.Now.ToString("yyyy") != p_user.created.Value.ToString("yyyy"))
+                                                                                {
+
+                                                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(p_user.created.Value.ToString("yyyy"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Years on Airbnb</p>
+                                                                                }
+                                                                                else if (DateTime.Now.ToString("MM") != p_user.created.Value.ToString("MM"))
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(p_user.created.Value.ToString("MM"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Months on Airbnb</p>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(p_user.created.Value.ToString("dd"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Days on Airbnb</p>
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="verify_guest">
+                                                        <div class="verify_container">
+                                                            <div class="confirmed_information">
+                                                                <div class="tittle">
+                                                                    <span>@name's confirmed information</span>
+                                                                </div>
+                                                                <ul class="confirmed_list">
+                                                                    <li><i class="fa-solid fa-check"></i>@p_user.user_personalInfor.FirstOrDefault().email_address</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col l-o-1 l-7 m-12 c-12">
+                                                    <div class="about_you">
+                                                        <div class="about_container">
+                                                            <h1>About @name</h1>
+                                                            <div class="edit_btn">
+                                                            </div>
+                                                            <div class="about_content">
+                                                                <div class="infor_box">
+                                                                    <ul class="infor_list">
+                                                                        <li><i class="fa-solid fa-briefcase"></i>My work: @p_user.user_profile.FirstOrDefault().user_work</li>
+                                                                        <li><i class="fa-solid fa-earth-europe"></i>Lives in @p_user.user_profile.FirstOrDefault().user_address</li>
+                                                                        @{
+                                                                            tmpBD = "";
+                                                                            if (p_user.user_profile.FirstOrDefault().user_birthday != null)
+                                                                            {
+                                                                                tmpBD = p_user.user_profile.FirstOrDefault().user_birthday.Value.ToString("yyyy-MM-dd");
+                                                                            }
+                                                                        }
+                                                                        <li><i class="fa-solid fa-golf-ball-tee"></i>BirthDay: @tmpBD</li>
+                                                                        <li><i class="fa-regular fa-heart"></i>I'm obsessed with: @p_user.user_profile.FirstOrDefault().user_obsessed_with</li>
+                                                                        <li><i class="fa-solid fa-wand-magic-sparkles"></i>Most useless skill: @p_user.user_profile.FirstOrDefault().user_unless_skill</li>
+                                                                        <li><i class="fa-regular fa-clock"></i>I spend too much time: @p_user.user_profile.FirstOrDefault().user_time_spend</li>
+                                                                    </ul>
+                                                                    <ul class="infor_list">
+                                                                        <li><i class="fa-solid fa-graduation-cap"></i>Where I went to school: @p_user.user_profile.FirstOrDefault().user_school</li>
+                                                                        @{
+                                                                            tmpBD = "";
+                                                                            pos = 0;
+                                                                            foreach (var item in p_user.users_languages.ToList())
+                                                                            {
+                                                                                if (pos == 0)
+                                                                                {
+                                                                                    tmpBD = tmpBD + item.listLanguage.language_name;
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    tmpBD = tmpBD + ", " + item.listLanguage.language_name;
+                                                                                }
+                                                                                pos++;
+                                                                            }
+                                                                        }
+                                                                        <li><i class="fa-solid fa-globe"></i>Speaks @tmpBD</li>
+                                                                        <li><i class="fa-solid fa-music"></i>Favorite song in high school: @p_user.user_profile.FirstOrDefault().user_favourite_song</li>
+                                                                        <li><i class="fa-regular fa-lightbulb"></i>Fun fact: @p_user.user_profile.FirstOrDefault().user_fun_fact</li>
+                                                                        <li><i class="fa-solid fa-book-open"></i>My biography title: @p_user.user_profile.FirstOrDefault().user_biography_title</li>
+                                                                        <li><i class="fa-solid fa-paw"></i>Pets: @p_user.user_profile.FirstOrDefault().user_pets</li>
+                                                                        <video src=""></video>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="about_text">
+                                                                    <p>@p_user.user_profile.FirstOrDefault().user_about</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="ask_guest">
+                                                                <div class="tittle">
+
+                                                                    <span>Ask @name about</span>
+                                                                </div>
+                                                                <ul class="interest_list">
+                                                                    @{
+                                                                        foreach (var item in p_user.users_interests.ToList())
+                                                                        {
+                                                                            <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
+                                                                        }
+                                                                    }
+                                                                    @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
+                                                                        <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
+                                                                        <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
+                                                                        <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
+                                                                        <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
+                                                                        <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
+                                                                        <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <h2>User chua lam profile</h2>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+    @{
+        if (lstHotel != null)
+        {
+            int position = 0;
+            List<PPl3.Models.booking> listUserCurrent = new List<PPl3.Models.booking>();
+            List<PPl3.Models.booking> listUserBooking = new List<PPl3.Models.booking>();
+            List<PPl3.Models.property_reviews> listUserReview = new List<PPl3.Models.property_reviews>();
+            foreach (var temp in lstHotel)
+            {
+                var p_user = temp.user;
+                List<PPl3.Models.property> listProperties = db.properties.Where(item => item.userId == p_user.id).ToList();
+                //bugs
+                <div id="myHotel-@temp.id" class="mod hide">
+                    <div class="mod__inner">
+                        <div class="mod__header">
+                            <p>Detail</p>
+                            <i class="far fa-window-close close-modal" data-modal-id="@temp.id"></i>
+                        </div>
+                        <div class="mod__body">
+                            <div class="main">
+                                <div id="content">
+                                    <div class="gird wide">
+                                        <div class="row no-gutter">
+                                            <div class="col l-8 m-8 c-12">
+                                                <div class="container">
+                                                    <div class="col l-6 m-6 c-12">
+                                                        <div class="statistical_box">
+                                                            <div class="icon">
+                                                                <i class="fa fa-chart-line"></i>
+                                                            </div>
+                                                            <div class="infor">
+                                                                <span>Month Renter</span>
+                                                                <div class="number">
+                                                                    <p id="month_renter">1234</p>
+                                                                    <i class="fa-solid fa-user"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col l-6 m-6 c-12">
+                                                        <div class="statistical_box">
+                                                            <div class="icon">
+                                                                <i class="fa-solid fa-chart-area"></i>
+                                                            </div>
+                                                            <div class="infor">
+                                                                <span>Total Renter</span>
+                                                                <div class="number">
+                                                                    <p id="total_renter">1234</p>
+                                                                    <i class="fa-solid fa-user"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col l-6 m-6 c-12">
+                                                        <div class="statistical_box">
+                                                            <div class="icon">
+                                                                <i class="fa-solid fa-chart-column"></i>
+                                                            </div>
+                                                            <div class="infor">
+                                                                <span>Month Revenue</span>
+                                                                <div class="number">
+                                                                    <span>$</span>
+                                                                    <p id="month_revenue">1234</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col l-6 m-6 c-12">
+                                                        <div class="statistical_box">
+                                                            <div class="icon">
+                                                                <i class="fa-solid fa-chart-pie"></i>
+                                                            </div>
+                                                            <div class="infor">
+                                                                <span>Total Revenue</span>
+                                                                <div class="number">
+                                                                    <span>$</span>
+                                                                    <p id="total_revenue">1234</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container">
+                                                    <div class="col l-6 m-12 c-12">
+                                                        <div class="box">
+                                                            <div class="tittle">
+                                                                <p>Statistics Of The Year</p>
+                                                            </div>
+                                                            <canvas id="renter_chart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col l-6 m-12 c-12">
+                                                        <div class="box">
+                                                            <div class="tittle">
+                                                                <p>Statistics Of The Month</p>
+                                                            </div>
+                                                            <canvas id="revenue_chart"></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container">
+                                                    <div class="col l-12 m-12 c-12">
+                                                        <div class="box_list">
+                                                            <div class="tittle">
+                                                                <p>List of room tenants</p>
+                                                                <button class="show_all_list_room">Show all</button>
+                                                            </div>
+                                                            <div class="table_render">
+                                                                <table>
+                                                                    <thead>
+                                                                    <th>Date</th>
+                                                                    <th>Name</th>
+                                                                    <th>Place</th>
+                                                                    <th>Price</th>
+                                                                    <th>Payments</th>
+                                                                    <th>Action</th>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @{
+                                                                            position = 0;
+                                                                            foreach (var tmp in listUserBooking)
+                                                                            {
+                                                                                position++;
+                                                                                if (position == 5) { break; }
+                                                                                <tr>
+                                                                                    <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
+                                                                                    <td>@tmp.user.account_name</td>
+                                                                                    <td>@tmp.property.p_address</td>
+                                                                                    <td>@tmp.amount_paid$</td>
+                                                                                    @{
+                                                                                        if (tmp.transaction_id == null)
+                                                                                        {
+                                                                                            <td>Not Paid</td>
+                                                                                        }
+                                                                                        else
+                                                                                        {
+                                                                                            <td>Paid</td>
+                                                                                            <td>
+                                                                                                <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                                            </td>
+                                                                                        }
+                                                                                    }
+
+                                                                                </tr>
+                                                                            }
+                                                                        }
+                                                                        @*<tr>
+                                                    <td>12/4/2024</td>
+                                                    <td>Davis Ngo</td>
+                                                    <td>192 NewYork City</td>
+                                                    <td>400$</td>
+                                                    <td>Paid</td>
+                                                    <td>
+                                                        <button><a href="">Detail</a></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>12/4/2024</td>
+                                                    <td>Davis Ngo</td>
+                                                    <td>192 NewYork City</td>
+                                                    <td>400$</td>
+                                                    <td>Paid</td>
+                                                    <td>
+                                                        <button><a href="">Detail</a></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>12/4/2024</td>
+                                                    <td>Davis Ngo</td>
+                                                    <td>192 NewYork City</td>
+                                                    <td>400$</td>
+                                                    <td>Paid</td>
+                                                    <td>
+                                                        <button><a href="">Detail</a></button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>12/4/2024</td>
+                                                    <td>Davis Ngo</td>
+                                                    <td>192 NewYork City</td>
+                                                    <td>400$</td>
+                                                    <td>Paid</td>
+                                                    <td>
+                                                        <button><a href="">Detail</a></button>
+                                                    </td>
+                                                </tr>*@
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col l-4 m-4 c-12">
+                                                <div class="container">
+                                                    <div class="col l-12 m-12 c-12">
+                                                        <div class="box">
+                                                            @{
+                                                                string urlavatar = "";
+                                                                if (p_user.user_profile.FirstOrDefault().user_avatar != null)
+                                                                {
+                                                                    urlavatar = p_user.user_profile.FirstOrDefault().user_avatar;
+                                                                }
+                                                                else
+                                                                {
+                                                                    urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
+                                                                }
+                                                            }
+                                                            <div class="avatar_hosting icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
+                                                            </div>
+                                                            <div class="name_hosting">
+                                                                <p>@p_user.user_personalInfor.FirstOrDefault().legal_name</p>
+                                                                <span>Hosting</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container">
+                                                    <div class="col l-12 m-12 c-12">
+                                                        <div class="tittle">
+                                                            <p>My Hotel</p>
+                                                        </div>
+                                                        <div class="box">
+                                                            @{
+                                                                position = 0;
+                                                                foreach (PPl3.Models.property item in listProperties)
+                                                                {
+                                                                    position++;
+                                                                    if (position == 1)
+                                                                    {
+                                                                        <div class="box_item focus">
+                                                                            <i class="fa-solid fa-house"></i>
+                                                                            <p>@item.p_address</p>
+                                                                            @{
+                                                                                if (item.p_status != 1)
+                                                                                {
+                                                                                    <span style="background-color:red !important">Unfinished</span>
+                                                                                }
+                                                                                else if (item.availability_type == 0)
+                                                                                {
+                                                                                    <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
+                                                                                }
+                                                                                else if (item.p_status == 1)
+                                                                                {
+                                                                                    <span style="background-color: green !important">Complete</span>
+
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="box_item">
+                                                                            <i class="fa-solid fa-house"></i>
+                                                                            <p>@item.p_address</p>
+                                                                            @{
+                                                                                if (item.p_status != 1)
+                                                                                {
+                                                                                    <span style="background-color:red !important">Unfinished</span>
+                                                                                }
+                                                                                else if (item.availability_type == 0)
+                                                                                {
+                                                                                    <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
+                                                                                }
+                                                                                else if (item.p_status == 1)
+                                                                                {
+                                                                                    <span style="background-color: green !important">Complete</span>
+
+                                                                                }
+                                                                            }
+
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="container">
+                                                    <div class="col l-12 m-12 c-12">
+                                                        <div class="box_list">
+                                                            <div class="tittle">
+                                                                <p>Comments Of User</p>
+                                                                <button class="show_all_comment">Show all</button>
+                                                            </div>
+                                                            <ul class="comment_list">
+                                                                @{
+                                                                    position = 0;
+                                                                    int rating = 0;
+
+                                                                    foreach (var tmp in listUserReview)
+                                                                    {
+                                                                        position++;
+                                                                        if (position == 6) { break; }
+                                                                        urlavatar = "";
+                                                                        if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
+                                                                        {
+                                                                            urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
+                                                                        }
+                                                                        <li>
+                                                                            <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
+                                                                                <div class="icon_star">
+                                                                                    @{
+                                                                                        rating = (int)Math.Round(double.Parse(tmp.overall_rating));
+                                                                                        for (int i = 1; i <= 5; i++)
+                                                                                        {
+                                                                                            if (i <= rating)
+                                                                                            {
+                                                                                                <i class="fa-solid fa-star"></i>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <i class="fa-regular fa-star"></i>
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="comment_details">
+                                                                                <div class="item">
+                                                                                    <h4>@tmp.user.account_name</h4>
+                                                                                    <span>@tmp.created.Value.ToString("dd/MM/yyyy")</span>
+                                                                                </div>
+                                                                                <p>@tmp.comment</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    }
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col l-6 m-6 c-12">
+                                                <div class="container">
+                                                    <div class="col l-12 m-12 c-12">
+                                                        <div class="box_list">
+                                                            <div class="tittle">
+                                                                <p>List Of Current Tenants</p>
+                                                                <button class="show_all_list_current">Show all</button>
+                                                            </div>
+                                                            <ul class="comment_list">
+                                                                @{
+                                                                    position = 0;
+                                                                    foreach (var tmp in listUserCurrent)
+                                                                    {
+                                                                        position++;
+                                                                        if (position == 6) { break; }
+                                                                        urlavatar = "";
+                                                                        if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
+                                                                        {
+                                                                            urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
+                                                                        }
+                                                                        <li>
+                                                                            <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
+                                                                            </div>
+                                                                            <div class="comment_details">
+                                                                                <div class="item">
+                                                                                    <h4>@tmp.user.account_name</h4>
+                                                                                    <span>In Progress</span>
+                                                                                </div>
+                                                                                <p>Rent from @tmp.check_in_date.Value.ToString("dd/MM/yyyy") to @tmp.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                                                            </div>
+                                                                        </li>
+                                                                    }
+                                                                }
+                                                                @*<li>
+                                            <div class="avatar_user">
+
+                                            </div>
+                                            <div class="comment_details">
+                                                <div class="item">
+                                                    <h4>Davis Ngo</h4>
+                                                    <span>In Progress</span>
+                                                </div>
+                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="avatar_user">
+
+                                            </div>
+                                            <div class="comment_details">
+                                                <div class="item">
+                                                    <h4>Davis Ngo</h4>
+                                                    <span>In Progress</span>
+                                                </div>
+                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="avatar_user">
+
+                                            </div>
+                                            <div class="comment_details">
+                                                <div class="item">
+                                                    <h4>Davis Ngo</h4>
+                                                    <span>In Progress</span>
+                                                </div>
+                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="avatar_user">
+
+                                            </div>
+                                            <div class="comment_details">
+                                                <div class="item">
+                                                    <h4>Davis Ngo</h4>
+                                                    <span>In Progress</span>
+                                                </div>
+                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
+                                            </div>
+                                        </li>*@
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="comment_detail">
+                                    <div class="gird wide">
+                                        <div class="row no-gutter">
+                                            <div class="col l-o-2 l-8 m-o-1 m-10 c-o-1 c-10 comment_detail_container">
+                                                <div class="comment_detail_tittle">
+                                                    @{
+                                                        int totalReviews = 0;
+                                                        double AvgRating = 0;
+                                                        foreach (PPl3.Models.property item in listProperties)
+                                                        {
+                                                            foreach (var tmp in item.property_reviews.ToList())
+                                                            {
+                                                                totalReviews++;
+                                                                AvgRating += double.Parse(tmp.overall_rating);
+                                                            }
+                                                        }
+                                                        AvgRating = AvgRating / totalReviews;
+                                                    }
+                                                    <h2><i class="fa-regular fa-solid fa-star"></i> @AvgRating · @totalReviews reviews</h2>
+                                                </div>
+                                                <div class="comment_box">
+                                                    @{
+                                                        position = 0;
+                                                        rating = 0;
+
+                                                        foreach (var tmp in listUserReview)
+                                                        {
+                                                            position++;
+                                                            urlavatar = "";
+                                                            if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
+                                                            {
+                                                                urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
+                                                            }
+                                                            else
+                                                            {
+                                                                urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
+                                                            }
+                                                            <div class="comment_item_detail comment_user_@position">
+                                                                <div class="header_comment">
+                                                                    <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat"></div>
+                                                                    <div>
+                                                                        <span>@tmp.user.account_name</span>
+                                                                        @{
+                                                                            string uState = tmp.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
+                                                                            string countryName = tmp.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
+                                                                            string uCity = tmp.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                                        }
+                                                                        <p>@uCity ,  @uState , @countryName</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="time_comment">
+                                                                    <div class="star_comment">
+                                                                        @{
+                                                                            rating = (int)Math.Round(double.Parse(tmp.overall_rating));
+                                                                            for (int i = 1; i <= 5; i++)
+                                                                            {
+                                                                                if (i <= rating)
+                                                                                {
+                                                                                    <i class="fa-solid fa-star"></i>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <i class="fa-regular fa-star"></i>
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        @*<i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>
+                                                <i class="fa-solid fa-star"></i>*@
+                                                                    </div>
+                                                                    <span>@tmp.created.Value.ToString("dd/MM/yyyy")</span>
+                                                                </div>
+
+                                                                <div class="body_comment_detail">
+                                                                    <p>@tmp.comment</p>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="list_room">
+                                    <div class="gird wide">
+                                        <div class="row no-gutter">
+                                            <div class="col l-o-2 l-8 m-8 c-12">
+                                                <div class="box list_room_container">
+                                                    <div class="tittle">
+                                                        <p>List of room tenants</p>
+                                                    </div>
+                                                    <div class="list_room_box table_render">
+                                                        <table>
+                                                            <thead>
+                                                            <th>Date</th>
+                                                            <th>Name</th>
+                                                            <th>Place</th>
+                                                            <th>Price</th>
+                                                            <th>Payments</th>
+                                                            <th>Action</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                @{
+                                                                    foreach (var tmp in listUserBooking)
+                                                                    {
+                                                                        <tr>
+                                                                            <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
+                                                                            <td>@tmp.user.account_name</td>
+                                                                            <td>@tmp.property.p_address</td>
+                                                                            <td>@tmp.amount_paid$</td>
+                                                                            @{
+                                                                                if (tmp.transaction_id == null)
+                                                                                {
+                                                                                    <td>Not Paid</td>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <td>Paid</td>
+                                                                                    <td>
+                                                                                        <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                                    </td>
+                                                                                }
+                                                                            }
+
+                                                                        </tr>
+                                                                    }
+                                                                }
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="list_current">
+                                    <div class="gird wide">
+                                        <div class="row no-gutter">
+                                            <div class="col l-o-2 l-8 m-8 c-12">
+                                                <div class="box list_room_container">
+                                                    <div class="tittle">
+                                                        <p>List Of Current Tenants</p>
+                                                    </div>
+                                                    <div class="current_box">
+                                                        @{
+                                                            position = 0;
+                                                            foreach (var tmp in listUserCurrent)
+                                                            {
+                                                                position++;
+                                                                if (position == 6) { break; }
+                                                                urlavatar = "";
+                                                                if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
+                                                                {
+                                                                    urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
+                                                                }
+                                                                else
+                                                                {
+                                                                    urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
+                                                                }
+                                                                <div class="current_item">
+                                                                    <div class="user_item">
+                                                                        <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
+
+                                                                        </div>
+                                                                        <div class="name_user">
+                                                                            <p>@tmp.user.account_name</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="name_hotel">
+                                                                        <p>@tmp.property.p_address</p>
+                                                                    </div>
+                                                                    <div class="date_check">
+                                                                        <span class="dot_check_in"><i class="fa-solid fa-circle"></i>@tmp.check_in_date.Value.ToString("dd/MM/yyyy")</span>
+                                                                        <span class="dot_check_out"><i class="fa-solid fa-circle"></i>@tmp.check_out_date.Value.ToString("dd/MM/yyyy")</span>
+                                                                    </div>
+                                                                    <div class="price">
+                                                                        <span>@tmp.transaction.amount$</span>
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
     <script src="~/ExtraFiles/JS/admin.js?v=3"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/ExtraFiles/JS/revenue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </body>
 </html>
 <script>
@@ -1240,4 +1877,228 @@
             })
         }
     }
+</script>
+<script>
+    var modals = document.querySelectorAll('.mod');
+    var closeIcons = document.querySelectorAll('.close-modal');
+
+    closeIcons.forEach(function (icon) {
+        icon.addEventListener('click', function () {
+            var modalId = icon.dataset.modalId;
+            var modal = document.getElementById('myModal-' + modalId);
+            modal.classList.add('hide');
+        });
+    });
+
+    function toggleMod(e) {
+        var modal = e.currentTarget;
+        modal.classList.toggle('hide');
+    }
+
+    modals.forEach(function (mod) {
+        mod.addEventListener('click', function (e) {
+            if (e.target === mod) {
+                toggleMod(e);
+            }
+        });
+    });
+</script>
+<script>
+
+    closeIcons.forEach(function (icon) {
+        icon.addEventListener('click', function () {
+            var modalId = icon.dataset.modalId;
+            var modal = document.getElementById('myHotel-' + modalId);
+            modal.classList.add('hide');
+        });
+    });
+
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.details_user');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var userId = button.id;
+                /*console.log("Button clicked for user ID:", userId);*/
+
+                var modalId = 'myModal-' + userId;
+                var modal = document.getElementById(modalId);
+
+
+                if (modal) {
+                    modal.classList.remove('hide');
+                }
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var DTHostbuttons = document.querySelectorAll('.details_host');
+        DTHostbuttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var userId = button.id;
+                /*console.log("Button clicked for user ID:", userId);*/
+
+                var modalId = 'myModal-' + userId;
+                var modal = document.getElementById(modalId);
+
+                if (modal) {
+                    modal.classList.remove('hide');
+                }
+            });
+        });
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var DTHotelbuttons = document.querySelectorAll('.details_hotel');
+        DTHotelbuttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var hotelId = button.id;
+                var parts = hotelId.split('_');
+                var idPart = parts[1];
+                /*console.log(idPart);*/
+                var modalId = 'myHotel-' + idPart;
+                var modal = document.getElementById(modalId);
+
+                if (modal) {
+                    modal.classList.remove('hide');
+                }
+            });
+        });
+
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.details_user');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var userId = button.id;
+                /*console.log(userId);*/
+
+                var modalId = 'myModal-' + userId;
+                var modal = document.getElementById(modalId);
+
+
+                if (modal) {
+                    modal.classList.remove('hide');
+                }
+            });
+        });
+    });
+
+    function DeleteUser(id) {
+        var row = $('#userRow-' + id);
+        if (confirm('Are you sure delete this user?')) {
+            $.ajax({
+                url: '/admin/homeadmin/DeleteUser',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (response) {
+                    if (response.phanhoi == "true") {
+                        /*console.log(response);*/
+                        row.remove();
+                        var userCountElem = $('#userCount');
+                        var userCount = parseInt(userCountElem.text()) - 1;
+                        userCountElem.html(userCount + ' <i class="fa-solid fa-user"></i>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    function DeleteHostUser(id) {
+        var row = $('#hostRow-' + id);
+        if (confirm('Are you sure delete this user?')) {
+            $.ajax({
+                url: '/admin/homeadmin/DeleteUser',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (response) {
+                    if (response.phanhoi == "true") {
+                        /*console.log(response);*/
+                        row.remove();
+                        var hostCountElem = $('#hostCount');
+                        var hostCount = parseInt(hostCountElem.text()) - 1;
+                        hostCountElem.html(hostCount + ' <i class="fa-solid fa-user"></i>');
+
+                        var hotelCountElem = $('#hotelCount');
+                        var hotelCount = parseInt(hotelCountElem.text()) - response.delprop.length;
+                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window"></i>');
+
+                        response.delprop.forEach(function (hotelId) {
+                            $('#hotelRow-' + hotelId).remove();
+                        });
+                    }
+                    else {
+                        console.log(response.phanhoi);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    function DeleteHotel(id) {
+        var row = $('#hotelRow-' + id);
+        if (confirm('Are you sure delete this hotel?')) {
+            $.ajax({
+                url: '/admin/homeadmin/DeleteHotel',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (response) {
+                    if (response.phanhoi == "true") {
+                        /*console.log(response);*/
+                        row.remove();
+                        var hotelCountElem = $('#hotelCount');
+                        var hotelCount = parseInt(hotelCountElem.text()) - 1;
+                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window">');
+                    }
+                    else {
+                        console.log(response.phanhoi);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    var deleteButtons = document.querySelectorAll('.delete_btns');
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var itemId = button.id;
+            /*console.log(itemId);*/
+            DeleteUser(itemId);
+        });
+    });
+
+    var deleteHostButtons = document.querySelectorAll('.delete_Hostbtns');
+    deleteHostButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var itemId = button.id;
+            /*console.log(itemId);*/
+            DeleteHostUser(itemId);
+        });
+    });
+
+    var deleteHotelButtons = document.querySelectorAll('.delete_Hotelbtns');
+    deleteHotelButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var itemId = button.id;
+            /*console.log(itemId);*/
+            DeleteHotel(itemId);
+        });
+    });
+
 </script>

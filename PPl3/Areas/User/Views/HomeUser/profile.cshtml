@@ -9,6 +9,11 @@
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
     int useridcontroller = ViewBag.is_user_id;
     bool checkEdit = true;
+    string imgUser = "";
+    if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+    {
+        imgUser = p_user.user_profile.FirstOrDefault().user_avatar;
+    }
     if(useridcontroller != p_user.id)
     {
         p_user = db.users.Where(item => item.id == useridcontroller).FirstOrDefault();
@@ -67,9 +72,9 @@
                                 countNoti++;
                             }
                         }
-                        @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+                        @if (imgUser != "")
                         {
-                            <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                            <button class="js_menuUser_btn icon_style" style="background : url(@imgUser) top center /cover no-repeat">
                                 @if (countNoti != 0)
                                 {
                                     <span class="notification_badge">@countNoti</span>
@@ -116,7 +121,6 @@
         </div>
     </div>
     <div class="main">
-
         <div id="content">
             <div class="gird wide">
                 <div class="row no-gutter">

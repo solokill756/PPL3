@@ -55,6 +55,24 @@
     <NavigationProperty Name="user" Relationship="Self.booking_userId_id_FK" FromRole="bookings" ToRole="users" />
     <NavigationProperty Name="disputes" Relationship="Self.disputes_booking_id_id_FK" FromRole="bookings" ToRole="disputes" />
   </EntityType>
+  <EntityType Name="Browse_hotel_listings">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="property_id" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="property" Relationship="Self.FK_Browse_hotel_listings_properties" FromRole="Browse_hotel_listings" ToRole="properties" />
+  </EntityType>
+  <EntityType Name="browser_becomes_host">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="user_id" Type="Int32" />
+    <Property Name="Date" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="user" Relationship="Self.FK_become_a_host_users" FromRole="browser_becomes_host" ToRole="users" />
+  </EntityType>
   <EntityType Name="category">
     <Key>
       <PropertyRef Name="id" />
@@ -396,7 +414,9 @@
     <Property Name="p_status" Type="Byte" />
     <Property Name="ask_for_booking" Type="Byte" />
     <Property Name="current_pages" Type="Int32" />
+    <Property Name="Date_Post" Type="DateTime" Precision="3" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_property_id_id_FK" FromRole="properties" ToRole="bookings" />
+    <NavigationProperty Name="Browse_hotel_listings" Relationship="Self.FK_Browse_hotel_listings_properties" FromRole="properties" ToRole="Browse_hotel_listings" />
     <NavigationProperty Name="city" Relationship="Self.pro_city_id_id_FK" FromRole="properties" ToRole="cities" />
     <NavigationProperty Name="country" Relationship="Self.pro_country_id_id_FK" FromRole="properties" ToRole="countries" />
     <NavigationProperty Name="currency" Relationship="Self.pro_currency_id_id_FK" FromRole="properties" ToRole="currencies" />
@@ -412,8 +432,6 @@
     <NavigationProperty Name="state" Relationship="Self.pro_state_id_id_FK" FromRole="properties" ToRole="states" />
     <NavigationProperty Name="user" Relationship="Self.pro_userId_id_FK" FromRole="properties" ToRole="users" />
     <NavigationProperty Name="transactions" Relationship="Self.transaction_property_id_id_FK" FromRole="properties" ToRole="transactions" />
-    <NavigationProperty Name="Browse_hotel_listings" Relationship="PPL3Model.FK_Browse_hotel_listings_properties" FromRole="property" ToRole="Browse_hotel_listings" />
-    <Property Name="Date_Post" Type="DateTime" Precision="3" />
   </EntityType>
   <EntityType Name="properties_discounts">
     <Key>
@@ -652,6 +670,7 @@
     <Property Name="day_become_host" Type="DateTime" Precision="3" />
     <Property Name="passport_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_userId_id_FK" FromRole="users" ToRole="bookings" />
+    <NavigationProperty Name="browser_becomes_host" Relationship="Self.FK_become_a_host_users" FromRole="users" ToRole="browser_becomes_host" />
     <NavigationProperty Name="disputes" Relationship="Self.disputes_userId_id_FK" FromRole="users" ToRole="disputes" />
     <NavigationProperty Name="email_contents" Relationship="Self.emct_receiver_id_id_FK" FromRole="users" ToRole="email_contents" />
     <NavigationProperty Name="email_contents1" Relationship="Self.emct_sender_id_id_FK" FromRole="users" ToRole="email_contents" />
@@ -678,7 +697,6 @@
     <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
     <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
     <NavigationProperty Name="users_interests" Relationship="Self.useridddd_id_id_FK" FromRole="users" ToRole="users_interests" />
-    <NavigationProperty Name="browser_becomes_host" Relationship="PPL3Model.FK_become_a_host_users" FromRole="user" ToRole="browser_becomes_host" />
   </EntityType>
   <EntityType Name="users_interests">
     <Key>
@@ -804,6 +822,34 @@
       </Principal>
       <Dependent Role="disputes">
         <PropertyRef Name="booking_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Browse_hotel_listings_properties">
+    <End Role="properties" Type="Self.property" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Browse_hotel_listings" Type="Self.Browse_hotel_listings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="properties">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Browse_hotel_listings">
+        <PropertyRef Name="property_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_become_a_host_users">
+    <End Role="users" Type="Self.user" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="browser_becomes_host" Type="Self.browser_becomes_host" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="browser_becomes_host">
+        <PropertyRef Name="user_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1587,6 +1633,8 @@
     <EntitySet Name="amenities" EntityType="Self.amenity" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" />
     <EntitySet Name="bookings" EntityType="Self.booking" />
+    <EntitySet Name="Browse_hotel_listings" EntityType="Self.Browse_hotel_listings" />
+    <EntitySet Name="browser_becomes_host" EntityType="Self.browser_becomes_host" />
     <EntitySet Name="categories" EntityType="Self.category" />
     <EntitySet Name="cities" EntityType="Self.city" />
     <EntitySet Name="cms_page_languages" EntityType="Self.cms_page_languages" />
@@ -1662,6 +1710,14 @@
     <AssociationSet Name="disputes_booking_id_id_FK" Association="Self.disputes_booking_id_id_FK">
       <End Role="bookings" EntitySet="bookings" />
       <End Role="disputes" EntitySet="disputes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Browse_hotel_listings_properties" Association="Self.FK_Browse_hotel_listings_properties">
+      <End Role="properties" EntitySet="properties" />
+      <End Role="Browse_hotel_listings" EntitySet="Browse_hotel_listings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_become_a_host_users" Association="Self.FK_become_a_host_users">
+      <End Role="users" EntitySet="users" />
+      <End Role="browser_becomes_host" EntitySet="browser_becomes_host" />
     </AssociationSet>
     <AssociationSet Name="cities_state_id_id_FK" Association="Self.cities_state_id_id_FK">
       <End Role="states" EntitySet="states" />
@@ -1907,70 +1963,5 @@
       <End Role="users" EntitySet="users" />
       <End Role="users_interests" EntitySet="users_interests" />
     </AssociationSet>
-    <EntitySet Name="sysdiagrams" EntityType="PPL3Model.sysdiagram" />
-    <EntitySet Name="Browse_hotel_listings" EntityType="PPL3Model.Browse_hotel_listings" />
-    <EntitySet Name="browser_becomes_host" EntityType="PPL3Model.browser_becomes_host" />
-    <AssociationSet Name="FK_Browse_hotel_listings_properties" Association="PPL3Model.FK_Browse_hotel_listings_properties">
-      <End Role="property" EntitySet="properties" />
-      <End Role="Browse_hotel_listings" EntitySet="Browse_hotel_listings" />
-    </AssociationSet>
-    <AssociationSet Name="FK_become_a_host_users" Association="PPL3Model.FK_become_a_host_users">
-      <End Role="user" EntitySet="users" />
-      <End Role="browser_becomes_host" EntitySet="browser_becomes_host" />
-    </AssociationSet>
   </EntityContainer>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
-  <EntityType Name="Browse_hotel_listings">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="property_id" Type="Int32" />
-    <Property Name="Date" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="property" Relationship="PPL3Model.FK_Browse_hotel_listings_properties" FromRole="Browse_hotel_listings" ToRole="property" />
-  </EntityType>
-  <EntityType Name="browser_becomes_host">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="user_id" Type="Int32" />
-    <Property Name="Date" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="user" Relationship="PPL3Model.FK_become_a_host_users" FromRole="browser_becomes_host" ToRole="user" />
-  </EntityType>
-  <Association Name="FK_Browse_hotel_listings_properties">
-    <End Type="PPL3Model.property" Role="property" Multiplicity="0..1" />
-    <End Type="PPL3Model.Browse_hotel_listings" Role="Browse_hotel_listings" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="property">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Browse_hotel_listings">
-        <PropertyRef Name="property_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_become_a_host_users">
-    <End Type="PPL3Model.user" Role="user" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Type="PPL3Model.browser_becomes_host" Role="browser_becomes_host" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="user">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="browser_becomes_host">
-        <PropertyRef Name="user_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

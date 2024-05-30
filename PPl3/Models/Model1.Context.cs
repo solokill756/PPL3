@@ -28,6 +28,8 @@ namespace PPl3.Models
         public virtual DbSet<amenity> amenities { get; set; }
         public virtual DbSet<booking_guests> booking_guests { get; set; }
         public virtual DbSet<booking> bookings { get; set; }
+        public virtual DbSet<Browse_hotel_listings> Browse_hotel_listings { get; set; }
+        public virtual DbSet<browser_becomes_host> browser_becomes_host { get; set; }
         public virtual DbSet<category> categories { get; set; }
         public virtual DbSet<city> cities { get; set; }
         public virtual DbSet<cms_page_languages> cms_page_languages { get; set; }
@@ -72,8 +74,5 @@ namespace PPl3.Models
         public virtual DbSet<user> users { get; set; }
         public virtual DbSet<users_interests> users_interests { get; set; }
         public virtual DbSet<users_languages> users_languages { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
-        public virtual DbSet<Browse_hotel_listings> Browse_hotel_listings { get; set; }
-        public virtual DbSet<browser_becomes_host> browser_becomes_host { get; set; }
     }
 }
