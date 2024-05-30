@@ -33,7 +33,7 @@
     <meta charset="UTF-8">
     <title> Responsive Sidebar Menu  | CodingLab </title>
 
-    <link href="~/ExtraFiles/assets/css/admin.css?v=3" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/admin.css?v=4" rel="stylesheet" />
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -70,10 +70,10 @@
             </li>
             <li>
                 <a href="#">
-                    <i class='bx bx-chat'></i>
-                    <span class="links_name">Messages</span>
+                    <i class='bx bx-bell'></i>
+                    <span class="links_name">Notification</span>
                 </a>
-                <span class="tooltip">Messages</span>
+                <span class="tooltip">Notification</span>
             </li>
             <li>
                 <a href="#">
@@ -89,41 +89,21 @@
                 </a>
                 <span class="tooltip">Centorship</span>
             </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cart-alt'></i>
-                    <span class="links_name">Order</span>
-                </a>
-                <span class="tooltip">Order</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-heart'></i>
-                    <span class="links_name">Saved</span>
-                </a>
-                <span class="tooltip">Saved</span>
-            </li>
-            <li>
-                <a href="#">
-                    <i class='bx bx-cog'></i>
-                    <span class="links_name">Setting</span>
-                </a>
-                <span class="tooltip">Setting</span>
-            </li>
+
             <li class="profile">
                 <div class="profile-details">
-                    <img src="https://www.pngmart.com/files/21/Admin-Profile-PNG-Clipart.png" alt="profileImg">
+                    <img src="./assets/img/avatar_user/bd72139a-d08d-4a23-b222-4d22e67fa581.webp" alt="profileImg">
                     <div class="name_job">
-                        <div class="name">Admin</div>
-                        <div class="job">web management</div>
+                        <div class="name">Prem Shahi</div>
+                        <div class="job">Web designer</div>
                     </div>
                 </div>
-                <i class='bx bx-log-out' id="log_out" onclick="window.location.href='/admin/homeadmin/logout'"></i>
+                <i class='bx bx-log-out' id="log_out"></i>
             </li>
         </ul>
     </div>
     <section class="home-section">
-       
+
         <div id="centorship">
             <div class="text"><i class="fa-solid fa-gauge"></i>Dashboard</div>
             <div class="container_home">
@@ -374,9 +354,9 @@
                                         </div>
                                     </div>
                                     @*<div class="mg-bt confirm_reservations">
-                                            <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
-                                            <span><img src="" alt="">Use Instant Book</span>
-                                        </div>*@
+                                        <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                        <span><img src="" alt="">Use Instant Book</span>
+                                    </div>*@
 
                                 </div>
                                 <div class="item_info">
@@ -483,6 +463,587 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div id="user">
+            <div class="text"><i class="fa-solid fa-user"></i>User</div>
+            <div class="container_user">
+                <div class="item_user">
+                    <div class="number_box">
+                        <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                        <span>People</span>
+                    </div>
+                    <div class="search">
+                        <button><i class='bx bx-search'></i></button>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                </div>
+                <div class="list_item item_user">
+                    <table>
+                        <thead>
+                        <th></th>
+                        <th>Name</th>
+                        <th>CMND</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="text"><i class="fa-solid fa-user"></i>Host</div>
+            <div class="container_user">
+                <div class="item_user">
+                    <div class="number_box">
+                        <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                        <span>People</span>
+                    </div>
+                    <div class="search">
+                        <button><i class='bx bx-search'></i></button>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                </div>
+                <div class="list_item item_user">
+                    <table>
+                        <thead>
+                        <th></th>
+                        <th>Name</th>
+                        <th>CMND</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="text"><i class="fa-solid fa-user"></i>Hotel</div>
+            <div class="container_user">
+                <div class="item_user">
+                    <div class="number_box">
+                        <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                        <span>People</span>
+                    </div>
+                    <div class="search">
+                        <button><i class='bx bx-search'></i></button>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                </div>
+                <div class="list_item item_user">
+                    <table>
+                        <thead>
+                        <th></th>
+                        <th>Name</th>
+                        <th>CMND</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th></th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            <tr>
+                                <td>
+                                    <div class="avatar">
+                                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                                    </div>
+                                </td>
+                                <td>Le Dinh Toan</td>
+                                <td>110203830298</td>
+                                <td>192, New York City</td>
+                                <td>toanledinh76@gmail.com</td>
+                                <td>
+                                    <button class="details_host">Detail</button>
+                                    <button>Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="notification">
+
+        </div>
+        <div id="analytics">
+
         </div>
     </section>
     <script src="~/ExtraFiles/JS/admin.js?v=2"></script>
