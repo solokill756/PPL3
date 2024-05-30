@@ -138,7 +138,7 @@ var inforHostDetails = document.querySelectorAll('.info_host_detail');
 if (inforHostDetails != null) {
     inforHostDetails.forEach((item) => {
         item.addEventListener('click', () => {
-            var find_containerInforHost = item.document.querySelector('.container_info_host');
+            var find_containerInforHost = item.querySelector('.container_info_host');
             if (item.classList.contains('openHost')) {
                 find_containerInforHost.classList.add('animationInfor')
                 setTimeout(() => {
@@ -281,46 +281,54 @@ imgHotels.forEach((img, index) => {
 const btnZoom = document.querySelector('.btn_zoom button')
 const imgZoomHotel = document.querySelector('.img_zoom_hotel')
 const imgZoom = document.querySelectorAll('.list_img img')
-btnZoom.addEventListener('click', () =>{
-  imgZoomHotel.classList.add('openImg')
-})
+if (btnZoom != null) {
+    btnZoom.addEventListener('click', () => {
+        imgZoomHotel.classList.add('openImg')
+    })
+}
+
 const btnLeft = document.querySelector('.btn_left')
 const btnRight = document.querySelector('.btn_right')
 const btnClose = document.querySelector('.btn_close')
 
 
-btnClose.addEventListener('click', ()=>{
-  imgZoomHotel.classList.remove('openImg')
-})
-btnLeft.style.pointerEvents = 'none'
-var current = 0;
-btnRight.addEventListener('click', ()=>{
-  btnLeft.style.pointerEvents = ''
-  if(current === imgZoom.length - 1){
-    btnRight.style.pointerEvents = 'none'
-  }
-  else{
-    current++;
-    imgZoom.forEach((img) =>{
-      img.style.transform = `translateX(${710 * -1 * current}px)`
+if (btnClose != null) {
+    btnClose.addEventListener('click', () => {
+        imgZoomHotel.classList.remove('openImg')
     })
-  }
-})
-btnLeft.addEventListener('click', ()=>{
-  btnRight.style.pointerEvents = ''
-  if(current === 0){
+}
+if (btnLeft != null) {
     btnLeft.style.pointerEvents = 'none'
-  }
-  else{
-    current--;
-    imgZoom.forEach((img) =>{
-      img.style.transform = `translateX(${710 * -1 * current}px)`
+    var current = 0;
+    btnRight.addEventListener('click', () => {
+        btnLeft.style.pointerEvents = ''
+        if (current === imgZoom.length - 1) {
+            btnRight.style.pointerEvents = 'none'
+        }
+        else {
+            current++;
+            imgZoom.forEach((img) => {
+                img.style.transform = `translateX(${710 * -1 * current}px)`
+            })
+        }
     })
-  }
-})
+    btnLeft.addEventListener('click', () => {
+        btnRight.style.pointerEvents = ''
+        if (current === 0) {
+            btnLeft.style.pointerEvents = 'none'
+        }
+        else {
+            current--;
+            imgZoom.forEach((img) => {
+                img.style.transform = `translateX(${710 * -1 * current}px)`
+            })
+        }
+    })
+
+}
 
 const btnAlls = document.querySelectorAll('.list_item table tbody tr td:first-child button');
-
+console.log(btnAlls);
 btnAlls.forEach((btn) =>{
   btn.addEventListener('click', ()=>{
     if(btn.classList.contains('ticked')){

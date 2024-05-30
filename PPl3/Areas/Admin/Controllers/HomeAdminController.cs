@@ -12,6 +12,7 @@ using System.Net;
 using System.Web.Management;
 using System.Data;
 using WebGrease;
+using System.Web.UI;
 
 namespace PPl3.Areas.Admin.Controllers
 {
@@ -20,6 +21,10 @@ namespace PPl3.Areas.Admin.Controllers
         // GET: Admin/HomeAdmin
         public ActionResult Index()
         {
+            if (TempData["CheckComfirm"] != null)
+            {
+                ViewBag.CheckComfirm = 1;
+            }
             PPL3Entities db = new PPL3Entities();
             string result1 = "";
             string result2 = "";
@@ -97,15 +102,13 @@ namespace PPl3.Areas.Admin.Controllers
                 phanHoi = e.ToString();
             }
             return Json(phanHoi, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
-        public JsonResult confirm_host(int user_id)
+        }       
+        public ActionResult confirm_host(int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             browser_becomes_host find_user = db.browser_becomes_host.FirstOrDefault(item => item.user_id == user_id);
             find_user.user.user_type = 3;
-           
+            find_user.user.day_become_host = DateTime.Now;
             db.SaveChanges();
             db.browser_becomes_host.Remove(find_user);
             user_notification user_Notification = new user_notification();
@@ -119,7 +122,8 @@ namespace PPl3.Areas.Admin.Controllers
             user find_host = db.users.FirstOrDefault(item => item.id == user_id);
             string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
             SendEmail("hosithao1622004@gmail.com" , "Congrats on becoming a host!" , emailHtml);
-            return Json("true", JsonRequestBehavior.AllowGet);
+            TempData["CheckComfirm"] = 1;
+            return RedirectToAction("index");
         }
         [HttpPost]
         public JsonResult host_denied(int user_id)
@@ -135,14 +139,14 @@ namespace PPl3.Areas.Admin.Controllers
             user_Notification.un_status = 0;
             user_Notification.un_url = "#";
             
-            db.users.FirstOrDefault(item => item.id == user_id).day_become_host = DateTime.Now;
+            
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
             return Json("true", JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult confirm_hotel(int hotel_id , int user_id)
+        public ActionResult confirm_hotel(int hotel_id , int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == hotel_id);
@@ -160,8 +164,11 @@ namespace PPl3.Areas.Admin.Controllers
             user_Notification.un_url = "#";
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
-            return Json("true", JsonRequestBehavior.AllowGet);
+            TempData["CheckComfirm"] = 1;
+            return RedirectToAction("index");
         }
+
+        
 
         public JsonResult hotel_denied(int hotel_id, int user_id)
         {
@@ -178,6 +185,100 @@ namespace PPl3.Areas.Admin.Controllers
             db.SaveChanges();
             return Json("true", JsonRequestBehavior.AllowGet);
         }
+
+       
+        public ActionResult ComfirmAll(int[] id, int check)
+
+        {
+            PPL3Entities db = new PPL3Entities();
+            if (check == 1)
+            {
+                List<browser_becomes_host> list_host = new List<browser_becomes_host>();
+                for (int i = 0; i <= id.Length - 1; ++i)
+                {
+                    int find_id = id[i];
+                    browser_becomes_host find_host = db.browser_becomes_host.FirstOrDefault(item => item.user_id == find_id);
+                    list_host.Add(find_host);
+                }
+                foreach (var item in list_host)
+                {
+                    item.user.user_type = 3;
+                    item.user.day_become_host = DateTime.Now;
+                }
+                foreach (var item in list_host)
+                {
+                    db.browser_becomes_host.Remove(item);
+                }
+                db.SaveChanges();
+                TempData["CheckComfirm"] = 1;
+                return RedirectToAction("index");
+            }
+            else
+            {
+                
+                List<Browse_hotel_listings> list_hotel = new List<Browse_hotel_listings>();
+                for (int i = 0; i <= id.Length - 1; ++i)
+                {
+                    int find_id = id[i];
+                    Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == find_id);
+                    list_hotel.Add(find_hotel);
+                }
+                foreach (var item in list_hotel)
+                {
+                    item.property.p_status = 1;
+                    item.property.Date_Post = DateTime.Now;
+                }
+                foreach (var item in list_hotel)
+                {
+                    db.Browse_hotel_listings.Remove(item);
+                }
+                db.SaveChanges();
+                TempData["CheckComfirm"] = 1;
+                return RedirectToAction("index");
+            }
+        }
+
+        public ActionResult DeniedAll(int[] id , int check)
+        {
+            PPL3Entities db = new PPL3Entities();
+            if (check == 1)
+            {
+                List<browser_becomes_host> list_host = new List<browser_becomes_host>();
+                for (int i = 0; i <= id.Length - 1; ++i)
+                {
+                    int find_id = id[i];
+                    browser_becomes_host find_host = db.browser_becomes_host.FirstOrDefault(item => item.user_id == find_id);
+                    list_host.Add(find_host);
+                }
+               
+                foreach (var item in list_host)
+                {
+                    db.browser_becomes_host.Remove(item);
+                }
+                db.SaveChanges();
+                TempData["CheckComfirm"] = 1;
+                return RedirectToAction("index");
+            }
+            else
+            {
+
+                List<Browse_hotel_listings> list_hotel = new List<Browse_hotel_listings>();
+                for (int i = 0; i <= id.Length - 1; ++i)
+                {
+                    int find_id = id[i];
+                    Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == find_id);
+                    list_hotel.Add(find_hotel);
+                }
+               
+                foreach (var item in list_hotel)
+                {
+                    db.Browse_hotel_listings.Remove(item);
+                }
+                db.SaveChanges();
+                TempData["CheckComfirm"] = 1;
+                return RedirectToAction("index");
+            }
+        } 
         public ActionResult LogOut()
         {
             PPL3Entities entities = new PPL3Entities();
@@ -191,20 +292,7 @@ namespace PPl3.Areas.Admin.Controllers
         }
 
 
-        public ActionResult AccpectHost(int user_id)
-        {
-            PPL3Entities db = new PPL3Entities();
-            user find_user = db.users.FirstOrDefault(item => item.id == user_id);
-
-            return View(find_user);
-        }
-
-        public ActionResult AccpectHotel(int id)
-        {
-            PPL3Entities db = new PPL3Entities();
-            Browse_hotel_listings hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.id == id);
-            return View(hotel);
-        }
+        
 
         // Send Email
 
