@@ -83,6 +83,7 @@
                 <span class="tooltip">Analytics</span>
             </li>
             <li>
+
                 <a href="#centorship">
                     <i class='bx bx-folder'></i>
                     <span class="links_name">Centorship</span>
@@ -103,367 +104,738 @@
         </ul>
     </div>
     <section class="home-section">
-
-        <div id="centorship">
-            <div class="text"><i class="fa-solid fa-gauge"></i>Dashboard</div>
-            <div class="container_home">
-                <div class="item">
-                    <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
-                    <div class="tittle">
-                        <p>Number of hotels posted</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
-                    <div class="tittle">
-                        <p>number of hosts</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="circle-container">
-                        <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
-                            <circle class="circle-background" cx="100" cy="100" r="90"></circle>
-                            <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
-                        </svg>
-                        <div class="circle-text" id="circleText">0%</div>
-                    </div>
-                    <div class="tittle">
-                        <p>Hotel rate</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="circle-container">
-                        <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
-                            <circle class="circle-background" cx="100" cy="100" r="90"></circle>
-                            <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
-                        </svg>
-                        <div class="circle-text" id="circleText">0%</div>
-                    </div>
-                    <div class="tittle">
-                        <p>Host rate</p>
-                    </div>
-                </div>
-            </div>
-            <div class="text">
-                <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
-                <button onclick="AcceptAll(1)">Accept All</button>
-                <button onclick="RefuseAll(1)">Refuse All</button>
-            </div>
-            <div class="container_list">
-                <div class="list_item list_owner">
-                    <table>
-                        <thead>
-                        <th></th>
-                        <th>Date</th>
-                        <th>Name</th>
-                        <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in host_browsing_list)
-                            {
-                                <tr class="user_@item.user_id">
-                                    <td>
-                                        <button class="@item.user_id"><i class="fa-solid fa-circle-check"></i></button>
-                                    </td>
-                                    <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
-                                    <td>@item.user.user_personalInfor.FirstOrDefault().legal_name</td>
-                                    <td>
-                                        <button class="details_host @item.id">Detail</button>
-                                    </td>
-                                </tr>
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="list_item chart_owner">
-                    <div class="chart">
-                        <canvas id="myChartofHost"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="text">
-                <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
-                <button onclick="AcceptAll(2)">Accept All</button>
-                <button onclick="RefuseAll(2)">Refuse All</button>
-            </div>
-            <div class="container_list">
-                <div class="list_item list_hotel">
-                    <table>
-                        <thead>
-                        <th></th>
-                        <th>Date</th>
-                        <th>Name</th>
-                        <th>Action</th>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in property_browing_list)
-                            {
-                                <tr class="property_@item.property_id">
-                                    <td>
-                                        <button class="@item.property.userId @item.property_id"><i class="fa-solid fa-circle-check"></i></button>
-                                    </td>
-                                    <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
-                                    <td>@item.property.p_name</td>
-                                    <td>
-                                        <button class="details_hotel @item.id">Detail</button>
-                                    </td>
-                                </tr>
-                            }
-
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="list_item chart_hotel">
-                    <div class="chart">
-                        <canvas id="myChartofHotel"></canvas>
-                    </div>
-                </div>
-            </div>
-            @foreach (var item in host_browsing_list)
-            {
-                <div class="info_host_detail info_detail center @item.id @item.user_id">
-                    <div class="container_info container_info_host @item.id @item.user_id">
-                        <div class="avatar_infor center">
-                            <img src="@item.user.user_profile.FirstOrDefault().user_avatar" alt="">
+        @if (ViewBag.CheckComfirm == 1)
+        {
+            <div id="centorship" class="active">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Dashboard</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
                         </div>
-                        <div class="name_infor center">
-                            <h1>@item.user.user_personalInfor.FirstOrDefault().legal_name</h1>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
                         </div>
-                        <div class="infor_box">
-                            <div class="item_info">
-                                <div class="info_child phone_number">
-                                    <h4><i class="fa-solid fa-phone"></i>Phone Number: </h4>
-                                    <span>@item.user.phone_number.FirstOrDefault().phone</span>
-                                </div>
-                                <div class="info_child cmnd">
-                                    <h4><i class="fa-solid fa-address-card"></i>Government ID: </h4>
-                                    <span>@item.user.governmentIDs.FirstOrDefault().date_range.Value.ToString("dd/MM/yyyy") - @item.user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("dd/MM/yyyy")</span>
-                                    <div class="img_cmnd">
-                                        <img src="@item.user.governmentIDs.FirstOrDefault().identity_card" alt="">
-                                        <img src="@item.user.governmentIDs.FirstOrDefault().backof_id_card" alt="">
-                                    </div>
-                                </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text">
+                    <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
+                    <button onclick="AcceptAll(1)">Accept All</button>
+                    <button onclick="RefuseAll(1)">Refuse All</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_owner">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in host_browsing_list)
+                                {
+                                    <tr class="user_@item.user_id">
+                                        <td>
+                                            <button class="@item.user_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                        <td>
+                                            <button class="details_host @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item chart_owner">
+                        <div class="chart">
+                            <canvas id="myChartofHost"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="text">
+                    <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
+                    <button onclick="AcceptAll(2)">Accept All</button>
+                    <button onclick="RefuseAll(2)">Refuse All</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_hotel">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in property_browing_list)
+                                {
+                                    <tr class="property_@item.property_id">
+                                        <td>
+                                            <button class="@item.property.userId @item.property_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.property.p_name</td>
+                                        <td>
+                                            <button class="details_hotel @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item chart_hotel">
+                        <div class="chart">
+                            <canvas id="myChartofHotel"></canvas>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in host_browsing_list)
+                {
+                    <div class="info_host_detail info_detail center @item.id @item.user_id">
+                        <div class="container_info container_info_host @item.id @item.user_id">
+                            <div class="avatar_infor center">
+                                <img src="@item.user.user_profile.FirstOrDefault().user_avatar" alt="">
                             </div>
-                            <div class="item_info">
-                                <div class="info_child address">
-                                    <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                    <span>@item.user.user_personalInfor.FirstOrDefault().country.ct_name - @item.user.user_personalInfor.FirstOrDefault().state.state_name - @item.user.user_personalInfor.FirstOrDefault().city.city_name</span>
-                                </div>
-                                <div class="info_child emergency_contact">
-                                    <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
-                                    <div class="info_emergency">
-                                        <div class="item_emergency">
-                                            <span><h5>Name: </h5>@item.user.emergency_contact.FirstOrDefault().ec_name</span>
-                                            <span><h5>Relation: </h5>@item.user.emergency_contact.FirstOrDefault().relationship</span>
-                                            <span><h5>Language: </h5>@item.user.emergency_contact.FirstOrDefault().ec_language</span>
-                                        </div>
-                                        <div class="item_emergency">
-                                            <span><h5>Email: </h5>@item.user.emergency_contact.FirstOrDefault().email</span>
-                                            <span><h5>Country: </h5>@item.user.emergency_contact.FirstOrDefault().country</span>
-                                            <span>
-                                                <h5>Phone Number: </h5>
-                                                @item.user.emergency_contact.FirstOrDefault().phone_number
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="name_infor center">
+                                <h1>@item.user.user_personalInfor.FirstOrDefault().legal_name</h1>
                             </div>
-                        </div>
-                        <div class="corner corner_top_left">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
-                        <div class="corner corner_top_right">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
-                        <div class="corner corner_bottom_left">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
-                        <div class="corner corner_bottom_right">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
-                        <div class="btn_handle center">
-                            <button onclick="confirm_host('@item.user_id')">Accept</button>
-                            <span>|</span>
-                            <button onclick="host_denied('@item.user_id')">Refuse</button>
-                        </div>
-                    </div>
-                </div>
-            }
-            @foreach (var item in property_browing_list)
-            {
-
-                PPl3.Models.property_images[] array_imgs = item.property.property_images.ToArray();
-
-                <div class="info_detail info_hotel_detail center @item.id @item.property_id">
-                    <div class="container_info container_info_hotel @item.id @item.property_id">
-                        <div class="img_box">
-                            <div class="img_hotel">
-
-                                <img src="@array_imgs[0].pi_image">
-                                <img src="@array_imgs[1].pi_image" style="top: 31%;">
-                                <img src="@array_imgs[2].pi_image" style="top: 36%;">
-                                <img src="@array_imgs[3].pi_image" style="top: 41%;">
-                                <img src="@array_imgs[4].pi_image" style="top: 46%;">
-                            </div>
-                            <div class="btn_zoom">
-                                <button><i class="fa-solid fa-expand"></i></button>
-                            </div>
-                        </div>
-                        <div class="information">
                             <div class="infor_box">
                                 <div class="item_info">
-                                    <div class="mg-bt name_hotel">
-                                        <h4><i class="fa-solid fa-signature" style="margin-right: 10px;"></i>Name: </h4>
-                                        <span>@item.property.p_name</span>
+                                    <div class="info_child phone_number">
+                                        <h4><i class="fa-solid fa-phone"></i>Phone Number: </h4>
+                                        <span>@item.user.phone_number.FirstOrDefault().phone</span>
                                     </div>
-                                    <div class="mg-bt booking_date">
-                                        <h4><i class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i>Booking Date: </h4>
-                                        <span>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</span>
-                                    </div>
-                                    <div class="mg-bt describes">
-                                        <h4><i class="fa-solid fa-droplet" style="margin-right: 10px;"></i>Describes: </h4>
-                                        <ul class="box_list">
-                                            @foreach (var amenity in item.property.property_amenities)
-                                            {
-                                                <li><img src="@amenity.amenity.icon_image" alt="">@amenity.amenity.amenity_name</li>
-                                            }
-
-                                        </ul>
-                                    </div>
-                                    <div class="mg-bt type_of">
-                                        <h4><i class="fa-solid fa-font-awesome" style="margin-right: 10px;"></i>Type Of: </h4>
-                                        <span><img src="@item.property.property_type.icon_image" alt="">@item.property.room_type.rt_name</span>
-                                    </div>
-                                    <div class="mg-bt located">
-                                        <h4><i class="fa-solid fa-location-dot" style="margin-right: 10px;"></i>Located: </h4>
-                                        <span>Country : @item.property.country.ct_name - State : @item.property.state.state_name - City : @item.property.city.city_name - Address : @item.property.p_address</span>
-                                    </div>
-                                    <div class="mg-bt basic_about">
-                                        <h4><i class="fa-solid fa-house-chimney" style="margin-right: 10px;"></i>Basic About: </h4>
-                                        <div class="box_basic">
-                                            <div class="item_basic">
-                                                <h5>Guest: <span>@item.property.accomodates_count</span></h5>
-                                                <h5>Bedrooms: <span>@item.property.bedroom_count</span></h5>
-                                            </div>
-                                            <div class="item_basic">
-                                                <h5>Beds: <span>@item.property.bed_count</span></h5>
-                                                <h5>Bathrooms: <span>@item.property.bathroom_count</span></h5>
-                                            </div>
+                                    <div class="info_child cmnd">
+                                        <h4><i class="fa-solid fa-address-card"></i>Government ID: </h4>
+                                        <span>@item.user.governmentIDs.FirstOrDefault().date_range.Value.ToString("dd/MM/yyyy") - @item.user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("dd/MM/yyyy")</span>
+                                        <div class="img_cmnd">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().identity_card" alt="">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().backof_id_card" alt="">
                                         </div>
                                     </div>
-                                    @*<div class="mg-bt confirm_reservations">
-                                        <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
-                                        <span><img src="" alt="">Use Instant Book</span>
-                                    </div>*@
-
                                 </div>
                                 <div class="item_info">
-                                    <div class="mg-bt utilities">
-                                        <h4><i class="fa-solid fa-house-signal" style="margin-right: 10px;"></i>Utilities: </h4>
-                                        <ul class="box_list box_utilities">
-                                            @foreach (var row in item.property.property_amenities.Where(x => x.amenity.category_id == 3))
-                                            {
-                                                <li><img src="@row.amenity.icon_image" alt="">@row.amenity.amenity_name</li>
-
-                                            }
-
-
-                                        </ul>
+                                    <div class="info_child address">
+                                        <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country.ct_name - @item.user.user_personalInfor.FirstOrDefault().state.state_name - @item.user.user_personalInfor.FirstOrDefault().city.city_name</span>
                                     </div>
-                                    <div class="mg-bt description">
-                                        <h4><i class="fa-solid fa-scroll" style="margin-right: 10px;"></i>Description: </h4>
-                                        <div class="mg-bt text_desciption">
-                                            <p>@item.property.p_description</p>
+                                    <div class="info_child emergency_contact">
+                                        <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
+                                        <div class="info_emergency">
+                                            <div class="item_emergency">
+                                                <span><h5>Name: </h5>@item.user.emergency_contact.FirstOrDefault().ec_name</span>
+                                                <span><h5>Relation: </h5>@item.user.emergency_contact.FirstOrDefault().relationship</span>
+                                                <span><h5>Language: </h5>@item.user.emergency_contact.FirstOrDefault().ec_language</span>
+                                            </div>
+                                            <div class="item_emergency">
+                                                <span><h5>Email: </h5>@item.user.emergency_contact.FirstOrDefault().email</span>
+                                                <span><h5>Country: </h5>@item.user.emergency_contact.FirstOrDefault().country</span>
+                                                <span>
+                                                    <h5>Phone Number: </h5>
+                                                    @item.user.emergency_contact.FirstOrDefault().phone_number
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mg-bt price">
-                                        <h4><i class="fa-solid fa-dollar-sign" style="margin-right: 10px;"></i>Price: </h4>
-                                        <span>@item.property.price$/night</span>
                                     </div>
                                 </div>
                             </div>
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
                             <div class="btn_handle center">
-                                <button onclick="confirm_hotel('@item.property.userId' , '@item.property_id')">Accept</button>
+                                <button onclick="window.location.href = '/admin/homeadmin/confirm_host?user_id=@item.user_id'">Accept</button>
                                 <span>|</span>
-                                <button onclick="host_denied('@item.property.userId' , '@item.property_id')">Refuse</button>
+                                <button onclick="window.location.href = '/admin/homeadmin/host_denied?user_id=@item.user_id'">Refuse</button>
                             </div>
                         </div>
-                        <div class="corner corner_top_left">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
-                        <div class="corner corner_top_right">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
-                        <div class="corner corner_bottom_left">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
-                        <div class="corner corner_bottom_right">
-                            <i class="fa-solid fa-swatchbook"></i>
-                        </div>
                     </div>
-                </div>
-                <div class="info_detail img_zoom_hotel center">
-                    <div class="container_info container_img_zoom">
-                        <div class="list_img">
-                            <img src="@array_imgs[0].pi_image">
-                            <img src="@array_imgs[1].pi_image">
-                            <img src="@array_imgs[2].pi_image">
-                            <img src="@array_imgs[3].pi_image">
-                            <img src="@array_imgs[4].pi_image">
-                        </div>
-                    </div>
-                    <div class="btn_img">
-                        <button class="btn_left" style="top: 50%; left: 20%; transform: translateY(-100%);"><i class="fa-solid fa-circle-chevron-left"></i></button>
-                        <button class="btn_close" style="bottom: 10%; left: 50%;"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn_right" style="top: 50%; right: 20%; transform: translateY(-100%) translateY(-50%);"><i class="fa-solid fa-circle-chevron-right"></i></button>
-                    </div>
-                </div>
-            }
+                }
+                @foreach (var item in property_browing_list)
+                {
 
-        </div>
-        <div id="home" class="active">
-            <div class="text"><i class="fa-solid fa-gauge"></i>Home</div>
-            <div class="container_home">
-                <div class="item">
-                    <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
-                    <div class="tittle">
-                        <p>Number of hotels posted</p>
+                    PPl3.Models.property_images[] array_imgs = item.property.property_images.ToArray();
+
+                    <div class="info_detail info_hotel_detail center @item.id @item.property_id">
+                        <div class="container_info container_info_hotel @item.id @item.property_id">
+                            <div class="img_box">
+                                <div class="img_hotel">
+
+                                    <img src="@array_imgs[0].pi_image">
+                                    <img src="@array_imgs[1].pi_image" style="top: 31%;">
+                                    <img src="@array_imgs[2].pi_image" style="top: 36%;">
+                                    <img src="@array_imgs[3].pi_image" style="top: 41%;">
+                                    <img src="@array_imgs[4].pi_image" style="top: 46%;">
+                                </div>
+                                <div class="btn_zoom">
+                                    <button><i class="fa-solid fa-expand"></i></button>
+                                </div>
+                            </div>
+                            <div class="information">
+                                <div class="infor_box">
+                                    <div class="item_info">
+                                        <div class="mg-bt name_hotel">
+                                            <h4><i class="fa-solid fa-signature" style="margin-right: 10px;"></i>Name: </h4>
+                                            <span>@item.property.p_name</span>
+                                        </div>
+                                        <div class="mg-bt booking_date">
+                                            <h4><i class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i>Booking Date: </h4>
+                                            <span>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                        <div class="mg-bt describes">
+                                            <h4><i class="fa-solid fa-droplet" style="margin-right: 10px;"></i>Describes: </h4>
+                                            <ul class="box_list">
+                                                @foreach (var amenity in item.property.property_amenities)
+                                                {
+                                                    <li><img src="@amenity.amenity.icon_image" alt="">@amenity.amenity.amenity_name</li>
+                                                }
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt type_of">
+                                            <h4><i class="fa-solid fa-font-awesome" style="margin-right: 10px;"></i>Type Of: </h4>
+                                            <span><img src="@item.property.property_type.icon_image" alt="">@item.property.room_type.rt_name</span>
+                                        </div>
+                                        <div class="mg-bt located">
+                                            <h4><i class="fa-solid fa-location-dot" style="margin-right: 10px;"></i>Located: </h4>
+                                            <span>Country : @item.property.country.ct_name - State : @item.property.state.state_name - City : @item.property.city.city_name - Address : @item.property.p_address</span>
+                                        </div>
+                                        <div class="mg-bt basic_about">
+                                            <h4><i class="fa-solid fa-house-chimney" style="margin-right: 10px;"></i>Basic About: </h4>
+                                            <div class="box_basic">
+                                                <div class="item_basic">
+                                                    <h5>Guest: <span>@item.property.accomodates_count</span></h5>
+                                                    <h5>Bedrooms: <span>@item.property.bedroom_count</span></h5>
+                                                </div>
+                                                <div class="item_basic">
+                                                    <h5>Beds: <span>@item.property.bed_count</span></h5>
+                                                    <h5>Bathrooms: <span>@item.property.bathroom_count</span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="mg-bt confirm_reservations">
+                                            <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                            <span><img src="" alt="">Use Instant Book</span>
+                                        </div>*@
+
+                                    </div>
+                                    <div class="item_info">
+                                        <div class="mg-bt utilities">
+                                            <h4><i class="fa-solid fa-house-signal" style="margin-right: 10px;"></i>Utilities: </h4>
+                                            <ul class="box_list box_utilities">
+                                                @foreach (var row in item.property.property_amenities.Where(x => x.amenity.category_id == 3))
+                                                {
+                                                    <li><img src="@row.amenity.icon_image" alt="">@row.amenity.amenity_name</li>
+
+                                                }
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt description">
+                                            <h4><i class="fa-solid fa-scroll" style="margin-right: 10px;"></i>Description: </h4>
+                                            <div class="mg-bt text_desciption">
+                                                <p>@item.property.p_description</p>
+                                            </div>
+                                        </div>
+                                        <div class="mg-bt price">
+                                            <h4><i class="fa-solid fa-dollar-sign" style="margin-right: 10px;"></i>Price: </h4>
+                                            <span>@item.property.price$/night</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn_handle center">
+                                    <button onclick="window.location.href ='/admin/homeadmin/confirm_hotel?hotel_id=@item.property_id& user_id=@item.property.userId'">Accept</button>
+                                    <span>|</span>
+                                    <button onclick="window.location.href ='/admin/homeadmin/hotel_denied?hotel_id=@item.property_id& user_id=@item.property.userId'">Refuse</button>
+                                </div>
+                            </div>
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info_detail img_zoom_hotel center">
+                        <div class="container_info container_img_zoom">
+                            <div class="list_img">
+                                <img src="@array_imgs[0].pi_image">
+                                <img src="@array_imgs[1].pi_image">
+                                <img src="@array_imgs[2].pi_image">
+                                <img src="@array_imgs[3].pi_image">
+                                <img src="@array_imgs[4].pi_image">
+                            </div>
+                        </div>
+                        <div class="btn_img">
+                            <button class="btn_left" style="top: 50%; left: 20%; transform: translateY(-100%);"><i class="fa-solid fa-circle-chevron-left"></i></button>
+                            <button class="btn_close" style="bottom: 10%; left: 50%;"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn_right" style="top: 50%; right: 20%; transform: translateY(-100%) translateY(-50%);"><i class="fa-solid fa-circle-chevron-right"></i></button>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <div id="centorship">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Dashboard</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
                     </div>
                 </div>
-                <div class="item">
-                    <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
-                    <div class="tittle">
-                        <p>number of hosts</p>
+                <div class="text">
+                    <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
+                    <button onclick="AcceptAll(1)">Accept All</button>
+                    <button onclick="RefuseAll(1)">Refuse All</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_owner">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in host_browsing_list)
+                                {
+                                    <tr class="user_@item.user_id">
+                                        <td>
+                                            <button class="@item.user_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                        <td>
+                                            <button class="details_host @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item chart_owner">
+                        <div class="chart">
+                            <canvas id="myChartofHost"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="item">
-                    <div class="circle-container">
-                        <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
-                            <circle class="circle-background" cx="100" cy="100" r="90"></circle>
-                            <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
-                        </svg>
-                        <div class="circle-text" id="circleText">0%</div>
+                <div class="text">
+                    <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
+                    <button onclick="AcceptAll(2)">Accept All</button>
+                    <button onclick="RefuseAll(2)">Refuse All</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_hotel">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in property_browing_list)
+                                {
+                                    <tr class="property_@item.property_id">
+                                        <td>
+                                            <button class="@item.property.userId @item.property_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.property.p_name</td>
+                                        <td>
+                                            <button class="details_hotel @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="tittle">
-                        <p>Hotel rate</p>
+                    <div class="list_item chart_hotel">
+                        <div class="chart">
+                            <canvas id="myChartofHotel"></canvas>
+                        </div>
                     </div>
                 </div>
-                <div class="item">
-                    <div class="circle-container">
-                        <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
-                            <circle class="circle-background" cx="100" cy="100" r="90"></circle>
-                            <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
-                        </svg>
-                        <div class="circle-text" id="circleText">0%</div>
+                @foreach (var item in host_browsing_list)
+                {
+                    <div class="info_host_detail info_detail center @item.id @item.user_id">
+                        <div class="container_info container_info_host @item.id @item.user_id">
+                            <div class="avatar_infor center">
+                                <img src="@item.user.user_profile.FirstOrDefault().user_avatar" alt="">
+                            </div>
+                            <div class="name_infor center">
+                                <h1>@item.user.user_personalInfor.FirstOrDefault().legal_name</h1>
+                            </div>
+                            <div class="infor_box">
+                                <div class="item_info">
+                                    <div class="info_child phone_number">
+                                        <h4><i class="fa-solid fa-phone"></i>Phone Number: </h4>
+                                        <span>@item.user.phone_number.FirstOrDefault().phone</span>
+                                    </div>
+                                    <div class="info_child cmnd">
+                                        <h4><i class="fa-solid fa-address-card"></i>Government ID: </h4>
+                                        <span>@item.user.governmentIDs.FirstOrDefault().date_range.Value.ToString("dd/MM/yyyy") - @item.user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("dd/MM/yyyy")</span>
+                                        <div class="img_cmnd">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().identity_card" alt="">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().backof_id_card" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item_info">
+                                    <div class="info_child address">
+                                        <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country.ct_name - @item.user.user_personalInfor.FirstOrDefault().state.state_name - @item.user.user_personalInfor.FirstOrDefault().city.city_name</span>
+                                    </div>
+                                    <div class="info_child emergency_contact">
+                                        <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
+                                        <div class="info_emergency">
+                                            <div class="item_emergency">
+                                                <span><h5>Name: </h5>@item.user.emergency_contact.FirstOrDefault().ec_name</span>
+                                                <span><h5>Relation: </h5>@item.user.emergency_contact.FirstOrDefault().relationship</span>
+                                                <span><h5>Language: </h5>@item.user.emergency_contact.FirstOrDefault().ec_language</span>
+                                            </div>
+                                            <div class="item_emergency">
+                                                <span><h5>Email: </h5>@item.user.emergency_contact.FirstOrDefault().email</span>
+                                                <span><h5>Country: </h5>@item.user.emergency_contact.FirstOrDefault().country</span>
+                                                <span>
+                                                    <h5>Phone Number: </h5>
+                                                    @item.user.emergency_contact.FirstOrDefault().phone_number
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="btn_handle center">
+                                <button onclick="window.location.href = '/admin/homeadmin/confirm_host?user_id=@item.user_id'">Accept</button>
+                                <span>|</span>
+                                <button onclick="window.location.href = '/admin/homeadmin/host_denied?user_id=@item.user_id'">Refuse</button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tittle">
-                        <p>Host rate</p>
+                }
+                @foreach (var item in property_browing_list)
+                {
+
+                    PPl3.Models.property_images[] array_imgs = item.property.property_images.ToArray();
+
+                    <div class="info_detail info_hotel_detail center @item.id @item.property_id">
+                        <div class="container_info container_info_hotel @item.id @item.property_id">
+                            <div class="img_box">
+                                <div class="img_hotel">
+
+                                    <img src="@array_imgs[0].pi_image">
+                                    <img src="@array_imgs[1].pi_image" style="top: 31%;">
+                                    <img src="@array_imgs[2].pi_image" style="top: 36%;">
+                                    <img src="@array_imgs[3].pi_image" style="top: 41%;">
+                                    <img src="@array_imgs[4].pi_image" style="top: 46%;">
+                                </div>
+                                <div class="btn_zoom">
+                                    <button><i class="fa-solid fa-expand"></i></button>
+                                </div>
+                            </div>
+                            <div class="information">
+                                <div class="infor_box">
+                                    <div class="item_info">
+                                        <div class="mg-bt name_hotel">
+                                            <h4><i class="fa-solid fa-signature" style="margin-right: 10px;"></i>Name: </h4>
+                                            <span>@item.property.p_name</span>
+                                        </div>
+                                        <div class="mg-bt booking_date">
+                                            <h4><i class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i>Booking Date: </h4>
+                                            <span>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                        <div class="mg-bt describes">
+                                            <h4><i class="fa-solid fa-droplet" style="margin-right: 10px;"></i>Describes: </h4>
+                                            <ul class="box_list">
+                                                @foreach (var amenity in item.property.property_amenities)
+                                                {
+                                                    <li><img src="@amenity.amenity.icon_image" alt="">@amenity.amenity.amenity_name</li>
+                                                }
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt type_of">
+                                            <h4><i class="fa-solid fa-font-awesome" style="margin-right: 10px;"></i>Type Of: </h4>
+                                            <span><img src="@item.property.property_type.icon_image" alt="">@item.property.room_type.rt_name</span>
+                                        </div>
+                                        <div class="mg-bt located">
+                                            <h4><i class="fa-solid fa-location-dot" style="margin-right: 10px;"></i>Located: </h4>
+                                            <span>Country : @item.property.country.ct_name - State : @item.property.state.state_name - City : @item.property.city.city_name - Address : @item.property.p_address</span>
+                                        </div>
+                                        <div class="mg-bt basic_about">
+                                            <h4><i class="fa-solid fa-house-chimney" style="margin-right: 10px;"></i>Basic About: </h4>
+                                            <div class="box_basic">
+                                                <div class="item_basic">
+                                                    <h5>Guest: <span>@item.property.accomodates_count</span></h5>
+                                                    <h5>Bedrooms: <span>@item.property.bedroom_count</span></h5>
+                                                </div>
+                                                <div class="item_basic">
+                                                    <h5>Beds: <span>@item.property.bed_count</span></h5>
+                                                    <h5>Bathrooms: <span>@item.property.bathroom_count</span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="mg-bt confirm_reservations">
+                                            <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                            <span><img src="" alt="">Use Instant Book</span>
+                                        </div>*@
+
+                                    </div>
+                                    <div class="item_info">
+                                        <div class="mg-bt utilities">
+                                            <h4><i class="fa-solid fa-house-signal" style="margin-right: 10px;"></i>Utilities: </h4>
+                                            <ul class="box_list box_utilities">
+                                                @foreach (var row in item.property.property_amenities.Where(x => x.amenity.category_id == 3))
+                                                {
+                                                    <li><img src="@row.amenity.icon_image" alt="">@row.amenity.amenity_name</li>
+
+                                                }
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt description">
+                                            <h4><i class="fa-solid fa-scroll" style="margin-right: 10px;"></i>Description: </h4>
+                                            <div class="mg-bt text_desciption">
+                                                <p>@item.property.p_description</p>
+                                            </div>
+                                        </div>
+                                        <div class="mg-bt price">
+                                            <h4><i class="fa-solid fa-dollar-sign" style="margin-right: 10px;"></i>Price: </h4>
+                                            <span>@item.property.price$/night</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn_handle center">
+                                    <button onclick="window.location.href ='/admin/homeadmin/confirm_hotel?hotel_id=@item.property_id&user_id=@item.property.userId'">Accept</button>
+                                    <span>|</span>
+                                    <button onclick="window.location.href ='/admin/homeadmin/hotel_denied?hotel_id=@item.property_id&user_id=@item.property.userId'">Refuse</button>
+                                </div>
+                            </div>
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info_detail img_zoom_hotel center">
+                        <div class="container_info container_img_zoom">
+                            <div class="list_img">
+                                <img src="@array_imgs[0].pi_image">
+                                <img src="@array_imgs[1].pi_image">
+                                <img src="@array_imgs[2].pi_image">
+                                <img src="@array_imgs[3].pi_image">
+                                <img src="@array_imgs[4].pi_image">
+                            </div>
+                        </div>
+                        <div class="btn_img">
+                            <button class="btn_left" style="top: 50%; left: 20%; transform: translateY(-100%);"><i class="fa-solid fa-circle-chevron-left"></i></button>
+                            <button class="btn_close" style="bottom: 10%; left: 50%;"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn_right" style="top: 50%; right: 20%; transform: translateY(-100%) translateY(-50%);"><i class="fa-solid fa-circle-chevron-right"></i></button>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+        @if (ViewBag.CheckComfirm == 1)
+        {
+            <div id="home">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Home</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <div id="home" class="active">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Home</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
         <div id="user">
             <div class="text"><i class="fa-solid fa-user"></i>User</div>
             <div class="container_user">
@@ -1046,7 +1418,7 @@
 
         </div>
     </section>
-    <script src="~/ExtraFiles/JS/admin.js?v=3"></script>
+    <script src="~/ExtraFiles/JS/admin.js?v=5"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
@@ -1126,25 +1498,25 @@
 <script src="~/Scripts/jquery-3.7.1.js"></script>
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 <script>
-    function confirm_host(user_id) {
-        $.ajax({
-            url: `/admin/homeadmin/confirm_host`,
-            type: "POST",
-            data: { user_id: user_id },
-            success: function (data) {
-                console.log(data);
-                var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
-                var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
-                containerInforHost.classList.add(`animationInfor`)
-                inforHostDetail.classList.remove('openHost');
-
-                document.querySelector(`.user_${user_id}`).classList.add('close');
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
-    }
+    //function confirm_host(user_id) {
+    //    $.ajax({
+    //        url: `/admin/homeadmin/confirm_host`,
+    //        type: "POST",
+    //        data: { user_id: user_id },
+    //        success: function (data) {
+    //            console.log(data);
+    //            //var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
+    //            //var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
+    //            //containerInforHost.classList.add(`animationInfor`)
+    //            //inforHostDetail.classList.remove('openHost');
+    //            //document.querySelector(`.user_${user_id}`).classList.add('close');
+    //            window.location.href = "/admin/homeadmin/index";
+    //        },
+    //        error: function (err) {
+    //            console.log(err);
+    //        }
+    //    })
+    //}
     function host_denied(user_id) {
         $.ajax({
             url: `/admin/homeadmin/host_denied`,
@@ -1165,24 +1537,25 @@
     }
 
 
-    function confirm_hotel(user_id , property_id) {
-        $.ajax({
-            url: `/admin/homeadmin/confirm_hotel`,
-            type: "POST",
-            data: { user_id: user_id, hotel_id: property_id },
-            success: function (data) {
-                console.log(data);
-                var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`)
-                var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`)
-                containerInforHotel.classList.add(`animationInfor`)
-                inforHotelDetail.classList.remove('openHost');
-                document.querySelector(`.property_${property_id}`).classList.add('close');
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
-    }
+    //function confirm_hotel(user_id , property_id) {
+    //    $.ajax({
+    //        url: `/admin/homeadmin/confirm_hotel`,
+    //        type: "POST",
+    //        data: { user_id: user_id, hotel_id: property_id },
+    //        success: function (data) {
+    //            console.log(data);
+    //            //var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`)
+    //            //var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`)
+    //            //containerInforHotel.classList.add(`animationInfor`)
+    //            //inforHotelDetail.classList.remove('openHost');
+    //            //document.querySelector(`.property_${property_id}`).classList.add('close');
+    //            window.location.herf = "/admin/homeadmin/index";
+    //        },
+    //        error: function (err) {
+    //            console.log(err);
+    //        }
+    //    })
+    //}
     function hotel_denied(user_id , property_id) {
         $.ajax({
             url: `/admin/homeadmin/hotel_denied`,
@@ -1203,41 +1576,46 @@
         })
     }
     function AcceptAll(check) {
+        let list_selects, list_id;
+
         if (check == 1) {
-            list_selects = document.querySelector('.list_ower').querySelectorAll('.ticked');
+            list_selects = document.querySelector('.list_item.list_owner').querySelectorAll('.ticked');
+            list_id = [];  // Initialize an empty array
             list_selects.forEach((item) => {
-                var id = item.classList.value.split(" ")[0];
-                confirm_host(id);
-
-            })
-        }
-        else {
-            list_selects = document.querySelector('.list_hotel').querySelectorAll('.ticked');
+                let id = item.classList.value.split(" ")[0];
+                list_id.push(id);
+            });
+        } else {
+            list_selects = document.querySelector('.list_item.list_hotel').querySelectorAll('.ticked');
+            list_id = [];  // Initialize an empty array
             list_selects.forEach((item) => {
-                var hotel_id = item.classList.value.split(" ")[1];
-                var user_id = item.classList.value.split(" ")[0];
-                confirm_hotel(user_id, hotel_id);
-
-            })
+                let hotel_id = item.classList.value.split(" ")[1];
+                list_id.push(hotel_id);
+            });
         }
+
+        window.location.href = `/admin/homeadmin/ComfirmAll?id=${list_id}&check=${check}`;
     }
     function RefuseAll(check) {
+        let list_selects, list_id;
+
         if (check == 1) {
-            list_selects = document.querySelector('.list_ower').querySelectorAll('.ticked');
+            list_selects = document.querySelector('.list_item.list_owner').querySelectorAll('.ticked');
+            list_id = [];  // Initialize an empty array
             list_selects.forEach((item) => {
-                var id = item.classList.value.split(" ")[0];
-                host_denied(id);
-
-            })
-        }
-        else {
-            list_selects = document.querySelector('.list_hotel').querySelectorAll('.ticked');
+                let id = item.classList.value.split(" ")[0];
+                list_id.push(id);
+            });
+        } else {
+            list_selects = document.querySelector('.list_item.list_hotel').querySelectorAll('.ticked');
+            list_id = [];  // Initialize an empty array
             list_selects.forEach((item) => {
-                var hotel_id = item.classList.value.split(" ")[1];
-                var user_id = item.classList.value.split(" ")[0];
-                host_denied(user_id, hotel_id);
-
-            })
+                let hotel_id = item.classList.value.split(" ")[1];
+                list_id.push(hotel_id);
+            });
         }
+
+        window.location.href = `/admin/homeadmin/DeniedAll?id=${list_id}&check=${check}`;
     }
+
 </script>
