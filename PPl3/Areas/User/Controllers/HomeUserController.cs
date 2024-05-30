@@ -1377,15 +1377,15 @@ namespace PPl3.Areas.User.Controllers
             {
                 using (MailMessage mailMessage = new MailMessage())
                 {
-                    mailMessage.From = new MailAddress("thanhlongtivip@gmail.com");
+                    mailMessage.From = new MailAddress("tnthotel2004@gmail.com");
                     mailMessage.To.Add(recipientEmail);
                     mailMessage.Subject = subject;
                     mailMessage.Body = body;
                     mailMessage.IsBodyHtml = true;
-                    string appPassword = "strm orqd egqw oqrx";
+                    string appPassword = "tsjp dydc eexq rgik";
                     using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
                     {
-                        smtpClient.Credentials = new NetworkCredential("thanhlongtivip@gmail.com", appPassword);
+                        smtpClient.Credentials = new NetworkCredential("tnthotel2004@gmail.com", appPassword);
                         smtpClient.EnableSsl = true;
                         smtpClient.Send(mailMessage);
                     }
