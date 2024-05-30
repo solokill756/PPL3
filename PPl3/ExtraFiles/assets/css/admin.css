@@ -14,6 +14,10 @@
   display: flex !important;
 }
 
+.close{
+  display: none !important;
+}
+
 .center{
   display: flex;
   justify-content: center;
@@ -339,11 +343,12 @@
   fill: #949494;
 }
 
+.item_user:first-child h2,
 .item h2{
   font-size: 55px;
   align-self: center;
 }
-
+.item_user:first-child h2>i,
 .item h2>i{
   font-size: 25px;
 }
@@ -771,8 +776,4 @@
 }
 .btn_img button:hover{
   color: #424242;
-}
-
-.close {
-    display: none !important;
 }
