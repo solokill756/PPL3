@@ -51,7 +51,7 @@ namespace PPl3.App_Start
 
                     Area = "User",
 
-                    returnUrl = returnUrl.ToString()
+                    returnUrl = returnUrl
 
                 }));
             }

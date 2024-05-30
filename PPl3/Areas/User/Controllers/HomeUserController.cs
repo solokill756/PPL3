@@ -602,7 +602,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(user model , string email_address)
+        public ActionResult Login(user model , string email_address , string returnUrl)
         {
             ViewBag.email_address = email_address;
             ViewBag.signUpOrLogin = 2;
@@ -644,11 +644,19 @@ namespace PPl3.Areas.User.Controllers
                 entities.SaveChanges();
                 Session["user"] = userInfor;
                 TempData["check"] = false;
-                if (userInfor.user_type  != 1)  return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
+                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                {
+                    return Redirect(returnUrl);
+                }
                 else
                 {
-                    return RedirectToAction("Index", "HomeAdmin", new { area = "Admin"});
+                    if (userInfor.user_type != 1) return RedirectToAction("Index", "HomeUser", new { area = "User", id = -1, checkID = -1 });
+                    else
+                    {
+                        return RedirectToAction("Index", "HomeAdmin", new { area = "Admin" });
+                    }
                 }
+              
 
             }
         }
