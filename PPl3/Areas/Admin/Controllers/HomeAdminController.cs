@@ -116,6 +116,8 @@ namespace PPl3.Areas.Admin.Controllers
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
             TempData["CheckComfirm"] = 1;
+            string emailHtml = RenderRazorViewToString("AccpectHotel", find_hotel);
+            SendEmail("hosithao1622004@gmail.com", "Your [Room/Hotel] Approval Successful!", emailHtml);
             return RedirectToAction("index");
         }
 
@@ -155,6 +157,18 @@ namespace PPl3.Areas.Admin.Controllers
                 {
                     item.user.user_type = 3;
                     item.user.day_become_host = DateTime.Now;
+                    user_notification user_Notification = new user_notification();
+                    user_Notification.userid = item.user_id;
+                    user_Notification.created = DateTime.Now;
+                    user_Notification.content = "You have successfully posted your hotel";
+                    user_Notification.un_status = 0;
+                    user_Notification.un_url = "#";
+                    db.user_notification.Add(user_Notification);
+                    db.SaveChanges();
+                    user find_host = db.users.FirstOrDefault(row => row.id == item.user_id);
+                    string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
+                    SendEmail("hosithao1622004@gmail.com", "Congrats on becoming a host!", emailHtml);
+
                 }
                 foreach (var item in list_host)
                 {
@@ -178,6 +192,17 @@ namespace PPl3.Areas.Admin.Controllers
                 {
                     item.property.p_status = 1;
                     item.property.Date_Post = DateTime.Now;
+                    user_notification user_Notification = new user_notification();
+                    user_Notification.userid = item.property_id;
+                    user_Notification.created = DateTime.Now;
+                    user_Notification.content = "Your hotel does not meet the listing conditions";
+                    user_Notification.un_status = 0;
+                    user_Notification.un_url = "#";
+                    db.user_notification.Add(user_Notification);
+                    db.SaveChanges();
+                    property find_hotel = db.properties.FirstOrDefault(row => row.id == item.property_id);
+                    string emailHtml = RenderRazorViewToString("AccpectHotel", find_hotel);
+                    SendEmail("hosithao1622004@gmail.com", "Your [Room/Hotel] Approval Successful!", emailHtml);
                 }
                 foreach (var item in list_hotel)
                 {
