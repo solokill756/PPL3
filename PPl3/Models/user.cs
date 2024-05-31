@@ -18,6 +18,7 @@ namespace PPl3.Models
         public user()
         {
             this.bookings = new HashSet<booking>();
+            this.browser_becomes_host = new HashSet<browser_becomes_host>();
             this.disputes = new HashSet<dispute>();
             this.email_contents = new HashSet<email_contents>();
             this.email_contents1 = new HashSet<email_contents>();
@@ -43,7 +44,6 @@ namespace PPl3.Models
             this.user_role1 = new HashSet<user_role>();
             this.users_languages = new HashSet<users_languages>();
             this.users_interests = new HashSet<users_interests>();
-            this.browser_becomes_host = new HashSet<browser_becomes_host>();
         }
     
         public int id { get; set; }
@@ -60,6 +60,8 @@ namespace PPl3.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<booking> bookings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<browser_becomes_host> browser_becomes_host { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<dispute> disputes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -111,7 +113,5 @@ namespace PPl3.Models
         public virtual ICollection<users_languages> users_languages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<users_interests> users_interests { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<browser_becomes_host> browser_becomes_host { get; set; }
     }
 }

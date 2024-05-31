@@ -53,7 +53,56 @@ namespace PPl3.Areas.Admin.Controllers
             ViewBag.data_hotels = result2.ToString().Substring(0, result2.Length - 1);
             return View();
         }
-       
+        [HttpPost]
+        public JsonResult DeleteUser(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            string phanHoi = "true";
+            List<int> delprop = new List<int>();
+            var delUser = db.users.Where(item => item.id == id).FirstOrDefault();
+            if(delUser.user_type == 3)
+            {
+                foreach(var num in db.properties.Where(item => item.userId == delUser.id).ToList())
+                {
+                    delprop.Add(num.id);
+                }
+            }
+            try
+            {
+                db.host_reviews.RemoveRange(db.host_reviews.Where(item => item.hostid == id || item.review_by_user == id).ToList());
+                db.Friendships.RemoveRange(db.Friendships.Where(item => item.UserId2 == id || item.UserId1 == id).ToList());
+                db.transactions.RemoveRange(db.transactions.Where(item => item.receiver_id == id || item.payer_id == id).ToList());
+                db.users.Remove(delUser);
+                db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                phanHoi = e.ToString();
+            }
+            var data = new
+            {
+                phanhoi = phanHoi,
+                delprop = delprop,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteHotel(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            string phanHoi = "true";
+            try
+            {
+                db.properties.Remove(db.properties.Where(item => item.id == id).FirstOrDefault());
+                db.SaveChanges();
+            }
+            catch(Exception e) 
+            {
+                phanHoi = e.ToString();
+            }
+            return Json(phanHoi, JsonRequestBehavior.AllowGet);
+        }       
         public ActionResult confirm_host(int user_id)
         {
             PPL3Entities db = new PPL3Entities();
