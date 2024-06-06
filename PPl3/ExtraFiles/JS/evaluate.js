@@ -1,5 +1,10 @@
 
 const img = document.querySelectorAll('.list_img li')
+const summit_btn = document.querySelector('.Summit_btn');
+const skip_btn = document.querySelector('.Skip_btn');
+const Comments = document.getElementById('comments');
+summit_btn.disabled = false;
+
 
 for(let i = 1; i <= img.length; i++){
     const imgBr = document.querySelector('.img_' + i)
@@ -39,19 +44,31 @@ for(let i = 1; i <= img.length; i++){
             };
         }
     })
+
+    Comments.addEventListener('change', () => {
+        if (Comments.textContent.trim() != "") {
+            summit_btn.disabled = true;
+            summit_btn.style.cursor = "pointer";
+        } 
+    })
 }
 
 const star = document.querySelectorAll('.list_star i')
 
 for(let i = 0; i < star.length; i++){
-    star[i].addEventListener('click', ()=>{
+    star[i].addEventListener('click', () => {
+        summit_btn.disabled = false;
+        summit_btn.style.cursor = "pointer";
         star.forEach((str) =>{
             str.classList.replace('fa-solid', 'fa-regular')
             str.style.color = ''
+            str.classList.remove("select");
+            
         })
         for(let j = 0; j <= i; j++){
             star[j].classList.replace('fa-regular', 'fa-solid')
             star[j].style.color = '#ffbf00'
+            star[j].classList.add("select");
         }
     })
 }

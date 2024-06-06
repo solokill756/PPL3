@@ -511,7 +511,7 @@
                                                     <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
                                                         <div class="icon_star">
                                                             @{
-                                                                rating = (int)Math.Round(double.Parse(tmp.overall_rating));
+                                                                rating = (int)Math.Round((double)tmp.overall_rating);
                                                                 for (int i = 1; i <= 5; i++)
                                                                 {
                                                                     if (i <= rating)
@@ -647,7 +647,7 @@
                                     foreach (var tmp in item.property_reviews.ToList())
                                     {
                                         totalReviews++;
-                                        AvgRating += double.Parse(tmp.overall_rating);
+                                        AvgRating += (double)tmp.overall_rating;
                                     }
                                 }
                                 AvgRating = AvgRating / totalReviews;
@@ -687,7 +687,7 @@
                                         <div class="time_comment">
                                             <div class="star_comment">
                                                 @{
-                                                    rating = (int)Math.Round(double.Parse(tmp.overall_rating));
+                                                    rating = (int)Math.Round((double)tmp.overall_rating);
                                                     for (int i = 1; i <= 5; i++)
                                                     {
                                                         if (i <= rating)
