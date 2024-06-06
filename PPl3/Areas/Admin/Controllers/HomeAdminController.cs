@@ -48,13 +48,13 @@ namespace PPl3.Areas.Admin.Controllers
                     {
                         if (item.user_type == 3)
                         {
-                            if (item.day_become_host.Value.Month == i) count1++;
+                            if (item.day_become_host != null && item.day_become_host.Value.Month == i) count1++;
                         }
 
                     }
                     foreach (var item in db.properties)
                     {
-                        if (item.Date_Post.Value.Month == i && item.p_status == 1) count2++;
+                        if (item.Date_Post != null && item.Date_Post.Value.Month == i && item.p_status == 1) count2++;
                     }
                     result1 = result1 + count1.ToString() + ",";
                     result2 = result2 + count2.ToString() + ",";
@@ -187,7 +187,8 @@ namespace PPl3.Areas.Admin.Controllers
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
             TempData["CheckComfirm"] = 1;
-            string emailHtml = RenderRazorViewToString("AccpectHotel", find_hotel);
+            property hotel = db.properties.FirstOrDefault(item => item.id == hotel_id);
+            string emailHtml = RenderRazorViewToString("AccpectHotel", hotel);
             SendEmail("hosithao1622004@gmail.com", "Your [Room/Hotel] Approval Successful!", emailHtml);
             return RedirectToAction("index");
         }
