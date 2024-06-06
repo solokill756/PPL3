@@ -22,6 +22,7 @@ using static System.Data.Entity.Infrastructure.Design.Executor;
 using System.Security.Policy;
 using System.Net;
 using System.Security.Cryptography;
+using System.Web.UI.WebControls;
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -602,7 +603,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(user model , string email_address , string returnUrl)
+        public ActionResult Login(user model , string email_address)
         {
             ViewBag.email_address = email_address;
             ViewBag.signUpOrLogin = 2;
@@ -644,8 +645,11 @@ namespace PPl3.Areas.User.Controllers
                 entities.SaveChanges();
                 Session["user"] = userInfor;
                 TempData["check"] = false;
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                var returnUrl = Session["ReturnUrl"] as string;
+
+                if (!string.IsNullOrEmpty(returnUrl))
                 {
+                    Session["ReturnUrl"] = null; // Xóa giá trị session sau khi sử dụng
                     return Redirect(returnUrl);
                 }
                 else
@@ -710,6 +714,11 @@ namespace PPl3.Areas.User.Controllers
             else if(!IsCorrectPassportCode(model.passport_code))
             {
                 ModelState.AddModelError("Passport", "Passport Invalid");
+                return View(model);
+            }
+            else if(IsPassPortExists(model.passport_code))
+            {
+                ModelState.AddModelError("PassportExit", "Passport Exit");
                 return View(model);
             }
             else
@@ -797,6 +806,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         // Detail
+        [UserAuthorize(idChucNang = 3)]
         public ActionResult Detail(int id , int bookingId = -1)
         {
             if (Session["user"] != null )
@@ -1343,7 +1353,7 @@ namespace PPl3.Areas.User.Controllers
                               };
             return Json(friendships , JsonRequestBehavior.AllowGet);
         }
-
+        [UserAuthorize(idChucNang = 14)]
         public ActionResult AddFriend(int userID)
         {
             PPL3Entities db = new PPL3Entities();
@@ -1441,6 +1451,15 @@ namespace PPl3.Areas.User.Controllers
 
             PPL3Entities db = new PPL3Entities();
             return db.user_personalInfor.Any(u => u.email_address== email_address);
+
+        }
+
+        public bool IsPassPortExists(string passport)
+
+        {
+
+            PPL3Entities db = new PPL3Entities();
+            return db.users.Any(u => u.passport_code == passport.Trim());
 
         }
         public bool IsPasswordExists(string password , int id)

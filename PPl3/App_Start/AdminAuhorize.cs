@@ -5,9 +5,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+
+
 namespace PPl3.App_Start
 {
-    public class HostAuthorize : AuthorizeAttribute
+    public class AdminAuhorize : AuthorizeAttribute
     {
         public int idChucNang { get; set; }
         public override void OnAuthorization(AuthorizationContext filterContext)
@@ -18,7 +20,7 @@ namespace PPl3.App_Start
             if (userSession != null)
             {
                 PPL3Entities db = new PPL3Entities();
-                var count = db.user_type_user_role.Count(m => m.user_type_id == userSession.user_type && m.user_role_id == idChucNang && m.user_type_id == 3);
+                var count = db.user_type_user_role.Count(m => m.user_type_id == userSession.user_type && m.user_role_id == idChucNang && m.user_type_id == 1);
                 if (count != 0)
                 {
                     return;

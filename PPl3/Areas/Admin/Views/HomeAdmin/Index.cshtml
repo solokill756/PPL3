@@ -35,7 +35,7 @@
 <head>
     <meta charset="UTF-8">
     <title> Responsive Sidebar Menu  | CodingLab </title>
-
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/admin.css?v=4" rel="stylesheet" />
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
@@ -167,10 +167,10 @@
 
             <li class="profile">
                 <div class="profile-details">
-                    <img src="./assets/img/avatar_user/bd72139a-d08d-4a23-b222-4d22e67fa581.webp" alt="profileImg">
+                    <img src="https://banner2.cleanpng.com/20190716/gxo/kisspng-user-profile-computer-icons-system-administrator-i-5d2dbe8f6be133.6663683015632789914419.jpg" alt="profileImg">
                     <div class="name_job">
-                        <div class="name">Prem Shahi</div>
-                        <div class="job">Web designer</div>
+                        <div class="name">Admin</div>
+                        <div class="job">Web Management</div>
                     </div>
                 </div>
                 <i class='bx bx-log-out' id="log_out" onclick="window.location.href='/admin/homeadmin/logout'"></i>
@@ -321,14 +321,13 @@
                                             <img src="@item.user.governmentIDs.FirstOrDefault().backof_id_card" alt="">
                                         </div>
                                     </div>
-<<<<<<< HEAD
+
                                     @*<div class="mg-bt confirm_reservations">
                                             <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
                                             <span><img src="" alt="">Use Instant Book</span>
                                         </div>*@
 
-=======
->>>>>>> 129404a3ed6d2bbf96505f8042b88e1a0e8a58b6
+
                                 </div>
                                 <div class="item_info">
                                     <div class="info_child address">
@@ -1162,7 +1161,6 @@
 
         </div>
     </section>
-<<<<<<< HEAD
     @{
         if (db.users != null)
         {
@@ -2063,9 +2061,9 @@
         }
     }
     <script src="~/ExtraFiles/JS/admin.js?v=3"></script>
-=======
+
     <script src="~/ExtraFiles/JS/admin.js?v=5"></script>
->>>>>>> 129404a3ed6d2bbf96505f8042b88e1a0e8a58b6
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="~/ExtraFiles/JS/revenue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
@@ -2226,23 +2224,26 @@
     }
     function AcceptAll(check) {
         let list_selects, list_id;
+        list_id = []; 
 
         if (check == 1) {
             list_selects = document.querySelector('.list_item.list_owner').querySelectorAll('.ticked');
-            list_id = [];  // Initialize an empty array
+           
             list_selects.forEach((item) => {
                 let id = item.classList.value.split(" ")[0];
+               
                 list_id.push(id);
             });
+            console.log(1);
         } else {
             list_selects = document.querySelector('.list_item.list_hotel').querySelectorAll('.ticked');
-            list_id = [];  // Initialize an empty array
+             
             list_selects.forEach((item) => {
                 let hotel_id = item.classList.value.split(" ")[1];
                 list_id.push(hotel_id);
             });
         }
-
+        console.log(list_id);
         window.location.href = `/admin/homeadmin/ComfirmAll?id=${list_id}&check=${check}`;
     }
     function RefuseAll(check) {
@@ -2393,6 +2394,9 @@
                         var userCountElem = $('#userCount');
                         var userCount = parseInt(userCountElem.text()) - 1;
                         userCountElem.html(userCount + ' <i class="fa-solid fa-user"></i>');
+                    }
+                    else {
+                        console.log(response.phanhoi);
                     }
                 },
                 error: function (xhr, status, error) {

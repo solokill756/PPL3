@@ -41,6 +41,7 @@ namespace PPl3.App_Start
             else
             {
                 var returnUrl = filterContext.RequestContext.HttpContext.Request.Url.AbsoluteUri;
+                HttpContext.Current.Session["ReturnUrl"] = returnUrl;
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
 
                 {
