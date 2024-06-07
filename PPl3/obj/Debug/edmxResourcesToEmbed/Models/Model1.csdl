@@ -554,7 +554,9 @@
     <Property Name="promo_code_id" Type="Int32" />
     <Property Name="discount_amt" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="transaction_status" Type="Byte" />
+    <Property Name="feedback" Type="Int32" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_transaction_id_id_FK" FromRole="transactions" ToRole="bookings" />
     <NavigationProperty Name="currency" Relationship="Self.transaction_currency_id_id_FK" FromRole="transactions" ToRole="currencies" />
     <NavigationProperty Name="promo_codes" Relationship="Self.transaction_promo_code_id_id_FK" FromRole="transactions" ToRole="promo_codes" />
@@ -562,7 +564,6 @@
     <NavigationProperty Name="property_reviews" Relationship="Self.pr_transactions_id_id_FK" FromRole="transactions" ToRole="property_reviews" />
     <NavigationProperty Name="user" Relationship="Self.transaction_payer_id_id_FK" FromRole="transactions" ToRole="users" />
     <NavigationProperty Name="user1" Relationship="Self.transaction_receiver_id_id_FK" FromRole="transactions" ToRole="users" />
-    <Property Name="feedback" Type="Int32" />
   </EntityType>
   <EntityType Name="user_notification">
     <Key>
@@ -1963,16 +1964,5 @@
       <End Role="users" EntitySet="users" />
       <End Role="users_interests" EntitySet="users_interests" />
     </AssociationSet>
-    <EntitySet Name="sysdiagrams" EntityType="PPL3Model.sysdiagram" />
   </EntityContainer>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
 </Schema>

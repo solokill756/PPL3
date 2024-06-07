@@ -33,6 +33,7 @@ namespace PPl3.Models
         public Nullable<int> promo_code_id { get; set; }
         public Nullable<decimal> discount_amt { get; set; }
         public Nullable<System.DateTime> created { get; set; }
+        public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> transaction_status { get; set; }
         public Nullable<int> feedback { get; set; }
     

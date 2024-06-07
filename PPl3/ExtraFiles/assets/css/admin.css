@@ -475,6 +475,13 @@
   color: #fff;
 }
 
+
+    .list_item table tbody td:last-child button > a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+
 .list_item table tbody tr td:first-child button{
   background-color: #000;
   padding: 0;
