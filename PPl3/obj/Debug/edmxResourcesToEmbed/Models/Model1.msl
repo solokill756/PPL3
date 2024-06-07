@@ -503,7 +503,6 @@
           <ScalarProperty Name="promo_code_id" ColumnName="promo_code_id" />
           <ScalarProperty Name="discount_amt" ColumnName="discount_amt" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="transaction_status" ColumnName="transaction_status" />
           <ScalarProperty Name="feedback" ColumnName="feedback" />
         </MappingFragment>

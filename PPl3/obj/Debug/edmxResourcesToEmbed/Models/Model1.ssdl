@@ -966,18 +966,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_transactions_payer">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
-    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="transactions">
-        <PropertyRef Name="payer_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="gid_userID_id_FK">
     <End Role="users" Type="Self.users" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -1669,10 +1657,6 @@
     <AssociationSet Name="FK_properties_discounts_properties" Association="Self.FK_properties_discounts_properties">
       <End Role="properties" EntitySet="properties" />
       <End Role="properties_discounts" EntitySet="properties_discounts" />
-    </AssociationSet>
-    <AssociationSet Name="FK_transactions_payer" Association="Self.FK_transactions_payer">
-      <End Role="users" EntitySet="users" />
-      <End Role="transactions" EntitySet="transactions" />
     </AssociationSet>
     <AssociationSet Name="gid_userID_id_FK" Association="Self.gid_userID_id_FK">
       <End Role="users" EntitySet="users" />

@@ -2387,7 +2387,6 @@
           <Property Name="promo_code_id" Type="Int32" />
           <Property Name="discount_amt" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="created" Type="DateTime" Precision="3" />
-          <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="transaction_status" Type="Byte" />
           <Property Name="feedback" Type="Int32" />
           <NavigationProperty Name="bookings" Relationship="Self.booking_transaction_id_id_FK" FromRole="transactions" ToRole="bookings" />
@@ -4306,7 +4305,6 @@
                 <ScalarProperty Name="promo_code_id" ColumnName="promo_code_id" />
                 <ScalarProperty Name="discount_amt" ColumnName="discount_amt" />
                 <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="modified" ColumnName="modified" />
                 <ScalarProperty Name="transaction_status" ColumnName="transaction_status" />
                 <ScalarProperty Name="feedback" ColumnName="feedback" />
               </MappingFragment>
