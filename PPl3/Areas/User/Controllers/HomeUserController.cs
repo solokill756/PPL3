@@ -1272,7 +1272,7 @@ namespace PPl3.Areas.User.Controllers
             //Build URL for VNPAY
             VnPayLibrary vnpay = new VnPayLibrary();
             var Price = (long)order.amount_paid * 2500000;
-            Price = (long)(Price + Price * 0.01);
+            Price = (long)(Price + Price * 0.3);
             vnpay.AddRequestData("vnp_Version", VnPayLibrary.VERSION);
             vnpay.AddRequestData("vnp_Command", "pay");
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);

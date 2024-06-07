@@ -278,7 +278,10 @@
                             <div class="gird wide">
                                 <div class="row no-gutter room_container">
                                     <div class="col l-12 m-12 c-12 room_tittle">
-                                        <h2>Where you'll sleep</h2>
+                                        <h2>
+                                            User's photo of the hotel
+                                           
+                                        </h2>
                                     </div>
                                     @{
                                         count = 0;
@@ -533,7 +536,7 @@
                                     {
                                         <p>@item.discounts_value% @item.discount.descride</p>
                                     }
-                                    <p>0.01% booking fee</p>
+                                    <p>30% booking fee</p>
                                 </div>
                                 @if(p_user.id == property.userId) { 
                                     <div class="pay_footer" style="display:none">
