@@ -23,8 +23,8 @@
     {
         hotel_rate = (decimal)db.properties.Where(item => item.p_status == 1).Count() / totalProperties * 100;
     }
-    List<PPl3.Models.user> lstUser = db.users.Where(item => item.user_status == 1 && item.user_type != 1).ToList();
-    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3 && item.user_status == 1).ToList();
+    List<PPl3.Models.user> lstUser = db.users.Where(item =>  item.user_type != 1).ToList();
+    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3).ToList();
     List<PPl3.Models.property> lstHotel = db.properties.Where(item => item.p_status == 1).ToList();
 
 }
@@ -36,7 +36,7 @@
     <meta charset="UTF-8">
     <title> Responsive Sidebar Menu  | CodingLab </title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
-    <link href="~/ExtraFiles/assets/css/admin.css?v=4" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/admin.css?v=5" rel="stylesheet" />
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css?v=3">
@@ -53,21 +53,25 @@
         }
 
         .mod {
+            DISPLAY: FLEX;
             position: fixed;
             top: 0;
-            height: 100vh;
-            width: 100vw;
+            LEFT: 0;
+            RIGHT: 0;
+            BOTTOM: 0;
+            /* height: 100vh; */
+            /* width: 100vw; */
             align-items: center;
             justify-content: center;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0, 0, 0, 0.3);
             z-index: 9999;
         }
 
         .mod__inner {
-            width: 1050px;
-            height: 700px;
+            width: 70%;
+            height: 540px;
             position: relative;
-            top: 12%;
+            /* top: 12%; */
             align-items: center;
             justify-content: center;
             margin: auto;
@@ -1320,20 +1324,21 @@
 
                                                             </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="verify_guest">
-                                                        <div class="verify_container">
-                                                            <div class="confirmed_information">
-                                                                <div class="tittle">
-                                                                    <span>@name's confirmed information</span>
+                                                        <div class="verify_guest">
+                                                            <div class="verify_container">
+                                                                <div class="confirmed_information">
+                                                                    <div class="tittle">
+                                                                        <span>@name's confirmed information</span>
+                                                                    </div>
+                                                                    <ul class="confirmed_list">
+                                                                        <li><i class="fa-solid fa-check"></i>@p_user.user_personalInfor.FirstOrDefault().email_address</li>
+                                                                    </ul>
                                                                 </div>
-                                                                <ul class="confirmed_list">
-                                                                    <li><i class="fa-solid fa-check"></i>@p_user.user_personalInfor.FirstOrDefault().email_address</li>
-                                                                </ul>
                                                             </div>
                                                         </div>
                                                     </div>
+
+                                                    
                                                 </div>
                                                 <div class="col l-o-1 l-7 m-12 c-12">
                                                     <div class="about_you">

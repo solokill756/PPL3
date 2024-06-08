@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="amenities">
           <Key>
             <PropertyRef Name="id" />
@@ -453,6 +453,16 @@
           <Property Name="code" Type="nvarchar" MaxLength="5" />
           <Property Name="state_status" Type="tinyint" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="transactions">
           <Key>
             <PropertyRef Name="id" />
@@ -469,9 +479,8 @@
           <Property Name="promo_code_id" Type="int" />
           <Property Name="discount_amt" Type="decimal" Precision="18" Scale="0" />
           <Property Name="created" Type="datetime" />
-          <Property Name="modified" Type="datetime" />
-          <Property Name="transaction_status" Type="tinyint" />
           <Property Name="feedback" Type="int" />
+          <Property Name="transaction_status" Type="tinyint" />
         </EntityType>
         <EntityType Name="user_notification">
           <Key>
@@ -827,18 +836,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="favourite_userID_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
-          <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="favourite">
-              <PropertyRef Name="userID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_amenities_categories">
           <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
           <End Role="amenities" Type="Self.amenities" Multiplicity="*" />
@@ -888,6 +885,18 @@
             </Principal>
             <Dependent Role="discounts1">
               <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_favourite_users">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="favourite">
+              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -968,6 +977,18 @@
             </Principal>
             <Dependent Role="properties_discounts">
               <PropertyRef Name="properties_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_transactions_payer">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="payer_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1263,18 +1284,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="transaction_payer_id_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
-          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="transactions">
-              <PropertyRef Name="payer_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="transaction_promo_code_id_id_FK">
           <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1" />
           <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
@@ -1533,6 +1542,7 @@
           <EntitySet Name="review_component" EntityType="Self.review_component" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="room_type" EntityType="Self.room_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_notification" EntityType="Self.user_notification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" Schema="dbo" store:Type="Tables" />
@@ -1619,10 +1629,6 @@
             <End Role="properties" EntitySet="properties" />
             <End Role="favourite" EntitySet="favourite" />
           </AssociationSet>
-          <AssociationSet Name="favourite_userID_id_FK" Association="Self.favourite_userID_id_FK">
-            <End Role="users" EntitySet="users" />
-            <End Role="favourite" EntitySet="favourite" />
-          </AssociationSet>
           <AssociationSet Name="FK_amenities_categories" Association="Self.FK_amenities_categories">
             <End Role="categories" EntitySet="categories" />
             <End Role="amenities" EntitySet="amenities" />
@@ -1638,6 +1644,10 @@
           <AssociationSet Name="FK_discounts_discounts" Association="Self.FK_discounts_discounts">
             <End Role="discounts" EntitySet="discounts" />
             <End Role="discounts1" EntitySet="discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_favourite_users" Association="Self.FK_favourite_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="favourite" EntitySet="favourite" />
           </AssociationSet>
           <AssociationSet Name="FK_Friendship_users" Association="Self.FK_Friendship_users">
             <End Role="users" EntitySet="users" />
@@ -1662,6 +1672,10 @@
           <AssociationSet Name="FK_properties_discounts_properties" Association="Self.FK_properties_discounts_properties">
             <End Role="properties" EntitySet="properties" />
             <End Role="properties_discounts" EntitySet="properties_discounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_transactions_payer" Association="Self.FK_transactions_payer">
+            <End Role="users" EntitySet="users" />
+            <End Role="transactions" EntitySet="transactions" />
           </AssociationSet>
           <AssociationSet Name="gid_userID_id_FK" Association="Self.gid_userID_id_FK">
             <End Role="users" EntitySet="users" />
@@ -1755,10 +1769,6 @@
             <End Role="currencies" EntitySet="currencies" />
             <End Role="transactions" EntitySet="transactions" />
           </AssociationSet>
-          <AssociationSet Name="transaction_payer_id_id_FK" Association="Self.transaction_payer_id_id_FK">
-            <End Role="users" EntitySet="users" />
-            <End Role="transactions" EntitySet="transactions" />
-          </AssociationSet>
           <AssociationSet Name="transaction_promo_code_id_id_FK" Association="Self.transaction_promo_code_id_id_FK">
             <End Role="promo_codes" EntitySet="promo_codes" />
             <End Role="transactions" EntitySet="transactions" />
@@ -1828,8 +1838,7 @@
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -2315,7 +2324,6 @@
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="overall_rating" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="created" Type="DateTime" Precision="3" />
-          <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="pr_status" Type="Byte" />
           <NavigationProperty Name="component_rating" Relationship="Self.cr_review_id_id_FK" FromRole="property_reviews" ToRole="component_rating" />
           <NavigationProperty Name="property" Relationship="Self.pr_property_id_id_FK" FromRole="property_reviews" ToRole="properties" />
@@ -3796,7 +3804,18 @@
             <End Role="users" EntitySet="users" />
             <End Role="users_interests" EntitySet="users_interests" />
           </AssociationSet>
+          <EntitySet Name="sysdiagrams" EntityType="PPL3Model.sysdiagram" />
         </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4239,7 +4258,6 @@
                 <ScalarProperty Name="comment" ColumnName="comment" />
                 <ScalarProperty Name="overall_rating" ColumnName="overall_rating" />
                 <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="modified" ColumnName="modified" />
                 <ScalarProperty Name="pr_status" ColumnName="pr_status" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4426,6 +4444,17 @@
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="language_id" ColumnName="language_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PPL3Model.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

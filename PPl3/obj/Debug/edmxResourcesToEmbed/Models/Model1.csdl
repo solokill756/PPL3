@@ -482,7 +482,6 @@
     <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="overall_rating" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="pr_status" Type="Byte" />
     <NavigationProperty Name="component_rating" Relationship="Self.cr_review_id_id_FK" FromRole="property_reviews" ToRole="component_rating" />
     <NavigationProperty Name="property" Relationship="Self.pr_property_id_id_FK" FromRole="property_reviews" ToRole="properties" />
@@ -1963,5 +1962,16 @@
       <End Role="users" EntitySet="users" />
       <End Role="users_interests" EntitySet="users_interests" />
     </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="PPL3Model.sysdiagram" />
   </EntityContainer>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
 </Schema>

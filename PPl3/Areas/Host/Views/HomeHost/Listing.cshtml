@@ -152,7 +152,7 @@
                                                     <div class="in_progress">
                                                         @if (item.p_status == 0)
                                                         {
-                                                            if(item.Date_Post == null) { 
+                                                            if(db.Browse_hotel_listings.Count(row => row.property_id == item.id) > 0) { 
                                                                 <button><i class="fa-solid fa-circle check-room-2" style="color:darkgoldenrod"></i> Pending</button>
                                                                 
                                                             }
@@ -193,7 +193,7 @@
                                                     <div class="in_progress">
                                                         @if (item.p_status == 0)
                                                         {
-                                                            if (item.Date_Post == null)
+                                                            if (db.Browse_hotel_listings.Count(row => row.property_id == item.id) > 0)
                                                             {
                                                                 <button><i class="fa-solid fa-circle check-room-2" style="color:darkgoldenrod"></i> Pending</button>
 
@@ -298,7 +298,7 @@
                                             }
                                             @if (item.p_status == 0)
                                             {
-                                                if (item.Date_Post == null)
+                                                if (db.Browse_hotel_listings.Count(row => row.property_id == item.id) > 0)
                                                 {
                                                     <button><i class="fa-solid fa-circle check-room-2" style="color:darkgoldenrod"></i> Pending</button>
 

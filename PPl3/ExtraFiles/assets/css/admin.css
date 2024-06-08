@@ -468,6 +468,7 @@
 }
 
 .list_item table tbody td:last-child button{
+  margin-bottom: 10px;
   padding: 10px;
   border: none;
   border-radius: 10px;

@@ -211,9 +211,16 @@
                                                 <tr>
                                                     <td align="left" style="padding:0;Margin:0;width:302px">
                                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
-                                                            <tr>
+                                                            @if (Model?.user?.passport_code != null)
+                                                            {
+
                                                                 <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@Model.user.passport_code<em></em></p></td>
-                                                            </tr>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>No passport code<em></em></p></td>
+                                                                @*<td style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>No passport code<em></em></td>*@
+                                                            }
                                                         </table>
                                                     </td>
                                                 </tr>
@@ -292,7 +299,7 @@
                                                     <td align="left" style="padding:0;Margin:0;width:298px">
                                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
                                                             <tr>
-                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>-Discount</strong></p></td>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>-Days of stay</strong></p></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -303,14 +310,8 @@
                                                     <td align="left" style="padding:0;Margin:0;width:302px">
                                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
                                                             <tr>
-                                                                @{
-                                                                    double discount = 0;
-                                                                    if (Model.discount_amt != null)
-                                                                    {
-                                                                        discount = (double)Model.discount_amt;
-                                                                    }
-                                                                }
-                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>@discount$</em></p></td>
+                                                                
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>@Model.bookings.First().check_in_date.Value.ToString("dd/MM/yyyy") - @Model.bookings.First().check_out_date.Value.ToString("dd/M/yyyy")</em></p></td>
                                                             </tr>
                                                         </table>
                                                     </td>
@@ -339,7 +340,7 @@
                                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
                                                             <tr>
                                                                 @{
-                                                                    double tong = (double)Model.amount + site_fees - discount;
+                                                                    double tong = (double)Model.amount + site_fees;
                                                                 }
                                                                 <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@tong$<em></em></p></td>
                                                             </tr>

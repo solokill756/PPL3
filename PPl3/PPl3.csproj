@@ -360,6 +360,9 @@
     <Compile Include="Models\state.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\transaction.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

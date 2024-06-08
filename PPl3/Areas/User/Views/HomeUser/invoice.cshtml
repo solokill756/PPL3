@@ -213,11 +213,13 @@
                                                             <tr>
                                                                 @if (Model?.user?.passport_code != null)
                                                                 {
-                                                                    <td style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@Model.user.passport_code<em></em></td>
+                                                                    
+                                                                    <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@Model.user.passport_code<em></em></p></td>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <td style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>No passport code<em></em></td>
+                                                                    <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>No passport code<em></em></p></td>
+                                                                    @*<td style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>No passport code<em></em></td>*@
                                                                 }
                                                             </tr>
                                                         </table>
@@ -339,7 +341,7 @@
                                                         <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
                                                             <tr>
                                                                 @{ 
-                                                                    double tong = (double) Model.amount + site_fees - discount;
+                                                                    double tong = (double)Model.amount + site_fees;
                                                                 }
                                                                 <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@tong$<em></em></p></td>
                                                             </tr>
