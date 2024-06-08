@@ -105,6 +105,15 @@ html{
     margin-bottom: 10px;
 }
 
+.tittle span>a{
+    text-decoration: none;
+    color: #000;
+}
+
+.tittle span>a:hover{
+    color: #ff385c;
+}
+
 .list_star{
     margin-bottom: 61px;
 }
@@ -134,6 +143,7 @@ html{
 .list_btn {
     display: flex;
     justify-content: center;
+    margin-bottom: 30px;
 }
 
 .list_btn button{
@@ -149,4 +159,35 @@ html{
 
 .list_btn  button:last-child{
     padding: 0 35px;
+}
+
+.box{
+    box-shadow: 0 0 5px #888888;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.avatar img{
+    width: 150px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #ccc;
+}
+
+.star_host{
+    margin: 20px 0;
+}
+
+.text_host textarea{
+    height: 280px;
+}
+
+.name_host a{
+    text-decoration: none;
+    color: #000;
+}
+
+.name_host a:hover{
+    color: #ff385c;
 }

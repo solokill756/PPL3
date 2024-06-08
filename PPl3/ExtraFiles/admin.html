@@ -1054,8 +1054,149 @@
         <div id="notification">
 
         </div>
+        <!-- new page -->
         <div id="analytics">
-
+          <div class="text"><i class="fa-solid fa-gauge"></i>Analytics</div>
+          <div class="container_analytics">
+            <div class="search_analytics">
+              <div class="item_analytics">
+                <input type="text" placeholder="Search..." id="search_company">
+                <button class="btn_search"><i class="fa-solid fa-search"></i></button>
+              </div>
+              <div class="item_analytics">
+                <select id="search_by_revenue" name ="Revenue">
+                  <option value="" selected disabled hidden>Revenue</option>
+                  <option value="service1">Under 10.000$</option>
+                  <option value="service2">10.000$ - 30.000$</option>
+                  <option value="service3">30.000$ - 50.000$</option>
+                  <option value="service4">Over 50.000$</option>
+                </select>
+                <button class="btn_search btn_revenue"><i class="fa-solid fa-search"></i></button>
+              </div>
+              <div class="item_analytics">
+                <select id="arrange">
+                  <option value="" selected disabled hidden>Arrange</option>
+                  <option value="service1">Ascending</option>
+                  <option value="service2">Decrease</option>
+                  <option value="service3">Sorted from a-z</option>
+                </select>
+                <button class="btn_search btn_arrange"><i class="fa-solid fa-search"></i></button>
+              </div>
+              <!-- <div class="item_analytics">
+                <input type="date" placeholder="dd/mm/yyyy" id="search_by_date">
+                <button class="btn_search btn_date"><i class="fa-solid fa-search"></i></button>
+              </div> -->
+            </div> 
+          </div>
+          <div class="container_analytics">
+            <div class="list_hotel_analytics">
+              <div class="list_item item_7">
+                <table>
+                  <thead>
+                    <th>Name Hotel</th>
+                    <th>Name Host</th>
+                    <th>Review</th>
+                    <th>Revenue</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        ABC Villa Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>40000$</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Le  VAn Do Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>20000$</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Concert Baby Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>30000$</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        New York City Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>10000$</td>
+                    </tr>
+                  </tbody>
+                </table>  
+              </div>
+              <div class="list_item item_3">
+                <div class="name_hotel_analytics">
+                  <span>New York City Hotel</span>
+                </div>
+                <div class="btn_by_year">
+                  <select name="" id="by_year">
+                    <option value="">2023</option>
+                    <option value="">2022</option>
+                    <option value="">2021</option>
+                    <option value="">2020</option>
+                    <option value="">2019</option>
+                    <option value="">2018</option>
+                  </select>
+                </div>
+                <div class="chart">
+                  <canvas id="chart_analytics_month"></canvas>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <div class="container_analytics">
+            <div class="list_hotel_analytics">
+              <div class="list_item item_7">
+                <div class="tittle">
+                  <span>Revenue of month</span>
+                </div>
+                <div class="btn_by_year">
+                  <select name="" id="by_year">
+                    <option value="">2023</option>
+                    <option value="">2022</option>
+                    <option value="">2021</option>
+                    <option value="">2020</option>
+                    <option value="">2019</option>
+                    <option value="">2018</option>
+                  </select>
+                </div>
+                <div class="chart">
+                  <canvas id="chart_admin_month"></canvas>
+                </div>
+              </div>
+              <div class="list_item item_3">
+                <div class="tittle">
+                  <span>Revenue of year</span>
+                </div>
+                <!-- <div class="btn_by_year" style="text-align: center;">
+                  <input type="date" name="" id="">
+                </div> -->
+                <div class="chart">
+                  <canvas id="chart_admin_year"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
     </section>
     <script src="./JS/admin.js"></script> 
@@ -1065,6 +1206,9 @@
   <script>
     const ctx = document.getElementById('myChartofHost');
     const ctx1 = document.getElementById('myChartofHotel');
+    const chartAnalytics = document.getElementById('chart_analytics_month');
+    const chartMonth = document.getElementById('chart_admin_month');
+    const chartYear = document.getElementById('chart_admin_year');
     new Chart(ctx, {
       type: 'bar',
       data: {
@@ -1118,4 +1262,74 @@
         }
       }
     });
+
+    new Chart(chartAnalytics, {
+      type: 'line',
+      data: {
+        labels: [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40,20, 30, 20, 10, 33],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+    new Chart(chartMonth, {
+      type: 'line',
+      data: {
+        labels: [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40,20, 30, 20, 10, 33],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+    new Chart(chartYear, {
+      type: 'line',
+      data: {
+        labels: [
+        '2018', '2019', '2020', '2021', '2022', '2023',
+      ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40,20, 30, 20, 10, 33],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+
 </script>
