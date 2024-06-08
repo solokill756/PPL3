@@ -18,13 +18,17 @@
   display: none !important;
 }
 
+.open{
+  display: block;
+}
+
 .center{
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .mg-bt{
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 .sidebar{
   position: fixed;
@@ -412,8 +416,6 @@
 .avatar img{
   width: 50px;
   border-radius: 100%;
-  object-fit:cover;
-  height:50px;
   border: 3px solid #ccc;
 }
 
@@ -473,6 +475,7 @@
   border-radius: 10px;
   background-color: #11101D;
   color: #fff;
+  margin-bottom: 5px;
 }
 
 .list_item table tbody tr td:first-child button{
@@ -537,14 +540,12 @@
 
 .avatar_infor{
   width: 100%;
-  padding: 10px;
+  padding: 30px;
 }
 
 .avatar_infor img{
   width: 150px;
-  border-radius: 80%;
-  object-fit:cover;
-  height:150px;
+  border-radius: 100%;
 }
 
 .infor_box{
@@ -562,7 +563,6 @@
 .img_cmnd img{
   width: 150px;
   border-radius: 10px;
-  height:100px;
 }
 
 .info_emergency{
@@ -684,7 +684,7 @@
 
 .text_desciption{
   overflow: auto;
-  height: 200px;
+  height: 300px;
   border: 1px solid #000;
   border-radius: 10px;
   padding: 5px 20px;
@@ -842,4 +842,139 @@
 
 #analytics{
   display: none;
+}
+
+.search_analytics{
+  display: flex;
+  padding: 20px;
+}
+
+.item_analytics{
+  flex: 1 1 33.33%;
+  text-align: center;
+  width: 100%;
+  margin: 0 10px;
+  max-width: 500px;
+}
+
+#search_company{
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 80%;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.btn_search{
+  padding: 10px;
+  border-radius: 4px;
+  color: #fff;
+  background-color: #11101D;
+  cursor: pointer;
+}
+
+#search_by_revenue{
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 80%;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+#arrange{
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 80%;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.item_7{
+  flex: 0 0 50% !important;
+  text-align: center;
+  height: 350px !important;
+  overflow: auto;
+}
+
+.list_hotel_analytics{
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+
+
+.item_7 table tbody tr:hover{
+  background-color: #424242;
+  color: #fff;
+  cursor: pointer;
+} 
+
+.item_3{
+  position: relative;
+  flex: 0 0 45% !important;
+  height: 350px !important;
+  overflow: auto;
+}
+
+.name_hotel_analytics{
+  text-align: center;
+}
+
+.name_hotel_analytics span{
+  font-size: 20px;
+  font-weight: 600;
+}
+
+#search_by_date{
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 80%;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+#by_year{
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.tittle {
+  text-align: center;
+}
+
+.btn_nav button{
+  position: absolute;
+  padding: 8px;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 5px #ccc;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.btn_nav button:hover{
+  background-color: #949494;
+}
+
+.btn_nav_left{
+  top: 50%;
+  left: 0;
+}
+
+.btn_nav_right{
+  top: 50%;
+  right: 0;
 }

@@ -22,85 +22,32 @@ let sidebar = document.querySelector(".sidebar");
   }
 
   //Circle
-function setCircleProgress(percentage, check) {
-    if (check == 1) {
-        const circles = document.querySelectorAll('.circle-progress');
-        circles.forEach((circle, index) => {
-            if (index % 2 != 0) {
-                const radius = circle.r.baseVal.value;
-                const circumference = 2 * Math.PI * radius;
-                const offset = circumference - (percentage / 100) * circumference;
+  function setCircleProgress(percentage) {
+    const circle = document.querySelector('.circle-progress');
+    const radius = circle.r.baseVal.value;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (percentage / 100) * circumference;
 
-                circle.style.strokeDasharray = `${circumference} ${circumference}`;
-                circle.style.strokeDashoffset = offset;
-            }
+    circle.style.strokeDasharray = `${circumference} ${circumference}`;
+    circle.style.strokeDashoffset = offset;
 
-        })
-    }
-    else {
-        const circles = document.querySelectorAll('.circle-progress');
-        circles.forEach((circle, index) => {
-            if (index % 2 == 0) {
-                const radius = circle.r.baseVal.value;
-                const circumference = 2 * Math.PI * radius;
-                const offset = circumference - (percentage / 100) * circumference;
-
-                circle.style.strokeDasharray = `${circumference} ${circumference}`;
-                circle.style.strokeDashoffset = offset;
-            }
-
-        })
-    }
-   
-    
-    if (check == 1) {
-        var circleTexts = document.querySelectorAll('#circleText');
-       
-        circleTexts.forEach((item, index) => {
-            if (index % 2 != 0) {
-                item.textContent = `${percentage}%`;
-            }
-            
-        })
-    }
-    else {
-        var circleTexts = document.querySelectorAll('#circleText');
-        circleTexts.forEach((item, index) => {
-            if (index % 2 == 0) {
-                item.textContent = `${percentage}%`;
-            }
-            
-        })
-    }
-     
+    document.getElementById('circleText').textContent = `${percentage}%`;
 }
 //Upload %
-function animateCircleProgress(targetPercentage_host, targetPercentage_hotel , duration) {
-  let start_host = 0;
-  const increment_host = targetPercentage_host / (duration / 10); // Tính toán gia tăng mỗi 10ms
+function animateCircleProgress(targetPercentage, duration) {
+  let start = 0;
+  const increment = targetPercentage / (duration / 10); // Tính toán gia tăng mỗi 10ms
 
-  const interval_host = setInterval(() => {
-      start_host += increment_host;
-      if (start_host >= targetPercentage_host) {
-          start_host = targetPercentage_host;
-          clearInterval(interval_host);
+  const interval = setInterval(() => {
+      start += increment;
+      if (start >= targetPercentage) {
+          start = targetPercentage;
+          clearInterval(interval);
       }
-      setCircleProgress(Math.round(start_host) , 1);
+      setCircleProgress(Math.round(start));
   }, 10); // Cập nhật mỗi 10ms
-  
-    let start_hotel = 0;
-    const increment_hotel = targetPercentage_hotel / (duration / 10); // Tính toán gia tăng mỗi 10ms
-
-    const interval_hotel = setInterval(() => {
-        start_hotel += increment_hotel;
-        if (start_hotel >= targetPercentage_hotel) {
-            start_hotel = targetPercentage_hotel;
-            clearInterval(interval_hotel);
-        }
-        setCircleProgress(Math.round(start_hotel) , 2);
-    }, 10); // Cập nhật mỗi 10ms
 }
-/*animateCircleProgress(75, 2000);*/
+animateCircleProgress(75, 2000);
 // Example: Set progress to 75%
 
 
@@ -122,90 +69,52 @@ page_btns.forEach((btn) =>{
 //Xử lý button detail infor
 
 var btnDetailsHost = document.querySelectorAll('.details_host')
-
+var inforHostDetail = document.querySelector('.info_host_detail')
+var containerInforHost = document.querySelector('.container_info_host')
 console.log(btnDetailsHost);
 btnDetailsHost.forEach((btn) =>{
-    btn.addEventListener('click', () => {
-        let select_id = btn.classList.value.split(" ")[1];
-        var inforHostDetail = document.querySelector(`.info_host_detail[class*="${select_id}"]`)
-        var containerInforHost = document.querySelector(`.container_info_host[class*="${select_id}"]`)
-        containerInforHost.classList.remove(`animationInfor`)
-        inforHostDetail.classList.add('openHost');
+  btn.addEventListener('click', ()=>{
+    containerInforHost.classList.remove('animationInfor')
+    inforHostDetail.classList.add('openHost');
   })
 })
 
-var inforHostDetails = document.querySelectorAll('.info_host_detail');
-if (inforHostDetails != null) {
-    inforHostDetails.forEach((item) => {
-        item.addEventListener('click', () => {
-            var find_containerInforHost = item.querySelector('.container_info_host');
-            if (item.classList.contains('openHost')) {
-                find_containerInforHost.classList.add('animationInfor')
-                setTimeout(() => {
-                    item.classList.remove('openHost');
-                }, 1100);
-            }
-            
-        })
-    });
-
-}
-var containerInforHosts = document.querySelectorAll('.container_info_host');
-containerInforHosts.forEach((item) => {
-    item.addEventListener('click', (e) => {
-        e.stopPropagation();
-    })
+inforHostDetail.addEventListener('click', ()=>{
+  if(inforHostDetail.classList.contains('openHost')){
+    containerInforHost.classList.add('animationInfor')
+    setTimeout(() => {
+      inforHostDetail.classList.remove('openHost');
+    }, 1100);
+  }
 })
+
+containerInforHost.addEventListener('click', (e)=>{
+  e.stopPropagation();
+})
+
 var btnDetailHotel = document.querySelectorAll('.details_hotel')
-
+var inforHotelDetail = document.querySelector('.info_hotel_detail')
+var containerInforHotel = document.querySelector('.container_info_hotel')
 console.log(btnDetailsHost);
-var btnDetailHotel = document.querySelectorAll('.details_hotel');
-
-console.log(btnDetailHotel);
-btnDetailHotel.forEach((btn) => {
-    btn.addEventListener('click', () => {
-        // Lấy ID từ tên lớp
-        let select_id = btn.classList.value.split(" ")[1];
-
-        // Sử dụng bộ chọn thuộc tính để tìm phần tử
-        var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${select_id}"]`);
-        var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${select_id}"]`);
-
-        // Kiểm tra nếu các phần tử tồn tại trước khi thao tác với chúng
-        if (containerInforHotel) {
-            containerInforHotel.classList.remove('animationInfor');
-        }
-
-        if (inforHotelDetail) {
-            inforHotelDetail.classList.add('openHost');
-        }
-    });
-});
-
-var inforHotelDetails = document.querySelectorAll('.info_hotel_detail');
-if (inforHotelDetails != null) {
-    inforHotelDetails.forEach((item) => {
-        item.addEventListener('click', () => {
-            if (item.classList.contains('openHost')) {
-                var find_containerInforHotel = item.querySelector(`.container_info_hotel`)
-                find_containerInforHotel.classList.add('animationInfor')
-                setTimeout(() => {
-                    item.classList.remove('openHost');
-                }, 1100);
-            }
-            
-        })
-
-    })
-}
-
-var containerInforHotels = document.querySelectorAll('.container_info_hotel');
-containerInforHotels.forEach((item) => {
-    item.addEventListener('click', (e) => {
-        e.stopPropagation();
-    })
+btnDetailHotel.forEach((btn) =>{
+  btn.addEventListener('click', ()=>{
+    containerInforHotel.classList.remove('animationInfor')
+    inforHotelDetail.classList.add('openHost');
+  })
 })
 
+inforHotelDetail.addEventListener('click', ()=>{
+  if(inforHotelDetail.classList.contains('openHost')){
+    containerInforHotel.classList.add('animationInfor')
+    setTimeout(() => {
+      inforHotelDetail.classList.remove('openHost');
+    }, 1100);
+  }
+})
+
+containerInforHotel.addEventListener('click', (e)=>{
+  e.stopPropagation();
+})
 
 //Xử lý ảnh hotel
 
@@ -281,54 +190,46 @@ imgHotels.forEach((img, index) => {
 const btnZoom = document.querySelector('.btn_zoom button')
 const imgZoomHotel = document.querySelector('.img_zoom_hotel')
 const imgZoom = document.querySelectorAll('.list_img img')
-if (btnZoom != null) {
-    btnZoom.addEventListener('click', () => {
-        imgZoomHotel.classList.add('openImg')
-    })
-}
-
+btnZoom.addEventListener('click', () =>{
+  imgZoomHotel.classList.add('openImg')
+})
 const btnLeft = document.querySelector('.btn_left')
 const btnRight = document.querySelector('.btn_right')
 const btnClose = document.querySelector('.btn_close')
 
 
-if (btnClose != null) {
-    btnClose.addEventListener('click', () => {
-        imgZoomHotel.classList.remove('openImg')
+btnClose.addEventListener('click', ()=>{
+  imgZoomHotel.classList.remove('openImg')
+})
+btnLeft.style.pointerEvents = 'none'
+var current = 0;
+btnRight.addEventListener('click', ()=>{
+  btnLeft.style.pointerEvents = ''
+  if(current === imgZoom.length - 1){
+    btnRight.style.pointerEvents = 'none'
+  }
+  else{
+    current++;
+    imgZoom.forEach((img) =>{
+      img.style.transform = `translateX(${710 * -1 * current}px)`
     })
-}
-if (btnLeft != null) {
+  }
+})
+btnLeft.addEventListener('click', ()=>{
+  btnRight.style.pointerEvents = ''
+  if(current === 0){
     btnLeft.style.pointerEvents = 'none'
-    var current = 0;
-    btnRight.addEventListener('click', () => {
-        btnLeft.style.pointerEvents = ''
-        if (current === imgZoom.length - 1) {
-            btnRight.style.pointerEvents = 'none'
-        }
-        else {
-            current++;
-            imgZoom.forEach((img) => {
-                img.style.transform = `translateX(${710 * -1 * current}px)`
-            })
-        }
+  }
+  else{
+    current--;
+    imgZoom.forEach((img) =>{
+      img.style.transform = `translateX(${710 * -1 * current}px)`
     })
-    btnLeft.addEventListener('click', () => {
-        btnRight.style.pointerEvents = ''
-        if (current === 0) {
-            btnLeft.style.pointerEvents = 'none'
-        }
-        else {
-            current--;
-            imgZoom.forEach((img) => {
-                img.style.transform = `translateX(${710 * -1 * current}px)`
-            })
-        }
-    })
-
-}
+  }
+})
 
 const btnAlls = document.querySelectorAll('.list_item table tbody tr td:first-child button');
-console.log(btnAlls);
+
 btnAlls.forEach((btn) =>{
   btn.addEventListener('click', ()=>{
     if(btn.classList.contains('ticked')){
@@ -337,4 +238,165 @@ btnAlls.forEach((btn) =>{
       btn.classList.add('ticked')
     }
   })
+})
+
+
+//Trang Analytics
+
+const hotels = document.querySelectorAll('.item_7 table tbody tr')
+for(let i = 0; i < hotels.length; i++){
+  hotels[i].addEventListener('click', () =>{
+    var name = hotels[i].firstElementChild.textContent;
+    const nameHotel = document.querySelector('.name_hotel_analytics span')
+    nameHotel.textContent = name;
+  })
+}
+
+const selectElement = document.getElementById('search_by_revenue');
+const btnRevenue = document.querySelector('.btn_revenue')
+const revenues = document.querySelectorAll('.item_7 table tbody tr td:last-child')
+
+var revenuesArr = [];
+
+for(let i = 0; i < revenues.length; i++){
+  var money = revenues[i].textContent.slice(0, -1);
+  revenuesArr.push(money, i)
+}
+
+btnRevenue.addEventListener('click', () =>{
+  var index = selectElement.selectedIndex;
+  hotels.forEach((ht) =>{
+    ht.classList.remove('close')
+  })
+  if(index === 1){
+    hotels.forEach((ht) =>{
+      ht.classList.add('close')
+    })
+    for(let j = 0; j < revenuesArr.length; j++){
+      if(j % 2 === 0){
+        if(revenuesArr[j] < 10000){
+          var row = revenuesArr[j + 1];
+          hotels[row].classList.remove('close')
+        }
+      }
+    }
+  }
+  else if(index === 2){
+    hotels.forEach((ht) =>{
+      ht.classList.add('close')
+    })
+    for(let j = 0; j < revenuesArr.length; j++){
+      if(j % 2 === 0){
+        if(revenuesArr[j] >= 10000 && revenuesArr[j] < 30000){
+          var row = revenuesArr[j + 1];
+          hotels[row].classList.remove('close')
+        }
+      }
+    }
+  }
+  else if(index === 3){
+    hotels.forEach((ht) =>{
+      ht.classList.add('close')
+    })
+    for(let j = 0; j < revenuesArr.length; j++){
+      if(j % 2 === 0){
+        if(revenuesArr[j] >= 30000 && revenuesArr[j] < 50000){
+          var row = revenuesArr[j + 1];
+          hotels[row].classList.remove('close')
+        }
+      }
+    }
+  }
+  else if(index === 4){
+    hotels.forEach((ht) =>{
+      ht.classList.add('close')
+    })
+    for(let j = 0; j < revenuesArr.length; j++){
+      if(j % 2 === 0){
+        if(revenuesArr[j] >= 50000){
+          var row = revenuesArr[j + 1];
+          hotels[row].classList.remove('close')
+        }
+      }
+    }
+  }
+});
+
+const selectElementArrange = document.getElementById('arrange');
+const btnArrange = document.querySelector('.btn_arrange')
+var arrArrange = [];
+
+btnArrange.addEventListener('click', () =>{
+  hotels.forEach((ht, index) =>{
+    if(ht.className === ''){
+        var revenue = ht.lastElementChild;
+        var money = revenue.textContent.slice(0, -1);
+        arrArrange.push(money, index)
+    }
+  })
+  
+  console.log(arrArrange)
+  var index = selectElementArrange.selectedIndex;
+  if(index === 1){
+    // Lấy danh sách các thẻ <tr> từ bảng
+    const tableBody = document.querySelector('.list_item.item_7 table tbody');
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+    // Sắp xếp mảng các thẻ <tr> dựa trên doanh thu (revenue)
+    rows.sort((a, b) => {
+        const revenueA = parseInt(a.querySelector('td:nth-child(4)').textContent.replace('$', '').replace(',', ''));
+        const revenueB = parseInt(b.querySelector('td:nth-child(4)').textContent.replace('$', '').replace(',', ''));
+        return revenueA - revenueB;
+    });
+
+    // Xóa tất cả các thẻ <tr> hiện có từ bảng
+    tableBody.innerHTML = '';
+
+    // Thêm các thẻ <tr> đã sắp xếp vào bảng
+    rows.forEach(row => {
+        tableBody.appendChild(row);
+    });
+  }
+  else if(index === 2){
+    // Lấy danh sách các thẻ <tr> từ bảng
+    const tableBody = document.querySelector('.list_item.item_7 table tbody');
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+    // Sắp xếp mảng các thẻ <tr> dựa trên doanh thu (revenue)
+    rows.sort((a, b) => {
+        const revenueA = parseInt(a.querySelector('td:nth-child(4)').textContent.replace('$', '').replace(',', ''));
+        const revenueB = parseInt(b.querySelector('td:nth-child(4)').textContent.replace('$', '').replace(',', ''));
+        return revenueB - revenueA;
+    });
+
+    // Xóa tất cả các thẻ <tr> hiện có từ bảng
+    tableBody.innerHTML = '';
+
+    // Thêm các thẻ <tr> đã sắp xếp vào bảng
+    rows.forEach(row => {
+        tableBody.appendChild(row);
+    });
+  }
+  else if(index === 3){
+    // Lấy danh sách các thẻ <tr> từ bảng
+    const tableBody = document.querySelector('.list_item.item_7 table tbody');
+    const rows = Array.from(tableBody.querySelectorAll('tr'));
+
+    // Sắp xếp mảng các thẻ <tr> dựa trên tên khách sạn (theo bảng chữ cái A-Z)
+    rows.sort((a, b) => {
+        const nameA = a.querySelector('td:nth-child(1)').textContent.trim().toLowerCase();
+        const nameB = b.querySelector('td:nth-child(1)').textContent.trim().toLowerCase();
+        return nameA.localeCompare(nameB);
+    });
+
+    // Xóa tất cả các thẻ <tr> hiện có từ bảng
+    tableBody.innerHTML = '';
+
+    // Thêm các thẻ <tr> đã sắp xếp vào bảng
+    rows.forEach(row => {
+        tableBody.appendChild(row);
+    });
+
+  }
+  
 })
