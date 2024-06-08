@@ -480,7 +480,7 @@
     <Property Name="review_by_user" Type="Int32" />
     <Property Name="transaction_id" Type="Int32" />
     <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="overall_rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="overall_rating" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="DateTime" Precision="3" />
     <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="pr_status" Type="Byte" />
@@ -554,8 +554,8 @@
     <Property Name="promo_code_id" Type="Int32" />
     <Property Name="discount_amt" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="transaction_status" Type="Byte" />
+    <Property Name="feedback" Type="Int32" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_transaction_id_id_FK" FromRole="transactions" ToRole="bookings" />
     <NavigationProperty Name="currency" Relationship="Self.transaction_currency_id_id_FK" FromRole="transactions" ToRole="currencies" />
     <NavigationProperty Name="promo_codes" Relationship="Self.transaction_promo_code_id_id_FK" FromRole="transactions" ToRole="promo_codes" />

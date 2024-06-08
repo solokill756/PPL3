@@ -406,7 +406,7 @@
           <Property Name="review_by_user" Type="int" />
           <Property Name="transaction_id" Type="int" />
           <Property Name="comment" Type="text" />
-          <Property Name="overall_rating" Type="varchar" MaxLength="10" />
+          <Property Name="overall_rating" Type="decimal" Precision="18" Scale="0" />
           <Property Name="created" Type="datetime" />
           <Property Name="modified" Type="datetime" />
           <Property Name="pr_status" Type="tinyint" />
@@ -471,6 +471,7 @@
           <Property Name="created" Type="datetime" />
           <Property Name="modified" Type="datetime" />
           <Property Name="transaction_status" Type="tinyint" />
+          <Property Name="feedback" Type="int" />
         </EntityType>
         <EntityType Name="user_notification">
           <Key>
@@ -2312,7 +2313,7 @@
           <Property Name="review_by_user" Type="Int32" />
           <Property Name="transaction_id" Type="Int32" />
           <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="overall_rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="overall_rating" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="created" Type="DateTime" Precision="3" />
           <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="pr_status" Type="Byte" />
@@ -2386,8 +2387,8 @@
           <Property Name="promo_code_id" Type="Int32" />
           <Property Name="discount_amt" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="created" Type="DateTime" Precision="3" />
-          <Property Name="modified" Type="DateTime" Precision="3" />
           <Property Name="transaction_status" Type="Byte" />
+          <Property Name="feedback" Type="Int32" />
           <NavigationProperty Name="bookings" Relationship="Self.booking_transaction_id_id_FK" FromRole="transactions" ToRole="bookings" />
           <NavigationProperty Name="currency" Relationship="Self.transaction_currency_id_id_FK" FromRole="transactions" ToRole="currencies" />
           <NavigationProperty Name="promo_codes" Relationship="Self.transaction_promo_code_id_id_FK" FromRole="transactions" ToRole="promo_codes" />
@@ -4304,8 +4305,8 @@
                 <ScalarProperty Name="promo_code_id" ColumnName="promo_code_id" />
                 <ScalarProperty Name="discount_amt" ColumnName="discount_amt" />
                 <ScalarProperty Name="created" ColumnName="created" />
-                <ScalarProperty Name="modified" ColumnName="modified" />
                 <ScalarProperty Name="transaction_status" ColumnName="transaction_status" />
+                <ScalarProperty Name="feedback" ColumnName="feedback" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -25,7 +25,7 @@ namespace PPl3.Models
         public Nullable<int> review_by_user { get; set; }
         public Nullable<int> transaction_id { get; set; }
         public string comment { get; set; }
-        public string overall_rating { get; set; }
+        public Nullable<decimal> overall_rating { get; set; }
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> pr_status { get; set; }

@@ -291,7 +291,7 @@ namespace PPl3.Areas.Host.Controllers
             new_hotel.bed_count = data.number_beds;
             if (current_pages >= 12)
             {
-               
+                new_hotel.p_status = 0;
                 new_hotel.current_pages = 1;
 
             }

@@ -23,6 +23,8 @@ using System.Security.Policy;
 using System.Net;
 using System.Security.Cryptography;
 using System.Web.UI.WebControls;
+using Microsoft.Ajax.Utilities;
+using System.Web.Helpers;
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -30,7 +32,7 @@ namespace PPl3.Areas.User.Controllers
     public class MyViewModelPageUser
 
     {
-
+        
         public List<amenity> Model1Data { get; set; }
 
         public List<property> Model2Data { get; set; }
@@ -41,7 +43,19 @@ namespace PPl3.Areas.User.Controllers
 
     }
 
-    
+    public class MyModel
+    {
+
+        public int number_star { get; set; }
+        public string comment { get; set; }
+        public string img_1 { get; set; }
+        public string img_2 { get; set; }
+        public string img_3 { get; set; }
+        public string img_4 { get; set; }
+        public int transation_id { get; set; }
+
+    }
+
     public class HomeUserController : Controller
     {
         // GET: User/HomeUser
@@ -609,15 +623,8 @@ namespace PPl3.Areas.User.Controllers
             ViewBag.signUpOrLogin = 2;
             PPL3Entities entities = new PPL3Entities();
             user_personalInfor find_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault();
-            foreach (var item in entities.properties.ToList())
-            {
-                if (item.end_date < DateTime.Now)
-                {
-                    item.availability_type = 0;
-                    item.current_pages = 10;
-                }
-            }
-            entities.SaveChanges();
+            
+            
             if (!IsGmailExists(email_address))
 
             {
@@ -638,7 +645,30 @@ namespace PPl3.Areas.User.Controllers
 
             else
             {
-                
+                foreach (var item in entities.properties.ToList())
+                {
+                    if (item.end_date < DateTime.Now)
+                    {
+                        item.availability_type = 0;
+                        item.current_pages = 10;
+                    }
+                }
+                entities.SaveChanges();
+                foreach (var item in entities.transactions.ToList())
+                {
+                    if (item.feedback == 0 && item.bookings.FirstOrDefault().check_out_date < DateTime.Now)
+                    {
+                        user_notification new_notification = new user_notification();
+                        new_notification.userid = item.payer_id;
+                        new_notification.content = "Please rate the trip with the invoice code " + item.id;
+                        new_notification.un_status = 0;
+                        new_notification.created = DateTime.Now;
+                        new_notification.un_url = "/user/homeuser/Comment?transation_id=" + item.id;
+                        entities.user_notification.Add(new_notification);
+                        item.feedback = 1;
+                        entities.SaveChanges();
+                    }
+                }
                 var id_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
                 var userInfor = (entities.users.Where(item => item.id ==  id_user).FirstOrDefault());
                 userInfor.user_status = 1;
@@ -693,15 +723,7 @@ namespace PPl3.Areas.User.Controllers
             user_personalInfor user_PersonalInfor = new user_personalInfor();
             user_notification user_Notification = new user_notification();
             PPL3Entities db = new PPL3Entities();
-            foreach (var item in db.properties.ToList())
-            {
-                if (item.end_date < DateTime.Now)
-                {
-                    item.availability_type = 0;
-                    item.current_pages = 10;
-                }
-            }
-            db.SaveChanges();
+           
             if (IsGmailExists(email_address))
 
             {
@@ -723,6 +745,33 @@ namespace PPl3.Areas.User.Controllers
             }
             else
             {
+                // Set lại trang để reset lại ngày đặt phòng cho khách sạn
+                foreach (var item in db.properties.ToList())
+                {
+                    if (item.end_date < DateTime.Now)
+                    {
+                        item.availability_type = 0;
+                        item.current_pages = 10;
+                    }
+                }
+                db.SaveChanges();
+
+                // Gửi thông báo bình luận đến những user
+                foreach (var item in db.transactions.ToList())
+                {
+                    if (item.feedback == 0 && item.bookings.FirstOrDefault().check_out_date < DateTime.Now)
+                    {
+                        user_notification new_notification = new user_notification();
+                        new_notification.userid = item.payer_id;
+                        new_notification.content = "Please rate the trip with the invoice code " + item.id;
+                        new_notification.un_status = 0;
+                        new_notification.created = DateTime.Now;
+                        new_notification.un_url = "/user/homeuser/Comment?transation_id=" + item.id;
+                        db.user_notification.Add(new_notification);
+                        item.feedback = 1;
+                        db.SaveChanges();
+                    }
+                }
                 if (model.user_type == null) model.user_type = 2;
                 model.created = DateTime.Now;
                 user_Notification.userid = model.id;
@@ -1175,7 +1224,8 @@ namespace PPl3.Areas.User.Controllers
                             newTransaction.transaction_status = 1;
                             newTransaction.receiver_id = invoiceItem.property.userId;
                             newTransaction.payer_id = p_user.id;
-                            newTransaction.site_fees = (decimal?)((int)invoiceItem.amount_paid * 0.01);
+                            newTransaction.site_fees = (decimal?)((int)invoiceItem.amount_paid * 0.3);
+                            newTransaction.feedback = 0;
                             db.transactions.Add(newTransaction);
                             invoiceItem.transaction_id = newTransaction.id;
                            
@@ -1222,7 +1272,7 @@ namespace PPl3.Areas.User.Controllers
             //Build URL for VNPAY
             VnPayLibrary vnpay = new VnPayLibrary();
             var Price = (long)order.amount_paid * 2500000;
-            Price = (long)(Price + Price * 0.01);
+            Price = (long)(Price + Price * 0.3);
             vnpay.AddRequestData("vnp_Version", VnPayLibrary.VERSION);
             vnpay.AddRequestData("vnp_Command", "pay");
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
@@ -1422,6 +1472,108 @@ namespace PPl3.Areas.User.Controllers
                 viewResult.ViewEngine.ReleaseView(ControllerContext, viewResult.View);
                 return sw.GetStringBuilder().ToString();
             }
+        }
+
+
+
+        // reviews and comments
+
+        public ActionResult Comment(int transation_id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            transaction find_transation = db.transactions.FirstOrDefault(item => item.id == transation_id);
+          
+            return View(find_transation);
+        }
+
+        [HttpPost]
+        public JsonResult SumitComment(MyModel data)
+        {
+            if(data != null)
+            {
+                PPL3Entities db = new PPL3Entities();
+                property_reviews new_reviews = new property_reviews();
+                transaction find_transaction = db.transactions.FirstOrDefault(item => item.id == data.transation_id);
+                new_reviews.property_id = find_transaction.property_id;
+                new_reviews.review_by_user = find_transaction.payer_id;
+                new_reviews.transaction_id = find_transaction.id;
+                new_reviews.comment = data.comment;
+                new_reviews.overall_rating = (decimal)data.number_star;
+                new_reviews.created = DateTime.Now;
+                new_reviews.pr_status = 1;
+                db.property_reviews.Add(new_reviews);
+                db.SaveChanges();
+                if(data.img_1 != null)
+                {
+                    amenity new_amenity = new amenity();
+                    property_amenities new_pr_am = new property_amenities();
+                   
+                    new_amenity.category_id = 44;
+                    new_amenity.amenity_name = "Overview";
+                    new_amenity.created = DateTime.Now;
+                    new_amenity.icon_image = data.img_1;
+                    db.amenities.Add(new_amenity);
+                    new_pr_am.property_id = find_transaction.property_id;
+                    new_pr_am.amenity_id = new_amenity.id;
+                    new_pr_am.pa_status = 1;
+                    db.property_amenities.Add(new_pr_am);
+                    db.SaveChanges();
+                   
+                }
+                if (data.img_2 != null)
+                {
+                    amenity new_amenity = new amenity();
+                    property_amenities new_pr_am = new property_amenities();
+                    new_amenity.category_id = 44;
+                    new_amenity.amenity_name = "Overview";
+                    new_amenity.created = DateTime.Now;
+                    new_amenity.icon_image = data.img_2;
+                    db.amenities.Add(new_amenity);
+                    new_pr_am.property_id = find_transaction.property_id;
+                    new_pr_am.amenity_id = new_amenity.id;
+                    new_pr_am.pa_status = 1;
+                    db.property_amenities.Add(new_pr_am);
+                    db.SaveChanges();
+                }
+                if (data.img_3 != null)
+                {
+                    amenity new_amenity = new amenity();
+                    property_amenities new_pr_am = new property_amenities();
+                    new_amenity.category_id = 44;
+                    new_amenity.amenity_name = "Overview";
+                    new_amenity.created = DateTime.Now;
+                    new_amenity.icon_image = data.img_3;
+                    db.amenities.Add(new_amenity);
+                    new_pr_am.property_id = find_transaction.property_id;
+                    new_pr_am.amenity_id = new_amenity.id;
+                    new_pr_am.pa_status = 1;
+                    db.property_amenities.Add(new_pr_am);
+                    db.SaveChanges();
+                }
+                if (data.img_4 != null)
+                {
+                    amenity new_amenity = new amenity();
+                    property_amenities new_pr_am = new property_amenities();
+                    new_amenity.category_id = 44;
+                    new_amenity.amenity_name = "Overview";
+                    new_amenity.created = DateTime.Now;
+                    new_amenity.icon_image = data.img_4;
+                    db.amenities.Add(new_amenity);
+                    new_pr_am.property_id = find_transaction.property_id;
+                    new_pr_am.amenity_id = new_amenity.id;
+                    new_pr_am.pa_status = 1;
+                    db.property_amenities.Add(new_pr_am);
+                    db.SaveChanges();
+                }
+
+               
+               
+            }
+            return Json(new
+            {
+                success = "true",
+                redirectUrl = "/user/homeuser/index"
+            }, JsonRequestBehavior.AllowGet);
         }
 
         //Function

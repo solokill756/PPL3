@@ -142,7 +142,7 @@
                         double sum = 0;
                         foreach (var row in item.property_reviews)
                         {
-                            sum = sum + double.Parse(row.overall_rating);
+                            sum = sum + (double)row.overall_rating;
                         }
                         sum = sum / item.property_reviews.ToArray().Length;
 

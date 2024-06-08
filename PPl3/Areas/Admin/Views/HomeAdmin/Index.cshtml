@@ -23,8 +23,8 @@
     {
         hotel_rate = (decimal)db.properties.Where(item => item.p_status == 1).Count() / totalProperties * 100;
     }
-    List<PPl3.Models.user> lstUser = db.users.Where(item => item.user_type == 2).ToList();
-    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3).ToList();
+    List<PPl3.Models.user> lstUser = db.users.Where(item => item.user_status == 1 && item.user_type != 1).ToList();
+    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3 && item.user_status == 1).ToList();
     List<PPl3.Models.property> lstHotel = db.properties.Where(item => item.p_status == 1).ToList();
 
 }
@@ -926,8 +926,8 @@
                         <span>People</span>
                     </div>
                     <div class="search">
-                        <button><i class='bx bx-search'></i></button>
-                        <input type="text" placeholder="Search...">
+                        <button id="btn_search_user"><i class='bx bx-search'></i></button>
+                        <input id="search_user" type="text" placeholder="Search..." value="">
                     </div>
                 </div>
                 <div class="list_item item_user">
@@ -1074,7 +1074,7 @@
                                             <td>@address</td>
                                             <td>@tmp.user_personalInfor.FirstOrDefault().email_address</td>
                                             <td>
-                                                <button id="@tmp.id" class="details_host">Detail</button>
+                                                <button><a href="/admin/homeadmin/userPersonalProfile?user=@tmp.id" target="_blank">Detail</a></button>
                                                 <button id="@tmp.id" class="delete_Hostbtns">Delete</button>
                                             </td>
                                         </tr>
@@ -1142,7 +1142,7 @@
                                                 @{
                                                     string hotelid = "hotel_" + tmp.id.ToString();
                                                 }
-                                                <button id="@hotelid" class="details_hotel">Detail</button>
+                                                <button><a href="/admin/homeadmin/revenue?user=@tmp.userId" target="_blank">Detail</a></button>
                                                 <button id="@tmp.id" class="delete_Hotelbtns">Delete</button>
                                             </td>
                                         </tr>
@@ -1429,643 +1429,11 @@
             }
         }
     }
-    @{
-        if (lstHotel != null)
-        {
-            int position = 0;
-            List<PPl3.Models.booking> listUserCurrent = new List<PPl3.Models.booking>();
-            List<PPl3.Models.booking> listUserBooking = new List<PPl3.Models.booking>();
-            List<PPl3.Models.property_reviews> listUserReview = new List<PPl3.Models.property_reviews>();
-            foreach (var temp in lstHotel)
-            {
-                var p_user = temp.user;
-                List<PPl3.Models.property> listProperties = db.properties.Where(item => item.userId == p_user.id).ToList();
-                //bugs
-                <div id="myHotel-@temp.id" class="mod hide">
-                    <div class="mod__inner">
-                        <div class="mod__header">
-                            <p>Detail</p>
-                            <i class="far fa-window-close close-modal" data-modal-id="@temp.id"></i>
-                        </div>
-                        <div class="mod__body">
-                            <div class="main">
-                                <div id="content">
-                                    <div class="gird wide">
-                                        <div class="row no-gutter">
-                                            <div class="col l-8 m-8 c-12">
-                                                <div class="container">
-                                                    <div class="col l-6 m-6 c-12">
-                                                        <div class="statistical_box">
-                                                            <div class="icon">
-                                                                <i class="fa fa-chart-line"></i>
-                                                            </div>
-                                                            <div class="infor">
-                                                                <span>Month Renter</span>
-                                                                <div class="number">
-                                                                    <p id="month_renter">1234</p>
-                                                                    <i class="fa-solid fa-user"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col l-6 m-6 c-12">
-                                                        <div class="statistical_box">
-                                                            <div class="icon">
-                                                                <i class="fa-solid fa-chart-area"></i>
-                                                            </div>
-                                                            <div class="infor">
-                                                                <span>Total Renter</span>
-                                                                <div class="number">
-                                                                    <p id="total_renter">1234</p>
-                                                                    <i class="fa-solid fa-user"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col l-6 m-6 c-12">
-                                                        <div class="statistical_box">
-                                                            <div class="icon">
-                                                                <i class="fa-solid fa-chart-column"></i>
-                                                            </div>
-                                                            <div class="infor">
-                                                                <span>Month Revenue</span>
-                                                                <div class="number">
-                                                                    <span>$</span>
-                                                                    <p id="month_revenue">1234</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col l-6 m-6 c-12">
-                                                        <div class="statistical_box">
-                                                            <div class="icon">
-                                                                <i class="fa-solid fa-chart-pie"></i>
-                                                            </div>
-                                                            <div class="infor">
-                                                                <span>Total Revenue</span>
-                                                                <div class="number">
-                                                                    <span>$</span>
-                                                                    <p id="total_revenue">1234</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="container">
-                                                    <div class="col l-6 m-12 c-12">
-                                                        <div class="box">
-                                                            <div class="tittle">
-                                                                <p>Statistics Of The Year</p>
-                                                            </div>
-                                                            <canvas id="renter_chart"></canvas>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col l-6 m-12 c-12">
-                                                        <div class="box">
-                                                            <div class="tittle">
-                                                                <p>Statistics Of The Month</p>
-                                                            </div>
-                                                            <canvas id="revenue_chart"></canvas>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="container">
-                                                    <div class="col l-12 m-12 c-12">
-                                                        <div class="box_list">
-                                                            <div class="tittle">
-                                                                <p>List of room tenants</p>
-                                                                <button class="show_all_list_room">Show all</button>
-                                                            </div>
-                                                            <div class="table_render">
-                                                                <table>
-                                                                    <thead>
-                                                                    <th>Date</th>
-                                                                    <th>Name</th>
-                                                                    <th>Place</th>
-                                                                    <th>Price</th>
-                                                                    <th>Payments</th>
-                                                                    <th>Action</th>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @{
-                                                                            position = 0;
-                                                                            foreach (var tmp in listUserBooking)
-                                                                            {
-                                                                                position++;
-                                                                                if (position == 5) { break; }
-                                                                                <tr>
-                                                                                    <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
-                                                                                    <td>@tmp.user.account_name</td>
-                                                                                    <td>@tmp.property.p_address</td>
-                                                                                    <td>@tmp.amount_paid$</td>
-                                                                                    @{
-                                                                                        if (tmp.transaction_id == null)
-                                                                                        {
-                                                                                            <td>Not Paid</td>
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            <td>Paid</td>
-                                                                                            <td>
-                                                                                                <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
-                                                                                            </td>
-                                                                                        }
-                                                                                    }
-
-                                                                                </tr>
-                                                                            }
-                                                                        }
-                                                                        @*<tr>
-                                                    <td>12/4/2024</td>
-                                                    <td>Davis Ngo</td>
-                                                    <td>192 NewYork City</td>
-                                                    <td>400$</td>
-                                                    <td>Paid</td>
-                                                    <td>
-                                                        <button><a href="">Detail</a></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>12/4/2024</td>
-                                                    <td>Davis Ngo</td>
-                                                    <td>192 NewYork City</td>
-                                                    <td>400$</td>
-                                                    <td>Paid</td>
-                                                    <td>
-                                                        <button><a href="">Detail</a></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>12/4/2024</td>
-                                                    <td>Davis Ngo</td>
-                                                    <td>192 NewYork City</td>
-                                                    <td>400$</td>
-                                                    <td>Paid</td>
-                                                    <td>
-                                                        <button><a href="">Detail</a></button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>12/4/2024</td>
-                                                    <td>Davis Ngo</td>
-                                                    <td>192 NewYork City</td>
-                                                    <td>400$</td>
-                                                    <td>Paid</td>
-                                                    <td>
-                                                        <button><a href="">Detail</a></button>
-                                                    </td>
-                                                </tr>*@
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col l-4 m-4 c-12">
-                                                <div class="container">
-                                                    <div class="col l-12 m-12 c-12">
-                                                        <div class="box">
-                                                            @{
-                                                                string urlavatar = "";
-                                                                if (p_user.user_profile.FirstOrDefault().user_avatar != null)
-                                                                {
-                                                                    urlavatar = p_user.user_profile.FirstOrDefault().user_avatar;
-                                                                }
-                                                                else
-                                                                {
-                                                                    urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
-                                                                }
-                                                            }
-                                                            <div class="avatar_hosting icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
-                                                            </div>
-                                                            <div class="name_hosting">
-                                                                <p>@p_user.user_personalInfor.FirstOrDefault().legal_name</p>
-                                                                <span>Hosting</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="container">
-                                                    <div class="col l-12 m-12 c-12">
-                                                        <div class="tittle">
-                                                            <p>My Hotel</p>
-                                                        </div>
-                                                        <div class="box">
-                                                            @{
-                                                                position = 0;
-                                                                foreach (PPl3.Models.property item in listProperties)
-                                                                {
-                                                                    position++;
-                                                                    if (position == 1)
-                                                                    {
-                                                                        <div class="box_item focus">
-                                                                            <i class="fa-solid fa-house"></i>
-                                                                            <p>@item.p_address</p>
-                                                                            @{
-                                                                                if (item.p_status != 1)
-                                                                                {
-                                                                                    <span style="background-color:red !important">Unfinished</span>
-                                                                                }
-                                                                                else if (item.availability_type == 0)
-                                                                                {
-                                                                                    <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
-                                                                                }
-                                                                                else if (item.p_status == 1)
-                                                                                {
-                                                                                    <span style="background-color: green !important">Complete</span>
-
-                                                                                }
-                                                                            }
-                                                                        </div>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <div class="box_item">
-                                                                            <i class="fa-solid fa-house"></i>
-                                                                            <p>@item.p_address</p>
-                                                                            @{
-                                                                                if (item.p_status != 1)
-                                                                                {
-                                                                                    <span style="background-color:red !important">Unfinished</span>
-                                                                                }
-                                                                                else if (item.availability_type == 0)
-                                                                                {
-                                                                                    <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
-                                                                                }
-                                                                                else if (item.p_status == 1)
-                                                                                {
-                                                                                    <span style="background-color: green !important">Complete</span>
-
-                                                                                }
-                                                                            }
-
-                                                                        </div>
-                                                                    }
-                                                                }
-                                                            }
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col l-6 m-6 c-12">
-                                                <div class="container">
-                                                    <div class="col l-12 m-12 c-12">
-                                                        <div class="box_list">
-                                                            <div class="tittle">
-                                                                <p>Comments Of User</p>
-                                                                <button class="show_all_comment">Show all</button>
-                                                            </div>
-                                                            <ul class="comment_list">
-                                                                @{
-                                                                    position = 0;
-                                                                    int rating = 0;
-
-                                                                    foreach (var tmp in listUserReview)
-                                                                    {
-                                                                        position++;
-                                                                        if (position == 6) { break; }
-                                                                        urlavatar = "";
-                                                                        if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
-                                                                        {
-                                                                            urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
-                                                                        }
-                                                                        <li>
-                                                                            <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
-                                                                                <div class="icon_star">
-                                                                                    @{
-                                                                                        rating = (int)Math.Round(double.Parse(tmp.overall_rating));
-                                                                                        for (int i = 1; i <= 5; i++)
-                                                                                        {
-                                                                                            if (i <= rating)
-                                                                                            {
-                                                                                                <i class="fa-solid fa-star"></i>
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                <i class="fa-regular fa-star"></i>
-                                                                                            }
-                                                                                        }
-                                                                                    }
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="comment_details">
-                                                                                <div class="item">
-                                                                                    <h4>@tmp.user.account_name</h4>
-                                                                                    <span>@tmp.created.Value.ToString("dd/MM/yyyy")</span>
-                                                                                </div>
-                                                                                <p>@tmp.comment</p>
-                                                                            </div>
-                                                                        </li>
-                                                                    }
-                                                                }
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col l-6 m-6 c-12">
-                                                <div class="container">
-                                                    <div class="col l-12 m-12 c-12">
-                                                        <div class="box_list">
-                                                            <div class="tittle">
-                                                                <p>List Of Current Tenants</p>
-                                                                <button class="show_all_list_current">Show all</button>
-                                                            </div>
-                                                            <ul class="comment_list">
-                                                                @{
-                                                                    position = 0;
-                                                                    foreach (var tmp in listUserCurrent)
-                                                                    {
-                                                                        position++;
-                                                                        if (position == 6) { break; }
-                                                                        urlavatar = "";
-                                                                        if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
-                                                                        {
-                                                                            urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
-                                                                        }
-                                                                        <li>
-                                                                            <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
-                                                                            </div>
-                                                                            <div class="comment_details">
-                                                                                <div class="item">
-                                                                                    <h4>@tmp.user.account_name</h4>
-                                                                                    <span>In Progress</span>
-                                                                                </div>
-                                                                                <p>Rent from @tmp.check_in_date.Value.ToString("dd/MM/yyyy") to @tmp.check_out_date.Value.ToString("dd/MM/yyyy")</p>
-                                                                            </div>
-                                                                        </li>
-                                                                    }
-                                                                }
-                                                                @*<li>
-                                            <div class="avatar_user">
-
-                                            </div>
-                                            <div class="comment_details">
-                                                <div class="item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <span>In Progress</span>
-                                                </div>
-                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="avatar_user">
-
-                                            </div>
-                                            <div class="comment_details">
-                                                <div class="item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <span>In Progress</span>
-                                                </div>
-                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="avatar_user">
-
-                                            </div>
-                                            <div class="comment_details">
-                                                <div class="item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <span>In Progress</span>
-                                                </div>
-                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="avatar_user">
-
-                                            </div>
-                                            <div class="comment_details">
-                                                <div class="item">
-                                                    <h4>Davis Ngo</h4>
-                                                    <span>In Progress</span>
-                                                </div>
-                                                <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                            </div>
-                                        </li>*@
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="comment_detail">
-                                    <div class="gird wide">
-                                        <div class="row no-gutter">
-                                            <div class="col l-o-2 l-8 m-o-1 m-10 c-o-1 c-10 comment_detail_container">
-                                                <div class="comment_detail_tittle">
-                                                    @{
-                                                        int totalReviews = 0;
-                                                        double AvgRating = 0;
-                                                        foreach (PPl3.Models.property item in listProperties)
-                                                        {
-                                                            foreach (var tmp in item.property_reviews.ToList())
-                                                            {
-                                                                totalReviews++;
-                                                                AvgRating += double.Parse(tmp.overall_rating);
-                                                            }
-                                                        }
-                                                        AvgRating = AvgRating / totalReviews;
-                                                    }
-                                                    <h2><i class="fa-regular fa-solid fa-star"></i> @AvgRating · @totalReviews reviews</h2>
-                                                </div>
-                                                <div class="comment_box">
-                                                    @{
-                                                        position = 0;
-                                                        rating = 0;
-
-                                                        foreach (var tmp in listUserReview)
-                                                        {
-                                                            position++;
-                                                            urlavatar = "";
-                                                            if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
-                                                            {
-                                                                urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
-                                                            }
-                                                            else
-                                                            {
-                                                                urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
-                                                            }
-                                                            <div class="comment_item_detail comment_user_@position">
-                                                                <div class="header_comment">
-                                                                    <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat"></div>
-                                                                    <div>
-                                                                        <span>@tmp.user.account_name</span>
-                                                                        @{
-                                                                            string uState = tmp.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                                            string countryName = tmp.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                                            string uCity = tmp.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
-                                                                        }
-                                                                        <p>@uCity ,  @uState , @countryName</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="time_comment">
-                                                                    <div class="star_comment">
-                                                                        @{
-                                                                            rating = (int)Math.Round(double.Parse(tmp.overall_rating));
-                                                                            for (int i = 1; i <= 5; i++)
-                                                                            {
-                                                                                if (i <= rating)
-                                                                                {
-                                                                                    <i class="fa-solid fa-star"></i>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <i class="fa-regular fa-star"></i>
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                        @*<i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>
-                                                <i class="fa-solid fa-star"></i>*@
-                                                                    </div>
-                                                                    <span>@tmp.created.Value.ToString("dd/MM/yyyy")</span>
-                                                                </div>
-
-                                                                <div class="body_comment_detail">
-                                                                    <p>@tmp.comment</p>
-                                                                </div>
-                                                            </div>
-                                                        }
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="list_room">
-                                    <div class="gird wide">
-                                        <div class="row no-gutter">
-                                            <div class="col l-o-2 l-8 m-8 c-12">
-                                                <div class="box list_room_container">
-                                                    <div class="tittle">
-                                                        <p>List of room tenants</p>
-                                                    </div>
-                                                    <div class="list_room_box table_render">
-                                                        <table>
-                                                            <thead>
-                                                            <th>Date</th>
-                                                            <th>Name</th>
-                                                            <th>Place</th>
-                                                            <th>Price</th>
-                                                            <th>Payments</th>
-                                                            <th>Action</th>
-                                                            </thead>
-                                                            <tbody>
-                                                                @{
-                                                                    foreach (var tmp in listUserBooking)
-                                                                    {
-                                                                        <tr>
-                                                                            <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
-                                                                            <td>@tmp.user.account_name</td>
-                                                                            <td>@tmp.property.p_address</td>
-                                                                            <td>@tmp.amount_paid$</td>
-                                                                            @{
-                                                                                if (tmp.transaction_id == null)
-                                                                                {
-                                                                                    <td>Not Paid</td>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <td>Paid</td>
-                                                                                    <td>
-                                                                                        <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
-                                                                                    </td>
-                                                                                }
-                                                                            }
-
-                                                                        </tr>
-                                                                    }
-                                                                }
-
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="list_current">
-                                    <div class="gird wide">
-                                        <div class="row no-gutter">
-                                            <div class="col l-o-2 l-8 m-8 c-12">
-                                                <div class="box list_room_container">
-                                                    <div class="tittle">
-                                                        <p>List Of Current Tenants</p>
-                                                    </div>
-                                                    <div class="current_box">
-                                                        @{
-                                                            position = 0;
-                                                            foreach (var tmp in listUserCurrent)
-                                                            {
-                                                                position++;
-                                                                if (position == 6) { break; }
-                                                                urlavatar = "";
-                                                                if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
-                                                                {
-                                                                    urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
-                                                                }
-                                                                else
-                                                                {
-                                                                    urlavatar = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
-                                                                }
-                                                                <div class="current_item">
-                                                                    <div class="user_item">
-                                                                        <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
-
-                                                                        </div>
-                                                                        <div class="name_user">
-                                                                            <p>@tmp.user.account_name</p>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="name_hotel">
-                                                                        <p>@tmp.property.p_address</p>
-                                                                    </div>
-                                                                    <div class="date_check">
-                                                                        <span class="dot_check_in"><i class="fa-solid fa-circle"></i>@tmp.check_in_date.Value.ToString("dd/MM/yyyy")</span>
-                                                                        <span class="dot_check_out"><i class="fa-solid fa-circle"></i>@tmp.check_out_date.Value.ToString("dd/MM/yyyy")</span>
-                                                                    </div>
-                                                                    <div class="price">
-                                                                        <span>@tmp.transaction.amount$</span>
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        }
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-    }
     <script src="~/ExtraFiles/JS/admin.js?v=3"></script>
 
     <script src="~/ExtraFiles/JS/admin.js?v=5"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="~/ExtraFiles/JS/revenue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </body>
 </html>
@@ -2296,13 +1664,13 @@
 </script>
 <script>
 
-    closeIcons.forEach(function (icon) {
-        icon.addEventListener('click', function () {
-            var modalId = icon.dataset.modalId;
-            var modal = document.getElementById('myHotel-' + modalId);
-            modal.classList.add('hide');
-        });
-    });
+    //closeIcons.forEach(function (icon) {
+    //    icon.addEventListener('click', function () {
+    //        var modalId = icon.dataset.modalId;
+    //        var modal = document.getElementById('myHotel-' + modalId);
+    //        modal.classList.add('hide');
+    //    });
+    //});
 
 </script>
 <script>
@@ -2342,24 +1710,23 @@
 
     });
 
-    document.addEventListener('DOMContentLoaded', function () {
-        var DTHotelbuttons = document.querySelectorAll('.details_hotel');
-        DTHotelbuttons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                var hotelId = button.id;
-                var parts = hotelId.split('_');
-                var idPart = parts[1];
-                /*console.log(idPart);*/
-                var modalId = 'myHotel-' + idPart;
-                var modal = document.getElementById(modalId);
+    //document.addEventListener('DOMContentLoaded', function () {
+    //    var DTHotelbuttons = document.querySelectorAll('.details_hotel');
+    //    DTHotelbuttons.forEach(function (button) {
+    //        button.addEventListener('click', function () {
+    //            var hotelId = button.id;
+    //            var parts = hotelId.split('_');
+    //            var idPart = parts[1];
+    //            /*console.log(idPart);*/
+    //            var modalId = 'myHotel-' + idPart;
+    //            var modal = document.getElementById(modalId);
 
-                if (modal) {
-                    modal.classList.remove('hide');
-                }
-            });
-        });
-
-    });
+    //            if (modal) {
+    //                modal.classList.remove('hide');
+    //            }
+    //        });
+    //    });
+    //});
 
     document.addEventListener('DOMContentLoaded', function () {
         var buttons = document.querySelectorAll('.details_user');
@@ -2389,11 +1756,19 @@
                 data: { id: id },
                 success: function (response) {
                     if (response.phanhoi == "true") {
-                        /*console.log(response);*/
+                        console.log(response);
                         row.remove();
                         var userCountElem = $('#userCount');
                         var userCount = parseInt(userCountElem.text()) - 1;
                         userCountElem.html(userCount + ' <i class="fa-solid fa-user"></i>');
+
+                        var hotelCountElem = $('#hotelCount');
+                        var hotelCount = parseInt(hotelCountElem.text()) - response.delprop.length;
+                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window"></i>');
+
+                        response.delprop.forEach(function (hotelId) {
+                            $('#hotelRow-' + hotelId).remove();
+                        });
                     }
                     else {
                         console.log(response.phanhoi);
@@ -2410,7 +1785,7 @@
         var row = $('#hostRow-' + id);
         if (confirm('Are you sure delete this user?')) {
             $.ajax({
-                url: '/admin/homeadmin/DeleteUser',
+                url: '/admin/homeadmin/DeleteHost',
                 type: 'POST',
                 dataType: 'json',
                 data: { id: id },
@@ -2450,19 +1825,22 @@
                 dataType: 'json',
                 data: { id: id },
                 success: function (response) {
-                    if (response.phanhoi == "true") {
-                        /*console.log(response);*/
+                    if (response == "true") {
+                        console.log(response);
                         row.remove();
                         var hotelCountElem = $('#hotelCount');
                         var hotelCount = parseInt(hotelCountElem.text()) - 1;
-                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window">');
+                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window"></i>');
                     }
                     else {
-                        console.log(response.phanhoi);
+                        console.log(response);
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
+                    console.log('Status:', status);
+                    console.log('Error:', error);
+                    console.log('Response:', xhr.responseText);
                 }
             });
         }
@@ -2494,5 +1872,57 @@
             DeleteHotel(itemId);
         });
     });
+
+    //function search(key, kind) {
+    //    var data = {
+    //        key: key,
+    //        kind : kind
+    //    };
+    //    $.ajax({
+    //        url: '/admin/homeadmin/search',
+    //        type: 'GET',
+    //        dataType: 'json',
+    //        data: data,
+    //        success: function (response) {
+    //            if (response.phanhoi == "true") {
+    //                console.log(response.phanhoi);
+    //                response.lst.forEach(function (user) {
+    //                    var avatar = 
+    //                    var newRowHtml = `
+    //                        <tr id="userRow-new">
+    //                            <td>
+    //                                <div class="avatar">
+    //                                    <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="">
+    //                                </div>
+    //                            </td>
+    //                            <td></td>
+    //                            <td></td>
+    //                            <td></td>
+    //                            <td></td>
+    //                            <td>
+    //                                <button class="details_user">Detail</button>
+    //                                <button class="delete_btns">Delete</button>
+    //                            </td>
+    //                        </tr>
+    //                    `;
+    //                    $('tbody').append(newRowHtml);
+    //                });
+    //            }
+    //            else {
+    //                console.log(response.phanhoi);
+    //            }
+    //        },
+    //        error: function (xhr, status, error) {
+    //            console.error(error);
+    //        }
+    //    });
+    //}
+
+    //const searchUserBtn = document.getElementById('btn_search_user');
+    //searchUserBtn.addEventListener('click', () => {
+    //    var key = document.getElementById('search_user').value;
+    //    var kind = 1;
+    //    search(key, kind);
+    //});
 
 </script>

@@ -23,6 +23,8 @@ using System.Security.Policy;
 using System.Net;
 using System.Security.Cryptography;
 using System.Web.UI.WebControls;
+using static PPl3.Areas.Host.Controllers.HomeHostController;
+using Microsoft.Ajax.Utilities;
 namespace PPl3.Areas.Admin.Controllers
 {
     public class HomeAdminController : Controller
@@ -48,13 +50,13 @@ namespace PPl3.Areas.Admin.Controllers
                     {
                         if (item.user_type == 3)
                         {
-                            if (item.day_become_host.Value.Month == i) count1++;
+                            if (item.day_become_host != null && item.day_become_host.Value.Month == i) count1++;
                         }
 
                     }
                     foreach (var item in db.properties)
                     {
-                        if (item.Date_Post.Value.Month == i && item.p_status == 1) count2++;
+                        if (item.Date_Post != null && item.Date_Post.Value.Month == i && item.p_status == 1) count2++;
                     }
                     result1 = result1 + count1.ToString() + ",";
                     result2 = result2 + count2.ToString() + ",";
@@ -70,6 +72,127 @@ namespace PPl3.Areas.Admin.Controllers
             }
             
         }
+
+        public ActionResult userPersonalProfile(int user)
+        {        
+            PPL3Entities db = new PPL3Entities();
+            var p_user = db.users.FirstOrDefault(item => item.id == user);
+            
+            ViewBag.user = p_user;
+
+            return View();
+        }
+
+        public ActionResult revenue(int user)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = db.users.FirstOrDefault(item => item.id == user);
+            if (p_user != null)
+            {
+                if (p_user.user_type == 3)
+                {
+                    //PPL3Entities db = new PPL3Entities();
+                    List<property> properties = db.properties.Where(item => item.userId == p_user.id).ToList();
+                    ViewBag.user = p_user;
+                    return View(properties);
+                }
+                else
+                {
+                    return RedirectToAction("index");
+                }
+
+            }
+            else return RedirectToAction("index");
+        }
+        public class RevenueListData
+        {
+            public int year { get; set; }
+            public double money { get; set; }
+            public int renters { get; set; }
+
+        }
+        public class RevenueListData1
+        {
+            public int month { get; set; }
+            public double money { get; set; }
+            public int renters { get; set; }
+
+        }
+
+        [HttpGet]
+        public JsonResult GetListDataForRevenue(int user)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = db.users.FirstOrDefault(item => item.id == user);
+            List<RevenueListData> data = new List<RevenueListData>();
+            List<RevenueListData1> data1 = new List<RevenueListData1>();
+            DateTime currentDate = DateTime.Now;
+            string currentMonth = currentDate.ToString("MM");
+            string currentYear = currentDate.ToString("yyyy");
+            double monthRevenue = 0;
+            double totalRevenue = 0;
+            int monthRenter = 0;
+            int totalRenter = 0;
+            for (int i = 0; i < 12; i++)
+            {
+                RevenueListData1 revenueListData1 = new RevenueListData1()
+                {
+                    month = i + 1,
+                    money = 0,
+                    renters = 0,
+                };
+                data1.Add(revenueListData1);
+            }
+            for (int i = int.Parse(currentYear) - 6; i <= int.Parse(currentYear); i++)
+            {
+                RevenueListData revenueListData = new RevenueListData()
+                {
+                    year = i,
+                    money = 0,
+                    renters = 0,
+                };
+                data.Add(revenueListData);
+            }
+            int mocYear = int.Parse(currentYear) - 6;
+            foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
+            {
+
+                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+
+                if (int.Parse(item.transfer_on.Value.ToString("yyyy")) >= mocYear)
+                {
+                    data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].money = (double)item.amount;
+                    data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].renters++;
+                }
+
+                if (int.Parse(item.transfer_on.Value.ToString("MM")) == int.Parse(currentMonth) && int.Parse(item.transfer_on.Value.ToString("yyyy")) == int.Parse(currentYear))
+                {
+                    monthRenter++;
+                    monthRevenue += (double)item.amount;
+                }
+                totalRenter++;
+                totalRevenue += (double)item.amount;
+            }
+            var result = new
+            {
+                Data = data,
+                Data1 = data1,
+                MonthRenter = monthRenter,
+                MonthRevenue = monthRevenue,
+                TotalRenter = totalRenter,
+                TotalRevenue = totalRevenue,
+            };
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult invoice(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            transaction transaction = db.transactions.FirstOrDefault(item => item.id == id);
+            return View(transaction);
+        }
+
         [HttpPost]
         [AdminAuhorize(idChucNang = 17)]
         public JsonResult DeleteUser(int id)
@@ -83,18 +206,51 @@ namespace PPl3.Areas.Admin.Controllers
                 foreach(var num in db.properties.Where(item => item.userId == delUser.id).ToList())
                 {
                     delprop.Add(num.id);
+                    var p = db.properties.Where(it => it.id == num.id).FirstOrDefault();
+                    p.p_status = 0;
+                    db.SaveChanges();
                 }
             }
             try
             {
-                db.Messages.RemoveRange(db.Messages.Where(item => item.SenderID == id || item.ReceiverID == id).ToList());
-                db.host_reviews.RemoveRange(db.host_reviews.Where(item => item.hostid == id || item.review_by_user == id).ToList());
-                db.Friendships.RemoveRange(db.Friendships.Where(item => item.UserId2 == id || item.UserId1 == id).ToList());
-                db.transactions.RemoveRange(db.transactions.Where(item => item.receiver_id == id || item.payer_id == id).ToList());
-                db.users.Remove(delUser);
+                delUser.user_status = 0;
                 db.SaveChanges();
             }
             catch(Exception e)
+            {
+                phanHoi = e.ToString();
+            }
+            var data = new
+            {
+                phanhoi = phanHoi,
+                delprop = delprop,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeleteHost(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            string phanHoi = "true";
+            List<int> delprop = new List<int>();
+            var delUser = db.users.Where(item => item.id == id).FirstOrDefault();
+            if (delUser.user_type == 3)
+            {
+                foreach (var num in db.properties.Where(item => item.userId == delUser.id).ToList())
+                {
+                    delprop.Add(num.id);
+                    var p = db.properties.Where(it => it.id == num.id).FirstOrDefault();
+                    p.p_status = 0;
+                    db.SaveChanges();
+                }
+            }
+            try
+            {
+                delUser.user_type = 2;
+                db.SaveChanges();
+            }
+            catch (Exception e)
             {
                 phanHoi = e.ToString();
             }
@@ -114,7 +270,8 @@ namespace PPl3.Areas.Admin.Controllers
             string phanHoi = "true";
             try
             {
-                db.properties.Remove(db.properties.Where(item => item.id == id).FirstOrDefault());
+                var p = db.properties.Where(item => item.id == id).FirstOrDefault();
+                p.p_status = 0;
                 db.SaveChanges();
             }
             catch(Exception e) 
@@ -123,6 +280,34 @@ namespace PPl3.Areas.Admin.Controllers
             }
             return Json(phanHoi, JsonRequestBehavior.AllowGet);
         }
+
+        //[HttpGet]
+        //public JsonResult search(string key, int kind)
+        //{
+        //    string phanhoi = "true";
+        //    List<user> lst = new List<user>();
+        //    PPL3Entities db = new PPL3Entities();
+        //    if (kind == 1)
+        //    {
+        //        lst = db.users
+        //         .Where(item => item.user_status == 1 && item.user_type != 1 && item.account_name.Contains(key))
+        //         .ToList();
+        //    }
+        //    else if (kind == 2)
+        //    {
+        //        lst = db.users
+        //         .Where(item => item.user_status == 1 && item.user_type == 3 && item.user_personalInfor.FirstOrDefault().legal_name.Contains(key))
+        //         .ToList();
+        //    }
+
+        //    var data = new
+        //    {
+        //        phanhoi = phanhoi,
+        //        lst = lst,
+        //    };
+        //    return Json(data, JsonRequestBehavior.AllowGet);
+        //}
+
         [AdminAuhorize(idChucNang = 15)]
         public ActionResult confirm_host(int user_id)
         {
@@ -187,7 +372,8 @@ namespace PPl3.Areas.Admin.Controllers
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
             TempData["CheckComfirm"] = 1;
-            string emailHtml = RenderRazorViewToString("AccpectHotel", find_hotel);
+            property hotel = db.properties.FirstOrDefault(item => item.id == hotel_id);
+            string emailHtml = RenderRazorViewToString("AccpectHotel", hotel);
             SendEmail("hosithao1622004@gmail.com", "Your [Room/Hotel] Approval Successful!", emailHtml);
             return RedirectToAction("index");
         }

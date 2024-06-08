@@ -1,0 +1,256 @@
+﻿@model PPl3.Models.transaction
+@{
+    Layout = null;
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
+    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reviews and comments</title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/evaluate.css" rel="stylesheet" />>
+    <link href="~/ExtraFiles/assets/css/headerGuest.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="/user/homeuser/index" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            @{
+                                int countNoti = 0;
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
+                                {
+                                    countNoti++;
+                                }
+                            }
+                            @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                    @if (countNoti != 0)
+                                    {
+                                        <span class="notification_badge">@countNoti</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                                    @*<i class="fa-solid fa-user"></i>*@
+                                    @if (countNoti != 0)
+                                    {
+                                        <span class="notification_badge">@countNoti</span>
+                                    }
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
+                                </button>
+                            }
+                        </div>
+
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><button>Trips</button></li>
+                                <li class=""><button>Wishlist</button></li>
+                                <li><a href="#">Manage listings</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            @if (db.property_reviews.Count(item => item.transaction_id == Model.id) > 0)
+            {
+                <h2>You have commented for the trip has transaction code : @Model.id  . Please return to the <a href="/user/homeuser/index">home page</a></h2>
+            }
+            else
+            {
+                <div class="grid wide">
+                    <div class="row no-gutter">
+                        <div class="col l-6 m-6 c-12">
+                            <ul class="list_img">
+                                <div class="container_img">
+                                <li class="img_1">
+                                    <input type="file" class="file_1" hidden>
+                                    <button class="add_btn btn_1"><i class="fa-solid fa-plus"></i></button>
+                                    <button class="remove_btn remove_1"><i class="fa-solid fa-close"></i></button>
+                                </li>
+                                <li class="img_2">
+                                    <input type="file" class="file_2" hidden>
+                                    <button class="add_btn btn_2"><i class="fa-solid fa-plus"></i></button>
+                                    <button class="remove_btn remove_2"><i class="fa-solid fa-close"></i></button>
+                                </li>
+                        </div>
+                        <div class="container_img">
+                            <li class="img_3">
+                                <input type="file" class="file_3" hidden>
+                                <button class="add_btn btn_3"><i class="fa-solid fa-plus"></i></button>
+                                <button class="remove_btn remove_3"><i class="fa-solid fa-close"></i></button>
+                            </li>
+                            <li class="img_4">
+                                <input type="file" class="file_4" hidden>
+                                <button class="add_btn btn_4"><i class="fa-solid fa-plus"></i></button>
+                                <button class="remove_btn remove_4"><i class="fa-solid fa-close"></i></button>
+                            </li>
+                        </div>
+                        </ul>
+                    </div>
+                    <div class="col l-6 m-6 c-12">
+                        <div class="container_comment">
+                            <div class="tittle">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <span>@Model.property.p_name</span>
+                            </div>
+                            <div class="list_star">
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                            <div class="text">
+                                <textarea name="comments" rows="4" cols="50" id="comments"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col l-12 m-12 c-12">
+                        <div class="list_btn">
+                            <button class="Summit_btn">Comment</button>
+                            <button class="Skip_btn">Skip</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+                
+    </div>
+    </div>
+    <script src="~/ExtraFiles/JS/menuGuest.js"></script>
+    <script src="~/ExtraFiles/JS/evaluate.js?v=2"></script>
+</body>
+</html>
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<script>
+    var data = {};
+    function getData(callback) {
+        data["transation_id"] = @Html.Raw(Json.Encode(Model.id));
+ 
+        var comment = $('#comments').val();
+        data["comment"] = comment;
+        var list_star = $('.list_star .select');
+        data["number_star"] = list_star.length;
+        var tasksCompleted = 0;
+        var totalTasks = 4;
+        function checkTaskCompletion() {
+
+            tasksCompleted++;
+
+            if (tasksCompleted === totalTasks) {
+
+                callback();
+
+            }
+
+        }
+        function readFile(file, index) {
+
+            if (file) {
+
+                var reader = new FileReader();
+
+                reader.readAsDataURL(file);
+
+                reader.onload = function (e) {
+
+                    var fileData = e.target.result;
+
+                    data["img_" + index] = fileData;
+
+                    checkTaskCompletion(); // Kiểm tra khi công việc hoàn tất
+
+                };
+
+            } else {
+
+                checkTaskCompletion(); // Nếu không có file, cũng cần kiểm tra
+
+            }
+
+        }
+
+        readFile(document.querySelector(".file_1").files[0], 1);
+
+        readFile(document.querySelector(".file_2").files[0], 2);
+
+        readFile(document.querySelector(".file_3").files[0], 3);
+
+        readFile(document.querySelector(".file_4").files[0], 4);
+        console.log(data);
+    }
+    // lấy giá trị của comment
+    function sendData() {
+        $.ajax({
+            url: "/user/homeuser/SumitComment",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json",
+            success: function (response) {
+                console.log(response.success);
+                window.location.href = response.redirectUrl;
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+    function saveAndSend() {
+        getData(function () {
+            sendData();
+        })
+    }
+
+    summit_btn.addEventListener('click', () => {
+        saveAndSend();
+    })
+
+    skip_btn.addEventListener('click', () => {
+        window.location.href = "/user/homeuser/index";
+    })
+</script>

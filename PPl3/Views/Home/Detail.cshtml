@@ -17,6 +17,7 @@
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
     var discountsJson = serializer.Serialize(discount_values);
+    List<PPl3.Models.property_amenities> list_amenity = property.property_amenities.Where(item => item.property_id == property.id && item.amenity.category_id != 44 && item.amenity.category_id != 3).ToList();
 }
 
 <!DOCTYPE html>
@@ -151,7 +152,7 @@
                                 double sum = 0;
                                 foreach (var item in property.property_reviews)
                                 {
-                                    sum = sum + double.Parse(item.overall_rating);
+                                    sum = sum + (double)item.overall_rating;
                                 }
                                 sum = sum / property.property_reviews.ToArray().Length;
                             }
@@ -234,24 +235,33 @@
                             <div class="gird wide">
                                 <div class="row no-gutter room_container">
                                     <div class="col l-12 m-12 c-12 room_tittle">
-                                        <h2>Where you'll sleep</h2>
+                                        <h2>
+                                            User's photo of the hotel
+                                          
+                                        </h2>
                                     </div>
                                     @{
                                         count = 0;
+
+                                        PPl3.Models.property_amenities[] amenities = db.property_amenities.Where(item => item.amenity.category_id == 44 && property.id == item.property_id).ToArray();
+                                        Random random = new Random();
+                                        List<int> selected = new List<int>();
                                     }
-                                    @foreach (var item in property.property_images)
+                                    @while (count <= 1 && count < amenities.Length)
                                     {
-                                        if (count <= 1)
+                                        i = random.Next(amenities.Length);
+                                        if (!selected.Contains(i))
                                         {
                                             <div class="col l-4 m-8 c-12">
-                                                <div class="img_bedroom" style="background : url(@item.pi_image) top center /cover no-repeat">
+                                                <div class="img_bedroom" style="background : url(@amenities[i].amenity.icon_image) top center /cover no-repeat">
                                                 </div>
                                                 <span>Overview</span>
 
                                             </div>
+                                            selected.Add(i);
+                                            count++;
                                         }
 
-                                        count++;
                                     }
                                 </div>
                             </div>
@@ -284,7 +294,7 @@
                                         @{
                                             count = 1;
                                         }
-                                        @foreach (var item in property.property_amenities.ToList())
+                                        @foreach (var item in list_amenity)
                                         {
                                             if (count > 3 && count <= 6)
                                             {
@@ -297,7 +307,7 @@
                                         }
                                     </div>
                                     <div class="col l-12 m-12 c-12 show_all">
-                                        <button>Show all @property.property_amenities.ToArray().Length amenities</button>
+                                        <button>Show all @list_amenity.Count() amenities</button>
                                     </div>
                                 </div>
                             </div>
@@ -409,7 +419,7 @@
                                     {
                                         <p>@item.discounts_value% @item.discount.descride</p>
                                     }
-                                    <p>0.01% booking fee</p>
+                                    <p>30% booking fee</p>
                                 </div>
                                 <div class="pay_footer">
                                     <button onclick="window.location.href = '/user/homeuser/detail?id=@property.id'">Login To Booking Hotel</button>
@@ -476,19 +486,41 @@
                                             <div class="time_comment">
                                                 <div class="star_comment">
                                                     @{
-                                                        for (int pos = 1; pos <= (int)double.Parse(item.overall_rating); ++pos)
+                                                        for (int pos = 1; pos <= (int)(item.overall_rating); ++pos)
                                                         {
 
                                                             <i class="fa-regular fa-solid fa-star"></i>
                                                         }
-                                                        for (int pos = (int)double.Parse(item.overall_rating) + 1; pos <= 5; ++pos)
+                                                        for (int pos = (int)(item.overall_rating) + 1; pos <= 5; ++pos)
                                                         {
                                                             <i class="far fa-star gray-star"></i>
                                                         }
                                                     }
 
                                                 </div>
-                                                <span>2 weeks ago</span>
+                                                @{
+                                                    count = 0;
+
+                                                    if (DateTime.Now.ToString("yyyy") != item.created.Value.ToString("yyyy"))
+                                                    {
+
+                                                        count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(item.created.Value.ToString("yyyy"));
+                                                        <span>@count Years ago</span>
+
+                                                    }
+                                                    else if (DateTime.Now.ToString("MM") != item.created.Value.ToString("MM"))
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(item.created.Value.ToString("MM"));
+                                                        <span>@count Months ago</span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(item.created.Value.ToString("dd"));
+                                                        <span>@count Days ago</span>
+
+                                                    }
+                                                }
                                                 <p>Stay Dates : @item.transaction.bookings.FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.bookings.FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                             </div>
 
@@ -532,14 +564,14 @@
                                                     </div>
                                                     <div class="infor_basics_item">
                                                         @{
-                                                            sum = 0;
+                                                            double sum1 = 0;
                                                             foreach (var item in property.user.host_reviews.ToList())
                                                             {
-                                                                sum = sum + double.Parse(item.rating);
+                                                                sum1 = sum1 + double.Parse(item.rating);
                                                             }
-                                                            sum = sum / property.user.host_reviews.ToArray().Length;
+                                                            sum1 = sum1 / property.user.host_reviews.ToArray().Length;
                                                         }
-                                                        <span>@sum<i class="fa-solid fa-star"></i></span>
+                                                        <span>@sum1<i class="fa-solid fa-star"></i></span>
                                                         <p>Rating</p>
                                                     </div>
                                                     <div class="infor_basic">
@@ -753,21 +785,15 @@
                             <h1>What this place offers</h1>
                         </div>
                         <div class="offer_box">
-                            <div class="scenic_view">
-                                <h2>Scenic views</h2>
-                                <ul>
-                                    <li>Mountain view</li>
-                                </ul>
-                            </div>
                             @foreach (var item in db.categories.ToList())
                             {
-                                if (property.property_amenities.Any(row => (row.amenity.category_id == item.id) && (item.id != 1 && item.id != 3)))
+                                if (list_amenity.Any(row => (row.amenity.category_id == item.id)) && item.id != 3 && item.id != 44)
                                 {
                                     <div class="BathRoom_offer @item.id">
                                         <h2>@item.category_name</h2>
                                         <ul class="display_anitimy">
 
-                                            @foreach (var antime in property.property_amenities.Where(row => (row.amenity.category_id == item.id)).ToList())
+                                            @foreach (var antime in list_amenity.Where(row => (row.amenity.category_id == item.id)).ToList())
                                             {
 
                                                 <li>
@@ -792,7 +818,7 @@
                 <div class="row no-gutter">
                     <div class="col l-o-2 l-8 m-o-1 m-10 c-o-1 c-10 comment_detail_container">
                         <div class="comment_detail_tittle">
-                            <h2><i class="fa-regular fa-solid fa-star"></i> 4.84 · 55 reviews</h2>
+                            <h2><i class="fa-regular fa-solid fa-star"></i> @sum · @db.property_reviews.ToArray().Length reviews</h2>
                         </div>
                         <div class="comment_box">
                             @foreach (var item in property.property_reviews.ToList())
@@ -817,19 +843,41 @@
                                         <div class="time_comment">
                                             <div class="star_comment">
                                                 @{
-                                                    for (int pos = 1; pos <= (int)double.Parse(item.overall_rating); ++pos)
+                                                    for (int pos = 1; pos <= (int)(item.overall_rating); ++pos)
                                                     {
 
                                                         <i class="fa-regular fa-solid fa-star"></i>
                                                     }
-                                                    for (int pos = (int)double.Parse(item.overall_rating) + 1; pos <= 5; ++pos)
+                                                    for (int pos = (int)(item.overall_rating) + 1; pos <= 5; ++pos)
                                                     {
                                                         <i class="far fa-star gray-star"></i>
                                                     }
                                                 }
 
                                             </div>
-                                            <span>2 weeks ago</span>
+                                            @{
+                                                count = 0;
+
+                                                if (DateTime.Now.ToString("yyyy") != item.created.Value.ToString("yyyy"))
+                                                {
+
+                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(item.created.Value.ToString("yyyy"));
+                                                    <span>@count Years ago</span>
+
+                                                }
+                                                else if (DateTime.Now.ToString("MM") != item.created.Value.ToString("MM"))
+                                                {
+                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(item.created.Value.ToString("MM"));
+                                                    <span>@count Months ago</span>
+
+                                                }
+                                                else
+                                                {
+                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(item.created.Value.ToString("dd"));
+                                                    <span>@count Days ago</span>
+
+                                                }
+                                            }
                                             <p>Stay Dates : @item.transaction.bookings.FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.bookings.FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                         </div>
 

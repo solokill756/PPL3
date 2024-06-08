@@ -415,6 +415,7 @@
     <Content Include="ExtraFiles\assets\css\book_room.css" />
     <Content Include="ExtraFiles\assets\css\comfirmForm.css" />
     <Content Include="ExtraFiles\assets\css\editProfile.css" />
+    <Content Include="ExtraFiles\assets\css\evaluate.css" />
     <Content Include="ExtraFiles\assets\css\gird.css" />
     <Content Include="ExtraFiles\assets\css\headerGuest.css" />
     <Content Include="ExtraFiles\assets\css\hotel.css" />
@@ -490,12 +491,14 @@
     <Content Include="ExtraFiles\assets\video_3d\KeNKUpa01dRaT5g00SSBV95FqXYkqf01DJdzn01F1aT00vCI.mp4" />
     <Content Include="ExtraFiles\assets\video_3d\zFaydEaihX6LP01x8TSCl76WHblb01Z01RrFELxyCXoNek.mp4" />
     <Content Include="ExtraFiles\editProfile.html" />
+    <Content Include="ExtraFiles\evaluate.html" />
     <Content Include="ExtraFiles\hotel.html" />
     <Content Include="ExtraFiles\hotel1.html" />
     <Content Include="ExtraFiles\index.html" />
     <Content Include="ExtraFiles\JS\admin.js" />
     <Content Include="ExtraFiles\JS\calendar.js" />
     <Content Include="ExtraFiles\JS\editProfile.js" />
+    <Content Include="ExtraFiles\JS\evaluate.js" />
     <Content Include="ExtraFiles\JS\first_header.js" />
     <Content Include="ExtraFiles\JS\hotel.js" />
     <Content Include="ExtraFiles\JS\imgSlide.js" />
@@ -568,6 +571,11 @@
     <Content Include="Areas\User\Views\HomeUser\PaymentFail.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\notification.cshtml" />
     <Content Include="Areas\User\Views\HomeUser\invoice.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\comfirmEmailForm.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\sendPassword.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\AccpectHost.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\AccpectHotel.cshtml" />
+    <Content Include="Areas\User\Views\HomeUser\Comment.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -575,10 +583,9 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\User\Views\HomeUser\comfirmEmailForm.cshtml" />
-    <Content Include="Areas\User\Views\HomeUser\sendPassword.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\AccpectHost.cshtml" />
-    <Content Include="Areas\Admin\Views\HomeAdmin\AccpectHotel.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\revenue.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\invoice.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\userPersonalProfile.cshtml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />

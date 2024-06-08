@@ -5,7 +5,7 @@
 
 @{
     PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
-    PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
+    PPl3.Models.user p_user = ViewBag.user;
     int position = 0;
     double count = 0;
 }
@@ -38,7 +38,7 @@
     }
 }
 
-@{ 
+@{
     List<PPl3.Models.user_notification> uns = db.user_notification.Where(item => item.userid == p_user.id).ToList();
 }
 
@@ -66,131 +66,8 @@
                 <div class="row no-gutter nav">
                     <div class="col l-12 m-12 c-12">
                         <div class="nav_container">
-                            <div class="menu_btn" onclick="window.location.href = '/user/homeuser/index'">
+                            <div class="menu_btn" onclick="window.location.href = '/admin/homeadmin/index'">
                                 <button><i class="fa-brands fa-think-peaks" style="color: rgba(235, 22, 22, .7); font-size: 35px;"></i></button>
-                            </div>
-                            <div class="btn_list">
-                                <div class="btn_item">
-                                    <button class="btn_mess">
-                                        @{
-                                            var mess = db.Messages.Where(tmp => tmp.ReceiverID == p_user.id).ToList();
-                                            if (mess.Count == 0)
-                                            {
-                                                <i class="fa-solid fa-envelope"></i>
-                                                <div class="number_alert hide">
-                                                    <p>@mess.Count</p>
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <i class="fa-solid fa-envelope"></i>
-                                                <div class="number_alert">
-                                                    <p>@mess.Count</p>
-                                                </div>
-                                            }
-                                        }
-                                    </button>
-                                    <span>message</span>
-                                    <div class="modal mess">
-                                        <ul class="modal_box">
-                                            @{
-                                                position = 0;
-                                                string tmpname = "";
-                                                foreach (var item in mess)
-                                                {
-                                                    position++;
-                                                    if (position == 5) { break; }
-                                                    tmpname = db.users.FirstOrDefault(find => find.id == item.SenderID).account_name;
-                                                    <li>
-                                                        <div class="mess_item">
-                                                            <h4>@tmpname</h4>
-                                                            <p>@item.MessageContent</p>
-                                                        </div>
-                                                    </li>
-                                                }
-                                            }
-                                            @*<li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>Hello Alnor :)))</p>
-            </div>
-        </li>
-        <li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>Very Good! Thank You </p>
-            </div>
-        </li>
-        <li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>The service was amazing !!!</p>
-            </div>
-        </li>
-        <li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>Hello Alnor, Can you advise me further?</p>
-            </div>
-        </li>*@
-                                            <a href="/user/homeuser/chatUser">Show All</a>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="btn_item">
-                                    <button class="btn_notifi">
-                                        @{
-                                            int countNoti = 0;
-                                            foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
-                                            {
-                                                countNoti++;
-                                            }
-                                        }
-                                        @if (countNoti != 0)
-                                        {
-                                            <i class="fa-solid fa-bell"></i>
-                                            <div class="number_alert">
-                                                <p>@countNoti</p>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <i class="fa-solid fa-bell"></i>
-                                            <div class="number_alert hide">
-                                                <p>@countNoti</p>
-                                            </div>
-                                        }
-                                    </button>
-                                    <span>Notification</span>
-                                    <div class="modal notifi">
-                                        <ul class="modal_box">
-                                            @{ 
-                                                position = 0;
-                                                foreach(var item in uns)
-                                                {
-                                                    position++;
-                                                    if(position == 5) { break; }
-                                                    <li>
-                                                        <div class="mess_item">
-                                                            @*<h4>Payment</h4>*@
-                                                            <p>@item.content</p>
-                                                        </div>
-                                                    </li>
-                                                }
-                                            }
-                                            @*<li>
-                                                <div class="mess_item">
-                                                    <h4>Payment</h4>
-                                                    <p>Paid room fee of $300</p>
-                                                </div>
-                                            </li>*@
-                                            <a href="/user/homeuser/notification">Show All</a>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="avatar">
-
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -315,11 +192,11 @@
                                                                 {
                                                                     <td>Paid</td>
                                                                     <td>
-                                                                        <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                        <button><a href="/admin/homeadmin/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
                                                                     </td>
                                                                 }
                                                             }
-                                                            
+
                                                         </tr>
                                                     }
                                                 }
@@ -408,23 +285,23 @@
                                             if (position == 1)
                                             {
                                                 <div class="box_item focus">
-                                                     <i class="fa-solid fa-house"></i>
-                                                     <p>@item.p_address</p>
-                                                     @{
-                                                         if (item.p_status != 1)
-                                                         {
-                                                             <span style="background-color:red !important">Unfinished</span>
-                                                         }
-                                                         else if (item.availability_type == 0)
-                                                         {
-                                                             <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
-                                                         }
-                                                         else if (item.p_status == 1)
-                                                         {
-                                                             <span style="background-color: green !important">Complete</span>
+                                                    <i class="fa-solid fa-house"></i>
+                                                    <p>@item.p_address</p>
+                                                    @{
+                                                        if (item.p_status != 1)
+                                                        {
+                                                            <span style="background-color:red !important">Unfinished</span>
+                                                        }
+                                                        else if (item.availability_type == 0)
+                                                        {
+                                                            <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
+                                                        }
+                                                        else if (item.p_status == 1)
+                                                        {
+                                                            <span style="background-color: green !important">Complete</span>
 
-                                                         }
-                                                     }
+                                                        }
+                                                    }
                                                 </div>
                                             }
                                             else
@@ -475,11 +352,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="container">
-                            <div class="col l-12 m-12 c-12">
-                                <a class="box_add" href="/host/homehost/addHotel"><i class="fa-solid fa-plus"></i>Add Hotel</a>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div class="col l-6 m-6 c-12">
                         <div class="container">
@@ -555,7 +428,7 @@
                                             foreach (var tmp in listUserCurrent)
                                             {
                                                 position++;
-                                                if(position == 6) { break; }
+                                                if (position == 6) { break; }
                                                 urlavatar = "";
                                                 if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
                                                 {
@@ -578,54 +451,6 @@
                                                 </li>
                                             }
                                         }
-                                        @*<li>
-                                                <div class="avatar_user">
-
-                                                </div>
-                                                <div class="comment_details">
-                                                    <div class="item">
-                                                        <h4>Davis Ngo</h4>
-                                                        <span>In Progress</span>
-                                                    </div>
-                                                    <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="avatar_user">
-
-                                                </div>
-                                                <div class="comment_details">
-                                                    <div class="item">
-                                                        <h4>Davis Ngo</h4>
-                                                        <span>In Progress</span>
-                                                    </div>
-                                                    <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="avatar_user">
-
-                                                </div>
-                                                <div class="comment_details">
-                                                    <div class="item">
-                                                        <h4>Davis Ngo</h4>
-                                                        <span>In Progress</span>
-                                                    </div>
-                                                    <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="avatar_user">
-
-                                                </div>
-                                                <div class="comment_details">
-                                                    <div class="item">
-                                                        <h4>Davis Ngo</h4>
-                                                        <span>In Progress</span>
-                                                    </div>
-                                                    <p>Rent from May 1, 2024 to May 5, 2024</p>
-                                                </div>
-                                            </li>*@
                                     </ul>
                                 </div>
                             </div>
@@ -756,15 +581,14 @@
                                                         {
                                                             <td>Paid</td>
                                                             <td>
-                                                                <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                <button><a href="/admin/homeadmin/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
                                                             </td>
                                                         }
                                                     }
-                                                    
+
                                                 </tr>
                                             }
                                         }
-
                                     </tbody>
                                 </table>
                             </div>
@@ -826,16 +650,112 @@
             </div>
         </div>
     </div>
-    <script src="~/ExtraFiles/JS/revenue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        //Xử lý My Hotel
+
+        const statuses = document.querySelectorAll('.box_item span')
+        const hotels = document.querySelectorAll('.box_item')
+        statuses.forEach((st) => {
+            if (st.textContent === 'In Progress') {
+                st.style.backgroundColor = 'chartreuse'
+            }
+            else if (st.textContent === 'Return') {
+                st.style.backgroundColor = 'red'
+            }
+            else if (st.textContent === 'Pending') {
+                st.style.backgroundColor = 'rgb(228, 109, 25)'
+            }
+        })
+
+        hotels.forEach((hotel) => {
+            hotel.addEventListener('click', () => {
+                document.querySelector('.focus').classList.remove('focus')
+                hotel.classList.add('focus')
+            })
+        })
+
+        //Xử lý mess, notifi
+
+        const btnMess = document.querySelector('.btn_mess')
+        const btnNotifi = document.querySelector('.btn_notifi')
+        const header = document.getElementById('header')
+        const content = document.querySelector('.main')
+
+        function showModal(modal) {
+            modal.classList.add('open')
+        }
+
+        function hideModal(modal) {
+            modal.classList.remove('open')
+        }
+
+
+        //Show all comment 
+        let commentDetail = document.getElementById('comment_detail')
+        let commentDetailContainer = document.querySelector('.comment_detail_container')
+        let showComment = document.querySelector('.show_all_comment')
+        let commentBox = document.querySelector('.comment_box')
+        showComment.addEventListener('click', () => {
+            commentDetail.classList.add('active')
+        })
+
+        commentDetail.addEventListener('click', () => {
+            commentDetail.classList.remove('active')
+        })
+
+        commentBox.addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+
+        commentDetailContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+
+        //Show all list room
+        let listRoom = document.getElementById('list_room')
+        let btnListRoom = document.querySelector('.show_all_list_room')
+        let listRoomContainer = document.querySelector('.list_room_container')
+
+        btnListRoom.addEventListener('click', () => {
+            listRoom.classList.add('active')
+        })
+
+        listRoom.addEventListener('click', () => {
+            listRoom.classList.remove('active')
+        })
+
+        listRoomContainer.addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+
+
+        //Show all list current of tenants
+
+        let listCurrent = document.getElementById('list_current')
+        let btnListCurrent = document.querySelector('.show_all_list_current')
+        let listCurrentBox = document.querySelector('.current_box')
+
+        btnListCurrent.addEventListener('click', () => {
+            listCurrent.classList.add('active')
+        })
+
+        listCurrent.addEventListener('click', () => {
+            listCurrent.classList.remove('active')
+        })
+
+        listCurrentBox.addEventListener('click', (e) => {
+            e.stopPropagation();
+        })
+    </script>
     <script>
 
 
         $(document).ready(function () {
             $.ajax({
                 type: "GET",
-                url: "/host/homehost/GetListDataForRevenue",
+                url: "/admin/homeadmin/GetListDataForRevenue?user="+@p_user.id,
                 success: function (response) {
                     var data = response.Data;
                     var data1 = response.Data1;
