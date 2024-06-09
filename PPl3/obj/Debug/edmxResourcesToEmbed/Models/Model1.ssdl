@@ -448,16 +448,6 @@
     <Property Name="code" Type="nvarchar" MaxLength="5" />
     <Property Name="state_status" Type="tinyint" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="transactions">
     <Key>
       <PropertyRef Name="id" />
@@ -569,6 +559,7 @@
     <Property Name="user_status" Type="tinyint" />
     <Property Name="day_become_host" Type="datetime" />
     <Property Name="passport_code" Type="varchar" MaxLength="255" />
+    <Property Name="is_active" Type="tinyint" />
   </EntityType>
   <EntityType Name="users_interests">
     <Key>
@@ -1537,7 +1528,6 @@
     <EntitySet Name="review_component" EntityType="Self.review_component" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="room_type" EntityType="Self.room_type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_notification" EntityType="Self.user_notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" Schema="dbo" store:Type="Tables" />

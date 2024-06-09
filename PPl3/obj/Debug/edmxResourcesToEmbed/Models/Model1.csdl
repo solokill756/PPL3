@@ -234,7 +234,7 @@
     <Property Name="property_id" Type="Int32" />
     <Property Name="added_date" Type="DateTime" Precision="3" />
     <NavigationProperty Name="property" Relationship="Self.favourite_property_id_id_FK" FromRole="favourite" ToRole="properties" />
-    <NavigationProperty Name="user" Relationship="Self.favourite_userID_id_FK" FromRole="favourite" ToRole="users" />
+    <NavigationProperty Name="user" Relationship="Self.FK_favourite_users" FromRole="favourite" ToRole="users" />
   </EntityType>
   <EntityType Name="Friendship">
     <Key>
@@ -482,6 +482,7 @@
     <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="overall_rating" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="DateTime" Precision="3" />
+    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="pr_status" Type="Byte" />
     <NavigationProperty Name="component_rating" Relationship="Self.cr_review_id_id_FK" FromRole="property_reviews" ToRole="component_rating" />
     <NavigationProperty Name="property" Relationship="Self.pr_property_id_id_FK" FromRole="property_reviews" ToRole="properties" />
@@ -553,14 +554,14 @@
     <Property Name="promo_code_id" Type="Int32" />
     <Property Name="discount_amt" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="transaction_status" Type="Byte" />
     <Property Name="feedback" Type="Int32" />
+    <Property Name="transaction_status" Type="Byte" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_transaction_id_id_FK" FromRole="transactions" ToRole="bookings" />
     <NavigationProperty Name="currency" Relationship="Self.transaction_currency_id_id_FK" FromRole="transactions" ToRole="currencies" />
     <NavigationProperty Name="promo_codes" Relationship="Self.transaction_promo_code_id_id_FK" FromRole="transactions" ToRole="promo_codes" />
     <NavigationProperty Name="property" Relationship="Self.transaction_property_id_id_FK" FromRole="transactions" ToRole="properties" />
     <NavigationProperty Name="property_reviews" Relationship="Self.pr_transactions_id_id_FK" FromRole="transactions" ToRole="property_reviews" />
-    <NavigationProperty Name="user" Relationship="Self.transaction_payer_id_id_FK" FromRole="transactions" ToRole="users" />
+    <NavigationProperty Name="user" Relationship="Self.FK_transactions_payer" FromRole="transactions" ToRole="users" />
     <NavigationProperty Name="user1" Relationship="Self.transaction_receiver_id_id_FK" FromRole="transactions" ToRole="users" />
   </EntityType>
   <EntityType Name="user_notification">
@@ -668,13 +669,14 @@
     <Property Name="user_status" Type="Byte" />
     <Property Name="day_become_host" Type="DateTime" Precision="3" />
     <Property Name="passport_code" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="is_active" Type="Byte" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_userId_id_FK" FromRole="users" ToRole="bookings" />
     <NavigationProperty Name="browser_becomes_host" Relationship="Self.FK_become_a_host_users" FromRole="users" ToRole="browser_becomes_host" />
     <NavigationProperty Name="disputes" Relationship="Self.disputes_userId_id_FK" FromRole="users" ToRole="disputes" />
     <NavigationProperty Name="email_contents" Relationship="Self.emct_receiver_id_id_FK" FromRole="users" ToRole="email_contents" />
     <NavigationProperty Name="email_contents1" Relationship="Self.emct_sender_id_id_FK" FromRole="users" ToRole="email_contents" />
     <NavigationProperty Name="emergency_contact" Relationship="Self.ecc_userid_id_FK" FromRole="users" ToRole="emergency_contact" />
-    <NavigationProperty Name="favourites" Relationship="Self.favourite_userID_id_FK" FromRole="users" ToRole="favourite" />
+    <NavigationProperty Name="favourites" Relationship="Self.FK_favourite_users" FromRole="users" ToRole="favourite" />
     <NavigationProperty Name="Friendships" Relationship="Self.FK_Friendship_users" FromRole="users" ToRole="Friendship" />
     <NavigationProperty Name="Friendships1" Relationship="Self.FK_Friendship_users1" FromRole="users" ToRole="Friendship" />
     <NavigationProperty Name="governmentIDs" Relationship="Self.gid_userID_id_FK" FromRole="users" ToRole="governmentID" />
@@ -686,7 +688,7 @@
     <NavigationProperty Name="properties" Relationship="Self.pro_userId_id_FK" FromRole="users" ToRole="properties" />
     <NavigationProperty Name="property_images" Relationship="Self.pi_added_by_user_id_FK" FromRole="users" ToRole="property_images" />
     <NavigationProperty Name="property_reviews" Relationship="Self.pr_reviews_by_user_id_FK" FromRole="users" ToRole="property_reviews" />
-    <NavigationProperty Name="transactions" Relationship="Self.transaction_payer_id_id_FK" FromRole="users" ToRole="transactions" />
+    <NavigationProperty Name="transactions" Relationship="Self.FK_transactions_payer" FromRole="users" ToRole="transactions" />
     <NavigationProperty Name="transactions1" Relationship="Self.transaction_receiver_id_id_FK" FromRole="users" ToRole="transactions" />
     <NavigationProperty Name="user_notification" Relationship="Self.unn_userid_id_FK" FromRole="users" ToRole="user_notification" />
     <NavigationProperty Name="user_personalInfor" Relationship="Self.up_userID_id_FK" FromRole="users" ToRole="user_personalInfor" />
@@ -1124,7 +1126,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="favourite_userID_id_FK">
+  <Association Name="FK_favourite_users">
     <End Role="users" Type="Self.user" Multiplicity="0..1" />
     <End Role="favourite" Type="Self.favourite" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1470,7 +1472,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="transaction_payer_id_id_FK">
+  <Association Name="FK_transactions_payer">
     <End Role="users" Type="Self.user" Multiplicity="0..1" />
     <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
     <ReferentialConstraint>
@@ -1806,7 +1808,7 @@
       <End Role="properties" EntitySet="properties" />
       <End Role="favourite" EntitySet="favourites" />
     </AssociationSet>
-    <AssociationSet Name="favourite_userID_id_FK" Association="Self.favourite_userID_id_FK">
+    <AssociationSet Name="FK_favourite_users" Association="Self.FK_favourite_users">
       <End Role="users" EntitySet="users" />
       <End Role="favourite" EntitySet="favourites" />
     </AssociationSet>
@@ -1914,7 +1916,7 @@
       <End Role="states" EntitySet="states" />
       <End Role="user_personalInfor" EntitySet="user_personalInfor" />
     </AssociationSet>
-    <AssociationSet Name="transaction_payer_id_id_FK" Association="Self.transaction_payer_id_id_FK">
+    <AssociationSet Name="FK_transactions_payer" Association="Self.FK_transactions_payer">
       <End Role="users" EntitySet="users" />
       <End Role="transactions" EntitySet="transactions" />
     </AssociationSet>
@@ -1962,16 +1964,5 @@
       <End Role="users" EntitySet="users" />
       <End Role="users_interests" EntitySet="users_interests" />
     </AssociationSet>
-    <EntitySet Name="sysdiagrams" EntityType="PPL3Model.sysdiagram" />
   </EntityContainer>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
 </Schema>

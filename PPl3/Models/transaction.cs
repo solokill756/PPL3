@@ -33,8 +33,8 @@ namespace PPl3.Models
         public Nullable<int> promo_code_id { get; set; }
         public Nullable<decimal> discount_amt { get; set; }
         public Nullable<System.DateTime> created { get; set; }
-        public Nullable<byte> transaction_status { get; set; }
         public Nullable<int> feedback { get; set; }
+        public Nullable<byte> transaction_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<booking> bookings { get; set; }

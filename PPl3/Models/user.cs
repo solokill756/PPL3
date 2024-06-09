@@ -57,6 +57,7 @@ namespace PPl3.Models
         public Nullable<byte> user_status { get; set; }
         public Nullable<System.DateTime> day_become_host { get; set; }
         public string passport_code { get; set; }
+        public Nullable<byte> is_active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<booking> bookings { get; set; }

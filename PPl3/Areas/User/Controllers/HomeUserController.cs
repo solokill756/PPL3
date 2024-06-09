@@ -642,6 +642,12 @@ namespace PPl3.Areas.User.Controllers
                 return View(model);
 
             }
+            else if(!IsGmailBlock(email_address))
+            {
+                ModelState.AddModelError("checkGmail", "This account has been banned");
+
+                return View(model);
+            }
 
             else
             {
@@ -774,6 +780,7 @@ namespace PPl3.Areas.User.Controllers
                 }
                 if (model.user_type == null) model.user_type = 2;
                 model.created = DateTime.Now;
+                model.is_active = 1;
                 user_Notification.userid = model.id;
                 user_Notification.created = DateTime.Now;
                 user_Notification.content = "Registration successful! Please complete your profile.";
@@ -1648,6 +1655,15 @@ namespace PPl3.Areas.User.Controllers
             return false;
         }
 
+        public bool IsGmailBlock(string email)
+        {
+            PPL3Entities db = new PPL3Entities();
+            if (db.user_personalInfor.FirstOrDefault(u => u.email_address == email).user.is_active == 1)
+            {
+                return true;
+            }
+            return false;
+        }
         
 
     }
