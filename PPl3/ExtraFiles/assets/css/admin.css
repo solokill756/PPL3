@@ -470,7 +470,6 @@
 }
 
 .list_item table tbody td:last-child button{
-  margin-bottom: 10px;
   padding: 10px;
   border: none;
   border-radius: 10px;
@@ -478,13 +477,6 @@
   color: #fff;
   margin-bottom: 5px;
 }
-
-
-    .list_item table tbody td:last-child button > a {
-        color: #fff;
-        text-decoration: none;
-    }
-
 
 .list_item table tbody tr td:first-child button{
   background-color: #000;
@@ -986,3 +978,67 @@
   top: 50%;
   right: 0;
 }
+
+.item_notifi{
+  border: 1px solid #000;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.tittle span{
+  font-weight: 600;
+  font-size: 25px;
+}
+
+.list_notifi{
+  overflow: auto;
+  height: 400px;
+}
+
+.list_notifi li{
+  display: flex;
+  list-style: none;
+  padding: 20px;
+  border-bottom: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.close_btn{
+  text-align: right;
+  width: 100%;
+  cursor: pointer;
+}
+
+.list_notifi li:hover{
+  background-color: #d6d6d6;
+}
+
+.logo i{  
+  padding: 10px;
+  margin-right: 15px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #949494;
+}
+
+.content_notifi p{
+  width: 100%; /* Đặt độ rộng cố định */
+  white-space: nowrap; /* Không cho phép xuống dòng */
+  overflow: hidden; /* Ẩn phần văn bản tràn ra */
+  text-overflow: ellipsis; /* Thêm dấu ba chấm khi văn bản tràn */
+}
+
+.time span{
+  font-size: 14px;
+  color: #302d4b;
+}
+
+.logo img{
+  width: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+

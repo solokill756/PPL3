@@ -400,3 +400,13 @@ btnArrange.addEventListener('click', () =>{
   }
   
 })
+// page notification
+
+const closeBtnNotifi = document.querySelectorAll('.close_btn');
+
+for(let i = 0; i < closeBtnNotifi.length; i++){
+  closeBtnNotifi[i].addEventListener('click', ()=>{
+    var notifi = closeBtnNotifi[i].parentNode;
+    notifi.classList.add('close')
+  })
+}
