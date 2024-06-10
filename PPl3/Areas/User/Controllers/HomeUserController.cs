@@ -46,8 +46,11 @@ namespace PPl3.Areas.User.Controllers
     public class MyModel
     {
 
-        public int number_star { get; set; }
-        public string comment { get; set; }
+        public int number_star_hotel { get; set; }
+
+        public int number_star_host { get; set; }
+        public string comment_hotel { get; set; }
+        public string comment_host { get; set; }
         public string img_1 { get; set; }
         public string img_2 { get; set; }
         public string img_3 { get; set; }
@@ -1499,17 +1502,34 @@ namespace PPl3.Areas.User.Controllers
             if(data != null)
             {
                 PPL3Entities db = new PPL3Entities();
+
+                // reviews_hotel
                 property_reviews new_reviews = new property_reviews();
                 transaction find_transaction = db.transactions.FirstOrDefault(item => item.id == data.transation_id);
                 new_reviews.property_id = find_transaction.property_id;
                 new_reviews.review_by_user = find_transaction.payer_id;
                 new_reviews.transaction_id = find_transaction.id;
-                new_reviews.comment = data.comment;
-                new_reviews.overall_rating = (decimal)data.number_star;
+                new_reviews.comment = data.comment_hotel;
+                new_reviews.overall_rating = (decimal)data.number_star_hotel;
                 new_reviews.created = DateTime.Now;
                 new_reviews.pr_status = 1;
                 db.property_reviews.Add(new_reviews);
                 db.SaveChanges();
+
+                // reviews_host
+
+                host_reviews host_Reviews = new host_reviews();
+
+                host_Reviews.hostid = find_transaction.receiver_id;
+                host_Reviews.review_by_user = find_transaction.payer_id;
+                host_Reviews.comment = data.comment_host;
+                host_Reviews.created = DateTime.Now;
+                host_Reviews.hr_status = 1;
+                host_Reviews.rating = data.number_star_host.ToString();
+                db.host_reviews.Add(host_Reviews);
+                db.SaveChanges();
+
+
                 if(data.img_1 != null)
                 {
                     amenity new_amenity = new amenity();
