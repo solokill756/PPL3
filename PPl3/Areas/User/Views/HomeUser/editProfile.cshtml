@@ -399,12 +399,12 @@
                                     </div>
                                 </div>
                                 <div class="container">
-                                    @foreach (var item in p_user.bookings.ToList())
+                                    @foreach (var item in p_user.transactions.GroupBy(t => t.property_id).Select(group => group.First()).ToList())
                                     {
                                         <div class="place"
                                              style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat"
                                              onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id'">
-                                            <p>@item.booking_date.Value.ToString("yyyy")</p>
+                                            <p>@item.bookings.FirstOrDefault().booking_date.Value.ToString("yyyy")</p>
                                         </div>
                                     }
 

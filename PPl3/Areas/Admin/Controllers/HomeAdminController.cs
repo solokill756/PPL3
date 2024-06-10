@@ -25,6 +25,7 @@ using System.Security.Cryptography;
 using System.Web.UI.WebControls;
 using static PPl3.Areas.Host.Controllers.HomeHostController;
 using Microsoft.Ajax.Utilities;
+using static System.Net.Mime.MediaTypeNames;
 namespace PPl3.Areas.Admin.Controllers
 {
     public class HomeAdminController : Controller
@@ -199,10 +200,12 @@ namespace PPl3.Areas.Admin.Controllers
         {
             PPL3Entities db = new PPL3Entities();
             string phanHoi = "true";
+            int is_host = 0;
             List<int> delprop = new List<int>();
             var delUser = db.users.Where(item => item.id == id).FirstOrDefault();
             if(delUser.user_type == 3)
             {
+                is_host = 1;
                 foreach(var num in db.properties.Where(item => item.userId == delUser.id).ToList())
                 {
                     delprop.Add(num.id);
@@ -213,7 +216,7 @@ namespace PPl3.Areas.Admin.Controllers
             }
             try
             {
-                delUser.user_status = 0;
+                delUser.is_active = 0;
                 db.SaveChanges();
             }
             catch(Exception e)
@@ -224,6 +227,7 @@ namespace PPl3.Areas.Admin.Controllers
             {
                 phanhoi = phanHoi,
                 delprop = delprop,
+                is_host=is_host
             };
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -281,32 +285,94 @@ namespace PPl3.Areas.Admin.Controllers
             return Json(phanHoi, JsonRequestBehavior.AllowGet);
         }
 
-        //[HttpGet]
-        //public JsonResult search(string key, int kind)
-        //{
-        //    string phanhoi = "true";
-        //    List<user> lst = new List<user>();
-        //    PPL3Entities db = new PPL3Entities();
-        //    if (kind == 1)
-        //    {
-        //        lst = db.users
-        //         .Where(item => item.user_status == 1 && item.user_type != 1 && item.account_name.Contains(key))
-        //         .ToList();
-        //    }
-        //    else if (kind == 2)
-        //    {
-        //        lst = db.users
-        //         .Where(item => item.user_status == 1 && item.user_type == 3 && item.user_personalInfor.FirstOrDefault().legal_name.Contains(key))
-        //         .ToList();
-        //    }
+        [HttpGet]
+        public JsonResult searchUser(string key)
+        {
+            string phanhoi = "true";
+            PPL3Entities db = new PPL3Entities();
 
-        //    var data = new
-        //    {
-        //        phanhoi = phanhoi,
-        //        lst = lst,
-        //    };
-        //    return Json(data, JsonRequestBehavior.AllowGet);
-        //}
+            var lst = (from item in db.users
+                       where item.is_active == 1 && (item.account_name.Contains(key) || item.passport_code.Contains(key) || item.user_personalInfor.FirstOrDefault().email_address.Contains(key)) && item.user_type != 1
+                       select new
+                       {
+                           item.id,
+                           item.account_name,
+                           item.passport_code,
+                           item.user_profile.FirstOrDefault().user_avatar,
+                           item.user_personalInfor.FirstOrDefault().email_address,
+                           address = (item.user_personalInfor.FirstOrDefault().country.ct_name + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().state.state_name + ", " ?? "") + 
+                                     (item.user_personalInfor.FirstOrDefault().city.city_name ?? "")
+                       }).ToList();
+
+            var data = new
+            {
+                phanhoi = phanhoi,
+                lst = lst,
+                count = lst.Count,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult searchHost(string key)
+        {
+            string phanhoi = "true";
+            PPL3Entities db = new PPL3Entities();
+
+            var lst = (from item in db.users
+                       where item.is_active == 1 && (item.user_personalInfor.FirstOrDefault().legal_name.Contains(key) || item.passport_code.Contains(key) || item.user_personalInfor.FirstOrDefault().email_address.Contains(key)) && item.user_type != 1 && item.user_type == 3
+                       select new
+                       {
+                           item.id,
+                           item.user_personalInfor.FirstOrDefault().legal_name,
+                           item.passport_code,
+                           item.user_profile.FirstOrDefault().user_avatar,
+                           item.user_personalInfor.FirstOrDefault().email_address,
+                           address = (item.user_personalInfor.FirstOrDefault().country.ct_name + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().state.state_name + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().city.city_name ?? "")
+                       }).ToList();
+
+            var data = new
+            {
+                phanhoi = phanhoi,
+                lst = lst,
+                count = lst.Count,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult searchHotel(string key)
+        {
+            string phanhoi = "true";
+            PPL3Entities db = new PPL3Entities();
+
+            var lst = (from item in db.properties
+                       where item.p_status == 1 && (item.p_name.Contains(key) || item.user.user_personalInfor.FirstOrDefault().legal_name.Contains(key) || item.user.user_personalInfor.FirstOrDefault().email_address.Contains(key) || item.user.passport_code.Contains(key)) 
+                       select new
+                       {
+                           item.id,
+                           item.userId,
+                           item.p_name,
+                           item.user.user_personalInfor.FirstOrDefault().legal_name,
+                           item.user.passport_code,
+                           item.Date_Post,
+                           item.user.user_personalInfor.FirstOrDefault().email_address,
+                           address = (item.country.ct_name + ", " ?? "") +
+                                     (item.state.state_name + ", " ?? "") +
+                                     (item.city.city_name ?? "")
+                       }).ToList();
+
+            var data = new
+            {
+                phanhoi = phanhoi,
+                lst = lst,
+                count = lst.Count,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         [AdminAuhorize(idChucNang = 15)]
         public ActionResult confirm_host(int user_id)
