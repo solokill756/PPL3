@@ -27,6 +27,10 @@
     List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3).ToList();
     List<PPl3.Models.property> lstHotel = db.properties.Where(item => item.p_status == 1).ToList();
 
+    double sum_revenue = 0;
+    double sum_star = 0;
+    List<int> selected_year = new List<int>();
+
 }
 
 <!DOCTYPE html>
@@ -36,7 +40,7 @@
     <meta charset="UTF-8">
     <title> Responsive Sidebar Menu  | CodingLab </title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
-    <link href="~/ExtraFiles/assets/css/admin.css?v=5" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/admin.css?v=6" rel="stylesheet" />
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css?v=3">
@@ -441,9 +445,9 @@
                                             </div>
                                         </div>
                                         @*<div class="mg-bt confirm_reservations">
-                                            <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
-                                            <span><img src="" alt="">Use Instant Book</span>
-                                        </div>*@
+                                                <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                                <span><img src="" alt="">Use Instant Book</span>
+                                            </div>*@
 
                                     </div>
                                     <div class="item_info">
@@ -763,9 +767,9 @@
                                             </div>
                                         </div>
                                         @*<div class="mg-bt confirm_reservations">
-                                            <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
-                                            <span><img src="" alt="">Use Instant Book</span>
-                                        </div>*@
+                                                <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                                <span><img src="" alt="">Use Instant Book</span>
+                                            </div>*@
 
                                     </div>
                                     <div class="item_info">
@@ -926,7 +930,7 @@
             <div class="container_user">
                 <div class="item_user">
                     <div class="number_box">
-                        <h2 id="userCount" >@lstUser.Count() <i class="fa-solid fa-user"></i></h2>
+                        <h2 id="userCount">@lstUser.Count() <i class="fa-solid fa-user"></i></h2>
                         <span>People</span>
                     </div>
                     <div class="search">
@@ -1093,7 +1097,7 @@
             <div class="container_user">
                 <div class="item_user">
                     <div class="number_box">
-                        <h2 id="hotelCount" >@lstHotel.Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <h2 id="hotelCount">@lstHotel.Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
                         <span>Hotel</span>
                     </div>
                     <div class="search">
@@ -1162,7 +1166,144 @@
 
         </div>
         <div id="analytics">
+            <div class="text"><i class="fa-solid fa-gauge"></i>Analytics</div>
+            <div class="container_analytics">
+                <div class="search_analytics">
+                    <div class="item_analytics">
+                        <input type="text" placeholder="Search..." id="search_company">
+                        <button class="btn_search"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                    <div class="item_analytics">
+                        <select id="search_by_revenue" name="Revenue">
+                            <option value="" selected disabled hidden>Revenue</option>
+                            <option value="service1">Under 10.000$</option>
+                            <option value="service2">10.000$ - 30.000$</option>
+                            <option value="service3">30.000$ - 50.000$</option>
+                            <option value="service4">Over 50.000$</option>
+                        </select>
+                        <button class="btn_search btn_revenue"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                    <div class="item_analytics">
+                        <select id="arrange">
+                            <option value="" selected disabled hidden>Arrange</option>
+                            <option value="service1">Ascending</option>
+                            <option value="service2">Decrease</option>
+                            <option value="service3">Sorted from a-z</option>
+                        </select>
+                        <button class="btn_search btn_arrange"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                    <!-- <div class="item_analytics">
+                      <input type="date" placeholder="dd/mm/yyyy" id="search_by_date">
+                      <button class="btn_search btn_date"><i class="fa-solid fa-search"></i></button>
+                    </div> -->
+                </div>
+            </div>
+            <div class="container_analytics">
+                <div class="list_hotel_analytics">
+                    <div class="list_item item_7">
+                        <table>
+                            <thead>
+                            <th>Name Hotel</th>
+                            <th>Name Host</th>
+                            <th>Review</th>
+                            <th>Revenue</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in db.properties)
+                                        {
+                                            foreach(var row in db.transactions) {
+                                                if(row.property_id == item.id) {
+                                                    sum_revenue = sum_revenue + (double)row.amount;
+                                                }
+                                            }
+                                            foreach(var row in db.property_reviews) {
+                                                if(row.property_id == item.id) {
+                                                    sum_star = sum_star + (double)row.overall_rating;
+                                                }
+                                            }
+                                            sum_star = sum_star / db.property_reviews.ToArray().Length;
+                                    <tr class="hotel_@item.id hotel">
+                                        <td>
+                                            @item.p_name
+                                        </td>
+                                        <td>@item.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                        <td>
+                                            @sum_star <i class="fa-solid fa-star"></i>
+                                        </td>
+                                        <td>@sum_revenue$</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item item_3">
+                        <div class="name_hotel_analytics">
+                            <span>Hotel Revenue Statistics</span>
+                        </div>
+                        <div class="btn_by_year">
+                            <select name="" id="by_year_hotel">
+                                @foreach (var item in db.transactions.ToList().OrderByDescending(item => item.transfer_on.Value.Year))
+                                {
+                                    if (!selected_year.Contains(item.transfer_on.Value.Year))
+                                    {
+                                        <option value="@item.transfer_on.Value.Year">@item.transfer_on.Value.Year</option>
 
+                                        selected_year.Add(item.transfer_on.Value.Year);
+                                    }
+
+
+                                }
+
+                            </select>
+                        </div>
+                        <div class="chart">
+                            <canvas id="chart_analytics_month"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container_analytics">
+                <div class="list_hotel_analytics">
+                    <div class="list_item item_7">
+                        <div class="tittle">
+                            <span>Revenue of month</span>
+                        </div>
+                        <div class="btn_by_year">
+                            <select name="" id="by_year_admin" style="margin-bottom: 30px">
+                                @{ 
+                                    selected_year = new List<int>();
+                                }
+                                @foreach (var item in db.transactions.ToList().OrderByDescending(item => item.transfer_on.Value.Year))
+                                {
+                                    if (!selected_year.Contains(item.transfer_on.Value.Year))
+                                    {
+                                        <option value="@item.transfer_on.Value.Year">@item.transfer_on.Value.Year</option>
+
+                                        selected_year.Add(item.transfer_on.Value.Year);
+                                    }
+
+
+                                }
+                            </select>
+                        </div>
+                        <div class="chart">
+                            <canvas id="chart_admin_month"></canvas>
+                        </div>
+                    </div>
+                    <div class="list_item item_3">
+                        <div class="tittle">
+                            <span>Revenue of year</span>
+                        </div>
+                        <!-- <div class="btn_by_year" style="text-align: center;">
+                          <input type="date" name="" id="">
+                        </div> -->
+                        <div class="chart">
+                            <canvas id="chart_admin_year"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
     @{
@@ -1338,7 +1479,7 @@
                                                         </div>
                                                     </div>
 
-                                                    
+
                                                 </div>
                                                 <div class="col l-o-1 l-7 m-12 c-12">
                                                     <div class="about_you">
@@ -1434,10 +1575,8 @@
             }
         }
     }
-    <script src="~/ExtraFiles/JS/admin.js?v=3"></script>
 
-    <script src="~/ExtraFiles/JS/admin.js?v=5"></script>
-
+    <script src="~/ExtraFiles/JS/admin.js?v=8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </body>
@@ -1449,6 +1588,9 @@
     var data_hotel = @Html.Raw(Json.Encode(ViewBag.data_hotels));
     var host_rate = @Html.Raw(Json.Encode(host_rate));
     var hotel_rate = @Html.Raw(Json.Encode(hotel_rate));
+    const chartAnalytics = document.getElementById('chart_analytics_month');
+    const chartMonth = document.getElementById('chart_admin_month');
+    const chartYear = document.getElementById('chart_admin_year');
     console.log(hotel_rate + " " + host_rate);
     animateCircleProgress(parseFloat(host_rate), parseFloat(hotel_rate), 1000);
     let list_each_month_host = [];
@@ -1513,6 +1655,70 @@
           }
         }
       }
+    });
+    var hotel_chart =  new Chart(chartAnalytics, {
+        type: 'line',
+        data: {
+            labels: [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+            ],
+            datasets: [{
+                label: "Hotel Revenue Statistics",
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    reponsive: true,
+                }
+            }
+        }
+    });
+
+    var admin_month_revenue = new Chart(chartMonth, {
+        type: 'line',
+        data: {
+            labels: [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+            ],
+            datasets: [{
+                label: 'Admin income statistics',
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    reponsive: true,
+                }
+            }
+        }
+    });
+
+    var admin_year_revenue = new Chart(chartYear, {
+        type: 'line',
+        data: {
+            labels: @Html.Raw(Json.Encode(selected_year.OrderBy(item => item).ToArray())),
+            datasets: [{
+                label: 'Admin income statistics',
+               
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    reponsive: true,
+                }
+            }
+        }
     });
 </script>
 <script src="~/Scripts/jquery-3.7.1.js"></script>
@@ -1668,17 +1874,6 @@
     });
 </script>
 <script>
-
-    //closeIcons.forEach(function (icon) {
-    //    icon.addEventListener('click', function () {
-    //        var modalId = icon.dataset.modalId;
-    //        var modal = document.getElementById('myHotel-' + modalId);
-    //        modal.classList.add('hide');
-    //    });
-    //});
-
-</script>
-<script>
     document.addEventListener('DOMContentLoaded', function () {
         var buttons = document.querySelectorAll('.details_user');
         buttons.forEach(function (button) {
@@ -1715,23 +1910,7 @@
 
     });
 
-    //document.addEventListener('DOMContentLoaded', function () {
-    //    var DTHotelbuttons = document.querySelectorAll('.details_hotel');
-    //    DTHotelbuttons.forEach(function (button) {
-    //        button.addEventListener('click', function () {
-    //            var hotelId = button.id;
-    //            var parts = hotelId.split('_');
-    //            var idPart = parts[1];
-    //            /*console.log(idPart);*/
-    //            var modalId = 'myHotel-' + idPart;
-    //            var modal = document.getElementById(modalId);
 
-    //            if (modal) {
-    //                modal.classList.remove('hide');
-    //            }
-    //        });
-    //    });
-    //});
 
     document.addEventListener('DOMContentLoaded', function () {
         var buttons = document.querySelectorAll('.details_user');
@@ -1878,6 +2057,155 @@
         });
     });
 
+    // Analytics solution
+    AdminRevenueByEM();
+    AdminRevenueEY();
+
+
+    function SearchHotel() {
+        var search_text = $('#search_company').val();
+        console.log(search_text);
+        $.ajax({
+            url: "/admin/homeadmin/SearchHotel",
+            type: "POST",
+            dataType: "json",
+            data: { search: search_text },
+            success: function (response) {
+                console.log(response);
+                
+                document.querySelectorAll('.list_item.item_7 .hotel').forEach(function (element) {
+                    if (response.indexOf(parseInt(element.classList.value.split(" ")[0].split("_")[1])) != -1) {
+                        if (element.classList.contains("disapear")) {
+                            element.classList.remove("disapear");
+                        }
+                    }
+                    else {
+                        element.classList.add("disapear");
+                    }
+                })
+                console.log("true");
+               
+                
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+    function HotelRevenueStatistics(id) {
+        const selectedValue = document.querySelector('#by_year_hotel').value;
+        $.ajax({
+            url: '/admin/homeadmin/HotelRevenue',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: id, year: selectedValue },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics , 1);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        });
+    }
+
+    function HotelRevenueByYear(year, id) {
+
+        $.ajax({
+            url: "/admin/homeadmin/HotelRevenue",
+            type: "POST",
+            dataType: 'json',
+            data: { id : id , year : year },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics , 1);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+    function AdminRevenueByEM() {
+        const selectedValue = document.querySelector('#by_year_admin').value;
+        $.ajax({
+            url: "/admin/homeadmin/AdminRevenue",
+            type: "POST",
+            data: { year: selectedValue },
+            dataType: "json",
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+
+                updateChartData(data_statics , 2);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+
+    function AdminRevenueByYear(year) {
+
+        $.ajax({
+            url: "/admin/homeadmin/AdminRevenue",
+            type: "POST",
+            dataType: 'json',
+            data: { year: year },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics, 2);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+    function AdminRevenueEY() {
+        $.ajax({
+            url: "/admin/homeadmin/AdminRevenueEY",
+            type: "POST",
+            dataType: "json",
+            data: { list_year: @Html.Raw(Json.Encode(selected_year)) },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics, 3);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+
     //function search(key, kind) {
     //    var data = {
     //        key: key,
@@ -1892,7 +2220,7 @@
     //            if (response.phanhoi == "true") {
     //                console.log(response.phanhoi);
     //                response.lst.forEach(function (user) {
-    //                    var avatar = 
+    //                    var avatar =
     //                    var newRowHtml = `
     //                        <tr id="userRow-new">
     //                            <td>

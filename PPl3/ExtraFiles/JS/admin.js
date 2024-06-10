@@ -1,7 +1,8 @@
 let sidebar = document.querySelector(".sidebar");
   let closeBtn = document.querySelector("#btn");
   let searchBtn = document.querySelector(".bx-search");
-
+let data_statics = []; 
+let current_id = -1;
   closeBtn.addEventListener("click", ()=>{
     sidebar.classList.toggle("open");
     menuBtnChange();//calling the function(optional)
@@ -22,32 +23,84 @@ let sidebar = document.querySelector(".sidebar");
   }
 
   //Circle
-  function setCircleProgress(percentage) {
-    const circle = document.querySelector('.circle-progress');
-    const radius = circle.r.baseVal.value;
-    const circumference = 2 * Math.PI * radius;
-    const offset = circumference - (percentage / 100) * circumference;
+  function setCircleProgress(percentage , check) {
+      if (check == 1) {
+          const circles = document.querySelectorAll('.circle-progress');
+          circles.forEach((circle, index) => {
+              if (index % 2 != 0) {
+                  const radius = circle.r.baseVal.value;
+                  const circumference = 2 * Math.PI * radius;
+                  const offset = circumference - (percentage / 100) * circumference;
 
-    circle.style.strokeDasharray = `${circumference} ${circumference}`;
-    circle.style.strokeDashoffset = offset;
+                  circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                  circle.style.strokeDashoffset = offset;
+              }
 
-    document.getElementById('circleText').textContent = `${percentage}%`;
+          })
+      }
+      else {
+          const circles = document.querySelectorAll('.circle-progress');
+          circles.forEach((circle, index) => {
+              if (index % 2 == 0) {
+                  const radius = circle.r.baseVal.value;
+                  const circumference = 2 * Math.PI * radius;
+                  const offset = circumference - (percentage / 100) * circumference;
+
+                  circle.style.strokeDasharray = `${circumference} ${circumference}`;
+                  circle.style.strokeDashoffset = offset;
+              }
+
+          })
+      }
+
+
+      if (check == 1) {
+          var circleTexts = document.querySelectorAll('#circleText');
+
+          circleTexts.forEach((item, index) => {
+              if (index % 2 != 0) {
+                  item.textContent = `${percentage}%`;
+              }
+
+          })
+      }
+      else {
+          var circleTexts = document.querySelectorAll('#circleText');
+          circleTexts.forEach((item, index) => {
+              if (index % 2 == 0) {
+                  item.textContent = `${percentage}%`;
+              }
+
+          })
+      }
 }
 //Upload %
-function animateCircleProgress(targetPercentage, duration) {
-  let start = 0;
-  const increment = targetPercentage / (duration / 10); // Tính toán gia tăng mỗi 10ms
+function animateCircleProgress(targetPercentage_host, targetPercentage_hotel, duration) {
+    let start_host = 0;
+    const increment_host = targetPercentage_host / (duration / 10); // Tính toán gia tăng mỗi 10ms
 
-  const interval = setInterval(() => {
-      start += increment;
-      if (start >= targetPercentage) {
-          start = targetPercentage;
-          clearInterval(interval);
-      }
-      setCircleProgress(Math.round(start));
-  }, 10); // Cập nhật mỗi 10ms
+    const interval_host = setInterval(() => {
+        start_host += increment_host;
+        if (start_host >= targetPercentage_host) {
+            start_host = targetPercentage_host;
+            clearInterval(interval_host);
+        }
+        setCircleProgress(Math.round(start_host), 1);
+    }, 10); // Cập nhật mỗi 10ms
+
+    let start_hotel = 0;
+    const increment_hotel = targetPercentage_hotel / (duration / 10); // Tính toán gia tăng mỗi 10ms
+
+    const interval_hotel = setInterval(() => {
+        start_hotel += increment_hotel;
+        if (start_hotel >= targetPercentage_hotel) {
+            start_hotel = targetPercentage_hotel;
+            clearInterval(interval_hotel);
+        }
+        setCircleProgress(Math.round(start_hotel), 2);
+    }, 10); // Cập nhật mỗi 10ms
 }
-animateCircleProgress(75, 2000);
+
 // Example: Set progress to 75%
 
 
@@ -79,18 +132,23 @@ btnDetailsHost.forEach((btn) =>{
   })
 })
 
-inforHostDetail.addEventListener('click', ()=>{
-  if(inforHostDetail.classList.contains('openHost')){
-    containerInforHost.classList.add('animationInfor')
-    setTimeout(() => {
-      inforHostDetail.classList.remove('openHost');
-    }, 1100);
-  }
-})
+if (inforHostDetail != null) {
+    inforHostDetail.addEventListener('click', () => {
+        if (inforHostDetail.classList.contains('openHost')) {
+            containerInforHost.classList.add('animationInfor')
+            setTimeout(() => {
+                inforHostDetail.classList.remove('openHost');
+            }, 1100);
+        }
+    })
+}
 
-containerInforHost.addEventListener('click', (e)=>{
-  e.stopPropagation();
-})
+if (containerInforHost != null) {
+    containerInforHost.addEventListener('click', (e) => {
+        e.stopPropagation();
+    }) 
+}
+
 
 var btnDetailHotel = document.querySelectorAll('.details_hotel')
 var inforHotelDetail = document.querySelector('.info_hotel_detail')
@@ -103,18 +161,23 @@ btnDetailHotel.forEach((btn) =>{
   })
 })
 
-inforHotelDetail.addEventListener('click', ()=>{
-  if(inforHotelDetail.classList.contains('openHost')){
-    containerInforHotel.classList.add('animationInfor')
-    setTimeout(() => {
-      inforHotelDetail.classList.remove('openHost');
-    }, 1100);
-  }
-})
+if (inforHotelDetail != null) {
+    inforHotelDetail.addEventListener('click', () => {
+        if (inforHotelDetail.classList.contains('openHost')) {
+            containerInforHotel.classList.add('animationInfor')
+            setTimeout(() => {
+                inforHotelDetail.classList.remove('openHost');
+            }, 1100);
+        }
+    })
+}
 
-containerInforHotel.addEventListener('click', (e)=>{
-  e.stopPropagation();
-})
+if (containerInforHotel != null) {
+    containerInforHotel.addEventListener('click', (e) => {
+        e.stopPropagation();
+    })
+}
+
 
 //Xử lý ảnh hotel
 
@@ -190,43 +253,57 @@ imgHotels.forEach((img, index) => {
 const btnZoom = document.querySelector('.btn_zoom button')
 const imgZoomHotel = document.querySelector('.img_zoom_hotel')
 const imgZoom = document.querySelectorAll('.list_img img')
-btnZoom.addEventListener('click', () =>{
-  imgZoomHotel.classList.add('openImg')
-})
+
+if (btnZoom != null) {
+    btnZoom.addEventListener('click', () => {
+        imgZoomHotel.classList.add('openImg')
+    })
+}
+
 const btnLeft = document.querySelector('.btn_left')
 const btnRight = document.querySelector('.btn_right')
 const btnClose = document.querySelector('.btn_close')
 
-
-btnClose.addEventListener('click', ()=>{
-  imgZoomHotel.classList.remove('openImg')
-})
-btnLeft.style.pointerEvents = 'none'
-var current = 0;
-btnRight.addEventListener('click', ()=>{
-  btnLeft.style.pointerEvents = ''
-  if(current === imgZoom.length - 1){
-    btnRight.style.pointerEvents = 'none'
-  }
-  else{
-    current++;
-    imgZoom.forEach((img) =>{
-      img.style.transform = `translateX(${710 * -1 * current}px)`
+if (btnClose != null) {
+    btnClose.addEventListener('click', () => {
+        imgZoomHotel.classList.remove('openImg')
     })
-  }
-})
-btnLeft.addEventListener('click', ()=>{
-  btnRight.style.pointerEvents = ''
-  if(current === 0){
+}
+if (btnLeft != null) {
     btnLeft.style.pointerEvents = 'none'
-  }
-  else{
-    current--;
-    imgZoom.forEach((img) =>{
-      img.style.transform = `translateX(${710 * -1 * current}px)`
+}
+
+var current = 0;
+if (btnRight) {
+    btnRight.addEventListener('click', () => {
+        btnLeft.style.pointerEvents = ''
+        if (current === imgZoom.length - 1) {
+            btnRight.style.pointerEvents = 'none'
+        }
+        else {
+            current++;
+            imgZoom.forEach((img) => {
+                img.style.transform = `translateX(${710 * -1 * current}px)`
+            })
+        }
     })
-  }
-})
+}
+
+if (btnLeft) {
+    btnLeft.addEventListener('click', () => {
+        btnRight.style.pointerEvents = ''
+        if (current === 0) {
+            btnLeft.style.pointerEvents = 'none'
+        }
+        else {
+            current--;
+            imgZoom.forEach((img) => {
+                img.style.transform = `translateX(${710 * -1 * current}px)`
+            })
+        }
+    })
+
+}
 
 const btnAlls = document.querySelectorAll('.list_item table tbody tr td:first-child button');
 
@@ -243,14 +320,75 @@ btnAlls.forEach((btn) =>{
 
 //Trang Analytics
 
+
+
+
+function updateChartData(newData, type) {
+    if (type == 1) {
+        // Cập nhật dữ liệu của biểu đồ
+        hotel_chart.data.datasets[0].data = newData;
+
+        // Gọi phương thức update() để cập nhật biểu đồ
+        hotel_chart.update();
+    }
+    else if (type == 2) {
+        // Cập nhật dữ liệu của biểu đồ
+        admin_month_revenue.data.datasets[0].data = newData;
+
+        // Gọi phương thức update() để cập nhật biểu đồ
+        admin_month_revenue.update();
+    }
+    else if (type == 3) {
+        // Cập nhật dữ liệu của biểu đồ
+        admin_year_revenue.data.datasets[0].data = newData;
+
+        // Gọi phương thức update() để cập nhật biểu đồ
+        admin_year_revenue.update();
+    }
+    
+}
+
 const hotels = document.querySelectorAll('.item_7 table tbody tr')
 for(let i = 0; i < hotels.length; i++){
   hotels[i].addEventListener('click', () =>{
     var name = hotels[i].firstElementChild.textContent;
     const nameHotel = document.querySelector('.name_hotel_analytics span')
-    nameHotel.textContent = name;
+      nameHotel.textContent = name;
+      current_id = hotels[i].classList.value.split(" ")[0].split("_")[1];
+      HotelRevenueStatistics(current_id);
+      
+     
   })
 }
+
+
+document.querySelector('#by_year_hotel').addEventListener('change', function () {
+    // Lấy giá trị được chọn từ thẻ select
+    const selectedValue = this.value;
+
+    // Lấy dữ liệu mới dựa trên giá trị được chọn
+    if (current_id != -1) {
+        HotelRevenueByYear(selectedValue, current_id);
+    }
+    
+
+});
+
+
+
+document.querySelector('#by_year_admin').addEventListener('change', function () {
+    // Lấy giá trị được chọn từ thẻ select
+    const selectedValue = this.value;
+    console.log(1);
+    // Lấy dữ liệu mới dựa trên giá trị được chọn
+    AdminRevenueByYear(selectedValue);
+
+
+});
+
+document.querySelector('.btn_search').addEventListener('click', function () {
+    SearchHotel();
+})
 
 const selectElement = document.getElementById('search_by_revenue');
 const btnRevenue = document.querySelector('.btn_revenue')

@@ -580,6 +580,86 @@ namespace PPl3.Areas.Admin.Controllers
                 return sw.GetStringBuilder().ToString();
             }
         }
+
+        // Analytics 
+        [HttpPost]
+        public JsonResult HotelRevenue(int id , int year)
+        {
+            PPL3Entities db = new PPL3Entities();
+            string result = "";
+            int i = 1;
+            while(i <= 12)
+            {
+                double count = 0;
+                foreach (var item in db.transactions)
+                    if (item.property_id == id && item.transfer_on.Value.Month == i && item.transfer_on.Value.Year == year)
+                    {
+                        count = count + (double)item.amount;
+                    }
+                result = result + count.ToString() + ",";
+                i++;
+            }
+            result = result.Substring(0, result.Length - 1);
+            return Json(result , JsonRequestBehavior.AllowGet);
+            
+        }
+        
+
+        [HttpPost]
+
+        public JsonResult AdminRevenue(int year)
+        {
+            PPL3Entities db = new PPL3Entities();
+            string result = "";
+            int i = 1;
+            while (i <= 12)
+            {
+                double count = 0;
+                foreach (var item in db.transactions)
+                    if (item.transfer_on.Value.Month == i && item.transfer_on.Value.Year == year)
+                    {
+                        count = count + (double)item.site_fees;
+                    }
+                result = result + count.ToString() + ",";
+                i++;
+            }
+            result = result.Substring(0, result.Length - 1);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult AdminRevenueEY(int[] list_year)
+        {
+            PPL3Entities db = new PPL3Entities();
+            string result = "";
+            foreach(var item in list_year.OrderBy(x => x))
+            {
+                double count = 0;
+                foreach(var row in db.transactions)
+                {
+                    if(row.transfer_on.Value.Year == item)
+                    {
+                        count = count + (double)row.site_fees;
+                    }
+                }
+                result = result + count.ToString() + ",";
+            }
+            result = result.Substring(0, result.Length - 1);
+            return Json(result, JsonRequestBehavior.AllowGet);
+        } 
+
+        public JsonResult SearchHotel(string search)
+        {
+            List<int> list_appear_hotel = new List<int>();
+            PPL3Entities db = new PPL3Entities();
+            foreach(var item in db.properties)
+            {
+                if(item.p_name.ToLower().Contains(search.ToLower()))
+                {
+                    list_appear_hotel.Add(item.id);
+                }
+            }
+            return Json(list_appear_hotel, JsonRequestBehavior.AllowGet);
+        }
     }
     
 
