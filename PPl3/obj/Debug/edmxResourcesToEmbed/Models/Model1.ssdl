@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="PPl3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="amenities">
     <Key>
       <PropertyRef Name="id" />
@@ -1488,7 +1488,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="PPl3ModelStoreContainer">
+  <EntityContainer Name="PPL3ModelStoreContainer">
     <EntitySet Name="amenities" EntityType="Self.amenities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="bookings" EntityType="Self.bookings" Schema="dbo" store:Type="Tables" />
