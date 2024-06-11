@@ -152,5 +152,20 @@ saveBtns.forEach((saveBtn) => {
 })
 
 
-// check gía trị của các thành phần được nhập
+const writeBtn = document.querySelector('.write_btn')
+const selectBtn = document.querySelector('.select_btn')
+const writeBox = document.querySelector('.write_box')
+const selectBox = document.querySelector('.select_box')
+writeBtn.addEventListener('click', ()=>{
+    selectBtn.classList.remove('btn_clicked');
+    writeBtn.classList.add('btn_clicked');
+    writeBox.classList.add('open')
+    selectBox.classList.remove('open')
+})
 
+selectBtn.addEventListener('click', ()=>{
+    selectBtn.classList.add('btn_clicked');
+    writeBtn.classList.remove('btn_clicked');
+    writeBox.classList.remove('open')
+    selectBox.classList.add('open')
+})
