@@ -3,7 +3,6 @@ const img = document.querySelectorAll('.list_img li')
 const summit_btn = document.querySelector('.Summit_btn');
 const skip_btn = document.querySelector('.Skip_btn');
 const Comments = document.getElementById('comments');
-summit_btn.disabled = false;
 
 for(let i = 1; i <= img.length; i++){
     const imgBr = document.querySelector('.img_' + i)
@@ -63,7 +62,7 @@ for(let i = 0; i < star.length; i++){
             str.classList.replace('fa-solid', 'fa-regular')
             check1 = 1;
             if (check1 == 1 && check2 == 1) {
-                summit_btn.disabled = false;
+                summit_btn.addEventListener('click', saveAndSend);
                 summit_btn.style.cursor = "pointer";
             }
            
@@ -85,7 +84,7 @@ for(let i = 0; i < starHost.length; i++){
         starHost.forEach((str) => {
             check2 = 1;
             if (check1 == 1 && check2 == 1) {
-                summit_btn.disabled = false;
+                summit_btn.addEventListener('click', saveAndSend);
                 summit_btn.style.cursor = "pointer";
             }
             str.classList.replace('fa-solid', 'fa-regular')

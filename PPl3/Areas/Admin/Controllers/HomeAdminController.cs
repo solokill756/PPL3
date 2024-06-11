@@ -726,6 +726,30 @@ namespace PPl3.Areas.Admin.Controllers
             }
             return Json(list_appear_hotel, JsonRequestBehavior.AllowGet);
         }
+
+
+        // notification
+
+        public JsonResult readNotification()
+        {
+            PPL3Entities db = new PPL3Entities();
+            foreach(var item in db.user_notification)
+            {
+                if (item.userid == 20) item.un_status = 1;
+            }
+            db.SaveChanges();
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult deleteNotification(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            var find_no = db.user_notification.FirstOrDefault(item => item.id == id);
+            db.user_notification.Remove(find_no);
+            db.SaveChanges();
+            return Json("true", JsonRequestBehavior.AllowGet);
+        }
     }
     
 

@@ -87,6 +87,13 @@ namespace PPl3.Areas.Host.Controllers
                         user_Notification.un_status = 1;
                         user_Notification.un_url = "#";
                         db.user_notification.Add(user_Notification);
+                        user_notification admin_notification = new user_notification();
+                        admin_notification.userid = 20;
+                        admin_notification.created = DateTime.Now;
+                        admin_notification.content = "The user with id " + p_user.id + " requests to become a host";
+                        admin_notification.un_status = 0;
+                        admin_notification.un_url = "#";
+                        db.user_notification.Add(admin_notification);
                         db.SaveChanges();
                         browser_becomes_host browser_Becomes_Host = new browser_becomes_host();
                         browser_Becomes_Host.user_id = p_user.id;
@@ -325,6 +332,13 @@ namespace PPl3.Areas.Host.Controllers
                 user_Notification.un_status = 0;
                 user_Notification.un_url = "#";
                 db.user_notification.Add(user_Notification);
+                user_notification admin_notification = new user_notification();
+                admin_notification.userid = 20;
+                admin_notification.created = DateTime.Now;
+                admin_notification.content = "Hotels with id " + new_hotel.id + " need to be approved";
+                admin_notification.un_status = 0;
+                admin_notification.un_url = "#";
+                db.user_notification.Add(admin_notification);
                 Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
                 browse_Hotel_.property_id = new_hotel.id;
                 
@@ -565,6 +579,13 @@ namespace PPl3.Areas.Host.Controllers
                     user_Notification.un_status = 0;
                     user_Notification.un_url = "#";
                     db.user_notification.Add(user_Notification);
+                    user_notification admin_notification = new user_notification();
+                    admin_notification.userid = 20;
+                    admin_notification.created = DateTime.Now;
+                    admin_notification.content = "Hotels with id " + find_hotel.id + " need to be approved";
+                    admin_notification.un_status = 0;
+                    admin_notification.un_url = "#";
+                    db.user_notification.Add(admin_notification);
                     Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
                     browse_Hotel_.property_id = find_hotel.id;
                     browse_Hotel_.Date = DateTime.Now;

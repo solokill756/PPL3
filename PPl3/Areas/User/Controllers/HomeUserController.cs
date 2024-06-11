@@ -918,7 +918,7 @@ namespace PPl3.Areas.User.Controllers
 
                     int daysDifference = (int)duration.TotalDays;
 
-                    if ((item.check_out_date < now) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+                    if ((item.check_out_date < now && item.pay_status == 0) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
 
                     {
 
@@ -1018,7 +1018,11 @@ namespace PPl3.Areas.User.Controllers
                 PPL3Entities db = new PPL3Entities();
                 foreach(var item in db.user_notification.ToList())
                 {
-                    item.un_status = 1;
+                    if(item.userid != 20)
+                    {
+                        item.un_status = 1;
+                    }
+                    
                 }
                 db.SaveChanges();
                 List<user_notification> un = db.user_notification.Where(item => item.userid == p_user.id).ToList();
@@ -1076,7 +1080,7 @@ namespace PPl3.Areas.User.Controllers
 
                 int daysDifference = (int)duration.TotalDays;
 
-                if ((item.check_out_date < now) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+                if ((item.check_out_date < now && item.pay_status == 0) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
 
                 {
 
@@ -1530,7 +1534,7 @@ namespace PPl3.Areas.User.Controllers
                 db.SaveChanges();
 
 
-                if(data.img_1 != null)
+                if(data.img_1 != null && data.img_1.Trim() != "")
                 {
                     amenity new_amenity = new amenity();
                     property_amenities new_pr_am = new property_amenities();
@@ -1547,7 +1551,7 @@ namespace PPl3.Areas.User.Controllers
                     db.SaveChanges();
                    
                 }
-                if (data.img_2 != null)
+                if (data.img_2 != null && data.img_2.Trim() != "")
                 {
                     amenity new_amenity = new amenity();
                     property_amenities new_pr_am = new property_amenities();
@@ -1562,7 +1566,7 @@ namespace PPl3.Areas.User.Controllers
                     db.property_amenities.Add(new_pr_am);
                     db.SaveChanges();
                 }
-                if (data.img_3 != null)
+                if (data.img_3 != null && data.img_3.Trim() != "")
                 {
                     amenity new_amenity = new amenity();
                     property_amenities new_pr_am = new property_amenities();
@@ -1577,7 +1581,7 @@ namespace PPl3.Areas.User.Controllers
                     db.property_amenities.Add(new_pr_am);
                     db.SaveChanges();
                 }
-                if (data.img_4 != null)
+                if (data.img_4 != null && data.img_4.Trim() != "")
                 {
                     amenity new_amenity = new amenity();
                     property_amenities new_pr_am = new property_amenities();
@@ -1601,6 +1605,15 @@ namespace PPl3.Areas.User.Controllers
                 success = "true",
                 redirectUrl = "/user/homeuser/index"
             }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult ShipComment(int transation_id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            transaction find_tran = db.transactions.FirstOrDefault(item => item.id == transation_id);
+            find_tran.feedback = 1;
+            db.SaveChanges();
+            return Json("true", JsonRequestBehavior.AllowGet);
         }
 
         //Function

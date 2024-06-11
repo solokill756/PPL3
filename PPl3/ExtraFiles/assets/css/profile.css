@@ -178,8 +178,8 @@ button:hover {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 3px;
+    padding-bottom: 10px;
 }
 
 .infor_list li {

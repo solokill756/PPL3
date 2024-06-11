@@ -94,103 +94,103 @@
             </div>
         </div>
         <div id="content">
-            @if (db.property_reviews.Count(item => item.transaction_id == Model.id) > 0)
+            @if (db.transactions.FirstOrDefault(item => item.id == Model.id).feedback == 1)
             {
                 <h2>You have commented for the trip has transaction code : @Model.id  . Please return to the <a href="/user/homeuser/index">home page</a></h2>
             }
             else
             {
-        <div class="grid wide">
-            <div class="row no-gutter">
-                <div class="col l-6 m-6 c-12">
-                    <ul class="list_img">
+                <div class="grid wide">
+                    <div class="row no-gutter">
+                        <div class="col l-6 m-6 c-12">
+                            <ul class="list_img">
+                                <div class="container_img">
+                                <li class="img_1">
+                                    <input type="file" class="file_1" hidden>
+                                    <button class="add_btn btn_1"><i class="fa-solid fa-plus"></i></button>
+                                    <button class="remove_btn remove_1"><i class="fa-solid fa-close"></i></button>
+                                </li>
+                                <li class="img_2">
+                                    <input type="file" class="file_2" hidden>
+                                    <button class="add_btn btn_2"><i class="fa-solid fa-plus"></i></button>
+                                    <button class="remove_btn remove_2"><i class="fa-solid fa-close"></i></button>
+                                </li>
+                        </div>
                         <div class="container_img">
-                        <li class="img_1">
-                            <input type="file" class="file_1" hidden>
-                            <button class="add_btn btn_1"><i class="fa-solid fa-plus"></i></button>
-                            <button class="remove_btn remove_1"><i class="fa-solid fa-close"></i></button>
-                        </li>
-                        <li class="img_2">
-                            <input type="file" class="file_2" hidden>
-                            <button class="add_btn btn_2"><i class="fa-solid fa-plus"></i></button>
-                            <button class="remove_btn remove_2"><i class="fa-solid fa-close"></i></button>
-                        </li>
-                </div>
-                <div class="container_img">
-                    <li class="img_3">
-                        <input type="file" class="file_3" hidden>
-                        <button class="add_btn btn_3"><i class="fa-solid fa-plus"></i></button>
-                        <button class="remove_btn remove_3"><i class="fa-solid fa-close"></i></button>
-                    </li>
-                    <li class="img_4">
-                        <input type="file" class="file_4" hidden>
-                        <button class="add_btn btn_4"><i class="fa-solid fa-plus"></i></button>
-                        <button class="remove_btn remove_4"><i class="fa-solid fa-close"></i></button>
-                    </li>
-                </div>
-                </ul>
-            </div>
-            <div class="col l-6 m-6 c-12">
-                <div class="container_comment">
-                    <div class="tittle">
-                        <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
-                        <span>@Model.property.p_name</span>
+                            <li class="img_3">
+                                <input type="file" class="file_3" hidden>
+                                <button class="add_btn btn_3"><i class="fa-solid fa-plus"></i></button>
+                                <button class="remove_btn remove_3"><i class="fa-solid fa-close"></i></button>
+                            </li>
+                            <li class="img_4">
+                                <input type="file" class="file_4" hidden>
+                                <button class="add_btn btn_4"><i class="fa-solid fa-plus"></i></button>
+                                <button class="remove_btn remove_4"><i class="fa-solid fa-close"></i></button>
+                            </li>
+                        </div>
+                        </ul>
                     </div>
-                    <div class="list_star star_hotel">
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
+                    <div class="col l-6 m-6 c-12">
+                        <div class="container_comment">
+                            <div class="tittle">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <span><a href="/user/homeuser/detail?id=@Model.property_id" target="_blank">@Model.property.p_name</a></span>
+                            </div>
+                            <div class="list_star star_hotel">
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                            <div class="text">
+                                <textarea name="comments" rows="4" cols="50" id="comments_hotel"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text">
-                        <textarea name="comments" rows="4" cols="50" id="comments_hotel"></textarea>
+                    <div class="col l-12 m-12 c-12">
+                        <div class="tittle">
+                            <h5>Review Host</h5>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col l-12 m-12 c-12">
-                <div class="tittle">
-                    <h5>Review Host</h5>
-                </div>
-            </div>
-            <div class="col l-6 m-6 c-12">
-                <div class="box">
-                    <div class="avatar">
-                        <img src="@Model.user1.user_profile.FirstOrDefault().user_avatar" alt="">
+                    <div class="col l-6 m-6 c-12">
+                        <div class="box">
+                            <div class="avatar">
+                                <img src="@Model.user1.user_profile.FirstOrDefault().user_avatar" alt="">
+                            </div>
+                            <!-- Details hotel by <a></a> -->
+                            <div class="name_host">
+                                <h2><a href="/user/homeuser/profile?id=@Model.user1.id" target="_blank">@Model.user1.user_personalInfor.FirstOrDefault().legal_name</a></h2>
+                            </div>
+                            <div class="list_star star_host">
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                        </div>
                     </div>
-                    <!-- Details hotel by <a></a> -->
-                    <div class="name_host">
-                        <h2><a href="/user/homeuser/profile?id=@Model.user1.id">@Model.user1.user_personalInfor.FirstOrDefault().legal_name</a></h2>
+                    <div class="col l-6 m-6 c-12">
+                        <div class="text text_host">
+                            <textarea name="comments" rows="4" cols="50" id="comments_host"></textarea>
+                        </div>
                     </div>
-                    <div class="list_star star_host">
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
-                        <i class="fa-regular fa-star"></i>
+                    <div class="col l-12 m-12 c-12">
+                        <div class="list_btn">
+                            <button class="Summit_btn">Comment</button>
+                            <button class="Skip_btn">Skip</button>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div class="col l-6 m-6 c-12">
-                <div class="text text_host">
-                    <textarea name="comments" rows="4" cols="50" id="comments_host"></textarea>
                 </div>
             </div>
-            <div class="col l-12 m-12 c-12">
-                <div class="list_btn">
-                    <button class="Summit_btn">Comment</button>
-                    <button class="Skip_btn">Skip</button>
-                </div>
-            </div>
+        }
+
         </div>
-            </div>
-            }
-                
-    </div>
-    </div>
-    <script src="~/ExtraFiles/JS/menuGuest.js"></script>
-    <script src="~/ExtraFiles/JS/evaluate.js?v = 3"></script>
-</body>
+        </div>
+        <script src="~/ExtraFiles/JS/menuGuest.js"></script>
+        <script src="~/ExtraFiles/JS/evaluate.js?v = 4"></script>
+    </body>
 </html>
 <script src="~/Scripts/jquery-3.7.1.js"></script>
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
@@ -278,11 +278,22 @@
         })
     }
 
-    summit_btn.addEventListener('click', () => {
-        saveAndSend();
-    })
+   
 
     skip_btn.addEventListener('click', () => {
-        window.location.href = "/user/homeuser/index";
+        $.ajax({
+            url: "/user/homeuser/ShipComment",
+            type: "POST",
+            dataType: 'json',
+            data: { transation_id : @Html.Raw(Json.Encode(Model.id))},
+            success: function (response) {
+                console.log(response);
+                window.location.href = "/user/homeuser/index";
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+        
     })
 </script>
