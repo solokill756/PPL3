@@ -148,7 +148,7 @@ html{
 
 .list_btn button{
     padding: 10px;
-    margin-right: 40px;
+    margin-right: 10px;
     font-size: 20px;
     font-weight: 600;
     background-color: #ff385c;
@@ -180,7 +180,7 @@ html{
 }
 
 .text_host textarea{
-    height: 280px;
+    height: 295px;
 }
 
 .name_host a{
@@ -190,4 +190,31 @@ html{
 
 .name_host a:hover{
     color: #ff385c;
+}
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+    .tittle span>a{
+        font-size: 30px;
+    }
+    .list_star i {
+        font-size: 25px;
+    }
+    .list_star i:not(i:last-child) {
+        margin-right: 25px;
+    }
+    .list_btn button{
+        margin-right: 10px;
+    }
+    .tittle {
+        text-align: center;
+    }
+    .container_img li:first-child {
+        margin-right: 0px;
+    }
+    .container_img li {
+        flex: none;
+    }
 }

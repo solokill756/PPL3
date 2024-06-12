@@ -131,6 +131,7 @@ html{
 .number{
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     margin-top: 10px;
 }
 
@@ -157,6 +158,7 @@ html{
     align-items: center;
     flex-direction: column;
     width: 100%;
+    height: 400px;
     background-color: #191C24;
     padding: 20px;
     border-radius: 10px;
@@ -704,4 +706,13 @@ html{
 
 .price{
     color: #ccc;
+}
+
+@media screen and (max-width: 46.1875em){
+    .btn_item span{
+        display: none;
+    }
+    .modal {
+        transform: translateY(20%) translateX(-40%);
+    }
 }
