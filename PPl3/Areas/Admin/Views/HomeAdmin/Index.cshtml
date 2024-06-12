@@ -350,7 +350,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country.ct_name - @item.user.user_personalInfor.FirstOrDefault().state.state_name - @item.user.user_personalInfor.FirstOrDefault().city.city_name</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country_id - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -673,7 +673,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country.ct_name - @item.user.user_personalInfor.FirstOrDefault().state.state_name - @item.user.user_personalInfor.FirstOrDefault().city.city_name</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country_id - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -996,13 +996,13 @@
                                                 string address = "";
                                                 if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country_id;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().city.city_name + ", " + tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         }
                                                     }
                                                 }
@@ -1080,13 +1080,13 @@
                                                 string address = "";
                                                 if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country_id;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().city.city_name + ", " + tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         }
                                                     }
                                                 }

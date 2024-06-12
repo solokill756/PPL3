@@ -355,9 +355,9 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country.ct_name + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().state.state_name + ", " ?? "") + 
-                                     (item.user_personalInfor.FirstOrDefault().city.city_name ?? "")
+                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") + 
+                                     (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
 
             var data = new
@@ -384,9 +384,9 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country.ct_name + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().state.state_name + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().city.city_name ?? "")
+                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
 
             var data = new

@@ -95,7 +95,6 @@
     <Property Name="city_status" Type="Byte" />
     <NavigationProperty Name="state" Relationship="Self.cities_state_id_id_FK" FromRole="cities" ToRole="states" />
     <NavigationProperty Name="properties" Relationship="Self.pro_city_id_id_FK" FromRole="cities" ToRole="properties" />
-    <NavigationProperty Name="user_personalInfor" Relationship="Self.u_city_id_FK" FromRole="cities" ToRole="user_personalInfor" />
   </EntityType>
   <EntityType Name="cms_page_languages">
     <Key>
@@ -141,7 +140,6 @@
     <Property Name="status" Type="Byte" />
     <NavigationProperty Name="properties" Relationship="Self.pro_country_id_id_FK" FromRole="countries" ToRole="properties" />
     <NavigationProperty Name="states" Relationship="Self.states_country_id_id_FK" FromRole="countries" ToRole="states" />
-    <NavigationProperty Name="user_personalInfor" Relationship="Self.up_country_id_id_FK" FromRole="countries" ToRole="user_personalInfor" />
   </EntityType>
   <EntityType Name="currency">
     <Key>
@@ -536,7 +534,6 @@
     <NavigationProperty Name="cities" Relationship="Self.cities_state_id_id_FK" FromRole="states" ToRole="cities" />
     <NavigationProperty Name="country" Relationship="Self.states_country_id_id_FK" FromRole="states" ToRole="countries" />
     <NavigationProperty Name="properties" Relationship="Self.pro_state_id_id_FK" FromRole="states" ToRole="properties" />
-    <NavigationProperty Name="user_personalInfor" Relationship="Self.u_state_id_FK" FromRole="states" ToRole="user_personalInfor" />
   </EntityType>
   <EntityType Name="transaction">
     <Key>
@@ -586,15 +583,12 @@
     <Property Name="email_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="facebook_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="country_id" Type="Int32" />
+    <Property Name="country_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="u_state" Type="Int32" />
-    <Property Name="u_city" Type="Int32" />
+    <Property Name="u_state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="u_city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="city" Relationship="Self.u_city_id_FK" FromRole="user_personalInfor" ToRole="cities" />
-    <NavigationProperty Name="country" Relationship="Self.up_country_id_id_FK" FromRole="user_personalInfor" ToRole="countries" />
-    <NavigationProperty Name="state" Relationship="Self.u_state_id_FK" FromRole="user_personalInfor" ToRole="states" />
     <NavigationProperty Name="user" Relationship="Self.up_userID_id_FK" FromRole="user_personalInfor" ToRole="users" />
   </EntityType>
   <EntityType Name="user_profile">
@@ -878,18 +872,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="u_city_id_FK">
-    <End Role="cities" Type="Self.city" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="cities">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_city" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="cpl_cms_page_id_id_FK">
     <End Role="cms_pages" Type="Self.cms_pages" Multiplicity="0..1" />
     <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
@@ -960,18 +942,6 @@
         <PropertyRef Name="id" />
       </Principal>
       <Dependent Role="states">
-        <PropertyRef Name="country_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="up_country_id_id_FK">
-    <End Role="countries" Type="Self.country" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="countries">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
         <PropertyRef Name="country_id" />
       </Dependent>
     </ReferentialConstraint>
@@ -1460,18 +1430,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="u_state_id_FK">
-    <End Role="states" Type="Self.state" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="states">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_state" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_transactions_payer">
     <End Role="users" Type="Self.user" Multiplicity="0..1" />
     <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
@@ -1728,10 +1686,6 @@
       <End Role="cities" EntitySet="cities" />
       <End Role="properties" EntitySet="properties" />
     </AssociationSet>
-    <AssociationSet Name="u_city_id_FK" Association="Self.u_city_id_FK">
-      <End Role="cities" EntitySet="cities" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
-    </AssociationSet>
     <AssociationSet Name="cpl_cms_page_id_id_FK" Association="Self.cpl_cms_page_id_id_FK">
       <End Role="cms_pages" EntitySet="cms_pages" />
       <End Role="cms_page_languages" EntitySet="cms_page_languages" />
@@ -1755,10 +1709,6 @@
     <AssociationSet Name="states_country_id_id_FK" Association="Self.states_country_id_id_FK">
       <End Role="countries" EntitySet="countries" />
       <End Role="states" EntitySet="states" />
-    </AssociationSet>
-    <AssociationSet Name="up_country_id_id_FK" Association="Self.up_country_id_id_FK">
-      <End Role="countries" EntitySet="countries" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
     </AssociationSet>
     <AssociationSet Name="pro_currency_id_id_FK" Association="Self.pro_currency_id_id_FK">
       <End Role="currencies" EntitySet="currencies" />
@@ -1911,10 +1861,6 @@
     <AssociationSet Name="pr_transactions_id_id_FK" Association="Self.pr_transactions_id_id_FK">
       <End Role="transactions" EntitySet="transactions" />
       <End Role="property_reviews" EntitySet="property_reviews" />
-    </AssociationSet>
-    <AssociationSet Name="u_state_id_FK" Association="Self.u_state_id_FK">
-      <End Role="states" EntitySet="states" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
     </AssociationSet>
     <AssociationSet Name="FK_transactions_payer" Association="Self.FK_transactions_payer">
       <End Role="users" EntitySet="users" />

@@ -510,13 +510,13 @@
                                                     {
                                                         if (tmp.user1.user_personalInfor.FirstOrDefault().country_id != null)
                                                         {
-                                                            address = tmp.user1.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                            address = tmp.user1.user_personalInfor.FirstOrDefault().country_id;
                                                             if (tmp.user1.user_personalInfor.FirstOrDefault().u_state != null)
                                                             {
-                                                                address = tmp.user1.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                                address = tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country_id;
                                                                 if (tmp.user1.user_personalInfor.FirstOrDefault().u_city != null)
                                                                 {
-                                                                    address = tmp.user1.user_personalInfor.FirstOrDefault().city.city_name + ", " + tmp.user1.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                                    address = tmp.user1.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country_id;
                                                                 }
                                                             }
                                                         }

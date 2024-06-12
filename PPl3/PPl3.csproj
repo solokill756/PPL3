@@ -579,6 +579,7 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\revenue.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\invoice.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\userPersonalProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\BanUser.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -586,7 +587,6 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\HomeAdmin\BanUser.cshtml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
