@@ -158,8 +158,11 @@ namespace PPl3.Areas.Admin.Controllers
             foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
             {
 
-                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
-                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                if (int.Parse(item.transfer_on.Value.ToString("yyyy")) == int.Parse(DateTime.Now.ToString("yyyy")))
+                {
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                }
 
                 if (int.Parse(item.transfer_on.Value.ToString("yyyy")) >= mocYear)
                 {
@@ -185,6 +188,41 @@ namespace PPl3.Areas.Admin.Controllers
                 TotalRevenue = totalRevenue,
             };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getRevenueChartInYear(int year, int user)
+        {
+            string phanhoi = "true";
+            PPL3Entities db = new PPL3Entities();
+            user p_user = db.users.FirstOrDefault(item => item.id == user);
+            List<RevenueListData1> data1 = new List<RevenueListData1>();
+            for (int i = 0; i < 12; i++)
+            {
+                RevenueListData1 revenueListData1 = new RevenueListData1()
+                {
+                    month = i + 1,
+                    money = 0,
+                    renters = 0,
+                };
+                data1.Add(revenueListData1);
+            }
+            int mocYear = int.Parse(DateTime.Now.ToString("yyyy"));
+            foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
+            {
+                if (int.Parse(item.transfer_on.Value.ToString("yyyy")) == year)
+                {
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                }
+            }
+
+            var data = new
+            {
+                phanhoi = phanhoi,
+                Data1 = data1,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult invoice(int id)
@@ -217,6 +255,8 @@ namespace PPl3.Areas.Admin.Controllers
             try
             {
                 delUser.is_active = 0;
+                string emailHtml = RenderRazorViewToString("BanUser", delUser);
+                SendEmail("hosithao1622004@gmail.com", "TNT Ban System", emailHtml);
                 db.SaveChanges();
             }
             catch(Exception e)
@@ -246,12 +286,20 @@ namespace PPl3.Areas.Admin.Controllers
                     delprop.Add(num.id);
                     var p = db.properties.Where(it => it.id == num.id).FirstOrDefault();
                     p.p_status = 0;
+                    
                     db.SaveChanges();
                 }
             }
             try
             {
                 delUser.user_type = 2;
+                user_notification user_Notification = new user_notification();
+                user_Notification.userid = delUser.id;
+                user_Notification.created = DateTime.Now;
+                user_Notification.content = "Hello " + delUser.account_name + ", you have been banned from the hosting system. Please contact tnthotel2004@gmail.com for further details.";
+                user_Notification.un_status = 0;
+                user_Notification.un_url = "#";
+                db.user_notification.Add(user_Notification);
                 db.SaveChanges();
             }
             catch (Exception e)
@@ -276,6 +324,13 @@ namespace PPl3.Areas.Admin.Controllers
             {
                 var p = db.properties.Where(item => item.id == id).FirstOrDefault();
                 p.p_status = 0;
+                user_notification user_Notification = new user_notification();
+                user_Notification.userid = p.userId;
+                user_Notification.created = DateTime.Now;
+                user_Notification.content = p.p_name + " has been deleted. Please contact tnthotel2004@gmail.com for more details.";
+                user_Notification.un_status = 0;
+                user_Notification.un_url = "#";
+                db.user_notification.Add(user_Notification);
                 db.SaveChanges();
             }
             catch(Exception e) 
@@ -300,9 +355,9 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country.ct_name + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().state.state_name + ", " ?? "") + 
-                                     (item.user_personalInfor.FirstOrDefault().city.city_name ?? "")
+                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") + 
+                                     (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
 
             var data = new
@@ -329,9 +384,9 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country.ct_name + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().state.state_name + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().city.city_name ?? "")
+                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
 
             var data = new
@@ -727,6 +782,10 @@ namespace PPl3.Areas.Admin.Controllers
             return Json(list_appear_hotel, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult BanUser(user user) 
+        {
+            return View(user);
+        }
 
         // notification
 

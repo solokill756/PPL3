@@ -597,8 +597,28 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
-        [UserAuthorize(idChucNang = 12)]
+        //[UserAuthorize(idChucNang = 12)]
         public JsonResult addAddressCtc(int country_id, int state_id, int city_id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
+            tmpprofile.country_id = db.countries.Where(item => item.id == country_id).FirstOrDefault().ct_name;
+            tmpprofile.u_state = db.states.Where(item => item.id == state_id).FirstOrDefault().state_name;
+            tmpprofile.u_city = db.cities.Where(item => item.id == city_id).FirstOrDefault().city_name;
+            db.SaveChanges();
+            var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
+            Session["user"] = userInfor;
+            var data = new
+            {
+                country = tmpprofile.country_id,
+                state = tmpprofile.u_state, city = tmpprofile.u_city,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult addAddressWrite(string country_id, string state_id, string city_id)
         {
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];

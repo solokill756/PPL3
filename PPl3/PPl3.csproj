@@ -579,6 +579,7 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\revenue.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\invoice.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\userPersonalProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\BanUser.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>

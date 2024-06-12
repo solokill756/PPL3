@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="PPl3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="amenities">
     <Key>
       <PropertyRef Name="id" />
@@ -488,10 +488,10 @@
     <Property Name="email_address" Type="varchar" MaxLength="255" />
     <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
     <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
-    <Property Name="country_id" Type="int" />
+    <Property Name="country_id" Type="nvarchar" MaxLength="50" />
     <Property Name="street_address" Type="nvarchar" MaxLength="255" />
-    <Property Name="u_state" Type="int" />
-    <Property Name="u_city" Type="int" />
+    <Property Name="u_state" Type="nvarchar" MaxLength="50" />
+    <Property Name="u_city" Type="nvarchar" MaxLength="50" />
     <Property Name="first_name" Type="nvarchar" MaxLength="255" />
     <Property Name="last_name" Type="nvarchar" MaxLength="255" />
   </EntityType>
@@ -1306,30 +1306,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="u_city_id_FK">
-    <End Role="cities" Type="Self.cities" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="cities">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_city" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="u_state_id_FK">
-    <End Role="states" Type="Self.states" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="states">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_state" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="ul_language_id_FK">
     <End Role="listLanguage" Type="Self.listLanguage" Multiplicity="0..1" />
     <End Role="users_languages" Type="Self.users_languages" Multiplicity="*" />
@@ -1367,18 +1343,6 @@
       </Principal>
       <Dependent Role="user_notification">
         <PropertyRef Name="userid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="up_country_id_id_FK">
-    <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="countries">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="country_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1488,7 +1452,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="PPl3ModelStoreContainer">
+  <EntityContainer Name="PPL3ModelStoreContainer">
     <EntitySet Name="amenities" EntityType="Self.amenities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="bookings" EntityType="Self.bookings" Schema="dbo" store:Type="Tables" />
@@ -1766,14 +1730,6 @@
       <End Role="users" EntitySet="users" />
       <End Role="transactions" EntitySet="transactions" />
     </AssociationSet>
-    <AssociationSet Name="u_city_id_FK" Association="Self.u_city_id_FK">
-      <End Role="cities" EntitySet="cities" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
-    </AssociationSet>
-    <AssociationSet Name="u_state_id_FK" Association="Self.u_state_id_FK">
-      <End Role="states" EntitySet="states" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
-    </AssociationSet>
     <AssociationSet Name="ul_language_id_FK" Association="Self.ul_language_id_FK">
       <End Role="listLanguage" EntitySet="listLanguage" />
       <End Role="users_languages" EntitySet="users_languages" />
@@ -1785,10 +1741,6 @@
     <AssociationSet Name="unn_userid_id_FK" Association="Self.unn_userid_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="user_notification" EntitySet="user_notification" />
-    </AssociationSet>
-    <AssociationSet Name="up_country_id_id_FK" Association="Self.up_country_id_id_FK">
-      <End Role="countries" EntitySet="countries" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
     </AssociationSet>
     <AssociationSet Name="up_userID_id_FK" Association="Self.up_userID_id_FK">
       <End Role="users" EntitySet="users" />

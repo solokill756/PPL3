@@ -972,9 +972,11 @@ namespace PPl3.Areas.Host.Controllers
             int mocYear = int.Parse(currentYear) - 6;
             foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
             {
-
-                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
-                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                if(int.Parse(item.transfer_on.Value.ToString("yyyy")) == int.Parse(DateTime.Now.ToString("yyyy")))
+                {
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                }
 
                 if(int.Parse(item.transfer_on.Value.ToString("yyyy")) >= mocYear)
                 {
@@ -1000,6 +1002,41 @@ namespace PPl3.Areas.Host.Controllers
                 TotalRevenue = totalRevenue,
             };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getRevenueChartInYear(int year) 
+        {
+            string phanhoi = "true";
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            List<RevenueListData1> data1 = new List<RevenueListData1>();
+            for (int i = 0; i < 12; i++)
+            {
+                RevenueListData1 revenueListData1 = new RevenueListData1()
+                {
+                    month = i + 1,
+                    money = 0,
+                    renters = 0,
+                };
+                data1.Add(revenueListData1);
+            }
+            int mocYear = int.Parse(DateTime.Now.ToString("yyyy"));
+            foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
+            {
+                if (int.Parse(item.transfer_on.Value.ToString("yyyy")) == year)
+                {
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                }
+            }
+
+            var data = new
+            {
+                phanhoi = phanhoi,
+                Data1 = data1,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // Fuction

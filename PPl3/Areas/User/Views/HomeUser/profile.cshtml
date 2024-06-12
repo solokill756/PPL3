@@ -340,26 +340,31 @@
                                     </div>
                                 </div>
 
-                                <div class="ask_guest">
-                                    <div class="tittle">
-                                        <span>Ask @p_user.user_personalInfor.FirstOrDefault().legal_name about</span>
-                                    </div>
-                                    <ul class="interest_list">
-                                        @{
-                                            foreach (var item in p_user.users_interests.ToList())
-                                            {
-                                                <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
-                                            }
-                                        }
-                                        @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
-                                            <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
-                                            <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
-                                            <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
-                                            <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
-                                            <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
-                                            <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
-                                    </ul>
-                                </div>
+                                @{
+                                    if (p_user.users_interests.Count() != 0)
+                                    {
+                                        <div class="ask_guest">
+                                            <div class="tittle">
+                                                <span>Ask @p_user.user_personalInfor.FirstOrDefault().legal_name about</span>
+                                            </div>
+                                            <ul class="interest_list">
+                                                @{
+                                                    foreach (var item in p_user.users_interests.ToList())
+                                                    {
+                                                        <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
+                                                    }
+                                                }
+                                                @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
+                        <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
+                        <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
+                        <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
+                        <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
+                                            </ul>
+                                        </div>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>

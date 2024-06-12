@@ -8,6 +8,7 @@
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
     int pos = 0;
     string tmpBD;
+    int is_select = 0;
 
 }
 
@@ -59,49 +60,49 @@
                                     {
                                         if (p_user.user_profile.FirstOrDefault().user_avatar != null)
                                         {
-                                                        <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
-                                                            @if (countNoti != 0)
-                                                            {
-                                                                <span class="notification_badge">@countNoti</span>
-                                                            }
-                                                            else
-                                                            {
+                                            <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                                                @if (countNoti != 0)
+                                                {
+                                                    <span class="notification_badge">@countNoti</span>
+                                                }
+                                                else
+                                                {
 
-                                                                <span class="notification_badge" style="background-color:transparent"></span>
-                                                            }
-                                                        </button>
+                                                    <span class="notification_badge" style="background-color:transparent"></span>
+                                                }
+                                            </button>
                                         }
                                         else
                                         {
-                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
-                            @*<i class="fa-solid fa-user"></i>*@
-                            @if (countNoti != 0)
-                            {
-                                <span class="notification_badge">@countNoti</span>
-                            }
-                            else
-                            {
+                                            <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                                                @*<i class="fa-solid fa-user"></i>*@
+                                                @if (countNoti != 0)
+                                                {
+                                                    <span class="notification_badge">@countNoti</span>
+                                                }
+                                                else
+                                                {
 
-                                <span class="notification_badge" style="background-color:transparent"></span>
-                            }
-                        </button>
+                                                    <span class="notification_badge" style="background-color:transparent"></span>
+                                                }
+                                            </button>
                                         }
 
                                     }
                                     else
                                     {
-                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
-                            @*<i class="fa-solid fa-user"></i>*@
-                            @if (countNoti != 0)
-                            {
-                                <span class="notification_badge">@countNoti</span>
-                            }
-                            else
-                            {
+                                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                                            @*<i class="fa-solid fa-user"></i>*@
+                                            @if (countNoti != 0)
+                                            {
+                                                <span class="notification_badge">@countNoti</span>
+                                            }
+                                            else
+                                            {
 
-                                <span class="notification_badge" style="background-color:transparent"></span>
-                            }
-                        </button>
+                                                <span class="notification_badge" style="background-color:transparent"></span>
+                                            }
+                                        </button>
                                     }
                                 }
                                 catch (Exception ex)
@@ -131,7 +132,7 @@
                                 <i class="fas fa-times" style="color: red;"></i>
                                 <p>Please enter complete information to become a host !</p>
                             </div>
-                            
+
                         }
                     </div>
                 </div>
@@ -181,9 +182,10 @@
                                             {
                                                 <input type="text" id="last_name" placeholder="Last name" value="@p_user.user_personalInfor.FirstOrDefault().last_name">
                                             }
-                                            else {
+                                            else
+                                            {
                                                 <input type="text" id="last_name" placeholder="Last name" value="@p_user.user_personalInfor.FirstOrDefault().last_name" readonly style="cursor:not-allowed">
-                                            }   
+                                            }
 
                                         }
                                         else
@@ -221,12 +223,14 @@
                                                     <input type="number" id="phone_number" required placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone" readonly style="cursor:not-allowed">
                                                 }
                                             }
-                                            else { 
+                                            else
+                                            {
                                                 <input type="number" id="phone_number" required placeholder="Phone number">
 
                                             }
                                         }
-                                        else { 
+                                        else
+                                        {
                                             <input type="number" id="phone_number" required placeholder="Phone number">
                                         }
 
@@ -282,7 +286,7 @@
                                                         {
                                                             <input type="date" id="Expiration_date" value="@p_user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("yyyy-MM-dd")" readonly style="cursor:not-allowed">
                                                         }
-                                                        
+
                                                     }
                                                     else
                                                     {
@@ -293,13 +297,15 @@
                                         </div>
                                         <div class="first_input">
                                             <h5>Issued by: </h5>
-                                            @if(p_user.user_type == 2) { 
+                                            @if (p_user.user_type == 2)
+                                            {
                                                 <input type="number" id="cccd_number" required placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card">
                                             }
-                                            else { 
+                                            else
+                                            {
                                                 <input type="number" id="cccd_number" required placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card" readonly style="cursor:not-allowed">
                                             }
-                                            
+
                                             <p class="error error_mess">Please enter all 12 numbers</p>
                                         </div>
                                     </div>
@@ -415,49 +421,65 @@
                                             string city = "";
                                             if (p_user.user_personalInfor != null)
                                             {
-                                                if (p_user.user_personalInfor.FirstOrDefault().country != null)
+                                                if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
                                                 {
-                                                    country = p_user.user_personalInfor.FirstOrDefault().country.ct_name;
-                                                    if (p_user.user_personalInfor.FirstOrDefault().state != null)
+                                                    country = p_user.user_personalInfor.FirstOrDefault().country_id;
+                                                    if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        state = p_user.user_personalInfor.FirstOrDefault().state.state_name;
-                                                        if (p_user.user_personalInfor.FirstOrDefault().city != null)
+                                                        state = p_user.user_personalInfor.FirstOrDefault().u_state;
+                                                        if (p_user.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            city = p_user.user_personalInfor.FirstOrDefault().city.city_name;
-                                                            <p class="address">Live in @city, @state, @country</p>
+                                                            city = p_user.user_personalInfor.FirstOrDefault().u_city;
+                                                            <p id="livein" class="address">Live in @city, @state, @country</p>
                                                         }
                                                         else
                                                         {
-                                                            <p class="address">Live in @state, @country</p>
+                                                            <p id="livein" class="address">Live in @state, @country</p>
                                                         }
                                                     }
                                                     else
                                                     {
-                                                        <p class="address">Live in @country</p>
+                                                        <p id="livein" class="address">Live in @country</p>
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    <p class="address">Live in</p>
+                                                    <p id="livein" class="address">Live in</p>
                                                 }
                                             }
 
 
-}
+                                        }
                                     </div>
                                     <button class="btn"><i class="fa-solid fa-chevron-down"></i></button>
                                 </div>
                                 <div class="input_box">
-                                    <div class="input_address">
+                                    @* New code *@
+                                    <div class="btn_change">
+                                        <button id="write_btn_id" class="write_btn btn_clicked"><i class="fa-solid fa-pen"></i>Write</button>
+                                        <button id="select_btn_id" class="select_btn"><i class="fa-solid fa-check-to-slot"></i>Select</button>
+                                    </div>
+                                    <div class="input_address write_box">
+                                        <div class="two_input">
+                                            <input type="text" id="city1" placeholder="City" value="@p_user.user_personalInfor.FirstOrDefault().u_city">
+                                            <input type="text" id="district1" placeholder="District" value="@p_user.user_personalInfor.FirstOrDefault().u_state">
+                                        </div>
+                                        <div class="first_input">
+                                            <input type="text" id="country1" placeholder="Country" value="@p_user.user_personalInfor.FirstOrDefault().country_id">
+                                        </div>
+                                    </div>
+                                    @* New code *@
+                                    @* Add class select_box *@
+                                    <div class="input_address select_box" style="display: none;">
                                         <div class="first_input">
                                             @*<input type="text" id="country" placeholder="Country">*@
                                             @if (p_user.user_type == 3)
                                             {
                                                 <select class="form-control"
-                                                        id="countryHost" disabled style="cursor:not-allowed">
+                                                        id="country" @*disabled style="cursor:not-allowed"*@>
                                                     @if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country.ct_name">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country_id">@p_user.user_personalInfor.FirstOrDefault().country_id</option>
                                                     }
                                                     else
                                                     {
@@ -466,20 +488,21 @@
 
                                                 </select>
                                             }
-                                            else { 
+                                            else
+                                            {
                                                 <select class="form-control"
-                                                        id="country" >
+                                                        id="country">
                                                     @*@if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
-                                                    {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country.ct_name">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="">Please select Country</option>
-                                                    }*@
+                                                        {
+                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country.ct_name">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="">Please select Country</option>
+                                                        }*@
 
                                                 </select>
-                                            
+
                                             }
 
                                         </div>
@@ -491,7 +514,7 @@
                                                         id="district">
                                                     @if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().state.state_name">@p_user.user_personalInfor.FirstOrDefault().state.state_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().u_state">@p_user.user_personalInfor.FirstOrDefault().u_state</option>
                                                     }
                                                     else
                                                     {
@@ -503,10 +526,10 @@
                                             else
                                             {
                                                 <select class="form-control"
-                                                        id="district" disabled style="cursor:not-allowed">
+                                                        id="district" @*disabled style="cursor:not-allowed"*@>
                                                     @if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().state.state_name">@p_user.user_personalInfor.FirstOrDefault().state.state_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().u_state">@p_user.user_personalInfor.FirstOrDefault().u_state</option>
                                                     }
                                                     else
                                                     {
@@ -524,7 +547,7 @@
                                                         id="city">
                                                     @if (p_user.user_personalInfor.FirstOrDefault().u_city != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().city.city_name">@p_user.user_personalInfor.FirstOrDefault().city.city_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().u_city">@p_user.user_personalInfor.FirstOrDefault().u_city</option>
                                                     }
                                                     else
                                                     {
@@ -533,13 +556,14 @@
 
                                                 </select>
                                             }
-                                            else { 
-                                            
+                                            else
+                                            {
+
                                                 <select class="form-control"
-                                                        id="city" disabled style="cursor:not-allowed">
+                                                        id="city" @*disabled style="cursor:not-allowed"*@>
                                                     @if (p_user.user_personalInfor.FirstOrDefault().u_city != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().city.city_name">@p_user.user_personalInfor.FirstOrDefault().city.city_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().u_city">@p_user.user_personalInfor.FirstOrDefault().u_city</option>
                                                     }
                                                     else
                                                     {
@@ -553,6 +577,7 @@
 
 
                                     </div>
+
                                     <button class="save_btn address_btn" id="saveaddress">Save</button>
                                 </div>
                             </li>
@@ -692,12 +717,12 @@
     <script src="~/ExtraFiles/JS/menuGuest.js?v=2"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @*<script>
-        $(document).ready(function () {
-            $('#country').val(@p_user.user_personalInfor.FirstOrDefault().country_id);
-            $('#city').val(@p_user.user_personalInfor.FirstOrDefault().u_s);
-            $('#district').val(@p_user.user_personalInfor.FirstOrDefault().u_state);
-        });
-    </script>*@
+            $(document).ready(function () {
+                $('#country').val(@p_user.user_personalInfor.FirstOrDefault().country_id);
+                $('#city').val(@p_user.user_personalInfor.FirstOrDefault().u_s);
+                $('#district').val(@p_user.user_personalInfor.FirstOrDefault().u_state);
+            });
+        </script>*@
     @*Lấy list countries*@
     <script>
         $(document).ready(function () {
@@ -706,8 +731,8 @@
                 type: "GET",
                 url: "/user/HomeUser/GetCountries",
                 success: function (countries) {
-                    $('#country').empty();
-                    $('#country').append('<option value="">Please select your state</option>');
+                    //$('#country').empty();
+                    //$('#country').append('<option value="">Please select your country</option>');
                     $.each(countries, function (key, value) {
                         $('#country').append('<option value="' + value.id + '">' + value.country_name + '</option>');
                     });
@@ -728,13 +753,13 @@
                         type: "GET",
                         url: "/user/HomeUser/GetStates?countryId=" + countryId,
                         success: function (states) {
-                        
+
                             $('#district').empty();
                             $('#district').append('<option value="">Please select your state</option>');
                             $('#city').empty();
                             $('#city').append('<option value="">Please select your city</option>');
                             $.each(states, function (key, value) {
-                                    $('#district').append('<option value="' + value.id + '">' + value.state_name + '</option>');
+                                $('#district').append('<option value="' + value.id + '">' + value.state_name + '</option>');
                             });
                         },
                         error: function (xhr, status, error) {
@@ -931,6 +956,7 @@
             var countryID = document.getElementById("country").value;
             var cityID = document.getElementById("city").value;
             var stateID = document.getElementById("district").value;
+            var liveInElement = document.getElementById('livein');
             var data = {
                 country_id: countryID,
                 state_id: stateID,
@@ -942,7 +968,33 @@
                 dataType: 'json',
                 data: data,
                 success: function (response) {
+                    /*console.log(response);*/
+                    liveInElement.textContent ="Live in "+ response.city + ", " + response.state + ", " + response.country;
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+        function addAddressWrite() {
+            var countryID = document.getElementById("country1").value;
+            var cityID = document.getElementById("city1").value;
+            var stateID = document.getElementById("district1").value;
+            var liveInElement = document.getElementById('livein');
+            var data = {
+                country_id: countryID,
+                state_id: stateID,
+                city_id: cityID
+            };
+            $.ajax({
+                url: '/user/homeuser/addAddressWrite',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (response) {
                     console.log(response);
+                    liveInElement.textContent ="Live in "+ cityID+", "+stateID+", "+countryID;
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
@@ -982,9 +1034,34 @@
     </script>
     @*Thiết lập lấy dữ liệu từ nút saveaddress*@
     <script>
+        let check = 0;
         const saveAddress = document.getElementById('saveaddress');
         saveAddress.addEventListener('click', () => {
-            addAddressCtc();
+            if (check == 1) {
+
+                addAddressCtc();
+            }
+            else {
+                addAddressWrite();
+            }
+        });
+    </script>
+
+    <script>
+        const writebutton = document.getElementById('write_btn_id');
+        writebutton.addEventListener('click', () => {
+            console.log("kich write");
+            check = 0;
+            document.querySelector('.select_box').style.display = 'none';
+            document.querySelector('.write_box').style.display = 'block';
+        });
+
+        const selectbutton = document.getElementById('select_btn_id');
+        selectbutton.addEventListener('click', () => {
+            console.log("kich select");
+            check = 1;
+            document.querySelector('.write_box').style.display = 'none';
+            document.querySelector('.select_box').style.display = 'block';
         });
     </script>
 

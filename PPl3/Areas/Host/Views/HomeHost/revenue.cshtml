@@ -11,15 +11,10 @@
 }
 
 @{
-    List<PPl3.Models.property_reviews> listUserReview = new List<PPl3.Models.property_reviews>();
-    foreach (PPl3.Models.property item in Model)
-    {
-        foreach (var tmp in item.property_reviews.ToList())
-        {
-            listUserReview.Add(tmp);
-        }
-    }
+    List<PPl3.Models.host_reviews> listUserReview = db.host_reviews.Where(item => item.hostid == p_user.id).ToList();
 }
+
+
 
 @{
     List<PPl3.Models.booking> listUserCurrent = new List<PPl3.Models.booking>();
@@ -38,7 +33,7 @@
     }
 }
 
-@{ 
+@{
     List<PPl3.Models.user_notification> uns = db.user_notification.Where(item => item.userid == p_user.id).ToList();
 }
 
@@ -110,29 +105,29 @@
                                                 }
                                             }
                                             @*<li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>Hello Alnor :)))</p>
-            </div>
-        </li>
-        <li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>Very Good! Thank You </p>
-            </div>
-        </li>
-        <li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>The service was amazing !!!</p>
-            </div>
-        </li>
-        <li>
-            <div class="mess_item">
-                <h4>Davis Ngo</h4>
-                <p>Hello Alnor, Can you advise me further?</p>
-            </div>
-        </li>*@
+                                                    <div class="mess_item">
+                                                        <h4>Davis Ngo</h4>
+                                                        <p>Hello Alnor :)))</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="mess_item">
+                                                        <h4>Davis Ngo</h4>
+                                                        <p>Very Good! Thank You </p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="mess_item">
+                                                        <h4>Davis Ngo</h4>
+                                                        <p>The service was amazing !!!</p>
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="mess_item">
+                                                        <h4>Davis Ngo</h4>
+                                                        <p>Hello Alnor, Can you advise me further?</p>
+                                                    </div>
+                                                </li>*@
                                             <a href="/user/homeuser/chatUser">Show All</a>
                                         </ul>
                                     </div>
@@ -141,7 +136,7 @@
                                     <button class="btn_notifi">
                                         @{
                                             int countNoti = 0;
-                                            foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                            foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
                                             {
                                                 countNoti++;
                                             }
@@ -164,12 +159,12 @@
                                     <span>Notification</span>
                                     <div class="modal notifi">
                                         <ul class="modal_box">
-                                            @{ 
+                                            @{
                                                 position = 0;
-                                                foreach(var item in uns)
+                                                foreach (var item in uns)
                                                 {
                                                     position++;
-                                                    if(position == 5) { break; }
+                                                    if (position == 5) { break; }
                                                     <li>
                                                         <div class="mess_item">
                                                             @*<h4>Payment</h4>*@
@@ -179,11 +174,11 @@
                                                 }
                                             }
                                             @*<li>
-                                                <div class="mess_item">
-                                                    <h4>Payment</h4>
-                                                    <p>Paid room fee of $300</p>
-                                                </div>
-                                            </li>*@
+                                                    <div class="mess_item">
+                                                        <h4>Payment</h4>
+                                                        <p>Paid room fee of $300</p>
+                                                    </div>
+                                                </li>*@
                                             <a href="/user/homeuser/notification">Show All</a>
                                         </ul>
                                     </div>
@@ -272,6 +267,17 @@
                                 <div class="box">
                                     <div class="tittle">
                                         <p>Statistics Of The Month</p>
+
+                                        <select name="" id="by_year">
+                                            @{
+                                                string currentyear = DateTime.Now.ToString("yyyy");
+                                                string yearbecomehost = p_user.day_become_host.Value.ToString("yyyy");
+                                                for (int i = int.Parse(currentyear); i >= int.Parse(yearbecomehost); i--)
+                                                {
+                                                    <option value="@i">@i</option>
+                                                }
+                                            }
+                                        </select>
                                     </div>
                                     <canvas id="revenue_chart"></canvas>
                                 </div>
@@ -319,7 +325,7 @@
                                                                     </td>
                                                                 }
                                                             }
-                                                            
+
                                                         </tr>
                                                     }
                                                 }
@@ -408,23 +414,23 @@
                                             if (position == 1)
                                             {
                                                 <div class="box_item focus">
-                                                     <i class="fa-solid fa-house"></i>
-                                                     <p>@item.p_address</p>
-                                                     @{
-                                                         if (item.p_status != 1)
-                                                         {
-                                                             <span style="background-color:red !important">Unfinished</span>
-                                                         }
-                                                         else if (item.availability_type == 0)
-                                                         {
-                                                             <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
-                                                         }
-                                                         else if (item.p_status == 1)
-                                                         {
-                                                             <span style="background-color: green !important">Complete</span>
+                                                    <i class="fa-solid fa-house"></i>
+                                                    <p>@item.p_address</p>
+                                                    @{
+                                                        if (item.p_status != 1)
+                                                        {
+                                                            <span style="background-color:red !important">Unfinished</span>
+                                                        }
+                                                        else if (item.availability_type == 0)
+                                                        {
+                                                            <span style="background-color: rgb(228, 109, 25) !important">Reservation expires</span>
+                                                        }
+                                                        else if (item.p_status == 1)
+                                                        {
+                                                            <span style="background-color: green !important">Complete</span>
 
-                                                         }
-                                                     }
+                                                        }
+                                                    }
                                                 </div>
                                             }
                                             else
@@ -499,9 +505,9 @@
                                                 position++;
                                                 if (position == 6) { break; }
                                                 urlavatar = "";
-                                                if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
+                                                if (tmp.user1.user_profile.FirstOrDefault().user_avatar != null && tmp.user1.user_profile != null)
                                                 {
-                                                    urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
+                                                    urlavatar = tmp.user1.user_profile.FirstOrDefault().user_avatar;
                                                 }
                                                 else
                                                 {
@@ -511,7 +517,7 @@
                                                     <div class="avatar_user icon_style" style="background: url(@urlavatar) top center /cover no-repeat">
                                                         <div class="icon_star">
                                                             @{
-                                                                rating = (int)Math.Round((double)tmp.overall_rating);
+                                                                rating = int.Parse(tmp.rating);
                                                                 for (int i = 1; i <= 5; i++)
                                                                 {
                                                                     if (i <= rating)
@@ -528,7 +534,7 @@
                                                     </div>
                                                     <div class="comment_details">
                                                         <div class="item">
-                                                            <h4>@tmp.user.account_name</h4>
+                                                            <h4>@tmp.user1.account_name</h4>
                                                             <span>@tmp.created.Value.ToString("dd/MM/yyyy")</span>
                                                         </div>
                                                         <p>@tmp.comment</p>
@@ -555,7 +561,7 @@
                                             foreach (var tmp in listUserCurrent)
                                             {
                                                 position++;
-                                                if(position == 6) { break; }
+                                                if (position == 6) { break; }
                                                 urlavatar = "";
                                                 if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
                                                 {
@@ -663,9 +669,9 @@
                                 {
                                     position++;
                                     urlavatar = "";
-                                    if (tmp.user.user_profile.FirstOrDefault().user_avatar != null && tmp.user.user_profile != null)
+                                    if (tmp.user1.user_profile.FirstOrDefault().user_avatar != null && tmp.user1.user_profile != null)
                                     {
-                                        urlavatar = tmp.user.user_profile.FirstOrDefault().user_avatar;
+                                        urlavatar = tmp.user1.user_profile.FirstOrDefault().user_avatar;
                                     }
                                     else
                                     {
@@ -677,17 +683,31 @@
                                             <div>
                                                 <span>@tmp.user.account_name</span>
                                                 @{
-                                                    string uState = tmp.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                    string countryName = tmp.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                    string uCity = tmp.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                    string address = "";
+                                                    if (tmp.user1.user_personalInfor.FirstOrDefault() != null)
+                                                    {
+                                                        if (tmp.user1.user_personalInfor.FirstOrDefault().country_id != null)
+                                                        {
+                                                            address = tmp.user1.user_personalInfor.FirstOrDefault().country_id;
+                                                            if (tmp.user1.user_personalInfor.FirstOrDefault().u_state != null)
+                                                            {
+                                                                address = tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country_id;
+                                                                if (tmp.user1.user_personalInfor.FirstOrDefault().u_city != null)
+                                                                {
+                                                                    address = tmp.user1.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country_id;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
                                                 }
-                                                <p>@uCity ,  @uState , @countryName</p>
+                                                <p>@address</p>
                                             </div>
                                         </div>
                                         <div class="time_comment">
                                             <div class="star_comment">
                                                 @{
-                                                    rating = (int)Math.Round((double)tmp.overall_rating);
+                                                    rating = int.Parse(tmp.rating);
                                                     for (int i = 1; i <= 5; i++)
                                                     {
                                                         if (i <= rating)
@@ -760,7 +780,7 @@
                                                             </td>
                                                         }
                                                     }
-                                                    
+
                                                 </tr>
                                             }
                                         }
@@ -830,76 +850,125 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const revenueCtx = document.getElementById('revenue_chart').getContext('2d');
+            const renterCtx = document.getElementById('renter_chart').getContext('2d');
 
+            let revenueChart = new Chart(revenueCtx, {
+                type: "line",
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "Renter",
+                            data: [],
+                            backgroundColor: "rgba(235, 22, 22, .7)",
+                            fill: true
+                        },
+                        {
+                            label: "Revenue",
+                            data: [],
+                            backgroundColor: "rgba(235, 22, 22, .5)",
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            });
 
-        $(document).ready(function () {
+            let renterChart = new Chart(renterCtx, {
+                type: "bar",
+                data: {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "Renter",
+                            data: [],
+                            backgroundColor: "rgba(235, 22, 22, .7)"
+                        },
+                        {
+                            label: "Revenue",
+                            data: [],
+                            backgroundColor: "rgba(235, 22, 22, .5)"
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+
             $.ajax({
                 type: "GET",
                 url: "/host/homehost/GetListDataForRevenue",
                 success: function (response) {
                     var data = response.Data;
                     var data1 = response.Data1;
-                    const renter = document.getElementById('renter_chart');
-                    const revenue = document.getElementById('revenue_chart');
+
                     const moneyList = data.map(item => item.money);
                     const newLabels = data.map(item => item.year);
                     const renterList = data.map(item => item.renters);
                     const moneyList1 = data1.map(item => item.money);
                     const newLabels1 = data1.map(item => item.month);
                     const renterList1 = data1.map(item => item.renters);
+
                     $("#month_renter").text(response.MonthRenter);
                     $("#total_renter").text(response.TotalRenter);
                     $("#month_revenue").text(response.MonthRevenue);
                     $("#total_revenue").text(response.TotalRevenue);
-                    var renterChart = new Chart(renter, {
-                        type: "bar",
-                        data: {
-                            labels: newLabels,
-                            datasets: [{
-                                label: "Renter",
-                                data: renterList,
-                                backgroundColor: "rgba(235, 22, 22, .7)"
-                            },
-                            {
-                                label: "Revenue",
-                                data: moneyList,
-                                backgroundColor: "rgba(235, 22, 22, .5)"
-                            },
-                            ]
-                        },
-                        options: {
-                            responsive: true
-                        }
-                    });
-                    var revenueChart = new Chart(revenue, {
-                        type: "line",
-                        data: {
-                            labels: newLabels1,
-                            datasets: [{
-                                label: "Renter",
-                                data: renterList1,
-                                backgroundColor: "rgba(235, 22, 22, .7)",
-                                fill: true
-                            },
-                            {
-                                label: "Revenue",
-                                data: moneyList1,
-                                backgroundColor: "rgba(235, 22, 22, .5)",
-                                fill: true
-                            }
-                            ]
-                        },
-                        options: {
-                            responsive: true
-                        }
-                    });
+
+                    renterChart.data.labels = newLabels;
+                    renterChart.data.datasets[0].data = renterList;
+                    renterChart.data.datasets[1].data = moneyList;
+                    renterChart.update();
+
+                    revenueChart.data.labels = newLabels1;
+                    revenueChart.data.datasets[0].data = renterList1;
+                    revenueChart.data.datasets[1].data = moneyList1;
+                    revenueChart.update();
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
                 }
             });
-        });
 
+            const updateRevenueChart = (year) => {
+                $.ajax({
+                    type: "GET",
+                    url: "/host/homehost/getRevenueChartInYear",
+                    data: { year: year },
+                    success: function (response) {
+                        if (response.phanhoi === "true") {
+                            const data1 = response.Data1;
+                            const moneyList1 = data1.map(item => item.money);
+                            const renterList1 = data1.map(item => item.renters);
+                            const newLabels1 = data1.map(item => item.month);
+
+                            revenueChart.data.labels = newLabels1;
+                            revenueChart.data.datasets[0].data = renterList1;
+                            revenueChart.data.datasets[1].data = moneyList1;
+                            revenueChart.update();
+                        } else {
+                            console.log(response.phanhoi);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            };
+
+            const yearSelect = document.getElementById('by_year');
+            yearSelect.addEventListener('change', function () {
+                const selectedYear = this.value;
+                updateRevenueChart(selectedYear);
+            });
+
+            const defaultYear = yearSelect.value;
+            updateRevenueChart(defaultYear);
+        });
     </script>
 </body>
 </html>

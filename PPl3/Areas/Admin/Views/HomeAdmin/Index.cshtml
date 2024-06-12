@@ -350,7 +350,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country.ct_name - @item.user.user_personalInfor.FirstOrDefault().state.state_name - @item.user.user_personalInfor.FirstOrDefault().city.city_name</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country_id - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -673,7 +673,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country.ct_name - @item.user.user_personalInfor.FirstOrDefault().state.state_name - @item.user.user_personalInfor.FirstOrDefault().city.city_name</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country_id - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -960,7 +960,7 @@
                         <th>Email</th>
                         <th></th>
                         </thead>
-                        <tbody>
+                        <tbody id="user_table">
                             @{
                                 if (lstUser != null)
                                 {
@@ -996,13 +996,13 @@
                                                 string address = "";
                                                 if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country_id;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().city.city_name + ", " + tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         }
                                                     }
                                                 }
@@ -1030,8 +1030,8 @@
                         <span>People</span>
                     </div>
                     <div class="search">
-                        <button><i class='bx bx-search'></i></button>
-                        <input type="text" placeholder="Search...">
+                        <button id="btn_search_host"><i class='bx bx-search'></i></button>
+                        <input id="search_host" type="text" placeholder="Search..." value="">
                     </div>
                 </div>
                 <div class="list_item item_user">
@@ -1044,7 +1044,7 @@
                         <th>Email</th>
                         <th></th>
                         </thead>
-                        <tbody>
+                        <tbody id="table_host">
                             @{
                                 if (lstHost != null)
                                 {
@@ -1080,13 +1080,13 @@
                                                 string address = "";
                                                 if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country_id;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().city.city_name + ", " + tmp.user_personalInfor.FirstOrDefault().state.state_name + ", " + tmp.user_personalInfor.FirstOrDefault().country.ct_name;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
                                                         }
                                                     }
                                                 }
@@ -1113,8 +1113,8 @@
                         <span>Hotel</span>
                     </div>
                     <div class="search">
-                        <button><i class='bx bx-search'></i></button>
-                        <input type="text" placeholder="Search...">
+                        <button id="btn_search_hotel"><i class='bx bx-search'></i></button>
+                        <input id="search_hotel" type="text" placeholder="Search..." value="">
                     </div>
                 </div>
                 <div class="list_item item_user">
@@ -1128,7 +1128,7 @@
                         <th>Day post</th>
                         <th></th>
                         </thead>
-                        <tbody>
+                        <tbody id="table_hotel">
                             @{
                                 if (lstHotel != null)
                                 {
@@ -1612,27 +1612,31 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="ask_guest">
-                                                                <div class="tittle">
-
-                                                                    <span>Ask @name about</span>
-                                                                </div>
-                                                                <ul class="interest_list">
-                                                                    @{
-                                                                        foreach (var item in p_user.users_interests.ToList())
-                                                                        {
-                                                                            <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
-                                                                        }
-                                                                    }
-                                                                    @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
-                                                                        <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
-                                                                        <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
-                                                                        <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
-                                                                        <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
-                                                                        <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
-                                                                        <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
-                                                                </ul>
-                                                            </div>
+                                                            @{
+                                                                if (p_user.users_interests.Count() != 0)
+                                                                {
+                                                                    <div class="ask_guest">
+                                                                        <div class="tittle">
+                                                                            <span>Ask @p_user.user_personalInfor.FirstOrDefault().legal_name about</span>
+                                                                        </div>
+                                                                        <ul class="interest_list">
+                                                                            @{
+                                                                                foreach (var item in p_user.users_interests.ToList())
+                                                                                {
+                                                                                    <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
+                                                                                }
+                                                                            }
+                                                                            @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
+                        <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
+                        <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
+                        <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
+                        <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
+                                                                        </ul>
+                                                                    </div>
+                                                                }
+                                                            }
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2334,56 +2338,213 @@
 
 
 
-    //function search(key, kind) {
-    //    var data = {
-    //        key: key,
-    //        kind : kind
-    //    };
-    //    $.ajax({
-    //        url: '/admin/homeadmin/search',
-    //        type: 'GET',
-    //        dataType: 'json',
-    //        data: data,
-    //        success: function (response) {
-    //            if (response.phanhoi == "true") {
-    //                console.log(response.phanhoi);
-    //                response.lst.forEach(function (user) {
-    //                    var avatar =
-    //                    var newRowHtml = `
-    //                        <tr id="userRow-new">
-    //                            <td>
-    //                                <div class="avatar">
-    //                                    <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="">
-    //                                </div>
-    //                            </td>
-    //                            <td></td>
-    //                            <td></td>
-    //                            <td></td>
-    //                            <td></td>
-    //                            <td>
-    //                                <button class="details_user">Detail</button>
-    //                                <button class="delete_btns">Delete</button>
-    //                            </td>
-    //                        </tr>
-    //                    `;
-    //                    $('tbody').append(newRowHtml);
-    //                });
-    //            }
-    //            else {
-    //                console.log(response.phanhoi);
-    //            }
-    //        },
-    //        error: function (xhr, status, error) {
-    //            console.error(error);
-    //        }
-    //    });
-    //}
+    function search(key) {
+        var data = {
+            key: key,
+        };
+        $.ajax({
+            url: '/admin/homeadmin/searchUser',
+            type: 'GET',
+            dataType: 'json',
+            data: data,
+            success: function (response) {
+                if (response.phanhoi == "true") {
+                    console.log(response.phanhoi);
+                    document.getElementById('user_table').innerHTML = '';
 
-    //const searchUserBtn = document.getElementById('btn_search_user');
-    //searchUserBtn.addEventListener('click', () => {
-    //    var key = document.getElementById('search_user').value;
-    //    var kind = 1;
-    //    search(key, kind);
-    //});
+                    $.each(response.lst, function (index, value) {
+                        if (value.user_avatar == null) {
+                            value.user_avatar = 'https://cdn-icons-png.flaticon.com/512/552/552721.png';
+                        }
+                        console.log(value.id);
+                        let rowHtml = `
+                            <tr id="userRow-${value.id}">
+                                <td>
+                                    <div class="avatar">
+                                        <img src="${value.user_avatar}" alt="">
+                                    </div>
+                                </td>
+                                <td>${value.account_name}</td>
+                                <td>${value.passport_code || ''}</td>
+                                <td>${value.address}</td>
+                                <td>${value.email_address}</td>
+                                <td>
+                                    <button id="${value.id}" class="details_user">Detail</button>
+                                    <button id="${value.id}" class="delete_btns">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                        document.getElementById('user_table').insertAdjacentHTML('beforeend', rowHtml);
+
+                    });
+                    var detailButtons = document.querySelectorAll('.details_user');
+                    detailButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var userId = button.id;
+                            var modalId = 'myModal-' + userId;
+                            var modal = document.getElementById(modalId);
+
+                            if (modal) {
+                                modal.classList.remove('hide');
+                            }
+                        });
+                    });
+
+                    var delButtons = document.querySelectorAll('.delete_btns');
+                    delButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var itemId = button.id;
+                            DeleteUser(itemId);
+                        });
+                    });
+                }
+                else {
+                    console.log(response.phanhoi);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function searchHost(key) {
+        var data = {
+            key: key,
+        };
+        $.ajax({
+            url: '/admin/homeadmin/searchHost',
+            type: 'GET',
+            dataType: 'json',
+            data: data,
+            success: function (response) {
+                if (response.phanhoi == "true") {
+                    document.getElementById('table_host').innerHTML = '';
+                    console.log(response.phanhoi);
+                    $.each(response.lst, function (index, value) {
+
+                        if (value.user_avatar == null) {
+                            value.user_avatar = 'https://cdn-icons-png.flaticon.com/512/552/552721.png';
+                        }
+                        console.log(value.id);
+                        let rowHtml = `
+                            <tr id="hostRow-${value.id}">
+                                <td>
+                                    <div class="avatar">
+                                        <img src="${value.user_avatar}" alt="">
+                                    </div>
+                                </td>
+                                <td>${value.legal_name}</td>
+                                <td>${value.passport_code || ''}</td>
+                                <td>${value.address}</td>
+                                <td>${value.email_address}</td>
+                                <td>
+                                    <button><a href="/admin/homeadmin/userPersonalProfile?user=${value.id}" target="_blank">Detail</a></button>
+                                    <button id="${value.id}" class="delete_Hostbtns">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                        document.getElementById('table_host').insertAdjacentHTML('beforeend', rowHtml);
+
+                    });
+                    var delHostButtons = document.querySelectorAll('.delete_Hostbtns');
+                    delHostButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var itemId = button.id;
+                            /*console.log(itemId);*/
+                            DeleteHostUser(itemId);
+                        });
+                    });
+                }
+                else {
+                    console.log(response.phanhoi);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function convertJsonDate(jsonDate) {
+        if (jsonDate && jsonDate.length > 0) {
+            var timestamp = parseInt(jsonDate.replace("/Date(", "").replace(")/", ""));
+            var date = new Date(timestamp);
+            var dateString = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+            return dateString;
+        }
+        return null;
+    }
+
+    function searchHotel(key) {
+        var data = {
+            key: key,
+        };
+        $.ajax({
+            url: '/admin/homeadmin/searchHotel',
+            type: 'GET',
+            dataType: 'json',
+            data: data,
+            success: function (response) {
+                if (response.phanhoi == "true") {
+                    document.getElementById('table_hotel').innerHTML = '';
+                    console.log(response.phanhoi);
+                    $.each(response.lst, function (index, value) {
+                        console.log(value.id);
+                        var date = convertJsonDate(value.Date_Post);
+                        var rowHtml = `
+                            <tr id="hotelRow-${value.id}">
+                                <td>${value.id}</td>
+                                <td>${value.p_name}</td>
+                                <td>${value.legal_name}</td>
+                                <td>${value.address}</td>
+                                <td>${value.email_address}</td>
+                                <td>${date}</td>
+                                <td>
+                                    <button><a href="/admin/homeadmin/revenue?user=${value.userId}" target="_blank">Detail</a></button>
+                                    <button id="${value.id}" class="delete_Hotelbtns">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+
+                        document.getElementById('table_hotel').insertAdjacentHTML('beforeend', rowHtml);
+
+                    });
+                    var delHotelButtons = document.querySelectorAll('.delete_Hotelbtns');
+                    delHotelButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var itemId = button.id;
+                            /*console.log(itemId);*/
+                            DeleteHotel(itemId);
+                        });
+                    });
+                }
+                else {
+                    console.log(response.phanhoi);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    const searchUserBtn = document.getElementById('btn_search_user');
+    searchUserBtn.addEventListener('click', () => {
+        var key = document.getElementById('search_user').value;
+        search(key);
+    });
+
+    const searchHostBtn = document.getElementById('btn_search_host');
+    searchHostBtn.addEventListener('click', () => {
+        var key = document.getElementById('search_host').value;
+        searchHost(key);
+    });
+
+    const searchHotelBtn = document.getElementById('btn_search_hotel');
+    searchHotelBtn.addEventListener('click', () => {
+        var key = document.getElementById('search_hotel').value;
+        searchHotel(key);
+    });
 
 </script>

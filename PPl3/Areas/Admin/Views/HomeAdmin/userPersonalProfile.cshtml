@@ -292,15 +292,15 @@
                                             string city = "";
                                             if (p_user.user_personalInfor != null)
                                             {
-                                                if (p_user.user_personalInfor.FirstOrDefault().country != null)
+                                                if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
                                                 {
-                                                    country = p_user.user_personalInfor.FirstOrDefault().country.ct_name;
-                                                    if (p_user.user_personalInfor.FirstOrDefault().state != null)
+                                                    country = p_user.user_personalInfor.FirstOrDefault().country_id;
+                                                    if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        state = p_user.user_personalInfor.FirstOrDefault().state.state_name;
-                                                        if (p_user.user_personalInfor.FirstOrDefault().city != null)
+                                                        state = p_user.user_personalInfor.FirstOrDefault().u_state;
+                                                        if (p_user.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            city = p_user.user_personalInfor.FirstOrDefault().city.city_name;
+                                                            city = p_user.user_personalInfor.FirstOrDefault().u_city;
                                                             <p class="address">Live in @city, @state, @country</p>
                                                         }
                                                         else
@@ -331,11 +331,11 @@
                                            
                                                 <select class="form-control"
                                                         id="country" disabled style="cursor:not-allowed">
-                                                    @*@if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
                                                         {
-                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country.ct_name">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
+                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country_id">@p_user.user_personalInfor.FirstOrDefault().country_id</option>
                                                         }
-                                                        else
+                                                        @*else
                                                         {
                                                             <option value="">Please select Country</option>
                                                         }*@
@@ -352,12 +352,12 @@
                                                         id="district" disabled style="cursor:not-allowed">
                                                     @if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().state.state_name">@p_user.user_personalInfor.FirstOrDefault().state.state_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().u_state">@p_user.user_personalInfor.FirstOrDefault().u_state</option>
                                                     }
-                                                    else
+                                                    @*else
                                                     {
                                                         <option value="">Please select state</option>
-                                                    }
+                                                    }*@
 
                                                 </select>
 
@@ -370,12 +370,12 @@
                                                         id="city" disabled style="cursor:not-allowed">
                                                     @if (p_user.user_personalInfor.FirstOrDefault().u_city != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().city.city_name">@p_user.user_personalInfor.FirstOrDefault().city.city_name</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().u_city">@p_user.user_personalInfor.FirstOrDefault().u_city</option>
                                                     }
-                                                    else
+                                                    @*else
                                                     {
                                                         <option value="">Please select City</option>
-                                                    }
+                                                    }*@
 
                                                 </select>
                                             

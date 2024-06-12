@@ -667,9 +667,9 @@
                                                     <span>@item.user.account_name</span>
                                                     @{
 
-                                                        string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                        string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                        string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                        string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
+                                                        string countryName = item.user.user_personalInfor.FirstOrDefault().country_id ?? "???";
+                                                        string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
                                                     }
                                                     <p>@uCity ,  @uState , @countryName</p>
                                                 </div>
@@ -1023,9 +1023,9 @@
                                                 <span>@item.user.account_name</span>
                                                 @{
 
-                                                    string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                    string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                    string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                    string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
+                                                    string countryName = item.user.user_personalInfor.FirstOrDefault().country_id ?? "???";
+                                                    string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
 
                                                 }
                                                 <p>@uCity ,  @uState , @countryName</p>
