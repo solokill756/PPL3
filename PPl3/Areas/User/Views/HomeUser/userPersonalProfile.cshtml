@@ -21,7 +21,7 @@
     <title>Personal information</title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/personal_infor.css" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/personal_infor.css?v=1" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/headerGuest.css?v=2" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -213,15 +213,7 @@
                                         {
                                             if (p_user.phone_number.FirstOrDefault().phone != null)
                                             {
-                                                if (p_user.user_type == 2)
-                                                {
-
-                                                    <input type="number" id="phone_number" required placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone">
-                                                }
-                                                else if (p_user.user_type == 3)
-                                                {
-                                                    <input type="number" id="phone_number" required placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone" readonly style="cursor:not-allowed">
-                                                }
+                                                <input type="number" id="phone_number" required placeholder="Phone number" value="@p_user.phone_number.FirstOrDefault().phone">
                                             }
                                             else
                                             {
@@ -594,32 +586,16 @@
                                         @{
                                             if (p_user.emergency_contact.FirstOrDefault() != null)
                                             {
-                                                if (p_user.user_type == 2)
-                                                {
-                                                    <div class="first_input">
-                                                        <input type="text" id="ec_name" placeholder="Name" value="@p_user.emergency_contact.FirstOrDefault().ec_name">
-                                                        <input type="text" id="relationship" placeholder="Relationship" value="@p_user.emergency_contact.FirstOrDefault().relationship">
-                                                        <input type="text" id="ec_language" placeholder="Language" value="@p_user.emergency_contact.FirstOrDefault().ec_language">
-                                                        <input type="email" id="ec_email" placeholder="Email" value="@p_user.emergency_contact.FirstOrDefault().email">
-                                                    </div>
-                                                    <div class="two_input">
-                                                        <input type="text" id="ec_country" placeholder="Country" value="@p_user.emergency_contact.FirstOrDefault().country">
-                                                        <input type="tel" id="ec_phone_number" placeholder="Phone number" value="@p_user.emergency_contact.FirstOrDefault().phone_number">
-                                                    </div>
-                                                }
-                                                else
-                                                {
-                                                    <div class="first_input">
-                                                        <input type="text" id="ec_name" placeholder="Name" value="@p_user.emergency_contact.FirstOrDefault().ec_name" readonly style="cursor:not-allowed">
-                                                        <input type="text" id="relationship" placeholder="Relationship" value="@p_user.emergency_contact.FirstOrDefault().relationship" readonly style="cursor:not-allowed">
-                                                        <input type="text" id="ec_language" placeholder="Language" value="@p_user.emergency_contact.FirstOrDefault().ec_language" readonly style="cursor:not-allowed">
-                                                        <input type="email" id="ec_email" placeholder="Email" value="@p_user.emergency_contact.FirstOrDefault().email" readonly style="cursor:not-allowed">
-                                                    </div>
-                                                    <div class="two_input">
-                                                        <input type="text" id="ec_country" placeholder="Country" value="@p_user.emergency_contact.FirstOrDefault().country" readonly style="cursor:not-allowed">
-                                                        <input type="tel" id="ec_phone_number" placeholder="Phone number" value="@p_user.emergency_contact.FirstOrDefault().phone_number" readonly style="cursor:not-allowed">
-                                                    </div>
-                                                }
+                                                <div class="first_input">
+                                                    <input type="text" id="ec_name" placeholder="Name" value="@p_user.emergency_contact.FirstOrDefault().ec_name">
+                                                    <input type="text" id="relationship" placeholder="Relationship" value="@p_user.emergency_contact.FirstOrDefault().relationship">
+                                                    <input type="text" id="ec_language" placeholder="Language" value="@p_user.emergency_contact.FirstOrDefault().ec_language">
+                                                    <input type="email" id="ec_email" placeholder="Email" value="@p_user.emergency_contact.FirstOrDefault().email">
+                                                </div>
+                                                <div class="two_input">
+                                                    <input type="text" id="ec_country" placeholder="Country" value="@p_user.emergency_contact.FirstOrDefault().country">
+                                                    <input type="tel" id="ec_phone_number" placeholder="Phone number" value="@p_user.emergency_contact.FirstOrDefault().phone_number">
+                                                </div>
 
                                             }
                                             else
@@ -713,7 +689,7 @@
             </div>
         </div>
     </div>
-    <script src="~/ExtraFiles/JS/personal_infor.js"></script>
+    <script src="~/ExtraFiles/JS/personal_infor.js?v=1"></script>
     <script src="~/ExtraFiles/JS/menuGuest.js?v=2"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     @*<script>
@@ -823,6 +799,7 @@
     <script>
         function addUserPhone() {
             var pn = document.getElementById("phone_number").value;
+            console.log(pn);
             var data = {
                 phone_number: pn
             };
