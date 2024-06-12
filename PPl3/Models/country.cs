@@ -19,7 +19,6 @@ namespace PPl3.Models
         {
             this.properties = new HashSet<property>();
             this.states = new HashSet<state>();
-            this.user_personalInfor = new HashSet<user_personalInfor>();
         }
     
         public int id { get; set; }
@@ -31,7 +30,5 @@ namespace PPl3.Models
         public virtual ICollection<property> properties { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<state> states { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user_personalInfor> user_personalInfor { get; set; }
     }
 }
