@@ -102,3 +102,9 @@ html {
     text-decoration: none; 
     color: inherit; 
 }
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+}

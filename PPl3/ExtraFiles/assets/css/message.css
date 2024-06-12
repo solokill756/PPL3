@@ -11,6 +11,10 @@ html{
     font-family: 'Montserrat', sans-serif;
 }
 
+.main{
+    margin: 15px;
+}
+
 .center{
     display: flex !important;
     justify-content: center;
@@ -338,4 +342,22 @@ html{
 .picture_css {
     width:300px;
     height:200px;
+}
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+    .list_message {
+        height: 642px;
+    }
+    .body_mess {
+        height: 615px;
+    }
+    .user_detail {
+        height: 813px;
+    }
+    .tittle h1{
+        display: none;
+    }
 }

@@ -310,3 +310,9 @@ html {
     width: 38px;
     height: 35px;
 }
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+}

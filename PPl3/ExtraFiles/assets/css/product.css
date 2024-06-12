@@ -445,7 +445,7 @@ html {
         width: 100%;
         height: 300px;
         border-radius: 10px;
-        margin-bottom: 25px;
+        margin-bottom: 10px;
         cursor: pointer;
     }
 
@@ -1152,6 +1152,7 @@ html {
 }
 
     .skill_work span {
+        display: flex;
         margin-bottom: 20px;
     }
 
@@ -1505,4 +1506,102 @@ html {
     }
 .hotel_discount p:last-child {
             margin-bottom: 0; /* Remove bottom margin for the last item */
+}
+
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+    .experience_list{
+        display: none;
+    }
+    .logo_link h1{
+        display: none;
+    }
+    .comment_item {
+        padding: 45px 0px 45px 0;
+    }
+    .pay{
+        justify-content: center;
+    }
+    .time_comment p {
+        display: none;
+    }
+    .light{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .calendar{
+        padding: 0px;
+        width: 100%;
+    }
+    .calendar-body{
+        padding: 0;
+    }
+    .calendar-week-day{
+        font-size: 14px;
+    }
+    .calendar-days{
+        font-size: 14px;
+    }
+    .calendar-days div {
+        width: 38px;
+        height: 40px;
+    }
+    .time_comment span {
+        font-size: 12px;
+        margin: 0 10px;
+    }
+    .comment_box {
+        padding: 15px;
+    }
+    .information {
+        padding: 15px;
+    }
+    .review_host img {
+        width: 90px;
+    }
+    .review_host i {
+        top: 45%;
+        left: 55%;
+        padding: 5px 5px;
+    }
+    .review_host h2{
+        font-size: 18px;
+    }
+    .infor_basics{
+        margin-left: 15px;
+    }
+    .infor_basics span {
+        font-size: 18px;
+    }
+    #footer{
+        text-align: center;
+    }
+}
+
+@media  screen and (min-width: 1024px){
+}
+
+@media screen and (max-width:63.9375em){
+    .pay_container{
+        width: 100%;
+    }
+    .guest_box_item{
+        padding: 10px;
+    }
+    .guest_box_item span{
+        font-size: 15px;
+    }
+    .quantity_guest button {
+        padding: 3px;
+    }
+    .nav_languages a{
+        display: none;
+    }
+    .experience_list {
+        width: 330px;
+    }
 }

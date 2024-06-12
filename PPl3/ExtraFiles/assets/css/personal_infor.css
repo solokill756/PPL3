@@ -265,3 +265,16 @@ html {
     color: #ff385c;
     margin-bottom: 10px;
 }
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+    .img_cccd button {
+        width: 100%;
+        height: 200px;
+    }
+    #footer{
+        text-align: center;
+    }
+}
