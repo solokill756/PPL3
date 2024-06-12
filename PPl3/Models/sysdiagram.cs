@@ -12,15 +12,12 @@ namespace PPl3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class email_content_languages
+    public partial class sysdiagram
     {
-        public int id { get; set; }
-        public Nullable<int> email_content_id { get; set; }
-        public Nullable<int> language_id { get; set; }
-        public string title { get; set; }
-        public string ecl_message { get; set; }
-    
-        public virtual email_contents email_contents { get; set; }
-        public virtual language language { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

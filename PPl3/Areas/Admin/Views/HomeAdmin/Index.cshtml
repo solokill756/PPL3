@@ -40,10 +40,10 @@
     <meta charset="UTF-8">
     <title> Responsive Sidebar Menu  | CodingLab </title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
-    <link href="~/ExtraFiles/assets/css/admin.css?v=8" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/admin.css?v=9" rel="stylesheet" />
     <!-- Boxicons CDN Link -->
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css?v=4">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css?v=5">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style id="img-style">
@@ -385,7 +385,7 @@
                                 <i class="fa-solid fa-swatchbook"></i>
                             </div>
                             <div class="btn_handle center">
-                                <button onclick="window.location.href = '/admin/homeadmin/confirm_host?user_id=@item.user_id'">Accept</button>
+                                <button onclick="confirm_host('@item.user_id')">Accept</button>
                                 <span>|</span>
                                 <button onclick="host_denied('@item.user_id')">Refuse</button>
                             </div>
@@ -455,9 +455,9 @@
                                             </div>
                                         </div>
                                         @*<div class="mg-bt confirm_reservations">
-                                                <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
-                                                <span><img src="" alt="">Use Instant Book</span>
-                                            </div>*@
+                    <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                    <span><img src="" alt="">Use Instant Book</span>
+                </div>*@
 
                                     </div>
                                     <div class="item_info">
@@ -484,13 +484,13 @@
                                             <span>@item.property.price$/night</span>
                                         </div>
                                     </div>
-                                </div>
 
-                            </div>
-                            <div class="btn_handle center">
-                                <button onclick="window.location.href ='/admin/homeadmin/confirm_hotel?hotel_id=@item.property_id& user_id=@item.property.userId'">Accept</button>
-                                <span>|</span>
-                                <button onclick="hotel_denied('@item.property.userId' , '@item.property_id')">Refuse</button>
+                                </div>
+                                <div class="btn_handle center">
+                                    <button onclick="confirm_hotel('@item.property.userId' , '@item.property_id')">Accept</button>
+                                    <span>|</span>
+                                    <button onclick="hotel_denied('@item.property.userId' , '@item.property_id')">Refuse</button>
+                                </div>
                             </div>
                             <div class="corner corner_top_left">
                                 <i class="fa-solid fa-swatchbook"></i>
@@ -707,11 +707,12 @@
                             <div class="corner corner_bottom_right">
                                 <i class="fa-solid fa-swatchbook"></i>
                             </div>
-                            <div class="btn_handle center">
-                                <button onclick="window.location.href = '/admin/homeadmin/confirm_host?user_id=@item.user_id'">Accept</button>
-                                <span>|</span>
-                                <button onclick="host_denied('@item.user_id')">Refuse</button>
-                            </div>
+
+                        </div>
+                        <div class="btn_handle center">
+                            <button onclick="confirm_host('@item.user_id')">Accept</button>
+                            <span>|</span>
+                            <button onclick="host_denied('@item.user_id')">Refuse</button>
                         </div>
                     </div>
                 }
@@ -808,13 +809,13 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="btn_handle center">
+                                    <button onclick="confirm_hotel('@item.property.userId', '@item.property_id')">Accept</button>
+                                    <span>|</span>
+                                    <button onclick="hotel_denied('@item.property.userId' , '@item.property_id')">Refuse</button>
+                                </div>
                             </div>
-                            <div class="btn_handle center">
-                                <button onclick="window.location.href ='/admin/homeadmin/confirm_hotel?hotel_id=@item.property_id&user_id=@item.property.userId'">Accept</button>
-                                <span>|</span>
-                                <button onclick="hotel_denied('@item.property.userId' , '@item.property_id')">Refuse</button>
-                            </div>
+                            
                             <div class="corner corner_top_left">
                                 <i class="fa-solid fa-swatchbook"></i>
                             </div>
@@ -1094,7 +1095,7 @@
                                             <td>@address</td>
                                             <td>@tmp.user_personalInfor.FirstOrDefault().email_address</td>
                                             <td>
-                                                <button><a href="/admin/homeadmin/userPersonalProfile?user=@tmp.id" target="_blank">Detail</a></button>
+                                                <button><a href="/admin/homeadmin/userPersonalProfile?user=@tmp.id" target="_blank" style="text-decoration:none; color:white">Detail</a></button>
                                                 <button id="@tmp.id" class="delete_Hostbtns">Delete</button>
                                             </td>
                                         </tr>
@@ -1162,7 +1163,7 @@
                                                 @{
                                                     string hotelid = "hotel_" + tmp.id.ToString();
                                                 }
-                                                <button><a href="/admin/homeadmin/revenue?user=@tmp.userId" target="_blank">Detail</a></button>
+                                                <button><a href="/admin/homeadmin/revenue?user=@tmp.userId" target="_blank" style="text-decoration:none; color:white">Detail</a></button>
                                                 <button id="@tmp.id" class="delete_Hotelbtns">Delete</button>
                                             </td>
                                         </tr>
@@ -1684,7 +1685,7 @@
     });
     console.log(list_each_month_host);
 
-    new Chart(ctx, {
+   var numberHostChart =  new Chart(ctx, {
       type: 'bar',
       data: {
       labels: [
@@ -1711,7 +1712,7 @@
       }
     });
 
-    new Chart(ctx1, {
+   var numberHotelChart =  new Chart(ctx1, {
       type: 'bar',
       data: {
       labels: [
@@ -1807,25 +1808,55 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-    //function confirm_host(user_id) {
-    //    $.ajax({
-    //        url: `/admin/homeadmin/confirm_host`,
-    //        type: "POST",
-    //        data: { user_id: user_id },
-    //        success: function (data) {
-    //            console.log(data);
-    //            //var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
-    //            //var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
-    //            //containerInforHost.classList.add(`animationInfor`)
-    //            //inforHostDetail.classList.remove('openHost');
-    //            //document.querySelector(`.user_${user_id}`).classList.add('close');
-    //            window.location.href = "/admin/homeadmin/index";
-    //        },
-    //        error: function (err) {
-    //            console.log(err);
-    //        }
-    //    })
-    //}
+
+    // CentorShip
+    function loadData() {
+        $.ajax({
+            url: `/admin/homeadmin/loadData`,
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                var container_homes = document.querySelector('.container_home').querySelectorAll('.item');
+                container_homes[0].querySelector('h2').textContent = data.number_hotel;
+                container_homes[1].querySelector('h2').textContent = data.number_host;
+                animateCircleProgress(data.host_rate, data.hotel_rate, 1000);
+                // Cập nhật dữ liệu của biểu đồ
+                numberHostChart.data.datasets[0].data = data.list_host;
+
+                // Gọi phương thức update() để cập nhật biểu đồ
+                numberHostChart.update();
+
+                // Cập nhật dữ liệu của biểu đồ
+                numberHotelChart.data.datasets[0].data = data.list_hotel;
+
+                // Gọi phương thức update() để cập nhật biểu đồ
+                numberHotelChart.update();
+                 
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+    function confirm_host(user_id) {
+        $.ajax({
+            url: `/admin/homeadmin/confirm_host`,
+            type: "POST",
+            data: { user_id: user_id },
+            success: function (data) {
+                console.log(data);
+                var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
+                var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
+                containerInforHost.classList.add(`animationInfor`)
+                inforHostDetail.classList.remove('openHost');
+                loadData();
+                document.querySelector(`.user_${user_id}`).classList.add('close');
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
     function host_denied(user_id) {
         $.ajax({
             url: `/admin/homeadmin/host_denied`,
@@ -1846,25 +1877,27 @@
     }
 
 
-    //function confirm_hotel(user_id , property_id) {
-    //    $.ajax({
-    //        url: `/admin/homeadmin/confirm_hotel`,
-    //        type: "POST",
-    //        data: { user_id: user_id, hotel_id: property_id },
-    //        success: function (data) {
-    //            console.log(data);
-    //            //var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`)
-    //            //var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`)
-    //            //containerInforHotel.classList.add(`animationInfor`)
-    //            //inforHotelDetail.classList.remove('openHost');
-    //            //document.querySelector(`.property_${property_id}`).classList.add('close');
-    //            window.location.herf = "/admin/homeadmin/index";
-    //        },
-    //        error: function (err) {
-    //            console.log(err);
-    //        }
-    //    })
-    //}
+    function confirm_hotel(user_id , property_id) {
+        $.ajax({
+            url: `/admin/homeadmin/confirm_hotel`,
+            type: "POST",
+            data: { user_id: user_id, hotel_id: property_id },
+            success: function (data) {
+                console.log(data);
+                var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`);
+                var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`);
+                containerInforHotel.classList.add(`animationInfor`)
+                inforHotelDetail.classList.remove('openHost');
+                
+                loadData();
+                document.querySelector(`.property_${property_id}`).classList.add('close');
+                
+            },
+            error: function (err) {
+                console.log(err.text);
+            }
+        })
+    }
     function hotel_denied(user_id, property_id) {
         $.ajax({
             url: `/admin/homeadmin/hotel_denied`,
@@ -2058,7 +2091,9 @@
                 data: { id: id },
                 success: function (response) {
                     if (response.phanhoi == "true") {
+                        
                         /*console.log(response);*/
+                        loadData();
                         row.remove();
                         var hostCountElem = $('#hostCount');
                         var hostCount = parseInt(hostCountElem.text()) - 1;
@@ -2093,6 +2128,7 @@
                 data: { id: id },
                 success: function (response) {
                     if (response == "true") {
+                        loadData();
                         console.log(response);
                         row.remove();
                         var hotelCountElem = $('#hotelCount');

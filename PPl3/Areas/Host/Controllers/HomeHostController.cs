@@ -494,7 +494,6 @@ namespace PPl3.Areas.Host.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             property find_hotel = db.properties.FirstOrDefault(item => item.id == id);
-
             find_hotel.p_name = data.hotel_name;
             find_hotel.p_description = data.hotelDescribe;
             find_hotel.userId = p_user.id;

@@ -24,7 +24,6 @@ namespace PPl3.Models
         public string category_name { get; set; }
         public string category_description { get; set; }
         public Nullable<System.DateTime> created { get; set; }
-        public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> category_status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

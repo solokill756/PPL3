@@ -256,7 +256,7 @@ namespace PPl3.Areas.Admin.Controllers
             {
                 delUser.is_active = 0;
                 string emailHtml = RenderRazorViewToString("BanUser", delUser);
-                SendEmail("hosithao1622004@gmail.com", "TNT Ban System", emailHtml);
+                SendEmail(delUser.user_personalInfor.FirstOrDefault().email_address, "TNT Ban System", emailHtml);
                 db.SaveChanges();
             }
             catch(Exception e)
@@ -429,8 +429,56 @@ namespace PPl3.Areas.Admin.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+
+        // CentorShip
+
+        public JsonResult loadData()
+{
+    PPL3Entities db = new PPL3Entities();
+    int number_hotel = db.properties.Count(item => item.p_status == 1);
+    int number_host = db.users.Count(item => item.user_type == 3);
+    double host_rate =   (number_host * 1.0) / (db.users.Count(item => item.user_type != 1) * 1.0) * 100;
+    double hotel_rate = (number_hotel * 1.0) / (db.properties.Count() * 1.0)  * 100;
+    int[] list_hotel = new int[12];
+    int[] list_host = new int[12];
+    
+    for (int i = 1; i <= 12; i++)
+    {
+        int count1 = 0;
+        int count2 = 0;
+        
+        foreach (var item in db.users)
+        {
+            if (item.user_type == 3)
+            {
+                if (item.day_become_host != null && item.day_become_host.Value.Month == i) count1++;
+            }
+        }
+        
+        foreach (var item in db.properties)
+        {
+            if (item.Date_Post != null && item.Date_Post.Value.Month == i && item.p_status == 1) count2++;
+        }
+        
+        list_hotel[i - 1] = count2;
+        list_host[i - 1] = count1;
+    }
+
+    var result = new
+    {
+        number_host = number_host,
+        number_hotel = number_hotel,
+        host_rate = host_rate,
+        hotel_rate = hotel_rate,
+        list_hotel = list_hotel,
+        list_host = list_host
+    };
+    
+    return Json(result, JsonRequestBehavior.AllowGet);
+}
+
         [AdminAuhorize(idChucNang = 15)]
-        public ActionResult confirm_host(int user_id)
+        public JsonResult confirm_host(int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             browser_becomes_host find_user = db.browser_becomes_host.FirstOrDefault(item => item.user_id == user_id);
@@ -448,9 +496,9 @@ namespace PPl3.Areas.Admin.Controllers
             db.SaveChanges();
             user find_host = db.users.FirstOrDefault(item => item.id == user_id);
             string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
-            SendEmail("hosithao1622004@gmail.com" , "Congrats on becoming a host!" , emailHtml);
+            SendEmail(find_host.user_personalInfor.FirstOrDefault().email_address , "Congrats on becoming a host!" , emailHtml);
             TempData["CheckComfirm"] = 1;
-            return RedirectToAction("index");
+            return Json("true", JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         [AdminAuhorize(idChucNang = 15)]
@@ -474,7 +522,7 @@ namespace PPl3.Areas.Admin.Controllers
         }
 
         [AdminAuhorize(idChucNang = 16)]
-        public ActionResult confirm_hotel(int hotel_id , int user_id)
+        public JsonResult confirm_hotel(int hotel_id , int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == hotel_id);
@@ -495,8 +543,8 @@ namespace PPl3.Areas.Admin.Controllers
             TempData["CheckComfirm"] = 1;
             property hotel = db.properties.FirstOrDefault(item => item.id == hotel_id);
             string emailHtml = RenderRazorViewToString("AccpectHotel", hotel);
-            SendEmail("hosithao1622004@gmail.com", "Your [Room/Hotel] Approval Successful!", emailHtml);
-            return RedirectToAction("index");
+            SendEmail(hotel.user.user_personalInfor.FirstOrDefault().email_address, "Your [Room/Hotel] Approval Successful!", emailHtml);
+            return Json("true", JsonRequestBehavior.AllowGet);
         }
 
 
@@ -546,7 +594,7 @@ namespace PPl3.Areas.Admin.Controllers
                     db.SaveChanges();
                     user find_host = db.users.FirstOrDefault(row => row.id == item.user_id);
                     string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
-                    SendEmail("hosithao1622004@gmail.com", "Congrats on becoming a host!", emailHtml);
+                    SendEmail(find_host.user_personalInfor.FirstOrDefault().email_address, "Congrats on becoming a host!", emailHtml);
 
                 }
                 foreach (var item in list_host)
@@ -582,7 +630,7 @@ namespace PPl3.Areas.Admin.Controllers
                     db.SaveChanges();
                     property find_hotel = db.properties.FirstOrDefault(row => row.id == item.property_id);
                     string emailHtml = RenderRazorViewToString("AccpectHotel", find_hotel);
-                    SendEmail("hosithao1622004@gmail.com", "Your [Room/Hotel] Approval Successful!", emailHtml);
+                    SendEmail(find_hotel.user.user_personalInfor.FirstOrDefault().email_address, "Your [Room/Hotel] Approval Successful!", emailHtml);
                 }
                 foreach (var item in list_hotel)
                 {

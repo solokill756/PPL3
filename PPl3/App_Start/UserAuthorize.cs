@@ -31,7 +31,7 @@ namespace PPl3.App_Start
                     filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                     {
                         Controller = "Home",
-                        Aciton = "Error",
+                        Aciton = "index",
                         Area = "",
                         returnUrl = returnUrl.ToString()
 

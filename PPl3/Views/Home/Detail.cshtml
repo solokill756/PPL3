@@ -81,9 +81,9 @@
                                         <a href="/user/homeuser/signup">Sign Up</a>
                                     </button>
                                 </li>
-                                <li><a href="#">Gift Cards</a></li>
+                         
                                 <li><a href="#">Airbnb your home</a></li>
-                                <li><a href="#">Help Center</a></li>
+                                <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                             </ul>
                         </div>
 
@@ -897,7 +897,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/product.js?v=2"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=3"></script>
     @* <script src="~/ExtraFiles/JS/calendar.js?v=1"></script>*@
 </body>
 </html>
@@ -907,7 +907,9 @@
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 
 <script>
-
+    var discounts = JSON.parse('@Html.Raw(discountsJson)');
+    var propertyPrice = @Json.Encode(property.price);
+    var booking_count = @Json.Encode(property.bookings.ToArray().Length);
     $(document).ready(function () {
     let calendar = $('.calendar');
     let checkIn = $('.check_in span');

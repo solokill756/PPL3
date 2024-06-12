@@ -90,7 +90,11 @@ namespace PPl3.Areas.User.Controllers
                     var property_amenities = db.property_amenities.Where(item => item.amenity_id == id).ToList();
                     var property_ids = property_amenities.Select(item => item.property_id).ToList();
                     var list_property = db.properties.Where(item => property_ids.Contains(item.id)).ToList();
-                    myView.Model2Data = list_property.OrderByDescending(item => item.bookings.ToArray().Length).ToList();
+                    myView.Model2Data = list_property
+                                        .OrderByDescending(item => item.bookings.ToArray().Length)
+                                        .ThenByDescending(item => item.property_reviews.Sum(review => review.overall_rating))
+                                        .ToList();
+
                     ViewBag.AmenityId = id;
 
                 }
@@ -1256,6 +1260,7 @@ namespace PPl3.Areas.User.Controllers
                             newTransaction.transfer_on = DateTime.Now;
                             newTransaction.currency_id = 1;
                             newTransaction.transaction_status = 1;
+                            
                             newTransaction.receiver_id = invoiceItem.property.userId;
                             newTransaction.payer_id = p_user.id;
                             newTransaction.site_fees = (decimal?)((int)invoiceItem.amount_paid * 0.3);
@@ -1266,8 +1271,10 @@ namespace PPl3.Areas.User.Controllers
                         }
                         db.SaveChanges();
                         transaction transaction = db.transactions.FirstOrDefault(item => item.id == invoiceItem.transaction_id);
+                        transaction.user = db.users.FirstOrDefault(item => item.id == transaction.payer_id);
+                        
                         string emailHtml = RenderRazorViewToString("Invoice", transaction);
-                        SendEmail("hosithao1622004@gmail.com", "Invoice for Transaction #" + transaction.id , emailHtml);
+                        SendEmail(p_user.user_personalInfor.FirstOrDefault().email_address, "Invoice for Transaction #" + transaction.id , emailHtml);
 
                       
 
@@ -1293,6 +1300,7 @@ namespace PPl3.Areas.User.Controllers
 
         public string UrlPayment(int orderCode)
         {
+
             PPL3Entities db = new PPL3Entities();
             var urlPayment = "";
             var order = db.bookings.FirstOrDefault(item => item.id == orderCode);
@@ -1328,6 +1336,51 @@ namespace PPl3.Areas.User.Controllers
             //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
             return urlPayment;
         }
+
+
+        // cancel hotel
+        //public ActionResult(int booking_id)
+        //{
+        //    user p_user = (user)Session["user"];
+        //    PPL3Entities db = new PPL3Entities();
+        //    booking find_booking = db.bookings.FirstOrDefault(item => item.id == booking_id);
+        //    find_booking.cancel_date = DateTime.Now;
+        //    find_booking.refund_paid = (decimal)((double)find_booking.amount_paid * 0.3);
+        //    db.SaveChanges();
+
+
+        //    user_notification user_Notification = new user_notification();
+        //    user_Notification.userid = find_booking.transaction.payer_id;
+        //    user_Notification.created = DateTime.Now;
+        //    user_Notification.content = "Cancel booking successful!";
+        //    user_Notification.un_status = 0;
+        //    user_Notification.un_url = "#";
+        //    db.user_notification.Add(user_Notification);
+
+        //    user_notification host_Notification = new user_notification();
+        //    host_Notification.userid = find_booking.transaction.receiver_id;
+        //    host_Notification.created = DateTime.Now;
+        //    host_Notification.content = "The booking with " + find_booking.id +  " has been cancelled!";
+        //    host_Notification.un_status = 0;
+        //    host_Notification.un_url = "#";
+        //    db.user_notification.Add(user_Notification);
+        //    db.SaveChanges();
+
+
+        //    user_notification admin_Notification = new user_notification();
+        //    admin_Notification.userid = find_booking.transaction.receiver_id;
+        //    admin_Notification.created = DateTime.Now;
+        //    admin_Notification.content = "The booking with " + find_booking.id + " has been cancelled!";
+        //    admin_Notification.un_status = 0;
+        //    admin_Notification.un_url = "#";
+        //    db.user_notification.Add(user_Notification);
+        //    db.SaveChanges();
+
+        //    string emailHtml = RenderRazorViewToString("Cancel", find_booking);
+        //    SendEmail(p_user.user_personalInfor.FirstOrDefault().email_address, "Invoice for Cancel Booking #" + booking_id, emailHtml);
+
+
+        //} 
 
         // Message 
         [UserAuthorize(idChucNang = 13)]

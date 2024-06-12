@@ -32,15 +32,9 @@ namespace PPl3.Models
         public virtual DbSet<browser_becomes_host> browser_becomes_host { get; set; }
         public virtual DbSet<category> categories { get; set; }
         public virtual DbSet<city> cities { get; set; }
-        public virtual DbSet<cms_page_languages> cms_page_languages { get; set; }
-        public virtual DbSet<cms_pages> cms_pages { get; set; }
         public virtual DbSet<component_rating> component_rating { get; set; }
         public virtual DbSet<country> countries { get; set; }
-        public virtual DbSet<currency> currencies { get; set; }
         public virtual DbSet<discount> discounts { get; set; }
-        public virtual DbSet<dispute> disputes { get; set; }
-        public virtual DbSet<email_content_languages> email_content_languages { get; set; }
-        public virtual DbSet<email_contents> email_contents { get; set; }
         public virtual DbSet<emergency_contact> emergency_contact { get; set; }
         public virtual DbSet<favourite> favourites { get; set; }
         public virtual DbSet<Friendship> Friendships { get; set; }
@@ -49,21 +43,18 @@ namespace PPl3.Models
         public virtual DbSet<host_reviews> host_reviews { get; set; }
         public virtual DbSet<interest_categories> interest_categories { get; set; }
         public virtual DbSet<interest> interests { get; set; }
-        public virtual DbSet<language> languages { get; set; }
         public virtual DbSet<listLanguage> listLanguages { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
-        public virtual DbSet<neighbourhood> neighbourhoods { get; set; }
         public virtual DbSet<phone_number> phone_number { get; set; }
-        public virtual DbSet<promo_codes> promo_codes { get; set; }
         public virtual DbSet<property> properties { get; set; }
         public virtual DbSet<properties_discounts> properties_discounts { get; set; }
         public virtual DbSet<property_amenities> property_amenities { get; set; }
         public virtual DbSet<property_images> property_images { get; set; }
         public virtual DbSet<property_reviews> property_reviews { get; set; }
         public virtual DbSet<property_type> property_type { get; set; }
-        public virtual DbSet<review_component> review_component { get; set; }
         public virtual DbSet<room_type> room_type { get; set; }
         public virtual DbSet<state> states { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<transaction> transactions { get; set; }
         public virtual DbSet<user_notification> user_notification { get; set; }
         public virtual DbSet<user_personalInfor> user_personalInfor { get; set; }
