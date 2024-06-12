@@ -26,6 +26,7 @@ html {
 .information {
     display: flex;
     justify-content: center;
+    flex-wrap:wrap;
 }
 
 .infor_container {
@@ -179,8 +180,9 @@ button:hover {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 3px;
+    width:100%;
+    padding-bottom: 10px;
 }
 
 .infor_list li {

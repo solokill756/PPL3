@@ -19,7 +19,6 @@ namespace PPl3.Models
         public Nullable<int> review_by_user { get; set; }
         public string comment { get; set; }
         public Nullable<System.DateTime> created { get; set; }
-        public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> hr_status { get; set; }
         public string rating { get; set; }
     

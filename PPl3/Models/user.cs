@@ -19,9 +19,6 @@ namespace PPl3.Models
         {
             this.bookings = new HashSet<booking>();
             this.browser_becomes_host = new HashSet<browser_becomes_host>();
-            this.disputes = new HashSet<dispute>();
-            this.email_contents = new HashSet<email_contents>();
-            this.email_contents1 = new HashSet<email_contents>();
             this.emergency_contact = new HashSet<emergency_contact>();
             this.favourites = new HashSet<favourite>();
             this.Friendships = new HashSet<Friendship>();
@@ -63,12 +60,6 @@ namespace PPl3.Models
         public virtual ICollection<booking> bookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<browser_becomes_host> browser_becomes_host { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<dispute> disputes { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<email_contents> email_contents { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<email_contents> email_contents1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<emergency_contact> emergency_contact { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

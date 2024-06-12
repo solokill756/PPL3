@@ -84,8 +84,7 @@
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="/host/HomeHost/Listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
-                                <li><a href="#">Gift Cards</a></li>
-                                <li><a href="#">Help Center</a></li>
+                                <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
                         </div>
@@ -401,6 +400,9 @@
                              $(`.detail .${receiverId} p`).text("Picture");
                              chatSection = $(`.body_mess.open`);
                              chatSection.scrollTop(chatSection.prop("scrollHeight"));
+                         },
+                         error: function (error) {
+                             alert.console("Image size is too large");
                          }
                      });
                     chatHub.server.sendMessage(receiverId, fileUpload);

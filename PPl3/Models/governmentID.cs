@@ -16,8 +16,6 @@ namespace PPl3.Models
     {
         public int id { get; set; }
         public Nullable<int> userID { get; set; }
-        public string driver_license { get; set; }
-        public string passport { get; set; }
         public string identity_card { get; set; }
         public string backof_id_card { get; set; }
         public Nullable<System.DateTime> date_range { get; set; }

@@ -19,9 +19,7 @@ namespace PPl3.Models
         {
             this.bookings = new HashSet<booking>();
             this.Browse_hotel_listings = new HashSet<Browse_hotel_listings>();
-            this.disputes = new HashSet<dispute>();
             this.favourites = new HashSet<favourite>();
-            this.neighbourhoods = new HashSet<neighbourhood>();
             this.properties_discounts = new HashSet<properties_discounts>();
             this.property_amenities = new HashSet<property_amenities>();
             this.property_images = new HashSet<property_images>();
@@ -56,7 +54,6 @@ namespace PPl3.Models
         public Nullable<byte> refund_type { get; set; }
         public Nullable<byte> booking_confirmation_method { get; set; }
         public Nullable<System.DateTime> created { get; set; }
-        public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> p_status { get; set; }
         public Nullable<byte> ask_for_booking { get; set; }
         public Nullable<int> current_pages { get; set; }
@@ -68,13 +65,8 @@ namespace PPl3.Models
         public virtual ICollection<Browse_hotel_listings> Browse_hotel_listings { get; set; }
         public virtual city city { get; set; }
         public virtual country country { get; set; }
-        public virtual currency currency { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<dispute> disputes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<favourite> favourites { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<neighbourhood> neighbourhoods { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<properties_discounts> properties_discounts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

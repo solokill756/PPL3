@@ -19,7 +19,6 @@ namespace PPl3.Models
         public Nullable<int> component_id { get; set; }
         public string rating { get; set; }
     
-        public virtual review_component review_component { get; set; }
         public virtual property_reviews property_reviews { get; set; }
     }
 }

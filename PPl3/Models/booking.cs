@@ -18,7 +18,6 @@ namespace PPl3.Models
         public booking()
         {
             this.booking_guests = new HashSet<booking_guests>();
-            this.disputes = new HashSet<dispute>();
         }
     
         public int id { get; set; }
@@ -27,9 +26,6 @@ namespace PPl3.Models
         public Nullable<System.DateTime> check_in_date { get; set; }
         public Nullable<System.DateTime> check_out_date { get; set; }
         public Nullable<decimal> price_per_day { get; set; }
-        public Nullable<decimal> price_for_stay { get; set; }
-        public Nullable<decimal> tax_paid { get; set; }
-        public Nullable<decimal> site_fees { get; set; }
         public Nullable<decimal> amount_paid { get; set; }
         public Nullable<byte> is_refund { get; set; }
         public Nullable<System.DateTime> cancel_date { get; set; }
@@ -46,7 +42,5 @@ namespace PPl3.Models
         public virtual property property { get; set; }
         public virtual transaction transaction { get; set; }
         public virtual user user { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<dispute> disputes { get; set; }
     }
 }

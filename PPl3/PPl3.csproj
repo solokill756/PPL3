@@ -248,31 +248,13 @@
     <Compile Include="Models\city.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\cms_pages.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\cms_page_languages.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\component_rating.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\country.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\currency.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\discount.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\dispute.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\email_contents.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\email_content_languages.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\emergency_contact.cs">
@@ -299,9 +281,6 @@
     <Compile Include="Models\interest_categories.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\language.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\listLanguage.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -323,14 +302,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\neighbourhood.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Payments\VnPayLibrary.cs" />
     <Compile Include="Models\phone_number.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\promo_codes.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\properties_discounts.cs">
@@ -351,13 +324,13 @@
     <Compile Include="Models\property_type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\review_component.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\room_type.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\state.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\transaction.cs">
@@ -579,6 +552,7 @@
     <Content Include="Areas\Admin\Views\HomeAdmin\revenue.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\invoice.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\userPersonalProfile.cshtml" />
+    <Content Include="Areas\Admin\Views\HomeAdmin\BanUser.cshtml" />
     <EntityDeploy Include="Models\Model1.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
@@ -586,6 +560,7 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\User\Views\Cancel.cshtml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />

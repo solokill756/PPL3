@@ -1,14 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="PPl3ModelStoreContainer" CdmEntityContainer="PPL3Entities">
+  <EntityContainerMapping StorageEntityContainer="PPL3ModelStoreContainer" CdmEntityContainer="PPL3Entities">
     <EntitySetMapping Name="amenities">
-      <EntityTypeMapping TypeName="PPl3Model.amenity">
+      <EntityTypeMapping TypeName="PPL3Model.amenity">
         <MappingFragment StoreEntitySet="amenities">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="category_id" ColumnName="category_id" />
           <ScalarProperty Name="amenity_name" ColumnName="amenity_name" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="amenity_status" ColumnName="amenity_status" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="icon_image" ColumnName="icon_image" />
@@ -16,7 +15,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="booking_guests">
-      <EntityTypeMapping TypeName="PPl3Model.booking_guests">
+      <EntityTypeMapping TypeName="PPL3Model.booking_guests">
         <MappingFragment StoreEntitySet="booking_guests">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="booking_id" ColumnName="booking_id" />
@@ -26,7 +25,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="bookings">
-      <EntityTypeMapping TypeName="PPl3Model.booking">
+      <EntityTypeMapping TypeName="PPL3Model.booking">
         <MappingFragment StoreEntitySet="bookings">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="property_id" ColumnName="property_id" />
@@ -34,9 +33,6 @@
           <ScalarProperty Name="check_in_date" ColumnName="check_in_date" />
           <ScalarProperty Name="check_out_date" ColumnName="check_out_date" />
           <ScalarProperty Name="price_per_day" ColumnName="price_per_day" />
-          <ScalarProperty Name="price_for_stay" ColumnName="price_for_stay" />
-          <ScalarProperty Name="tax_paid" ColumnName="tax_paid" />
-          <ScalarProperty Name="site_fees" ColumnName="site_fees" />
           <ScalarProperty Name="amount_paid" ColumnName="amount_paid" />
           <ScalarProperty Name="is_refund" ColumnName="is_refund" />
           <ScalarProperty Name="cancel_date" ColumnName="cancel_date" />
@@ -51,7 +47,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Browse_hotel_listings">
-      <EntityTypeMapping TypeName="PPl3Model.Browse_hotel_listings">
+      <EntityTypeMapping TypeName="PPL3Model.Browse_hotel_listings">
         <MappingFragment StoreEntitySet="Browse_hotel_listings">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="property_id" ColumnName="property_id" />
@@ -60,7 +56,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="browser_becomes_host">
-      <EntityTypeMapping TypeName="PPl3Model.browser_becomes_host">
+      <EntityTypeMapping TypeName="PPL3Model.browser_becomes_host">
         <MappingFragment StoreEntitySet="browser_becomes_host">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="user_id" ColumnName="user_id" />
@@ -69,19 +65,18 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="categories">
-      <EntityTypeMapping TypeName="PPl3Model.category">
+      <EntityTypeMapping TypeName="PPL3Model.category">
         <MappingFragment StoreEntitySet="categories">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="category_name" ColumnName="category_name" />
           <ScalarProperty Name="category_description" ColumnName="category_description" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="category_status" ColumnName="category_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="cities">
-      <EntityTypeMapping TypeName="PPl3Model.city">
+      <EntityTypeMapping TypeName="PPL3Model.city">
         <MappingFragment StoreEntitySet="cities">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="state_id" ColumnName="state_id" />
@@ -90,30 +85,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="cms_page_languages">
-      <EntityTypeMapping TypeName="PPl3Model.cms_page_languages">
-        <MappingFragment StoreEntitySet="cms_page_languages">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="cms_page_id" ColumnName="cms_page_id" />
-          <ScalarProperty Name="language_id" ColumnName="language_id" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="cpl_description" ColumnName="cpl_description" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="cms_pages">
-      <EntityTypeMapping TypeName="PPl3Model.cms_pages">
-        <MappingFragment StoreEntitySet="cms_pages">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="unique_name" ColumnName="unique_name" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="cp_status" ColumnName="cp_status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="component_rating">
-      <EntityTypeMapping TypeName="PPl3Model.component_rating">
+      <EntityTypeMapping TypeName="PPL3Model.component_rating">
         <MappingFragment StoreEntitySet="component_rating">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="review_id" ColumnName="review_id" />
@@ -123,7 +96,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="countries">
-      <EntityTypeMapping TypeName="PPl3Model.country">
+      <EntityTypeMapping TypeName="PPL3Model.country">
         <MappingFragment StoreEntitySet="countries">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="ct_name" ColumnName="ct_name" />
@@ -132,68 +105,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="currencies">
-      <EntityTypeMapping TypeName="PPl3Model.currency">
-        <MappingFragment StoreEntitySet="currencies">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="currency_name" ColumnName="currency_name" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="currency_status" ColumnName="currency_status" />
-          <ScalarProperty Name="icon_image" ColumnName="icon_image" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="discounts">
-      <EntityTypeMapping TypeName="PPl3Model.discount">
+      <EntityTypeMapping TypeName="PPL3Model.discount">
         <MappingFragment StoreEntitySet="discounts">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="descride" ColumnName="descride" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="disputes">
-      <EntityTypeMapping TypeName="PPl3Model.dispute">
-        <MappingFragment StoreEntitySet="disputes">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="userId" ColumnName="userId" />
-          <ScalarProperty Name="property_id" ColumnName="property_id" />
-          <ScalarProperty Name="booking_id" ColumnName="booking_id" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="disputes_description" ColumnName="disputes_description" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="disputes_status" ColumnName="disputes_status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="email_content_languages">
-      <EntityTypeMapping TypeName="PPl3Model.email_content_languages">
-        <MappingFragment StoreEntitySet="email_content_languages">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="email_content_id" ColumnName="email_content_id" />
-          <ScalarProperty Name="language_id" ColumnName="language_id" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="ecl_message" ColumnName="ecl_message" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="email_contents">
-      <EntityTypeMapping TypeName="PPl3Model.email_contents">
-        <MappingFragment StoreEntitySet="email_contents">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="sender_id" ColumnName="sender_id" />
-          <ScalarProperty Name="receiver_id" ColumnName="receiver_id" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="content" ColumnName="content" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="ec_status" ColumnName="ec_status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="emergency_contact">
-      <EntityTypeMapping TypeName="PPl3Model.emergency_contact">
+      <EntityTypeMapping TypeName="PPL3Model.emergency_contact">
         <MappingFragment StoreEntitySet="emergency_contact">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userid" ColumnName="userid" />
@@ -207,7 +128,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="favourites">
-      <EntityTypeMapping TypeName="PPl3Model.favourite">
+      <EntityTypeMapping TypeName="PPL3Model.favourite">
         <MappingFragment StoreEntitySet="favourite">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
@@ -217,7 +138,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Friendships">
-      <EntityTypeMapping TypeName="PPl3Model.Friendship">
+      <EntityTypeMapping TypeName="PPL3Model.Friendship">
         <MappingFragment StoreEntitySet="Friendship">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="UserId1" ColumnName="UserId1" />
@@ -227,12 +148,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="governmentIDs">
-      <EntityTypeMapping TypeName="PPl3Model.governmentID">
+      <EntityTypeMapping TypeName="PPL3Model.governmentID">
         <MappingFragment StoreEntitySet="governmentID">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
-          <ScalarProperty Name="driver_license" ColumnName="driver_license" />
-          <ScalarProperty Name="passport" ColumnName="passport" />
           <ScalarProperty Name="identity_card" ColumnName="identity_card" />
           <ScalarProperty Name="backof_id_card" ColumnName="backof_id_card" />
           <ScalarProperty Name="date_range" ColumnName="date_range" />
@@ -242,7 +161,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="guest_type">
-      <EntityTypeMapping TypeName="PPl3Model.guest_type">
+      <EntityTypeMapping TypeName="PPL3Model.guest_type">
         <MappingFragment StoreEntitySet="guest_type">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="type_name" ColumnName="type_name" />
@@ -250,21 +169,20 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="host_reviews">
-      <EntityTypeMapping TypeName="PPl3Model.host_reviews">
+      <EntityTypeMapping TypeName="PPL3Model.host_reviews">
         <MappingFragment StoreEntitySet="host_reviews">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="hostid" ColumnName="hostid" />
           <ScalarProperty Name="review_by_user" ColumnName="review_by_user" />
           <ScalarProperty Name="comment" ColumnName="comment" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="hr_status" ColumnName="hr_status" />
           <ScalarProperty Name="rating" ColumnName="rating" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="interest_categories">
-      <EntityTypeMapping TypeName="PPl3Model.interest_categories">
+      <EntityTypeMapping TypeName="PPL3Model.interest_categories">
         <MappingFragment StoreEntitySet="interest_categories">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="cate_name" ColumnName="cate_name" />
@@ -274,7 +192,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="interests">
-      <EntityTypeMapping TypeName="PPl3Model.interest">
+      <EntityTypeMapping TypeName="PPL3Model.interest">
         <MappingFragment StoreEntitySet="interests">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="interest_cate_id" ColumnName="interest_cate_id" />
@@ -285,20 +203,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="languages">
-      <EntityTypeMapping TypeName="PPl3Model.language">
-        <MappingFragment StoreEntitySet="languages">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="language_name" ColumnName="language_name" />
-          <ScalarProperty Name="code" ColumnName="code" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="language_status" ColumnName="language_status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="listLanguages">
-      <EntityTypeMapping TypeName="PPl3Model.listLanguage">
+      <EntityTypeMapping TypeName="PPL3Model.listLanguage">
         <MappingFragment StoreEntitySet="listLanguage">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="language_name" ColumnName="language_name" />
@@ -306,7 +212,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Messages">
-      <EntityTypeMapping TypeName="PPl3Model.Message">
+      <EntityTypeMapping TypeName="PPL3Model.Message">
         <MappingFragment StoreEntitySet="Message">
           <ScalarProperty Name="ID" ColumnName="ID" />
           <ScalarProperty Name="SenderID" ColumnName="SenderID" />
@@ -316,23 +222,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="neighbourhoods">
-      <EntityTypeMapping TypeName="PPl3Model.neighbourhood">
-        <MappingFragment StoreEntitySet="neighbourhood">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="property_id" ColumnName="property_id" />
-          <ScalarProperty Name="neighbour_name" ColumnName="neighbour_name" />
-          <ScalarProperty Name="neighbour_description" ColumnName="neighbour_description" />
-          <ScalarProperty Name="latitude" ColumnName="latitude" />
-          <ScalarProperty Name="longitude" ColumnName="longitude" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="neighbour_status" ColumnName="neighbour_status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="phone_number">
-      <EntityTypeMapping TypeName="PPl3Model.phone_number">
+      <EntityTypeMapping TypeName="PPL3Model.phone_number">
         <MappingFragment StoreEntitySet="phone_number">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
@@ -340,22 +231,8 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="promo_codes">
-      <EntityTypeMapping TypeName="PPl3Model.promo_codes">
-        <MappingFragment StoreEntitySet="promo_codes">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="title" ColumnName="title" />
-          <ScalarProperty Name="pc_description" ColumnName="pc_description" />
-          <ScalarProperty Name="code" ColumnName="code" />
-          <ScalarProperty Name="discount" ColumnName="discount" />
-          <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
-          <ScalarProperty Name="pc_status" ColumnName="pc_status" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="properties">
-      <EntityTypeMapping TypeName="PPl3Model.property">
+      <EntityTypeMapping TypeName="PPL3Model.property">
         <MappingFragment StoreEntitySet="properties">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="p_name" ColumnName="p_name" />
@@ -384,7 +261,6 @@
           <ScalarProperty Name="refund_type" ColumnName="refund_type" />
           <ScalarProperty Name="booking_confirmation_method" ColumnName="booking_confirmation_method" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="p_status" ColumnName="p_status" />
           <ScalarProperty Name="ask_for_booking" ColumnName="ask_for_booking" />
           <ScalarProperty Name="current_pages" ColumnName="current_pages" />
@@ -393,7 +269,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="properties_discounts">
-      <EntityTypeMapping TypeName="PPl3Model.properties_discounts">
+      <EntityTypeMapping TypeName="PPL3Model.properties_discounts">
         <MappingFragment StoreEntitySet="properties_discounts">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="properties_id" ColumnName="properties_id" />
@@ -403,20 +279,19 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="property_amenities">
-      <EntityTypeMapping TypeName="PPl3Model.property_amenities">
+      <EntityTypeMapping TypeName="PPL3Model.property_amenities">
         <MappingFragment StoreEntitySet="property_amenities">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="property_id" ColumnName="property_id" />
           <ScalarProperty Name="amenity_id" ColumnName="amenity_id" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="pa_status" ColumnName="pa_status" />
           <ScalarProperty Name="pa_description" ColumnName="pa_description" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="property_images">
-      <EntityTypeMapping TypeName="PPl3Model.property_images">
+      <EntityTypeMapping TypeName="PPL3Model.property_images">
         <MappingFragment StoreEntitySet="property_images">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="property_id" ColumnName="property_id" />
@@ -428,7 +303,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="property_reviews">
-      <EntityTypeMapping TypeName="PPl3Model.property_reviews">
+      <EntityTypeMapping TypeName="PPL3Model.property_reviews">
         <MappingFragment StoreEntitySet="property_reviews">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="property_id" ColumnName="property_id" />
@@ -437,13 +312,12 @@
           <ScalarProperty Name="comment" ColumnName="comment" />
           <ScalarProperty Name="overall_rating" ColumnName="overall_rating" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="pr_status" ColumnName="pr_status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="property_type">
-      <EntityTypeMapping TypeName="PPl3Model.property_type">
+      <EntityTypeMapping TypeName="PPL3Model.property_type">
         <MappingFragment StoreEntitySet="property_type">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="pt_name" ColumnName="pt_name" />
@@ -454,23 +328,12 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="review_component">
-      <EntityTypeMapping TypeName="PPl3Model.review_component">
-        <MappingFragment StoreEntitySet="review_component">
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="component_name" ColumnName="component_name" />
-          <ScalarProperty Name="component_description" ColumnName="component_description" />
-          <ScalarProperty Name="component_icon" ColumnName="component_icon" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="room_type">
-      <EntityTypeMapping TypeName="PPl3Model.room_type">
+      <EntityTypeMapping TypeName="PPL3Model.room_type">
         <MappingFragment StoreEntitySet="room_type">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="rt_name" ColumnName="rt_name" />
           <ScalarProperty Name="created" ColumnName="created" />
-          <ScalarProperty Name="modified" ColumnName="modified" />
           <ScalarProperty Name="rt_status" ColumnName="rt_status" />
           <ScalarProperty Name="icon_image" ColumnName="icon_image" />
           <ScalarProperty Name="describe" ColumnName="describe" />
@@ -478,7 +341,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="states">
-      <EntityTypeMapping TypeName="PPl3Model.state">
+      <EntityTypeMapping TypeName="PPL3Model.state">
         <MappingFragment StoreEntitySet="states">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="country_id" ColumnName="country_id" />
@@ -488,8 +351,19 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="PPL3Model.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="transactions">
-      <EntityTypeMapping TypeName="PPl3Model.transaction">
+      <EntityTypeMapping TypeName="PPL3Model.transaction">
         <MappingFragment StoreEntitySet="transactions">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="property_id" ColumnName="property_id" />
@@ -509,7 +383,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="user_notification">
-      <EntityTypeMapping TypeName="PPl3Model.user_notification">
+      <EntityTypeMapping TypeName="PPL3Model.user_notification">
         <MappingFragment StoreEntitySet="user_notification">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userid" ColumnName="userid" />
@@ -521,7 +395,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="user_personalInfor">
-      <EntityTypeMapping TypeName="PPl3Model.user_personalInfor">
+      <EntityTypeMapping TypeName="PPL3Model.user_personalInfor">
         <MappingFragment StoreEntitySet="user_personalInfor">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
@@ -539,7 +413,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="user_profile">
-      <EntityTypeMapping TypeName="PPl3Model.user_profile">
+      <EntityTypeMapping TypeName="PPL3Model.user_profile">
         <MappingFragment StoreEntitySet="user_profile">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
@@ -561,7 +435,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="user_role">
-      <EntityTypeMapping TypeName="PPl3Model.user_role">
+      <EntityTypeMapping TypeName="PPL3Model.user_role">
         <MappingFragment StoreEntitySet="user_role">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="ur_url" ColumnName="ur_url" />
@@ -574,7 +448,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="user_type">
-      <EntityTypeMapping TypeName="PPl3Model.user_type">
+      <EntityTypeMapping TypeName="PPL3Model.user_type">
         <MappingFragment StoreEntitySet="user_type">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="ut_name" ColumnName="ut_name" />
@@ -583,7 +457,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="user_type_user_role">
-      <EntityTypeMapping TypeName="PPl3Model.user_type_user_role">
+      <EntityTypeMapping TypeName="PPL3Model.user_type_user_role">
         <MappingFragment StoreEntitySet="user_type_user_role">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="user_type_id" ColumnName="user_type_id" />
@@ -592,7 +466,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="users">
-      <EntityTypeMapping TypeName="PPl3Model.user">
+      <EntityTypeMapping TypeName="PPL3Model.user">
         <MappingFragment StoreEntitySet="users">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="account_name" ColumnName="account_name" />
@@ -610,7 +484,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="users_interests">
-      <EntityTypeMapping TypeName="PPl3Model.users_interests">
+      <EntityTypeMapping TypeName="PPL3Model.users_interests">
         <MappingFragment StoreEntitySet="users_interests">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userid" ColumnName="userid" />
@@ -620,7 +494,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="users_languages">
-      <EntityTypeMapping TypeName="PPl3Model.users_languages">
+      <EntityTypeMapping TypeName="PPL3Model.users_languages">
         <MappingFragment StoreEntitySet="users_languages">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />

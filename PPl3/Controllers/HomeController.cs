@@ -49,7 +49,10 @@ namespace PPl3.Controllers
                 var property_amenities = db.property_amenities.Where(item => item.amenity_id == id).ToList();
                 var property_ids = property_amenities.Select(item => item.property_id).ToList();
                 var list_property = db.properties.Where(item => property_ids.Contains(item.id)).ToList();
-                myView.Model2Data = list_property.OrderByDescending(item => item.bookings.ToArray().Length).ToList();
+                myView.Model2Data = list_property
+                                        .OrderByDescending(item => item.bookings.ToArray().Length)
+                                        .ThenByDescending(item => item.property_reviews.Sum(review => review.overall_rating))
+                                        .ToList();
                 ViewBag.AmenityId = id;
             }
             if (id != -1) ViewBag.checkId = id;

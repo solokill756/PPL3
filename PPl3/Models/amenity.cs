@@ -24,7 +24,6 @@ namespace PPl3.Models
         public Nullable<int> category_id { get; set; }
         public string amenity_name { get; set; }
         public Nullable<System.DateTime> created { get; set; }
-        public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> amenity_status { get; set; }
         public string description { get; set; }
         public string icon_image { get; set; }

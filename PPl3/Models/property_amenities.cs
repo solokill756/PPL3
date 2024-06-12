@@ -18,7 +18,6 @@ namespace PPl3.Models
         public Nullable<int> property_id { get; set; }
         public Nullable<int> amenity_id { get; set; }
         public Nullable<System.DateTime> created { get; set; }
-        public Nullable<System.DateTime> modified { get; set; }
         public Nullable<byte> pa_status { get; set; }
         public string pa_description { get; set; }
     

@@ -125,8 +125,8 @@
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="/host/HomeHost/Listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
-                                <li><a href="#">Gift Cards</a></li>
-                                <li><a href="#">Help Center</a></li>
+                             
+                                <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
                         </div>
@@ -410,7 +410,7 @@
                                     <h1>Add dates for prices</h1>
                                 </div>
                                 <div class="pay_body">
-                                    <div class="check_in_out">
+                                    <div class="check_in_out">  
                                         @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                         {
                                             <div class="check_in check_item">
@@ -555,6 +555,12 @@
                                         <button>Reservations Not Yet Open</button>
                                     </div>
                                 }
+                                else if(db.transactions.Count(item => item.property_id == property.id) > 0) { 
+                                        <div class="pay_footer">
+                                            <button id="checkAvailabilityButton" onclick="">Cancel Booking</button>
+                                        </div>
+                                
+                                }
                                 else if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                 {
                                 
@@ -667,9 +673,9 @@
                                                     <span>@item.user.account_name</span>
                                                     @{
 
-                                                        string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                        string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                        string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                        string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
+                                                        string countryName = item.user.user_personalInfor.FirstOrDefault().country_id ?? "???";
+                                                        string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
                                                     }
                                                     <p>@uCity ,  @uState , @countryName</p>
                                                 </div>
@@ -1023,9 +1029,9 @@
                                                 <span>@item.user.account_name</span>
                                                 @{
 
-                                                    string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                    string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                    string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                    string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
+                                                    string countryName = item.user.user_personalInfor.FirstOrDefault().country_id ?? "???";
+                                                    string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
 
                                                 }
                                                 <p>@uCity ,  @uState , @countryName</p>
@@ -1089,7 +1095,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/product.js?v=10"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=11"></script>
     @*<script src="~/ExtraFiles/JS/calendar.js?v=2"></script>*@
 
 </body>
@@ -1103,7 +1109,7 @@
     var propertyPrice = @Json.Encode(property.price);
     var booking_count = @Json.Encode(property.bookings.ToArray().Length);
     console.log(discounts);
-    console.log(priceHotel);
+    /*console.log(priceHotel);*/
     function booking(hotelId, hotelGuest) {
         var priceHotel = $('.money_hotel').text();
         priceHotel = priceHotel.substring(1, priceHotel.length);

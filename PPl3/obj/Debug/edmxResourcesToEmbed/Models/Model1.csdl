@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="PPl3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="PPL3Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="amenity">
     <Key>
       <PropertyRef Name="id" />
@@ -8,7 +8,6 @@
     <Property Name="category_id" Type="Int32" />
     <Property Name="amenity_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="amenity_status" Type="Byte" />
     <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -36,9 +35,6 @@
     <Property Name="check_in_date" Type="DateTime" Precision="3" />
     <Property Name="check_out_date" Type="DateTime" Precision="3" />
     <Property Name="price_per_day" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="price_for_stay" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="tax_paid" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="site_fees" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="amount_paid" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="is_refund" Type="Byte" />
     <Property Name="cancel_date" Type="DateTime" Precision="3" />
@@ -53,7 +49,6 @@
     <NavigationProperty Name="property" Relationship="Self.booking_property_id_id_FK" FromRole="bookings" ToRole="properties" />
     <NavigationProperty Name="transaction" Relationship="Self.booking_transaction_id_id_FK" FromRole="bookings" ToRole="transactions" />
     <NavigationProperty Name="user" Relationship="Self.booking_userId_id_FK" FromRole="bookings" ToRole="users" />
-    <NavigationProperty Name="disputes" Relationship="Self.disputes_booking_id_id_FK" FromRole="bookings" ToRole="disputes" />
   </EntityType>
   <EntityType Name="Browse_hotel_listings">
     <Key>
@@ -81,7 +76,6 @@
     <Property Name="category_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="category_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="category_status" Type="Byte" />
     <NavigationProperty Name="amenities" Relationship="Self.FK_amenities_categories" FromRole="categories" ToRole="amenities" />
   </EntityType>
@@ -95,30 +89,6 @@
     <Property Name="city_status" Type="Byte" />
     <NavigationProperty Name="state" Relationship="Self.cities_state_id_id_FK" FromRole="cities" ToRole="states" />
     <NavigationProperty Name="properties" Relationship="Self.pro_city_id_id_FK" FromRole="cities" ToRole="properties" />
-    <NavigationProperty Name="user_personalInfor" Relationship="Self.u_city_id_FK" FromRole="cities" ToRole="user_personalInfor" />
-  </EntityType>
-  <EntityType Name="cms_page_languages">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="cms_page_id" Type="Int32" />
-    <Property Name="language_id" Type="Int32" />
-    <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="cpl_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="cms_pages" Relationship="Self.cpl_cms_page_id_id_FK" FromRole="cms_page_languages" ToRole="cms_pages" />
-    <NavigationProperty Name="language" Relationship="Self.cpl_language_id_id_FK" FromRole="cms_page_languages" ToRole="languages" />
-  </EntityType>
-  <EntityType Name="cms_pages">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="unique_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="cp_status" Type="Byte" />
-    <NavigationProperty Name="cms_page_languages" Relationship="Self.cpl_cms_page_id_id_FK" FromRole="cms_pages" ToRole="cms_page_languages" />
   </EntityType>
   <EntityType Name="component_rating">
     <Key>
@@ -128,7 +98,6 @@
     <Property Name="review_id" Type="Int32" />
     <Property Name="component_id" Type="Int32" />
     <Property Name="rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="review_component" Relationship="Self.cr_component_id_id_FK" FromRole="component_rating" ToRole="review_component" />
     <NavigationProperty Name="property_reviews" Relationship="Self.cr_review_id_id_FK" FromRole="component_rating" ToRole="property_reviews" />
   </EntityType>
   <EntityType Name="country">
@@ -141,20 +110,6 @@
     <Property Name="status" Type="Byte" />
     <NavigationProperty Name="properties" Relationship="Self.pro_country_id_id_FK" FromRole="countries" ToRole="properties" />
     <NavigationProperty Name="states" Relationship="Self.states_country_id_id_FK" FromRole="countries" ToRole="states" />
-    <NavigationProperty Name="user_personalInfor" Relationship="Self.up_country_id_id_FK" FromRole="countries" ToRole="user_personalInfor" />
-  </EntityType>
-  <EntityType Name="currency">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="currency_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="currency_status" Type="Byte" />
-    <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="properties" Relationship="Self.pro_currency_id_id_FK" FromRole="currencies" ToRole="properties" />
-    <NavigationProperty Name="transactions" Relationship="Self.transaction_currency_id_id_FK" FromRole="currencies" ToRole="transactions" />
   </EntityType>
   <EntityType Name="discount">
     <Key>
@@ -165,51 +120,6 @@
     <NavigationProperty Name="discounts1" Relationship="Self.FK_discounts_discounts" FromRole="discounts" ToRole="discounts1" />
     <NavigationProperty Name="discount1" Relationship="Self.FK_discounts_discounts" FromRole="discounts1" ToRole="discounts" />
     <NavigationProperty Name="properties_discounts" Relationship="Self.FK_properties_discounts_discounts" FromRole="discounts" ToRole="properties_discounts" />
-  </EntityType>
-  <EntityType Name="dispute">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="userId" Type="Int32" />
-    <Property Name="property_id" Type="Int32" />
-    <Property Name="booking_id" Type="Int32" />
-    <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="disputes_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="disputes_status" Type="Byte" />
-    <NavigationProperty Name="booking" Relationship="Self.disputes_booking_id_id_FK" FromRole="disputes" ToRole="bookings" />
-    <NavigationProperty Name="property" Relationship="Self.disputes_property_id_id_FK" FromRole="disputes" ToRole="properties" />
-    <NavigationProperty Name="user" Relationship="Self.disputes_userId_id_FK" FromRole="disputes" ToRole="users" />
-  </EntityType>
-  <EntityType Name="email_content_languages">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="email_content_id" Type="Int32" />
-    <Property Name="language_id" Type="Int32" />
-    <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="ecl_message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="email_contents" Relationship="Self.ecl_email_content_id_id_FK" FromRole="email_content_languages" ToRole="email_contents" />
-    <NavigationProperty Name="language" Relationship="Self.ecl_language_id_id_FK" FromRole="email_content_languages" ToRole="languages" />
-  </EntityType>
-  <EntityType Name="email_contents">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="sender_id" Type="Int32" />
-    <Property Name="receiver_id" Type="Int32" />
-    <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="ec_status" Type="Byte" />
-    <NavigationProperty Name="email_content_languages" Relationship="Self.ecl_email_content_id_id_FK" FromRole="email_contents" ToRole="email_content_languages" />
-    <NavigationProperty Name="user" Relationship="Self.emct_receiver_id_id_FK" FromRole="email_contents" ToRole="users" />
-    <NavigationProperty Name="user1" Relationship="Self.emct_sender_id_id_FK" FromRole="email_contents" ToRole="users" />
   </EntityType>
   <EntityType Name="emergency_contact">
     <Key>
@@ -253,8 +163,6 @@
     </Key>
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="userID" Type="Int32" />
-    <Property Name="driver_license" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="passport" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="identity_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="backof_id_card" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="date_range" Type="DateTime" Precision="0" />
@@ -279,7 +187,6 @@
     <Property Name="review_by_user" Type="Int32" />
     <Property Name="comment" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="hr_status" Type="Byte" />
     <Property Name="rating" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="user" Relationship="Self.hr_hostid_id_FK" FromRole="host_reviews" ToRole="users" />
@@ -308,19 +215,6 @@
     <NavigationProperty Name="interest_categories" Relationship="Self.interest_cate_id_id_FK" FromRole="interests" ToRole="interest_categories" />
     <NavigationProperty Name="users_interests" Relationship="Self.interest_idd_id_FK" FromRole="interests" ToRole="users_interests" />
   </EntityType>
-  <EntityType Name="language">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="language_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="code" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="language_status" Type="Byte" />
-    <NavigationProperty Name="cms_page_languages" Relationship="Self.cpl_language_id_id_FK" FromRole="languages" ToRole="cms_page_languages" />
-    <NavigationProperty Name="email_content_languages" Relationship="Self.ecl_language_id_id_FK" FromRole="languages" ToRole="email_content_languages" />
-  </EntityType>
   <EntityType Name="listLanguage">
     <Key>
       <PropertyRef Name="id" />
@@ -341,21 +235,6 @@
     <NavigationProperty Name="user" Relationship="Self.FK_Message_users" FromRole="Message" ToRole="users" />
     <NavigationProperty Name="user1" Relationship="Self.FK_Message_users1" FromRole="Message" ToRole="users" />
   </EntityType>
-  <EntityType Name="neighbourhood">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="property_id" Type="Int32" />
-    <Property Name="neighbour_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="neighbour_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="latitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="longitude" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="neighbour_status" Type="Byte" />
-    <NavigationProperty Name="property" Relationship="Self.neighbourhood_property_id_id_FK" FromRole="neighbourhood" ToRole="properties" />
-  </EntityType>
   <EntityType Name="phone_number">
     <Key>
       <PropertyRef Name="id" />
@@ -364,20 +243,6 @@
     <Property Name="userID" Type="Int32" />
     <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="user" Relationship="Self.pn_userID_id_FK" FromRole="phone_number" ToRole="users" />
-  </EntityType>
-  <EntityType Name="promo_codes">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="title" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="pc_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="code" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="discount" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
-    <Property Name="pc_status" Type="Byte" />
-    <NavigationProperty Name="transactions" Relationship="Self.transaction_promo_code_id_id_FK" FromRole="promo_codes" ToRole="transactions" />
   </EntityType>
   <EntityType Name="property">
     <Key>
@@ -410,7 +275,6 @@
     <Property Name="refund_type" Type="Byte" />
     <Property Name="booking_confirmation_method" Type="Byte" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="p_status" Type="Byte" />
     <Property Name="ask_for_booking" Type="Byte" />
     <Property Name="current_pages" Type="Int32" />
@@ -419,10 +283,7 @@
     <NavigationProperty Name="Browse_hotel_listings" Relationship="Self.FK_Browse_hotel_listings_properties" FromRole="properties" ToRole="Browse_hotel_listings" />
     <NavigationProperty Name="city" Relationship="Self.pro_city_id_id_FK" FromRole="properties" ToRole="cities" />
     <NavigationProperty Name="country" Relationship="Self.pro_country_id_id_FK" FromRole="properties" ToRole="countries" />
-    <NavigationProperty Name="currency" Relationship="Self.pro_currency_id_id_FK" FromRole="properties" ToRole="currencies" />
-    <NavigationProperty Name="disputes" Relationship="Self.disputes_property_id_id_FK" FromRole="properties" ToRole="disputes" />
     <NavigationProperty Name="favourites" Relationship="Self.favourite_property_id_id_FK" FromRole="properties" ToRole="favourite" />
-    <NavigationProperty Name="neighbourhoods" Relationship="Self.neighbourhood_property_id_id_FK" FromRole="properties" ToRole="neighbourhood" />
     <NavigationProperty Name="properties_discounts" Relationship="Self.FK_properties_discounts_properties" FromRole="properties" ToRole="properties_discounts" />
     <NavigationProperty Name="property_amenities" Relationship="Self.pa_property_id_id_FK" FromRole="properties" ToRole="property_amenities" />
     <NavigationProperty Name="property_images" Relationship="Self.pi_property_id_id_FK" FromRole="properties" ToRole="property_images" />
@@ -452,7 +313,6 @@
     <Property Name="property_id" Type="Int32" />
     <Property Name="amenity_id" Type="Int32" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="pa_status" Type="Byte" />
     <Property Name="pa_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="amenity" Relationship="Self.pa_amenity_id_id_FK" FromRole="property_amenities" ToRole="amenities" />
@@ -482,7 +342,6 @@
     <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="overall_rating" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="pr_status" Type="Byte" />
     <NavigationProperty Name="component_rating" Relationship="Self.cr_review_id_id_FK" FromRole="property_reviews" ToRole="component_rating" />
     <NavigationProperty Name="property" Relationship="Self.pr_property_id_id_FK" FromRole="property_reviews" ToRole="properties" />
@@ -501,16 +360,6 @@
     <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="properties" Relationship="Self.pro_property_type_id_id_FK" FromRole="property_type" ToRole="properties" />
   </EntityType>
-  <EntityType Name="review_component">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="component_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="component_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="component_icon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="component_rating" Relationship="Self.cr_component_id_id_FK" FromRole="review_component" ToRole="component_rating" />
-  </EntityType>
   <EntityType Name="room_type">
     <Key>
       <PropertyRef Name="id" />
@@ -518,7 +367,6 @@
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="rt_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="created" Type="DateTime" Precision="3" />
-    <Property Name="modified" Type="DateTime" Precision="3" />
     <Property Name="rt_status" Type="Byte" />
     <Property Name="icon_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="describe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
@@ -536,7 +384,16 @@
     <NavigationProperty Name="cities" Relationship="Self.cities_state_id_id_FK" FromRole="states" ToRole="cities" />
     <NavigationProperty Name="country" Relationship="Self.states_country_id_id_FK" FromRole="states" ToRole="countries" />
     <NavigationProperty Name="properties" Relationship="Self.pro_state_id_id_FK" FromRole="states" ToRole="properties" />
-    <NavigationProperty Name="user_personalInfor" Relationship="Self.u_state_id_FK" FromRole="states" ToRole="user_personalInfor" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <EntityType Name="transaction">
     <Key>
@@ -557,8 +414,6 @@
     <Property Name="feedback" Type="Int32" />
     <Property Name="transaction_status" Type="Byte" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_transaction_id_id_FK" FromRole="transactions" ToRole="bookings" />
-    <NavigationProperty Name="currency" Relationship="Self.transaction_currency_id_id_FK" FromRole="transactions" ToRole="currencies" />
-    <NavigationProperty Name="promo_codes" Relationship="Self.transaction_promo_code_id_id_FK" FromRole="transactions" ToRole="promo_codes" />
     <NavigationProperty Name="property" Relationship="Self.transaction_property_id_id_FK" FromRole="transactions" ToRole="properties" />
     <NavigationProperty Name="property_reviews" Relationship="Self.pr_transactions_id_id_FK" FromRole="transactions" ToRole="property_reviews" />
     <NavigationProperty Name="user" Relationship="Self.FK_transactions_payer" FromRole="transactions" ToRole="users" />
@@ -586,15 +441,12 @@
     <Property Name="email_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="facebook_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="country_id" Type="Int32" />
+    <Property Name="country_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="u_state" Type="Int32" />
-    <Property Name="u_city" Type="Int32" />
+    <Property Name="u_state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="u_city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <NavigationProperty Name="city" Relationship="Self.u_city_id_FK" FromRole="user_personalInfor" ToRole="cities" />
-    <NavigationProperty Name="country" Relationship="Self.up_country_id_id_FK" FromRole="user_personalInfor" ToRole="countries" />
-    <NavigationProperty Name="state" Relationship="Self.u_state_id_FK" FromRole="user_personalInfor" ToRole="states" />
     <NavigationProperty Name="user" Relationship="Self.up_userID_id_FK" FromRole="user_personalInfor" ToRole="users" />
   </EntityType>
   <EntityType Name="user_profile">
@@ -672,9 +524,6 @@
     <Property Name="is_active" Type="Byte" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_userId_id_FK" FromRole="users" ToRole="bookings" />
     <NavigationProperty Name="browser_becomes_host" Relationship="Self.FK_become_a_host_users" FromRole="users" ToRole="browser_becomes_host" />
-    <NavigationProperty Name="disputes" Relationship="Self.disputes_userId_id_FK" FromRole="users" ToRole="disputes" />
-    <NavigationProperty Name="email_contents" Relationship="Self.emct_receiver_id_id_FK" FromRole="users" ToRole="email_contents" />
-    <NavigationProperty Name="email_contents1" Relationship="Self.emct_sender_id_id_FK" FromRole="users" ToRole="email_contents" />
     <NavigationProperty Name="emergency_contact" Relationship="Self.ecc_userid_id_FK" FromRole="users" ToRole="emergency_contact" />
     <NavigationProperty Name="favourites" Relationship="Self.FK_favourite_users" FromRole="users" ToRole="favourite" />
     <NavigationProperty Name="Friendships" Relationship="Self.FK_Friendship_users" FromRole="users" ToRole="Friendship" />
@@ -812,20 +661,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="disputes_booking_id_id_FK">
-    <End Role="bookings" Type="Self.booking" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="disputes" Type="Self.dispute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="bookings">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="disputes">
-        <PropertyRef Name="booking_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Browse_hotel_listings_properties">
     <End Role="properties" Type="Self.property" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -878,54 +713,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="u_city_id_FK">
-    <End Role="cities" Type="Self.city" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="cities">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_city" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="cpl_cms_page_id_id_FK">
-    <End Role="cms_pages" Type="Self.cms_pages" Multiplicity="0..1" />
-    <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="cms_pages">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="cms_page_languages">
-        <PropertyRef Name="cms_page_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="cpl_language_id_id_FK">
-    <End Role="languages" Type="Self.language" Multiplicity="0..1" />
-    <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="languages">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="cms_page_languages">
-        <PropertyRef Name="language_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="cr_component_id_id_FK">
-    <End Role="review_component" Type="Self.review_component" Multiplicity="0..1" />
-    <End Role="component_rating" Type="Self.component_rating" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="review_component">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="component_rating">
-        <PropertyRef Name="component_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="cr_review_id_id_FK">
     <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -964,42 +751,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="up_country_id_id_FK">
-    <End Role="countries" Type="Self.country" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="countries">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="country_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="pro_currency_id_id_FK">
-    <End Role="currencies" Type="Self.currency" Multiplicity="0..1" />
-    <End Role="properties" Type="Self.property" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="currencies">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="properties">
-        <PropertyRef Name="currency_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="transaction_currency_id_id_FK">
-    <End Role="currencies" Type="Self.currency" Multiplicity="0..1" />
-    <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="currencies">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="transactions">
-        <PropertyRef Name="currency_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_discounts_discounts">
     <End Role="discounts" Type="Self.discount" Multiplicity="1" />
     <End Role="discounts1" Type="Self.discount" Multiplicity="0..1" />
@@ -1023,78 +774,6 @@
       </Principal>
       <Dependent Role="properties_discounts">
         <PropertyRef Name="discounts_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="disputes_property_id_id_FK">
-    <End Role="properties" Type="Self.property" Multiplicity="0..1" />
-    <End Role="disputes" Type="Self.dispute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="properties">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="disputes">
-        <PropertyRef Name="property_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="disputes_userId_id_FK">
-    <End Role="users" Type="Self.user" Multiplicity="0..1" />
-    <End Role="disputes" Type="Self.dispute" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="disputes">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ecl_email_content_id_id_FK">
-    <End Role="email_contents" Type="Self.email_contents" Multiplicity="0..1" />
-    <End Role="email_content_languages" Type="Self.email_content_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="email_contents">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_content_languages">
-        <PropertyRef Name="email_content_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ecl_language_id_id_FK">
-    <End Role="languages" Type="Self.language" Multiplicity="0..1" />
-    <End Role="email_content_languages" Type="Self.email_content_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="languages">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_content_languages">
-        <PropertyRef Name="language_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="emct_receiver_id_id_FK">
-    <End Role="users" Type="Self.user" Multiplicity="0..1" />
-    <End Role="email_contents" Type="Self.email_contents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_contents">
-        <PropertyRef Name="receiver_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="emct_sender_id_id_FK">
-    <End Role="users" Type="Self.user" Multiplicity="0..1" />
-    <End Role="email_contents" Type="Self.email_contents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_contents">
-        <PropertyRef Name="sender_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1266,20 +945,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="neighbourhood_property_id_id_FK">
-    <End Role="properties" Type="Self.property" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="neighbourhood" Type="Self.neighbourhood" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="properties">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="neighbourhood">
-        <PropertyRef Name="property_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="pn_userID_id_FK">
     <End Role="users" Type="Self.user" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -1291,18 +956,6 @@
       </Principal>
       <Dependent Role="phone_number">
         <PropertyRef Name="userID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="transaction_promo_code_id_id_FK">
-    <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1" />
-    <End Role="transactions" Type="Self.transaction" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="promo_codes">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="transactions">
-        <PropertyRef Name="promo_code_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1457,18 +1110,6 @@
       </Principal>
       <Dependent Role="property_reviews">
         <PropertyRef Name="transaction_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="u_state_id_FK">
-    <End Role="states" Type="Self.state" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="states">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_state" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1638,15 +1279,9 @@
     <EntitySet Name="browser_becomes_host" EntityType="Self.browser_becomes_host" />
     <EntitySet Name="categories" EntityType="Self.category" />
     <EntitySet Name="cities" EntityType="Self.city" />
-    <EntitySet Name="cms_page_languages" EntityType="Self.cms_page_languages" />
-    <EntitySet Name="cms_pages" EntityType="Self.cms_pages" />
     <EntitySet Name="component_rating" EntityType="Self.component_rating" />
     <EntitySet Name="countries" EntityType="Self.country" />
-    <EntitySet Name="currencies" EntityType="Self.currency" />
     <EntitySet Name="discounts" EntityType="Self.discount" />
-    <EntitySet Name="disputes" EntityType="Self.dispute" />
-    <EntitySet Name="email_content_languages" EntityType="Self.email_content_languages" />
-    <EntitySet Name="email_contents" EntityType="Self.email_contents" />
     <EntitySet Name="emergency_contact" EntityType="Self.emergency_contact" />
     <EntitySet Name="favourites" EntityType="Self.favourite" />
     <EntitySet Name="Friendships" EntityType="Self.Friendship" />
@@ -1655,21 +1290,18 @@
     <EntitySet Name="host_reviews" EntityType="Self.host_reviews" />
     <EntitySet Name="interest_categories" EntityType="Self.interest_categories" />
     <EntitySet Name="interests" EntityType="Self.interest" />
-    <EntitySet Name="languages" EntityType="Self.language" />
     <EntitySet Name="listLanguages" EntityType="Self.listLanguage" />
     <EntitySet Name="Messages" EntityType="Self.Message" />
-    <EntitySet Name="neighbourhoods" EntityType="Self.neighbourhood" />
     <EntitySet Name="phone_number" EntityType="Self.phone_number" />
-    <EntitySet Name="promo_codes" EntityType="Self.promo_codes" />
     <EntitySet Name="properties" EntityType="Self.property" />
     <EntitySet Name="properties_discounts" EntityType="Self.properties_discounts" />
     <EntitySet Name="property_amenities" EntityType="Self.property_amenities" />
     <EntitySet Name="property_images" EntityType="Self.property_images" />
     <EntitySet Name="property_reviews" EntityType="Self.property_reviews" />
     <EntitySet Name="property_type" EntityType="Self.property_type" />
-    <EntitySet Name="review_component" EntityType="Self.review_component" />
     <EntitySet Name="room_type" EntityType="Self.room_type" />
     <EntitySet Name="states" EntityType="Self.state" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="transactions" EntityType="Self.transaction" />
     <EntitySet Name="user_notification" EntityType="Self.user_notification" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" />
@@ -1708,10 +1340,6 @@
       <End Role="users" EntitySet="users" />
       <End Role="bookings" EntitySet="bookings" />
     </AssociationSet>
-    <AssociationSet Name="disputes_booking_id_id_FK" Association="Self.disputes_booking_id_id_FK">
-      <End Role="bookings" EntitySet="bookings" />
-      <End Role="disputes" EntitySet="disputes" />
-    </AssociationSet>
     <AssociationSet Name="FK_Browse_hotel_listings_properties" Association="Self.FK_Browse_hotel_listings_properties">
       <End Role="properties" EntitySet="properties" />
       <End Role="Browse_hotel_listings" EntitySet="Browse_hotel_listings" />
@@ -1728,22 +1356,6 @@
       <End Role="cities" EntitySet="cities" />
       <End Role="properties" EntitySet="properties" />
     </AssociationSet>
-    <AssociationSet Name="u_city_id_FK" Association="Self.u_city_id_FK">
-      <End Role="cities" EntitySet="cities" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
-    </AssociationSet>
-    <AssociationSet Name="cpl_cms_page_id_id_FK" Association="Self.cpl_cms_page_id_id_FK">
-      <End Role="cms_pages" EntitySet="cms_pages" />
-      <End Role="cms_page_languages" EntitySet="cms_page_languages" />
-    </AssociationSet>
-    <AssociationSet Name="cpl_language_id_id_FK" Association="Self.cpl_language_id_id_FK">
-      <End Role="languages" EntitySet="languages" />
-      <End Role="cms_page_languages" EntitySet="cms_page_languages" />
-    </AssociationSet>
-    <AssociationSet Name="cr_component_id_id_FK" Association="Self.cr_component_id_id_FK">
-      <End Role="review_component" EntitySet="review_component" />
-      <End Role="component_rating" EntitySet="component_rating" />
-    </AssociationSet>
     <AssociationSet Name="cr_review_id_id_FK" Association="Self.cr_review_id_id_FK">
       <End Role="property_reviews" EntitySet="property_reviews" />
       <End Role="component_rating" EntitySet="component_rating" />
@@ -1756,18 +1368,6 @@
       <End Role="countries" EntitySet="countries" />
       <End Role="states" EntitySet="states" />
     </AssociationSet>
-    <AssociationSet Name="up_country_id_id_FK" Association="Self.up_country_id_id_FK">
-      <End Role="countries" EntitySet="countries" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
-    </AssociationSet>
-    <AssociationSet Name="pro_currency_id_id_FK" Association="Self.pro_currency_id_id_FK">
-      <End Role="currencies" EntitySet="currencies" />
-      <End Role="properties" EntitySet="properties" />
-    </AssociationSet>
-    <AssociationSet Name="transaction_currency_id_id_FK" Association="Self.transaction_currency_id_id_FK">
-      <End Role="currencies" EntitySet="currencies" />
-      <End Role="transactions" EntitySet="transactions" />
-    </AssociationSet>
     <AssociationSet Name="FK_discounts_discounts" Association="Self.FK_discounts_discounts">
       <End Role="discounts" EntitySet="discounts" />
       <End Role="discounts1" EntitySet="discounts" />
@@ -1775,30 +1375,6 @@
     <AssociationSet Name="FK_properties_discounts_discounts" Association="Self.FK_properties_discounts_discounts">
       <End Role="discounts" EntitySet="discounts" />
       <End Role="properties_discounts" EntitySet="properties_discounts" />
-    </AssociationSet>
-    <AssociationSet Name="disputes_property_id_id_FK" Association="Self.disputes_property_id_id_FK">
-      <End Role="properties" EntitySet="properties" />
-      <End Role="disputes" EntitySet="disputes" />
-    </AssociationSet>
-    <AssociationSet Name="disputes_userId_id_FK" Association="Self.disputes_userId_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="disputes" EntitySet="disputes" />
-    </AssociationSet>
-    <AssociationSet Name="ecl_email_content_id_id_FK" Association="Self.ecl_email_content_id_id_FK">
-      <End Role="email_contents" EntitySet="email_contents" />
-      <End Role="email_content_languages" EntitySet="email_content_languages" />
-    </AssociationSet>
-    <AssociationSet Name="ecl_language_id_id_FK" Association="Self.ecl_language_id_id_FK">
-      <End Role="languages" EntitySet="languages" />
-      <End Role="email_content_languages" EntitySet="email_content_languages" />
-    </AssociationSet>
-    <AssociationSet Name="emct_receiver_id_id_FK" Association="Self.emct_receiver_id_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="email_contents" EntitySet="email_contents" />
-    </AssociationSet>
-    <AssociationSet Name="emct_sender_id_id_FK" Association="Self.emct_sender_id_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="email_contents" EntitySet="email_contents" />
     </AssociationSet>
     <AssociationSet Name="ecc_userid_id_FK" Association="Self.ecc_userid_id_FK">
       <End Role="users" EntitySet="users" />
@@ -1852,17 +1428,9 @@
       <End Role="users" EntitySet="users" />
       <End Role="Message" EntitySet="Messages" />
     </AssociationSet>
-    <AssociationSet Name="neighbourhood_property_id_id_FK" Association="Self.neighbourhood_property_id_id_FK">
-      <End Role="properties" EntitySet="properties" />
-      <End Role="neighbourhood" EntitySet="neighbourhoods" />
-    </AssociationSet>
     <AssociationSet Name="pn_userID_id_FK" Association="Self.pn_userID_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="phone_number" EntitySet="phone_number" />
-    </AssociationSet>
-    <AssociationSet Name="transaction_promo_code_id_id_FK" Association="Self.transaction_promo_code_id_id_FK">
-      <End Role="promo_codes" EntitySet="promo_codes" />
-      <End Role="transactions" EntitySet="transactions" />
     </AssociationSet>
     <AssociationSet Name="FK_properties_discounts_properties" Association="Self.FK_properties_discounts_properties">
       <End Role="properties" EntitySet="properties" />
@@ -1911,10 +1479,6 @@
     <AssociationSet Name="pr_transactions_id_id_FK" Association="Self.pr_transactions_id_id_FK">
       <End Role="transactions" EntitySet="transactions" />
       <End Role="property_reviews" EntitySet="property_reviews" />
-    </AssociationSet>
-    <AssociationSet Name="u_state_id_FK" Association="Self.u_state_id_FK">
-      <End Role="states" EntitySet="states" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
     </AssociationSet>
     <AssociationSet Name="FK_transactions_payer" Association="Self.FK_transactions_payer">
       <End Role="users" EntitySet="users" />

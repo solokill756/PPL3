@@ -87,6 +87,13 @@ namespace PPl3.Areas.Host.Controllers
                         user_Notification.un_status = 1;
                         user_Notification.un_url = "#";
                         db.user_notification.Add(user_Notification);
+                        user_notification admin_notification = new user_notification();
+                        admin_notification.userid = 20;
+                        admin_notification.created = DateTime.Now;
+                        admin_notification.content = "The user with id " + p_user.id + " requests to become a host";
+                        admin_notification.un_status = 0;
+                        admin_notification.un_url = "#";
+                        db.user_notification.Add(admin_notification);
                         db.SaveChanges();
                         browser_becomes_host browser_Becomes_Host = new browser_becomes_host();
                         browser_Becomes_Host.user_id = p_user.id;
@@ -325,6 +332,13 @@ namespace PPl3.Areas.Host.Controllers
                 user_Notification.un_status = 0;
                 user_Notification.un_url = "#";
                 db.user_notification.Add(user_Notification);
+                user_notification admin_notification = new user_notification();
+                admin_notification.userid = 20;
+                admin_notification.created = DateTime.Now;
+                admin_notification.content = "Hotels with id " + new_hotel.id + " need to be approved";
+                admin_notification.un_status = 0;
+                admin_notification.un_url = "#";
+                db.user_notification.Add(admin_notification);
                 Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
                 browse_Hotel_.property_id = new_hotel.id;
                 
@@ -480,7 +494,6 @@ namespace PPl3.Areas.Host.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             property find_hotel = db.properties.FirstOrDefault(item => item.id == id);
-
             find_hotel.p_name = data.hotel_name;
             find_hotel.p_description = data.hotelDescribe;
             find_hotel.userId = p_user.id;
@@ -565,6 +578,13 @@ namespace PPl3.Areas.Host.Controllers
                     user_Notification.un_status = 0;
                     user_Notification.un_url = "#";
                     db.user_notification.Add(user_Notification);
+                    user_notification admin_notification = new user_notification();
+                    admin_notification.userid = 20;
+                    admin_notification.created = DateTime.Now;
+                    admin_notification.content = "Hotels with id " + find_hotel.id + " need to be approved";
+                    admin_notification.un_status = 0;
+                    admin_notification.un_url = "#";
+                    db.user_notification.Add(admin_notification);
                     Browse_hotel_listings browse_Hotel_ = new Browse_hotel_listings();
                     browse_Hotel_.property_id = find_hotel.id;
                     browse_Hotel_.Date = DateTime.Now;
@@ -951,9 +971,11 @@ namespace PPl3.Areas.Host.Controllers
             int mocYear = int.Parse(currentYear) - 6;
             foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
             {
-
-                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
-                data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                if(int.Parse(item.transfer_on.Value.ToString("yyyy")) == int.Parse(DateTime.Now.ToString("yyyy")))
+                {
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                }
 
                 if(int.Parse(item.transfer_on.Value.ToString("yyyy")) >= mocYear)
                 {
@@ -979,6 +1001,41 @@ namespace PPl3.Areas.Host.Controllers
                 TotalRevenue = totalRevenue,
             };
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult getRevenueChartInYear(int year) 
+        {
+            string phanhoi = "true";
+            PPL3Entities db = new PPL3Entities();
+            user p_user = (user)Session["user"];
+            List<RevenueListData1> data1 = new List<RevenueListData1>();
+            for (int i = 0; i < 12; i++)
+            {
+                RevenueListData1 revenueListData1 = new RevenueListData1()
+                {
+                    month = i + 1,
+                    money = 0,
+                    renters = 0,
+                };
+                data1.Add(revenueListData1);
+            }
+            int mocYear = int.Parse(DateTime.Now.ToString("yyyy"));
+            foreach (var item in db.transactions.Where(tmp => tmp.receiver_id == p_user.id).ToList())
+            {
+                if (int.Parse(item.transfer_on.Value.ToString("yyyy")) == year)
+                {
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
+                }
+            }
+
+            var data = new
+            {
+                phanhoi = phanhoi,
+                Data1 = data1,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         // Fuction

@@ -1,4 +1,5 @@
-﻿var menuUserBtns = document.querySelectorAll('.js_menuUser_btn');
+﻿
+var menuUserBtns = document.querySelectorAll('.js_menuUser_btn');
 var subNavGuest = document.querySelector('.js_sub_nav_guest');
 var menuUser = document.querySelector('.js_menu_user');
 const firstHeader = document.querySelector('#first_header');
@@ -344,10 +345,10 @@ if (document.getElementById("checkInDate") != null && document.getElementById("c
             console.log(diffDays);
             if (diffDays + 1 >= 10 && discounts.length > 1) {
                 if (booking_count < 3 && discounts.length > 0) {
-                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice  * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100 * (100 - discounts[1]) / 100 * diffDays + "</h2>" ;
+                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100 * (100 - Math.max(discounts[1] , discounts[2])) / 100 * diffDays + "</h2>";
                 }
                 else {
-                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[1]) / 100 * diffDays + "</h2>" ;
+                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - Math.max(discounts[1], discounts[2])) / 100 * diffDays + "</h2>" ;
                 }
                 
             } else if (diffDays + 1 >= 5 && discounts.length > 2) {

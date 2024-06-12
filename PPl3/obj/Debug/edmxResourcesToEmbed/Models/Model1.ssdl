@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="PPl3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+<Schema Namespace="PPL3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="amenities">
     <Key>
       <PropertyRef Name="id" />
@@ -8,7 +8,6 @@
     <Property Name="category_id" Type="int" />
     <Property Name="amenity_name" Type="nvarchar" MaxLength="255" />
     <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
     <Property Name="amenity_status" Type="tinyint" />
     <Property Name="description" Type="nvarchar(max)" />
     <Property Name="icon_image" Type="varchar(max)" />
@@ -32,9 +31,6 @@
     <Property Name="check_in_date" Type="datetime" />
     <Property Name="check_out_date" Type="datetime" />
     <Property Name="price_per_day" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="price_for_stay" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="tax_paid" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="site_fees" Type="decimal" Precision="18" Scale="0" />
     <Property Name="amount_paid" Type="decimal" Precision="18" Scale="0" />
     <Property Name="is_refund" Type="tinyint" />
     <Property Name="cancel_date" Type="datetime" />
@@ -70,7 +66,6 @@
     <Property Name="category_name" Type="nvarchar" MaxLength="255" />
     <Property Name="category_description" Type="text" />
     <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
     <Property Name="category_status" Type="tinyint" />
   </EntityType>
   <EntityType Name="cities">
@@ -81,26 +76,6 @@
     <Property Name="state_id" Type="int" />
     <Property Name="city_name" Type="nvarchar" MaxLength="255" />
     <Property Name="city_status" Type="tinyint" />
-  </EntityType>
-  <EntityType Name="cms_page_languages">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="cms_page_id" Type="int" />
-    <Property Name="language_id" Type="int" />
-    <Property Name="title" Type="nvarchar" MaxLength="255" />
-    <Property Name="cpl_description" Type="text" />
-  </EntityType>
-  <EntityType Name="cms_pages">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="unique_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
-    <Property Name="cp_status" Type="tinyint" />
   </EntityType>
   <EntityType Name="component_rating">
     <Key>
@@ -120,60 +95,12 @@
     <Property Name="code" Type="nvarchar" MaxLength="5" />
     <Property Name="status" Type="tinyint" />
   </EntityType>
-  <EntityType Name="currencies">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="currency_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
-    <Property Name="currency_status" Type="tinyint" />
-    <Property Name="icon_image" Type="varchar(max)" />
-  </EntityType>
   <EntityType Name="discounts">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="descride" Type="nvarchar" MaxLength="100" />
-  </EntityType>
-  <EntityType Name="disputes">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="userId" Type="int" />
-    <Property Name="property_id" Type="int" />
-    <Property Name="booking_id" Type="int" />
-    <Property Name="title" Type="nvarchar" MaxLength="255" />
-    <Property Name="disputes_description" Type="text" />
-    <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
-    <Property Name="disputes_status" Type="tinyint" />
-  </EntityType>
-  <EntityType Name="email_content_languages">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="email_content_id" Type="int" />
-    <Property Name="language_id" Type="int" />
-    <Property Name="title" Type="nvarchar" MaxLength="255" />
-    <Property Name="ecl_message" Type="text" />
-  </EntityType>
-  <EntityType Name="email_contents">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="sender_id" Type="int" />
-    <Property Name="receiver_id" Type="int" />
-    <Property Name="title" Type="nvarchar" MaxLength="255" />
-    <Property Name="content" Type="text" />
-    <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
-    <Property Name="ec_status" Type="tinyint" />
   </EntityType>
   <EntityType Name="emergency_contact">
     <Key>
@@ -212,8 +139,6 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="userID" Type="int" />
-    <Property Name="driver_license" Type="varchar(max)" />
-    <Property Name="passport" Type="varchar(max)" />
     <Property Name="identity_card" Type="varchar(max)" />
     <Property Name="backof_id_card" Type="varchar(max)" />
     <Property Name="date_range" Type="date" />
@@ -236,7 +161,6 @@
     <Property Name="review_by_user" Type="int" />
     <Property Name="comment" Type="nvarchar" MaxLength="255" />
     <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
     <Property Name="hr_status" Type="tinyint" />
     <Property Name="rating" Type="varchar" MaxLength="10" />
   </EntityType>
@@ -260,17 +184,6 @@
     <Property Name="itr_description" Type="nvarchar" MaxLength="255" />
     <Property Name="itr_status" Type="tinyint" />
   </EntityType>
-  <EntityType Name="languages">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="language_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="code" Type="nvarchar" MaxLength="5" />
-    <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
-    <Property Name="language_status" Type="tinyint" />
-  </EntityType>
   <EntityType Name="listLanguage">
     <Key>
       <PropertyRef Name="id" />
@@ -288,20 +201,6 @@
     <Property Name="MessageContent" Type="nvarchar(max)" />
     <Property Name="Timestamp" Type="datetime" />
   </EntityType>
-  <EntityType Name="neighbourhood">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="property_id" Type="int" />
-    <Property Name="neighbour_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="neighbour_description" Type="text" />
-    <Property Name="latitude" Type="nvarchar" MaxLength="50" />
-    <Property Name="longitude" Type="nvarchar" MaxLength="50" />
-    <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
-    <Property Name="neighbour_status" Type="tinyint" />
-  </EntityType>
   <EntityType Name="phone_number">
     <Key>
       <PropertyRef Name="id" />
@@ -309,19 +208,6 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="userID" Type="int" />
     <Property Name="phone" Type="varchar" MaxLength="15" />
-  </EntityType>
-  <EntityType Name="promo_codes">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="title" Type="nvarchar" MaxLength="255" />
-    <Property Name="pc_description" Type="text" />
-    <Property Name="code" Type="nvarchar" MaxLength="255" />
-    <Property Name="discount" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
-    <Property Name="pc_status" Type="tinyint" />
   </EntityType>
   <EntityType Name="properties">
     <Key>
@@ -354,7 +240,6 @@
     <Property Name="refund_type" Type="tinyint" />
     <Property Name="booking_confirmation_method" Type="tinyint" />
     <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
     <Property Name="p_status" Type="tinyint" />
     <Property Name="ask_for_booking" Type="tinyint" />
     <Property Name="current_pages" Type="int" />
@@ -377,7 +262,6 @@
     <Property Name="property_id" Type="int" />
     <Property Name="amenity_id" Type="int" />
     <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
     <Property Name="pa_status" Type="tinyint" />
     <Property Name="pa_description" Type="text" />
   </EntityType>
@@ -403,7 +287,6 @@
     <Property Name="comment" Type="text" />
     <Property Name="overall_rating" Type="decimal" Precision="18" Scale="0" />
     <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
     <Property Name="pr_status" Type="tinyint" />
   </EntityType>
   <EntityType Name="property_type">
@@ -417,15 +300,6 @@
     <Property Name="pt_status" Type="tinyint" />
     <Property Name="icon_image" Type="varchar(max)" />
   </EntityType>
-  <EntityType Name="review_component">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="component_name" Type="nvarchar" MaxLength="255" />
-    <Property Name="component_description" Type="text" />
-    <Property Name="component_icon" Type="varchar(max)" />
-  </EntityType>
   <EntityType Name="room_type">
     <Key>
       <PropertyRef Name="id" />
@@ -433,7 +307,6 @@
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="rt_name" Type="nvarchar" MaxLength="255" />
     <Property Name="created" Type="datetime" />
-    <Property Name="modified" Type="datetime" />
     <Property Name="rt_status" Type="tinyint" />
     <Property Name="icon_image" Type="varchar(max)" />
     <Property Name="describe" Type="nvarchar(max)" />
@@ -447,6 +320,16 @@
     <Property Name="state_name" Type="nvarchar" MaxLength="255" />
     <Property Name="code" Type="nvarchar" MaxLength="5" />
     <Property Name="state_status" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
   <EntityType Name="transactions">
     <Key>
@@ -488,10 +371,10 @@
     <Property Name="email_address" Type="varchar" MaxLength="255" />
     <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
     <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
-    <Property Name="country_id" Type="int" />
+    <Property Name="country_id" Type="nvarchar" MaxLength="50" />
     <Property Name="street_address" Type="nvarchar" MaxLength="255" />
-    <Property Name="u_state" Type="int" />
-    <Property Name="u_city" Type="int" />
+    <Property Name="u_state" Type="nvarchar" MaxLength="50" />
+    <Property Name="u_city" Type="nvarchar" MaxLength="50" />
     <Property Name="first_name" Type="nvarchar" MaxLength="255" />
     <Property Name="last_name" Type="nvarchar" MaxLength="255" />
   </EntityType>
@@ -658,42 +541,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="cpl_cms_page_id_id_FK">
-    <End Role="cms_pages" Type="Self.cms_pages" Multiplicity="0..1" />
-    <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="cms_pages">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="cms_page_languages">
-        <PropertyRef Name="cms_page_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="cpl_language_id_id_FK">
-    <End Role="languages" Type="Self.languages" Multiplicity="0..1" />
-    <End Role="cms_page_languages" Type="Self.cms_page_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="languages">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="cms_page_languages">
-        <PropertyRef Name="language_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="cr_component_id_id_FK">
-    <End Role="review_component" Type="Self.review_component" Multiplicity="0..1" />
-    <End Role="component_rating" Type="Self.component_rating" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="review_component">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="component_rating">
-        <PropertyRef Name="component_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="cr_review_id_id_FK">
     <End Role="property_reviews" Type="Self.property_reviews" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -708,44 +555,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="disputes_booking_id_id_FK">
-    <End Role="bookings" Type="Self.bookings" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="bookings">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="disputes">
-        <PropertyRef Name="booking_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="disputes_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
-    <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="properties">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="disputes">
-        <PropertyRef Name="property_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="disputes_userId_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
-    <End Role="disputes" Type="Self.disputes" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="disputes">
-        <PropertyRef Name="userId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="ecc_userid_id_FK">
     <End Role="users" Type="Self.users" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -757,54 +566,6 @@
       </Principal>
       <Dependent Role="emergency_contact">
         <PropertyRef Name="userid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ecl_email_content_id_id_FK">
-    <End Role="email_contents" Type="Self.email_contents" Multiplicity="0..1" />
-    <End Role="email_content_languages" Type="Self.email_content_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="email_contents">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_content_languages">
-        <PropertyRef Name="email_content_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ecl_language_id_id_FK">
-    <End Role="languages" Type="Self.languages" Multiplicity="0..1" />
-    <End Role="email_content_languages" Type="Self.email_content_languages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="languages">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_content_languages">
-        <PropertyRef Name="language_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="emct_receiver_id_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
-    <End Role="email_contents" Type="Self.email_contents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_contents">
-        <PropertyRef Name="receiver_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="emct_sender_id_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
-    <End Role="email_contents" Type="Self.email_contents" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="email_contents">
-        <PropertyRef Name="sender_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1042,20 +803,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="neighbourhood_property_id_id_FK">
-    <End Role="properties" Type="Self.properties" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="neighbourhood" Type="Self.neighbourhood" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="properties">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="neighbourhood">
-        <PropertyRef Name="property_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="pa_amenity_id_id_FK">
     <End Role="amenities" Type="Self.amenities" Multiplicity="0..1" />
     <End Role="property_amenities" Type="Self.property_amenities" Multiplicity="*" />
@@ -1184,18 +931,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="pro_currency_id_id_FK">
-    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
-    <End Role="properties" Type="Self.properties" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="currencies">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="properties">
-        <PropertyRef Name="currency_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="pro_property_type_id_id_FK">
     <End Role="property_type" Type="Self.property_type" Multiplicity="0..1" />
     <End Role="properties" Type="Self.properties" Multiplicity="*" />
@@ -1258,30 +993,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="transaction_currency_id_id_FK">
-    <End Role="currencies" Type="Self.currencies" Multiplicity="0..1" />
-    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="currencies">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="transactions">
-        <PropertyRef Name="currency_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="transaction_promo_code_id_id_FK">
-    <End Role="promo_codes" Type="Self.promo_codes" Multiplicity="0..1" />
-    <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="promo_codes">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="transactions">
-        <PropertyRef Name="promo_code_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="transaction_property_id_id_FK">
     <End Role="properties" Type="Self.properties" Multiplicity="0..1" />
     <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
@@ -1303,30 +1014,6 @@
       </Principal>
       <Dependent Role="transactions">
         <PropertyRef Name="receiver_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="u_city_id_FK">
-    <End Role="cities" Type="Self.cities" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="cities">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_city" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="u_state_id_FK">
-    <End Role="states" Type="Self.states" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="states">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="u_state" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1367,18 +1054,6 @@
       </Principal>
       <Dependent Role="user_notification">
         <PropertyRef Name="userid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="up_country_id_id_FK">
-    <End Role="countries" Type="Self.countries" Multiplicity="0..1" />
-    <End Role="user_personalInfor" Type="Self.user_personalInfor" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="countries">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_personalInfor">
-        <PropertyRef Name="country_id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1488,7 +1163,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="PPl3ModelStoreContainer">
+  <EntityContainer Name="PPL3ModelStoreContainer">
     <EntitySet Name="amenities" EntityType="Self.amenities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="booking_guests" EntityType="Self.booking_guests" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="bookings" EntityType="Self.bookings" Schema="dbo" store:Type="Tables" />
@@ -1496,15 +1171,9 @@
     <EntitySet Name="browser_becomes_host" EntityType="Self.browser_becomes_host" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="cities" EntityType="Self.cities" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="cms_page_languages" EntityType="Self.cms_page_languages" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="cms_pages" EntityType="Self.cms_pages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="component_rating" EntityType="Self.component_rating" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="countries" EntityType="Self.countries" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="currencies" EntityType="Self.currencies" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="discounts" EntityType="Self.discounts" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="disputes" EntityType="Self.disputes" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="email_content_languages" EntityType="Self.email_content_languages" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="email_contents" EntityType="Self.email_contents" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="emergency_contact" EntityType="Self.emergency_contact" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="favourite" EntityType="Self.favourite" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Friendship" EntityType="Self.Friendship" Schema="dbo" store:Type="Tables" />
@@ -1513,21 +1182,18 @@
     <EntitySet Name="host_reviews" EntityType="Self.host_reviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="interest_categories" EntityType="Self.interest_categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="interests" EntityType="Self.interests" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="languages" EntityType="Self.languages" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="listLanguage" EntityType="Self.listLanguage" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="neighbourhood" EntityType="Self.neighbourhood" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="phone_number" EntityType="Self.phone_number" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="promo_codes" EntityType="Self.promo_codes" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="properties" EntityType="Self.properties" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="properties_discounts" EntityType="Self.properties_discounts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="property_amenities" EntityType="Self.property_amenities" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="property_images" EntityType="Self.property_images" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="property_reviews" EntityType="Self.property_reviews" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="property_type" EntityType="Self.property_type" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="review_component" EntityType="Self.review_component" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="room_type" EntityType="Self.room_type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_notification" EntityType="Self.user_notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" Schema="dbo" store:Type="Tables" />
@@ -1562,53 +1228,13 @@
       <End Role="states" EntitySet="states" />
       <End Role="cities" EntitySet="cities" />
     </AssociationSet>
-    <AssociationSet Name="cpl_cms_page_id_id_FK" Association="Self.cpl_cms_page_id_id_FK">
-      <End Role="cms_pages" EntitySet="cms_pages" />
-      <End Role="cms_page_languages" EntitySet="cms_page_languages" />
-    </AssociationSet>
-    <AssociationSet Name="cpl_language_id_id_FK" Association="Self.cpl_language_id_id_FK">
-      <End Role="languages" EntitySet="languages" />
-      <End Role="cms_page_languages" EntitySet="cms_page_languages" />
-    </AssociationSet>
-    <AssociationSet Name="cr_component_id_id_FK" Association="Self.cr_component_id_id_FK">
-      <End Role="review_component" EntitySet="review_component" />
-      <End Role="component_rating" EntitySet="component_rating" />
-    </AssociationSet>
     <AssociationSet Name="cr_review_id_id_FK" Association="Self.cr_review_id_id_FK">
       <End Role="property_reviews" EntitySet="property_reviews" />
       <End Role="component_rating" EntitySet="component_rating" />
     </AssociationSet>
-    <AssociationSet Name="disputes_booking_id_id_FK" Association="Self.disputes_booking_id_id_FK">
-      <End Role="bookings" EntitySet="bookings" />
-      <End Role="disputes" EntitySet="disputes" />
-    </AssociationSet>
-    <AssociationSet Name="disputes_property_id_id_FK" Association="Self.disputes_property_id_id_FK">
-      <End Role="properties" EntitySet="properties" />
-      <End Role="disputes" EntitySet="disputes" />
-    </AssociationSet>
-    <AssociationSet Name="disputes_userId_id_FK" Association="Self.disputes_userId_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="disputes" EntitySet="disputes" />
-    </AssociationSet>
     <AssociationSet Name="ecc_userid_id_FK" Association="Self.ecc_userid_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="emergency_contact" EntitySet="emergency_contact" />
-    </AssociationSet>
-    <AssociationSet Name="ecl_email_content_id_id_FK" Association="Self.ecl_email_content_id_id_FK">
-      <End Role="email_contents" EntitySet="email_contents" />
-      <End Role="email_content_languages" EntitySet="email_content_languages" />
-    </AssociationSet>
-    <AssociationSet Name="ecl_language_id_id_FK" Association="Self.ecl_language_id_id_FK">
-      <End Role="languages" EntitySet="languages" />
-      <End Role="email_content_languages" EntitySet="email_content_languages" />
-    </AssociationSet>
-    <AssociationSet Name="emct_receiver_id_id_FK" Association="Self.emct_receiver_id_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="email_contents" EntitySet="email_contents" />
-    </AssociationSet>
-    <AssociationSet Name="emct_sender_id_id_FK" Association="Self.emct_sender_id_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="email_contents" EntitySet="email_contents" />
     </AssociationSet>
     <AssociationSet Name="favourite_property_id_id_FK" Association="Self.favourite_property_id_id_FK">
       <End Role="properties" EntitySet="properties" />
@@ -1682,10 +1308,6 @@
       <End Role="interests" EntitySet="interests" />
       <End Role="users_interests" EntitySet="users_interests" />
     </AssociationSet>
-    <AssociationSet Name="neighbourhood_property_id_id_FK" Association="Self.neighbourhood_property_id_id_FK">
-      <End Role="properties" EntitySet="properties" />
-      <End Role="neighbourhood" EntitySet="neighbourhood" />
-    </AssociationSet>
     <AssociationSet Name="pa_amenity_id_id_FK" Association="Self.pa_amenity_id_id_FK">
       <End Role="amenities" EntitySet="amenities" />
       <End Role="property_amenities" EntitySet="property_amenities" />
@@ -1726,10 +1348,6 @@
       <End Role="countries" EntitySet="countries" />
       <End Role="properties" EntitySet="properties" />
     </AssociationSet>
-    <AssociationSet Name="pro_currency_id_id_FK" Association="Self.pro_currency_id_id_FK">
-      <End Role="currencies" EntitySet="currencies" />
-      <End Role="properties" EntitySet="properties" />
-    </AssociationSet>
     <AssociationSet Name="pro_property_type_id_id_FK" Association="Self.pro_property_type_id_id_FK">
       <End Role="property_type" EntitySet="property_type" />
       <End Role="properties" EntitySet="properties" />
@@ -1750,14 +1368,6 @@
       <End Role="countries" EntitySet="countries" />
       <End Role="states" EntitySet="states" />
     </AssociationSet>
-    <AssociationSet Name="transaction_currency_id_id_FK" Association="Self.transaction_currency_id_id_FK">
-      <End Role="currencies" EntitySet="currencies" />
-      <End Role="transactions" EntitySet="transactions" />
-    </AssociationSet>
-    <AssociationSet Name="transaction_promo_code_id_id_FK" Association="Self.transaction_promo_code_id_id_FK">
-      <End Role="promo_codes" EntitySet="promo_codes" />
-      <End Role="transactions" EntitySet="transactions" />
-    </AssociationSet>
     <AssociationSet Name="transaction_property_id_id_FK" Association="Self.transaction_property_id_id_FK">
       <End Role="properties" EntitySet="properties" />
       <End Role="transactions" EntitySet="transactions" />
@@ -1765,14 +1375,6 @@
     <AssociationSet Name="transaction_receiver_id_id_FK" Association="Self.transaction_receiver_id_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="transactions" EntitySet="transactions" />
-    </AssociationSet>
-    <AssociationSet Name="u_city_id_FK" Association="Self.u_city_id_FK">
-      <End Role="cities" EntitySet="cities" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
-    </AssociationSet>
-    <AssociationSet Name="u_state_id_FK" Association="Self.u_state_id_FK">
-      <End Role="states" EntitySet="states" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
     </AssociationSet>
     <AssociationSet Name="ul_language_id_FK" Association="Self.ul_language_id_FK">
       <End Role="listLanguage" EntitySet="listLanguage" />
@@ -1785,10 +1387,6 @@
     <AssociationSet Name="unn_userid_id_FK" Association="Self.unn_userid_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="user_notification" EntitySet="user_notification" />
-    </AssociationSet>
-    <AssociationSet Name="up_country_id_id_FK" Association="Self.up_country_id_id_FK">
-      <End Role="countries" EntitySet="countries" />
-      <End Role="user_personalInfor" EntitySet="user_personalInfor" />
     </AssociationSet>
     <AssociationSet Name="up_userID_id_FK" Association="Self.up_userID_id_FK">
       <End Role="users" EntitySet="users" />
