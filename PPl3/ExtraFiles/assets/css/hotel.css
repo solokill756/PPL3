@@ -654,3 +654,16 @@ html{
     background-color: rgb(208, 208, 208) !important;
     color: #727171;
 }
+
+@media screen and (max-width: 46.1875em) {
+    .price span {
+        font-size: 60px;
+        left: 86px;
+        top: -30.88px;
+    }
+
+    .price img {
+        width: 65px;
+        transform: translateX(-10%) translateY(-43%);
+    }
+}

@@ -615,7 +615,7 @@ namespace PPl3.Areas.User.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
-            tmpprofile.country_id = db.countries.Where(item => item.id == country_id).FirstOrDefault().ct_name;
+            tmpprofile.country = db.countries.Where(item => item.id == country_id).FirstOrDefault().ct_name;
             tmpprofile.u_state = db.states.Where(item => item.id == state_id).FirstOrDefault().state_name;
             tmpprofile.u_city = db.cities.Where(item => item.id == city_id).FirstOrDefault().city_name;
             db.SaveChanges();
@@ -623,7 +623,7 @@ namespace PPl3.Areas.User.Controllers
             Session["user"] = userInfor;
             var data = new
             {
-                country = tmpprofile.country_id,
+                country = tmpprofile.country,
                 state = tmpprofile.u_state, city = tmpprofile.u_city,
             };
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -635,12 +635,13 @@ namespace PPl3.Areas.User.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
-            tmpprofile.country_id = country_id;
+            tmpprofile.country = country_id;
             tmpprofile.u_state = state_id;
             tmpprofile.u_city = city_id;
             db.SaveChanges();
             var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
             Session["user"] = userInfor;
+            
             return Json("true", JsonRequestBehavior.AllowGet);
         }
 

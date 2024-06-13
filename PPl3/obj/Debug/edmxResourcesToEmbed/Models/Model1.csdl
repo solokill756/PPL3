@@ -378,16 +378,6 @@
     <NavigationProperty Name="country" Relationship="Self.states_country_id_id_FK" FromRole="states" ToRole="countries" />
     <NavigationProperty Name="properties" Relationship="Self.pro_state_id_id_FK" FromRole="states" ToRole="properties" />
   </EntityType>
-  <EntityType Name="sysdiagram">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-    <Property Name="principal_id" Type="Int32" Nullable="false" />
-    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="version" Type="Int32" />
-    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
-  </EntityType>
   <EntityType Name="transaction">
     <Key>
       <PropertyRef Name="id" />
@@ -431,7 +421,7 @@
     <Property Name="email_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="facebook_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-    <Property Name="country_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="u_state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <Property Name="u_city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -1291,7 +1281,6 @@
     <EntitySet Name="property_type" EntityType="Self.property_type" />
     <EntitySet Name="room_type" EntityType="Self.room_type" />
     <EntitySet Name="states" EntityType="Self.state" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
     <EntitySet Name="transactions" EntityType="Self.transaction" />
     <EntitySet Name="user_notification" EntityType="Self.user_notification" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" />
