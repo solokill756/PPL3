@@ -292,9 +292,9 @@
                                             string city = "";
                                             if (p_user.user_personalInfor != null)
                                             {
-                                                if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                if (p_user.user_personalInfor.FirstOrDefault().country != null)
                                                 {
-                                                    country = p_user.user_personalInfor.FirstOrDefault().country_id;
+                                                    country = p_user.user_personalInfor.FirstOrDefault().country;
                                                     if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
                                                         state = p_user.user_personalInfor.FirstOrDefault().u_state;
@@ -331,9 +331,9 @@
                                            
                                                 <select class="form-control"
                                                         id="country" disabled style="cursor:not-allowed">
-                                                    @if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().country != null)
                                                         {
-                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country_id">@p_user.user_personalInfor.FirstOrDefault().country_id</option>
+                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country">@p_user.user_personalInfor.FirstOrDefault().country</option>
                                                         }
                                                         @*else
                                                         {

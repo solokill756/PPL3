@@ -413,9 +413,9 @@
                                             string city = "";
                                             if (p_user.user_personalInfor != null)
                                             {
-                                                if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                if (p_user.user_personalInfor.FirstOrDefault().country != null)
                                                 {
-                                                    country = p_user.user_personalInfor.FirstOrDefault().country_id;
+                                                    country = p_user.user_personalInfor.FirstOrDefault().country;
                                                     if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
                                                         state = p_user.user_personalInfor.FirstOrDefault().u_state;
@@ -457,7 +457,7 @@
                                             <input type="text" id="district1" placeholder="District" value="@p_user.user_personalInfor.FirstOrDefault().u_state">
                                         </div>
                                         <div class="first_input">
-                                            <input type="text" id="country1" placeholder="Country" value="@p_user.user_personalInfor.FirstOrDefault().country_id">
+                                            <input type="text" id="country1" placeholder="Country" value="@p_user.user_personalInfor.FirstOrDefault().country">
                                         </div>
                                     </div>
                                     @* New code *@
@@ -469,9 +469,9 @@
                                             {
                                                 <select class="form-control"
                                                         id="country" @*disabled style="cursor:not-allowed"*@>
-                                                    @if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().country != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country_id">@p_user.user_personalInfor.FirstOrDefault().country_id</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country">@p_user.user_personalInfor.FirstOrDefault().country</option>
                                                     }
                                                     else
                                                     {
@@ -484,15 +484,14 @@
                                             {
                                                 <select class="form-control"
                                                         id="country">
-                                                    @*@if (p_user.user_personalInfor.FirstOrDefault().country_id != null)
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().country != null)
                                                         {
-                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country.ct_name">@p_user.user_personalInfor.FirstOrDefault().country.ct_name</option>
+                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country">@p_user.user_personalInfor.FirstOrDefault().country</option>
                                                         }
                                                         else
                                                         {
                                                             <option value="">Please select Country</option>
-                                                        }*@
-
+                                                        }
                                                 </select>
 
                                             }
@@ -946,7 +945,10 @@
                 data: data,
                 success: function (response) {
                     /*console.log(response);*/
-                    liveInElement.textContent ="Live in "+ response.city + ", " + response.state + ", " + response.country;
+                    liveInElement.textContent = "Live in " + response.city + ", " + response.state + ", " + response.country;
+                    document.getElementById("country1").value = response.country;
+                    document.getElementById("city1").value = response.city;
+                    document.getElementById("district1").value = response.state;
                 },
                 error: function (xhr, status, error) {
                     console.error(error);
@@ -971,7 +973,11 @@
                 data: data,
                 success: function (response) {
                     console.log(response);
-                    liveInElement.textContent ="Live in "+ cityID+", "+stateID+", "+countryID;
+                    liveInElement.textContent = "Live in " + cityID + ", " + stateID + ", " + countryID;
+                    document.getElementById("country").value = countryID;
+                    document.getElementById("city").value = cityID;
+                    document.getElementById("district").value = stateID;
+                    $('#country').empty();
                 },
                 error: function (xhr, status, error) {
                     console.error(error);

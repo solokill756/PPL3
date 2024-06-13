@@ -144,8 +144,6 @@
     <Property Name="date_range" Type="date" />
     <Property Name="expiration_date" Type="date" />
     <Property Name="number_card" Type="varchar" MaxLength="15" />
-    <Property Name="Account_Number" Type="nvarchar" MaxLength="50" />
-    <Property Name="Bank_Name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="guest_type">
     <Key>
@@ -323,16 +321,6 @@
     <Property Name="code" Type="nvarchar" MaxLength="5" />
     <Property Name="state_status" Type="tinyint" />
   </EntityType>
-  <EntityType Name="sysdiagrams">
-    <Key>
-      <PropertyRef Name="diagram_id" />
-    </Key>
-    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-    <Property Name="principal_id" Type="int" Nullable="false" />
-    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="version" Type="int" />
-    <Property Name="definition" Type="varbinary(max)" />
-  </EntityType>
   <EntityType Name="transactions">
     <Key>
       <PropertyRef Name="id" />
@@ -370,7 +358,7 @@
     <Property Name="email_address" Type="varchar" MaxLength="255" />
     <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
     <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
-    <Property Name="country_id" Type="nvarchar" MaxLength="50" />
+    <Property Name="country" Type="nvarchar" MaxLength="50" />
     <Property Name="street_address" Type="nvarchar" MaxLength="255" />
     <Property Name="u_state" Type="nvarchar" MaxLength="50" />
     <Property Name="u_city" Type="nvarchar" MaxLength="50" />
@@ -1192,7 +1180,6 @@
     <EntitySet Name="property_type" EntityType="Self.property_type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="room_type" EntityType="Self.room_type" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="states" EntityType="Self.states" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="transactions" EntityType="Self.transactions" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_notification" EntityType="Self.user_notification" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="user_personalInfor" EntityType="Self.user_personalInfor" Schema="dbo" store:Type="Tables" />

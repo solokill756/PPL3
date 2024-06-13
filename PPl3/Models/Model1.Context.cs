@@ -54,7 +54,6 @@ namespace PPl3.Models
         public virtual DbSet<property_type> property_type { get; set; }
         public virtual DbSet<room_type> room_type { get; set; }
         public virtual DbSet<state> states { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<transaction> transactions { get; set; }
         public virtual DbSet<user_notification> user_notification { get; set; }
         public virtual DbSet<user_personalInfor> user_personalInfor { get; set; }

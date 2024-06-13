@@ -358,7 +358,7 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                           address = (item.user_personalInfor.FirstOrDefault().country + ", " ?? "") +
                                      (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") + 
                                      (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
@@ -387,7 +387,7 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                           address = (item.user_personalInfor.FirstOrDefault().country + ", " ?? "") +
                                      (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") +
                                      (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
@@ -501,7 +501,30 @@ namespace PPl3.Areas.Admin.Controllers
             string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
             SendEmail(find_host.user_personalInfor.FirstOrDefault().email_address , "Congrats on becoming a host!" , emailHtml);
             TempData["CheckComfirm"] = 1;
-            return Json("true", JsonRequestBehavior.AllowGet);
+            var lst = (from item in db.users
+                       where item.is_active == 1 && item.id == user_id
+                       select new
+                       {
+                           item.id,
+                           item.user_personalInfor.FirstOrDefault().legal_name,
+                           item.passport_code,
+                           item.user_profile.FirstOrDefault().user_avatar,
+                           item.user_personalInfor.FirstOrDefault().email_address,
+                           address = (item.user_personalInfor.FirstOrDefault().country + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") +
+                                     (item.user_personalInfor.FirstOrDefault().u_city ?? "")
+                       }).ToList();
+            var data = new
+            {
+                phanhoi = "true",
+                id = lst[0].id,
+                user_avatar = lst[0].user_avatar,
+                legal_name = lst[0].legal_name,
+                email_address = lst[0].email_address,
+                address = lst[0].address,
+                passport_code = lst[0].passport_code,
+            };
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
         [AdminAuhorize(idChucNang = 15)]

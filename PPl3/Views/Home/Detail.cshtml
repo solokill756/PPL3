@@ -476,7 +476,7 @@
                                                     @{
 
                                                         string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
-                                                        string countryName = item.user.user_personalInfor.FirstOrDefault().country_id ?? "???";
+                                                        string countryName = item.user.user_personalInfor.FirstOrDefault().country ?? "???";
                                                         string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
 
                                                     }
@@ -833,7 +833,7 @@
                                                 @{
 
                                                     string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
-                                                    string countryName = item.user.user_personalInfor.FirstOrDefault().country_id ?? "???";
+                                                    string countryName = item.user.user_personalInfor.FirstOrDefault().country ?? "???";
                                                     string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
 
                                                 }

@@ -23,8 +23,8 @@
     {
         hotel_rate = (decimal)db.properties.Where(item => item.p_status == 1).Count() / totalProperties * 100;
     }
-    List<PPl3.Models.user> lstUser = db.users.Where(item => item.user_type != 1).ToList();
-    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3).ToList();
+    List<PPl3.Models.user> lstUser = db.users.Where(item => item.user_type != 1 && item.is_active == 1).ToList();
+    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3 && item.is_active == 1).ToList();
     List<PPl3.Models.property> lstHotel = db.properties.Where(item => item.p_status == 1).ToList();
 
     double sum_revenue = 0;
@@ -350,7 +350,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country_id - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -673,7 +673,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country_id - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -707,13 +707,13 @@
                             <div class="corner corner_bottom_right">
                                 <i class="fa-solid fa-swatchbook"></i>
                             </div>
-
+                            <div class="btn_handle center">
+                                <button onclick="confirm_host('@item.user_id')">Accept</button>
+                                <span>|</span>
+                                <button onclick="host_denied('@item.user_id')">Refuse</button>
+                            </div>
                         </div>
-                        <div class="btn_handle center">
-                            <button onclick="confirm_host('@item.user_id')">Accept</button>
-                            <span>|</span>
-                            <button onclick="host_denied('@item.user_id')">Refuse</button>
-                        </div>
+             
                     </div>
                 }
                 @foreach (var item in property_browing_list)
@@ -995,15 +995,15 @@
                                             }
                                             @{
                                                 string address = "";
-                                                if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
+                                                if (tmp.user_personalInfor.FirstOrDefault().country != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country_id;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
                                                         }
                                                     }
                                                 }
@@ -1079,15 +1079,15 @@
                                             }
                                             @{
                                                 string address = "";
-                                                if (tmp.user_personalInfor.FirstOrDefault().country_id != null)
+                                                if (tmp.user_personalInfor.FirstOrDefault().country != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country_id;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().country;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country_id;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
                                                         }
                                                     }
                                                 }
@@ -1846,13 +1846,44 @@
             type: "POST",
             data: { user_id: user_id },
             success: function (data) {
-                console.log(data);
+                console.log(data.phanhoi);
                 var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
                 var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
                 containerInforHost.classList.add(`animationInfor`)
                 inforHostDetail.classList.remove('openHost');
                 loadData();
                 document.querySelector(`.user_${user_id}`).classList.add('close');
+
+                let rowHtml = `
+                    <tr id="hostRow-${data.id}">
+                        <td>
+                            <div class="avatar">
+                                <img src="${data.user_avatar}" alt="">
+                            </div>
+                        </td>
+                        <td>${data.legal_name}</td>
+                        <td>${data.passport_code || ''}</td>
+                        <td>${data.address}</td>
+                        <td>${data.email_address}</td>
+                        <td>
+                            <button><a href="/admin/homeadmin/userPersonalProfile?user=${data.id}" target="_blank">Detail</a></button>
+                            <button id="${data.id}" class="delete_Hostbtns">Delete</button>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('table_host').insertAdjacentHTML('beforeend', rowHtml);
+
+                var delHostButtons = document.querySelectorAll('.delete_Hostbtns');
+                delHostButtons.forEach(function (button) {
+                    button.addEventListener('click', function () {
+                        if (button.id == data.id) {
+                            var itemId = button.id;
+                            /*console.log(itemId);*/
+                            DeleteHostUser(itemId);
+                        }
+                        
+                    });
+                });
             },
             error: function (err) {
                 console.log(err);
