@@ -374,9 +374,6 @@
           <ScalarProperty Name="amount" ColumnName="amount" />
           <ScalarProperty Name="transfer_on" ColumnName="transfer_on" />
           <ScalarProperty Name="currency_id" ColumnName="currency_id" />
-          <ScalarProperty Name="promo_code_id" ColumnName="promo_code_id" />
-          <ScalarProperty Name="discount_amt" ColumnName="discount_amt" />
-          <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="feedback" ColumnName="feedback" />
           <ScalarProperty Name="transaction_status" ColumnName="transaction_status" />
         </MappingFragment>

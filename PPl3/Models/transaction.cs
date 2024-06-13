@@ -30,9 +30,6 @@ namespace PPl3.Models
         public Nullable<decimal> amount { get; set; }
         public Nullable<System.DateTime> transfer_on { get; set; }
         public Nullable<int> currency_id { get; set; }
-        public Nullable<int> promo_code_id { get; set; }
-        public Nullable<decimal> discount_amt { get; set; }
-        public Nullable<System.DateTime> created { get; set; }
         public Nullable<int> feedback { get; set; }
         public Nullable<byte> transaction_status { get; set; }
     

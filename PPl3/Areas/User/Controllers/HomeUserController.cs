@@ -942,7 +942,7 @@ namespace PPl3.Areas.User.Controllers
 
                     int daysDifference = (int)duration.TotalDays;
 
-                    if ((item.check_out_date < now && item.pay_status == 0) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+                    if ((item.check_out_date < now && item.pay_status == 0) || (daysDifference <= 5 && daysDifference >= 0 && item.pay_status == 0))
 
                     {
 
@@ -1104,7 +1104,7 @@ namespace PPl3.Areas.User.Controllers
 
                 int daysDifference = (int)duration.TotalDays;
 
-                if ((item.check_out_date < now && item.pay_status == 0) || (daysDifference <= 2 && daysDifference >= 0 && item.pay_status == 0))
+                if ((item.check_out_date < now && item.pay_status == 0) || (daysDifference <= 5 && daysDifference >= 0 && item.pay_status == 0))
 
                 {
 
@@ -1141,7 +1141,7 @@ namespace PPl3.Areas.User.Controllers
                
                 userBooking.amount_paid = (decimal)price_hotel;
                 userBooking.booking_date = DateTime.Now;
-                userBooking.is_refund = 1;
+                userBooking.is_refund = 0;
                 userBooking.booking_status = 1;
                 userBooking.created = DateTime.Now;
                 userBooking.pay_status = 0;
@@ -1242,9 +1242,18 @@ namespace PPl3.Areas.User.Controllers
                         db.user_notification.Add(user_Notification);
                         db.SaveChanges();
 
+                        user_notification host_Notification = new user_notification();
+                        host_Notification.userid = invoiceItem.property.userId;
+                        host_Notification.created = DateTime.Now;
+                        host_Notification.content = "The hotel" + invoiceItem.property.p_name + " has been booked by the customer with the id " + invoiceItem.userId;
+                        host_Notification.un_status = 0;
+                        host_Notification.un_url = "/host/homehost/revenue";
+                        db.user_notification.Add(host_Notification);
+                        db.SaveChanges();
+
                         // kiểm tra coi hóa đơn có tồn tại hay không
 
-                        if(invoiceItem.transaction_id != null)
+                        if (invoiceItem.transaction_id != null)
                         {
                             transaction find_transaction = db.transactions.FirstOrDefault(item => item.id == invoiceItem.transaction_id);
                             find_transaction.transaction_status = 1;
@@ -1331,6 +1340,7 @@ namespace PPl3.Areas.User.Controllers
 
             //Add Params of 2.1.0 Version
             //Billing
+            
 
             urlPayment = vnpay.CreateRequestUrl(vnp_Url, vnp_HashSecret);
             //log.InfoFormat("VNPAY URL: {0}", paymentUrl);
@@ -1339,48 +1349,51 @@ namespace PPl3.Areas.User.Controllers
 
 
         // cancel hotel
-        //public ActionResult(int booking_id)
-        //{
-        //    user p_user = (user)Session["user"];
-        //    PPL3Entities db = new PPL3Entities();
-        //    booking find_booking = db.bookings.FirstOrDefault(item => item.id == booking_id);
-        //    find_booking.cancel_date = DateTime.Now;
-        //    find_booking.refund_paid = (decimal)((double)find_booking.amount_paid * 0.3);
-        //    db.SaveChanges();
+        public ActionResult cancelHotel(int booking_id)
+        {
+            user p_user = (user)Session["user"];
+            PPL3Entities db = new PPL3Entities();
+            booking find_booking = db.bookings.FirstOrDefault(item => item.id == booking_id);
+            find_booking.cancel_date = DateTime.Now;
+            find_booking.refund_paid = (decimal)((double)find_booking.amount_paid * 0.3);
+            find_booking.is_refund = 1;
+            db.SaveChanges();
 
 
-        //    user_notification user_Notification = new user_notification();
-        //    user_Notification.userid = find_booking.transaction.payer_id;
-        //    user_Notification.created = DateTime.Now;
-        //    user_Notification.content = "Cancel booking successful!";
-        //    user_Notification.un_status = 0;
-        //    user_Notification.un_url = "#";
-        //    db.user_notification.Add(user_Notification);
+            user_notification user_Notification = new user_notification();
+            user_Notification.userid = find_booking.transaction.payer_id;
+            user_Notification.created = DateTime.Now;
+            user_Notification.content = "Cancel booking successful!";
+            user_Notification.un_status = 0;
+            user_Notification.un_url = "#";
+            db.user_notification.Add(user_Notification);
 
-        //    user_notification host_Notification = new user_notification();
-        //    host_Notification.userid = find_booking.transaction.receiver_id;
-        //    host_Notification.created = DateTime.Now;
-        //    host_Notification.content = "The booking with " + find_booking.id +  " has been cancelled!";
-        //    host_Notification.un_status = 0;
-        //    host_Notification.un_url = "#";
-        //    db.user_notification.Add(user_Notification);
-        //    db.SaveChanges();
-
-
-        //    user_notification admin_Notification = new user_notification();
-        //    admin_Notification.userid = find_booking.transaction.receiver_id;
-        //    admin_Notification.created = DateTime.Now;
-        //    admin_Notification.content = "The booking with " + find_booking.id + " has been cancelled!";
-        //    admin_Notification.un_status = 0;
-        //    admin_Notification.un_url = "#";
-        //    db.user_notification.Add(user_Notification);
-        //    db.SaveChanges();
-
-        //    string emailHtml = RenderRazorViewToString("Cancel", find_booking);
-        //    SendEmail(p_user.user_personalInfor.FirstOrDefault().email_address, "Invoice for Cancel Booking #" + booking_id, emailHtml);
+            user_notification host_Notification = new user_notification();
+            host_Notification.userid = find_booking.transaction.receiver_id;
+            host_Notification.created = DateTime.Now;
+            host_Notification.content = "The booking with " + find_booking.id + " has been cancelled!";
+            host_Notification.un_status = 0;
+            host_Notification.un_url = "#";
+            db.user_notification.Add(user_Notification);
+            db.SaveChanges();
 
 
-        //} 
+            //user_notification admin_Notification = new user_notification();
+            //admin_Notification.userid = 20;
+            //admin_Notification.created = DateTime.Now;
+            //admin_Notification.content = "The booking with " + find_booking.id + " has been cancelled!";
+            //admin_Notification.un_status = 0;
+            //admin_Notification.un_url = "#";
+            //db.user_notification.Add(user_Notification);
+            //db.SaveChanges();
+
+            string emailHtml = RenderRazorViewToString("cancel", db.transactions.FirstOrDefault(item => item.booking_id == booking_id));
+            SendEmail(p_user.user_personalInfor.FirstOrDefault().email_address, "Invoice for Cancel Booking #" + booking_id, emailHtml);
+
+            return RedirectToAction("trip");
+
+
+        }
 
         // Message 
         [UserAuthorize(idChucNang = 13)]

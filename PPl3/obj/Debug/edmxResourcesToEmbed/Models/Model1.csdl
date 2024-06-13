@@ -408,9 +408,6 @@
     <Property Name="amount" Type="Decimal" Precision="18" Scale="0" />
     <Property Name="transfer_on" Type="DateTime" Precision="3" />
     <Property Name="currency_id" Type="Int32" />
-    <Property Name="promo_code_id" Type="Int32" />
-    <Property Name="discount_amt" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="created" Type="DateTime" Precision="3" />
     <Property Name="feedback" Type="Int32" />
     <Property Name="transaction_status" Type="Byte" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_transaction_id_id_FK" FromRole="transactions" ToRole="bookings" />

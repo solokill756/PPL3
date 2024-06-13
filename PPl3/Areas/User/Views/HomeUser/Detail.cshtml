@@ -41,7 +41,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=4" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=19" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=20" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -555,9 +555,9 @@
                                         <button>Reservations Not Yet Open</button>
                                     </div>
                                 }
-                                else if(db.transactions.Count(item => item.property_id == property.id) > 0) { 
+                                else if(booking_id != -1 &&  db.transactions.Count(item => item.booking_id == booking_id) > 0) { 
                                         <div class="pay_footer">
-                                            <button id="checkAvailabilityButton" onclick="">Cancel Booking</button>
+                                            <button id="checkAvailabilityButton" onclick="cancelHotel('@booking_id')">Cancel Booking</button>
                                         </div>
                                 
                                 }
@@ -1266,6 +1266,12 @@
         }
           })
 
+    }
+
+    function cancelHotel(booking_id) {
+        if (confirm('If you cancel this trip, you will only be compensated 30% of the amount paid! Are you sure you want to cancel?')) {
+            window.location.href = `/user/homeuser/cancelHotel?booking_id=${booking_id}`;
+        }
     }
 </script>
 

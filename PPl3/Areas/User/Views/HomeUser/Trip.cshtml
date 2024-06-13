@@ -109,46 +109,82 @@
                         </div>
                         @foreach (var item in Model.ToList())
                         {
+                            
                             if (item.booking_status == 1)
                             {
                                 if (item.pay_status == 1)
                                 {
-                                    <div class="col l-12 m-12 c-12">
-                                        <div class="hotel_container">
-                                            <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat; cursor:default">
+                                    if ((item.check_in_date - DateTime.Now).Value.Days >= 2 && item.is_refund == 0)
+                                    {
+                                        <div class="col l-12 m-12 c-12">
+                                            <div class="hotel_container" onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id&bookingId=@item.id'" style="cursor:pointer">
+                                                <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat; cursor:default">
 
-                                            </div>
-                                            <div class="infor_hotel">
-                                                <div class="name_hotel">
-                                                    <span>@item.property.p_name , @item.property.p_address</span>
-                                                    @{
-                                                        double sum = 0;
-                                                        foreach (var row in item.property.property_reviews.ToList())
-                                                        {
-                                                            sum = sum + (double)row.overall_rating;
+                                                </div>
+                                                <div class="infor_hotel">
+                                                    <div class="name_hotel">
+                                                        <span>@item.property.p_name , @item.property.p_address</span>
+                                                        @{
+                                                            double sum = 0;
+                                                            foreach (var row in item.property.property_reviews.ToList())
+                                                            {
+                                                                sum = sum + (double)row.overall_rating;
+                                                            }
+                                                            sum = sum / item.property.property_reviews.ToArray().Length;
                                                         }
-                                                        sum = sum / item.property.property_reviews.ToArray().Length;
-                                                    }
-                                                    <p><i class="fa-solid fa-star"></i>@sum</p>
-                                                </div>
-                                                <div class="date_check">
-                                                    <p><i class="fa-solid fa-circle" style="color: greenyellow; margin-right: 5px; font-size: 10px;"></i>Check-In: <span class="check_in">@item.check_in_date.Value.ToString("dd/MM/yyyy")</span></p>
-                                                    <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyyy")</span></p>
-                                                </div>
-                                                <div class="price">
+                                                        <p><i class="fa-solid fa-star"></i>@sum</p>
+                                                    </div>
+                                                    <div class="date_check">
+                                                        <p><i class="fa-solid fa-circle" style="color: greenyellow; margin-right: 5px; font-size: 10px;"></i>Check-In: <span class="check_in">@item.check_in_date.Value.ToString("dd/MM/yyyy")</span></p>
+                                                        <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyyy")</span></p>
+                                                    </div>
+                                                    <div class="price">
 
-                                                    <p>Price: <span>$@item.amount_paid</span></p>
-                                                    <p>Transaction : <span style="color:green">complete</span></p>
+                                                        <p>Price: <span>$@item.amount_paid</span></p>
+                                                        <p>Transaction : <span style="color:green">complete</span></p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    }
+                                    else if(item.is_refund == 0){ 
+                                            <div class="col l-12 m-12 c-12">
+                                                <div class="hotel_container">
+                                                    <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat; cursor:default">
+
+                                                    </div>
+                                                    <div class="infor_hotel">
+                                                        <div class="name_hotel">
+                                                            <span>@item.property.p_name , @item.property.p_address</span>
+                                                            @{
+                                                                double sum = 0;
+                                                                foreach (var row in item.property.property_reviews.ToList())
+                                                                {
+                                                                    sum = sum + (double)row.overall_rating;
+                                                                }
+                                                                sum = sum / item.property.property_reviews.ToArray().Length;
+                                                            }
+                                                            <p><i class="fa-solid fa-star"></i>@sum</p>
+                                                        </div>
+                                                        <div class="date_check">
+                                                            <p><i class="fa-solid fa-circle" style="color: greenyellow; margin-right: 5px; font-size: 10px;"></i>Check-In: <span class="check_in">@item.check_in_date.Value.ToString("dd/MM/yyyy")</span></p>
+                                                            <p><i class="fa-solid fa-circle" style="color: #ff385c; margin-right: 5px; font-size: 10px;"></i>Check-Out: <span class="check_out">@item.check_out_date.Value.ToString("dd/MM/yyyyy")</span></p>
+                                                        </div>
+                                                        <div class="price">
+
+                                                            <p>Price: <span>$@item.amount_paid</span></p>
+                                                            <p>Transaction : <span style="color:green">complete</span></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    }
 
                                 }
                                 else
                                 {
                                     <div class="col l-12 m-12 c-12">
-                                        <div class="hotel_container" onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id&bookingId=@item.id'">
+                                        <div class="hotel_container" onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id&bookingId=@item.id'" style="cursor:pointer">
                                             <div class="img_hotel" style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat">
 
                                             </div>
@@ -171,7 +207,7 @@
                                                 </div>
                                                 <div class="price">
                                                     <p>Price: <span>$@item.amount_paid</span></p>
-                                            
+
                                                     <p>Transaction : <span style="color:red">Not yet</span></p>
                                                 </div>
                                             </div>

@@ -144,6 +144,8 @@
     <Property Name="date_range" Type="date" />
     <Property Name="expiration_date" Type="date" />
     <Property Name="number_card" Type="varchar" MaxLength="15" />
+    <Property Name="Account_Number" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bank_Name" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="guest_type">
     <Key>
@@ -344,9 +346,6 @@
     <Property Name="amount" Type="decimal" Precision="18" Scale="0" />
     <Property Name="transfer_on" Type="datetime" />
     <Property Name="currency_id" Type="int" />
-    <Property Name="promo_code_id" Type="int" />
-    <Property Name="discount_amt" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="created" Type="datetime" />
     <Property Name="feedback" Type="int" />
     <Property Name="transaction_status" Type="tinyint" />
   </EntityType>

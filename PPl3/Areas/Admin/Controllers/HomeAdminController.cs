@@ -26,6 +26,9 @@ using System.Web.UI.WebControls;
 using static PPl3.Areas.Host.Controllers.HomeHostController;
 using Microsoft.Ajax.Utilities;
 using static System.Net.Mime.MediaTypeNames;
+using System.Drawing;
+using ZXing.QrCode;
+using ZXing;
 namespace PPl3.Areas.Admin.Controllers
 {
     public class HomeAdminController : Controller
@@ -621,7 +624,7 @@ namespace PPl3.Areas.Admin.Controllers
                     item.property.p_status = 1;
                     item.property.Date_Post = DateTime.Now;
                     user_notification user_Notification = new user_notification();
-                    user_Notification.userid = item.property_id;
+                    user_Notification.userid = item.property.userId;
                     user_Notification.created = DateTime.Now;
                     user_Notification.content = "Your hotel does not meet the listing conditions";
                     user_Notification.un_status = 0;
@@ -857,6 +860,7 @@ namespace PPl3.Areas.Admin.Controllers
             db.SaveChanges();
             return Json("true", JsonRequestBehavior.AllowGet);
         }
+        
     }
     
 

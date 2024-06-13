@@ -1283,8 +1283,10 @@
                             <th>Revenue</th>
                             </thead>
                             <tbody>
-                                @foreach (var item in db.properties)
+                                @foreach (var item in db.properties.Where(item => item.p_status == 1))
                                 {
+                                    sum_revenue = 0;
+                                    sum_star = 0;
                                     foreach (var row in db.transactions)
                                     {
                                         if (row.property_id == item.id)

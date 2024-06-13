@@ -844,3 +844,7 @@ D:\PPL3-ST\PPL3\PPl3\bin\roslyn\vbc.exe.config
 D:\PPL3-ST\PPL3\PPl3\bin\roslyn\vbc.rsp
 D:\PPL3-ST\PPL3\PPl3\bin\roslyn\VBCSCompiler.exe
 D:\PPL3-ST\PPL3\PPl3\bin\roslyn\VBCSCompiler.exe.config
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.dll
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.presentation.dll
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.xml
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.presentation.xml
