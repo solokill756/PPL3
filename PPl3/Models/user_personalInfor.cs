@@ -20,7 +20,7 @@ namespace PPl3.Models
         public string email_address { get; set; }
         public string facebook_id { get; set; }
         public string twitter_id { get; set; }
-        public string country { get; set; }
+        public string country_id { get; set; }
         public string street_address { get; set; }
         public string u_state { get; set; }
         public string u_city { get; set; }

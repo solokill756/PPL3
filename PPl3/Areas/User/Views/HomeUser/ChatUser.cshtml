@@ -153,7 +153,7 @@
                                 }
                                 else { 
                                     <li class="@item.UserId1">
-                                        @if (item.user.user_profile.FirstOrDefault().user_avatar != null)
+                                        @if ( item.user.user_profile.FirstOrDefault() != null && item.user.user_profile.FirstOrDefault().user_avatar != null)
                                         {
                                             <div class="avatar" style="background: url('@item.user.user_profile.FirstOrDefault().user_avatar') top center /cover no-repeat;"></div>
                                         }

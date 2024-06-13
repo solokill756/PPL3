@@ -242,7 +242,6 @@
           <Property Name="p_status" Type="tinyint" />
           <Property Name="current_pages" Type="int" />
           <Property Name="Date_Post" Type="datetime" />
-          <Property Name="ask_for_booking" Type="bit" />
         </EntityType>
         <EntityType Name="properties_discounts">
           <Key>

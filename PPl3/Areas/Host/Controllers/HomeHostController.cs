@@ -1050,7 +1050,7 @@ namespace PPl3.Areas.Host.Controllers
                 return false;
             }
             //if (p_user.user_personalInfor.FirstOrDefault().facebook_id == null) { return false; }
-            if (p_user.user_personalInfor.FirstOrDefault().country == null) { return false; }
+            if (p_user.user_personalInfor.FirstOrDefault().country_id == null) { return false; }
             if (p_user.user_personalInfor.FirstOrDefault().u_state == null) { return false; }
             if (p_user.user_personalInfor.FirstOrDefault().u_city == null) { return false; }
             if (p_user.phone_number.FirstOrDefault().phone == null) { return false; }
