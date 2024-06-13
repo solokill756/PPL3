@@ -31,7 +31,6 @@ namespace PPl3.Models
         public string p_name { get; set; }
         public string p_description { get; set; }
         public Nullable<int> userId { get; set; }
-        public Nullable<byte> is_guest_favourite { get; set; }
         public Nullable<int> property_type_id { get; set; }
         public Nullable<int> room_type_id { get; set; }
         public Nullable<int> country_id { get; set; }
@@ -42,20 +41,12 @@ namespace PPl3.Models
         public string bed_count { get; set; }
         public string bathroom_count { get; set; }
         public string accomodates_count { get; set; }
-        public string max_pets { get; set; }
         public Nullable<byte> availability_type { get; set; }
         public Nullable<System.DateTime> startDate { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
         public Nullable<decimal> price { get; set; }
-        public Nullable<int> currency_id { get; set; }
-        public Nullable<byte> price_type { get; set; }
-        public string minimum_stay { get; set; }
-        public Nullable<byte> minimum_stay_type { get; set; }
-        public Nullable<byte> refund_type { get; set; }
-        public Nullable<byte> booking_confirmation_method { get; set; }
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<byte> p_status { get; set; }
-        public Nullable<byte> ask_for_booking { get; set; }
         public Nullable<int> current_pages { get; set; }
         public Nullable<System.DateTime> Date_Post { get; set; }
     

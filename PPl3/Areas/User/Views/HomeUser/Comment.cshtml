@@ -94,7 +94,7 @@
             </div>
         </div>
         <div id="content">
-            @if (db.transactions.FirstOrDefault(item => item.id == Model.id).feedback == 1)
+            @if (db.property_reviews.Count(item => item.transaction_id == Model.id) > 0)
             {
                 <h2>You have commented for the trip has transaction code : @Model.id  . Please return to the <a href="/user/homeuser/index">home page</a></h2>
             }

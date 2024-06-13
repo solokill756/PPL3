@@ -273,14 +273,7 @@
                                             <button class="plus_btn plus_bathrooms_btn"><i class="fa-solid fa-plus"></i></button>
                                         </div>
                                     </div>
-                                    <div class="quantity_item guest">
-                                        <h3>Pets</h3>
-                                        <div class="quantity_guest">
-                                            <button class="minus_btn minus_pets_btn"><i class="fa-solid fa-minus"></i></button>
-                                            <span class="number_pets">0</span>
-                                            <button class="plus_btn plus_pets_btn"><i class="fa-solid fa-plus"></i></button>
-                                        </div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -431,25 +424,13 @@
                                 </div>
                                 <div class="confirm_list">
                                     <div class="confirm_item">
-                                        <button class="0">
+                                        <button class="0 selected">
                                             <div class="text">
                                                 <span>Use Instant Book</span>
                                                 <p>Guests can book automatically.</p>
                                             </div>
                                             <div class="icon">
                                                 <img src="~/ExtraFiles/assets/Image/image-button-110.png">
-                                            </div>
-                                        </button>
-                                    </div>
-
-                                    <div class="confirm_item">
-                                        <button class="1">
-                                            <div class="text">
-                                                <span>Approve or decline requests</span>
-                                                <p>Guests must ask if they can book.</p>
-                                            </div>
-                                            <div class="icon">
-                                                <img src="~/ExtraFiles/assets/Image/image-button-120.png">
                                             </div>
                                         </button>
                                     </div>
@@ -628,13 +609,12 @@
         number_bedrooms: "",
         number_bathrooms: "",
         number_beds: "",
-        number_pets: "",
         listHighlight: [],
         list_main_amentities: [],
         list_other_amentities: [],
         listDiscounts: [],
         price: "",
-        ask_for_booking: "",
+        
         check_in: "",
         check_out: ""
     };
@@ -701,13 +681,13 @@
         var number_guest = $('.number_guest').text();
         var number_bedrooms = $('.number_bedrooms').text();
         var number_bathrooms = $('.number_bathrooms').text();
-        var number_pets = $('.number_pets').text();
+        
         var number_beds = $('.number_beds').text();
         data.number_guest = number_guest;
         data.number_bedrooms = number_bedrooms;
         data.number_bathrooms = number_bathrooms;
         data.number_beds = number_beds;
-        data.number_pets = number_pets;
+        
 
         // pages 8
         var list_main_amentities = $('.list_offer .offer_item .clicked').map(function () {
@@ -753,15 +733,7 @@
 
 
         // pages 10
-        var ask_for_booking = $('.confirm_list .confirm_item .selected');
-        if (ask_for_booking.length > 0) {
-            var classList = ask_for_booking.attr('class');
-            if (classList) {
-                data["ask_for_booking"] = classList.split(" ")[0];
-
-
-            }
-        }
+        
 
         // pages 11 + 12
         var price = $('.price span').text(); // Sử dụng .text() thay vì .val()

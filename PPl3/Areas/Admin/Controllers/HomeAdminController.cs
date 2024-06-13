@@ -29,6 +29,7 @@ using static System.Net.Mime.MediaTypeNames;
 using System.Drawing;
 using ZXing.QrCode;
 using ZXing;
+using System.Drawing.Imaging;
 namespace PPl3.Areas.Admin.Controllers
 {
     public class HomeAdminController : Controller
@@ -569,16 +570,17 @@ namespace PPl3.Areas.Admin.Controllers
         }
 
         [AdminAuhorize(idChucNang = 15)]
-        public ActionResult ComfirmAll(int[] id, int check)
+        public ActionResult ComfirmAll(string ids, int check)
 
         {
+            string[] list_id = ids.Split(',');
             PPL3Entities db = new PPL3Entities();
-            if (check == 1 && id.Length > 0)
+            if (check == 1 && list_id.Length > 0)
             {
                 List<browser_becomes_host> list_host = new List<browser_becomes_host>();
-                for (int i = 0; i <= id.Length - 1; ++i)
+                for (int i = 0; i <= list_id.Length - 1; ++i)
                 {
-                    int find_id = id[i];
+                    int find_id = int.Parse(list_id[i]);
                     browser_becomes_host find_host = db.browser_becomes_host.FirstOrDefault(item => item.user_id == find_id);
                     if(find_host != null)
                     list_host.Add(find_host);
@@ -608,13 +610,13 @@ namespace PPl3.Areas.Admin.Controllers
                 TempData["CheckComfirm"] = 1;
               
             }
-            else if (check == 2 && id.Length > 0)
+            else if (check == 2 && list_id.Length > 0)
             {
 
                 List<Browse_hotel_listings> list_hotel = new List<Browse_hotel_listings>();
-                for (int i = 0; i <= id.Length - 1; ++i)
+                for (int i = 0; i <= list_id.Length - 1; ++i)
                 {
-                    int find_id = id[i];
+                    int find_id = int.Parse(list_id[i]);
                     Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == find_id);
                     if(find_hotel != null)
                     list_hotel.Add(find_hotel);
@@ -626,7 +628,7 @@ namespace PPl3.Areas.Admin.Controllers
                     user_notification user_Notification = new user_notification();
                     user_Notification.userid = item.property.userId;
                     user_Notification.created = DateTime.Now;
-                    user_Notification.content = "Your hotel does not meet the listing conditions";
+                    user_Notification.content = "Your [Room/Hotel] Approval Successful!";
                     user_Notification.un_status = 0;
                     user_Notification.un_url = "#";
                     db.user_notification.Add(user_Notification);
@@ -860,7 +862,52 @@ namespace PPl3.Areas.Admin.Controllers
             db.SaveChanges();
             return Json("true", JsonRequestBehavior.AllowGet);
         }
-        
+
+        // Qr code 
+        public ActionResult GenerateQRCode(string bankName, string accountNumber, decimal amount, string transactionDescription = "Chuyen khoan")
+        {
+            // Tạo nội dung cho QR code theo chuẩn VietQR
+            //amount = amount * 2500000;
+            //var content = $"VietQR|2.0|{bankName}|{accountNumber}|{amount:F2}|{transactionDescription}";
+
+            //// Khởi tạo barcode writer
+            //var barcodeWriter = new BarcodeWriter
+            //{
+            //    Format = BarcodeFormat.QR_CODE,
+            //    Options = new QrCodeEncodingOptions
+            //    {
+            //        Width = 250,
+            //        Height = 250,
+            //        Margin = 1 // Tùy chọn: Định nghĩa margin nếu cần
+            //    }
+            //};
+
+            //// Tạo bitmap QR code
+            //using (var bitmap = barcodeWriter.Write(content))
+            //{
+            //    using (var stream = new MemoryStream())
+            //    {
+            //        // Lưu bitmap vào memory stream dưới định dạng PNG
+            //        bitmap.Save(stream, ImageFormat.Png);
+
+            //        // Chuyển đổi memory stream thành mảng byte
+            //        byte[] imageBytes = stream.ToArray();
+
+            //        // Chuyển đổi mảng byte thành chuỗi base64
+            //        string base64String = Convert.ToBase64String(imageBytes);
+
+            //        // Đặt chuỗi base64 làm hình ảnh QR code trong view
+            //        ViewBag.QRCodeImage = $"data:image/png;base64,{base64String}";
+            //    }
+            //}
+
+            ViewBag.nameBank = bankName;
+            ViewBag.accountNumber = accountNumber;
+            ViewBag.Money = amount / 2500000;
+            ViewBag.TransactionDescription = transactionDescription;
+
+            return View();
+        }
     }
     
 

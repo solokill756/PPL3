@@ -286,7 +286,9 @@
                                                     }
                                                 }
                                             </div>
+
                                         </div>
+
                                         <div class="first_input">
                                             <h5>Issued by: </h5>
                                             @if (p_user.user_type == 2)
@@ -398,6 +400,52 @@
                                                 </div>
                                             </button>
                                         }
+
+                                    </div>
+                                    <div class="input_cccd_container">
+                                        <div class="first_input input_date">
+                                            <h5>Bank Name: </h5>
+                                            @{
+
+                                                if (p_user.governmentIDs.FirstOrDefault().date_range != null)
+                                                {
+                                                    if (p_user.user_type == 2)
+                                                    {
+                                                        <input type="text" id="bank_name" value="@p_user.governmentIDs.FirstOrDefault().name_bank">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" id="bank_name" value="@p_user.governmentIDs.FirstOrDefault().name_bank" readonly style="cursor:not-allowed">
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <input type="text" id="bank_name" required>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="first_input input_date">
+                                            <h5>Bank Number: </h5>
+                                            @{
+                                                if (p_user.governmentIDs.FirstOrDefault().date_range != null)
+                                                {
+                                                    if (p_user.user_type == 2)
+                                                    {
+                                                        <input type="number" id="number_bank" value="@p_user.governmentIDs.FirstOrDefault().number_bank">
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="number" id="number_bank" value="@p_user.governmentIDs.FirstOrDefault().number_bank" readonly style="cursor:not-allowed">
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <input type="number" required id="number_bank">
+                                                }
+                                            }
+                                        </div>
 
                                     </div>
                                     <button class="save_btn" id="savecard">Save</button>
@@ -822,10 +870,14 @@
             var dateRange = document.getElementById("date_range").value;
             var expirationDate = document.getElementById("Expiration_date").value;
             var cccdNumber = document.getElementById("cccd_number").value;
+            var bankName = document.getElementById("bank_name").value;
+            var bankNumber = document.getElementById("number_bank").value;
             var data = new FormData();
             if (dateRange) data.append('date_range', dateRange);
             if (expirationDate) data.append('Expiration_date', expirationDate);
             if (cccdNumber) data.append('cccd_number', cccdNumber);
+            if (bankName) data.append('bank_name', bankName)
+            if (bankNumber) data.append('bank_number', bankNumber);
             $.ajax({
                 url: '/user/homeuser/addUserIDCard',
                 type: 'POST',
@@ -898,6 +950,7 @@
             }
         }
     </script>
+        
     <script>
         function addEmergencyContact() {
             var ecName = document.getElementById("ec_name").value;
@@ -979,6 +1032,8 @@
             });
         }
     </script>
+        
+    
     @*Thiết lập lấy dữ liệu từ nút savename*@
     <script>
         const saveName = document.getElementById('savename');

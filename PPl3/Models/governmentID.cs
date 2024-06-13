@@ -21,6 +21,8 @@ namespace PPl3.Models
         public Nullable<System.DateTime> date_range { get; set; }
         public Nullable<System.DateTime> expiration_date { get; set; }
         public string number_card { get; set; }
+        public string number_bank { get; set; }
+        public string name_bank { get; set; }
     
         public virtual user user { get; set; }
     }

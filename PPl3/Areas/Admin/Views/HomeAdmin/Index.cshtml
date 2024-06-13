@@ -1180,14 +1180,14 @@
             <div class="container_notifi">
                 <div class="item_notifi">
                     <div class="tittle" style="width : 265px">
-                        <span>Request host approval</span>
+                        <span>Request</span>
                     </div>
                     <ul class="list_notifi">
                         @foreach (var item in db.user_notification.OrderByDescending(row => row.created))
                         {
-                            if (item.userid == 20 && item.content.Contains("host"))
+                            if (item.userid == 20 && !(item.content.Contains("pay")))
                             {
-                                <li>
+                                <li onclick="window.location.href = '@item.un_url'" target ="_blank">
                                     <div class="logo">
                                         <i class="fa-brands fa-think-peaks"></i>
                                     </div>
@@ -1209,14 +1209,14 @@
                 </div>
                 <div class="item_notifi">
                     <div class="tittle" style="width : 265px">
-                        <span>Request hotel approval</span>
+                        <span>Payment</span>
                     </div>
                     <ul class="list_notifi">
                         @foreach (var item in db.user_notification.OrderByDescending(row => row.created))
                         {
-                            if (item.userid == 20 && item.content.Contains("Hotels"))
+                            if (item.userid == 20 && (item.content.Contains("pay")))
                             {
-                                <li>
+                                <li onclick="window.location.href = '@item.un_url'" target="_blank">
                                     <div class="logo">
                                         <i class="fa-brands fa-think-peaks"></i>
                                     </div>
@@ -1941,7 +1941,8 @@
             });
         }
         console.log(list_id);
-        window.location.href = `/admin/homeadmin/ComfirmAll?id=${list_id}&check=${check}`;
+        let encodedListId = list_id.join(",");
+        window.location.href = `/admin/homeadmin/ComfirmAll?ids=${encodedListId}&check=${check}`;
     }
     function RefuseAll(check) {
         let list_selects, list_id;
@@ -1962,7 +1963,8 @@
             });
         }
 
-        window.location.href = `/admin/homeadmin/DeniedAll?id=${list_id}&check=${check}`;
+        let encodedListId = list_id.join(",");
+        window.location.href = `/admin/homeadmin/ComfirmAll?ids=${encodedListId}&check=${check}`;
     }
 
 </script>

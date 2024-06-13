@@ -194,9 +194,9 @@
 
                                                     if (p_user.governmentIDs.FirstOrDefault().date_range != null)
                                                     {
-                                                        
-                                                            <input type="date" id="date_range" value="@p_user.governmentIDs.FirstOrDefault().date_range.Value.ToString("yyyy-MM-dd")" readonly style="cursor:not-allowed">
-                                                        
+
+                                                        <input type="date" id="date_range" value="@p_user.governmentIDs.FirstOrDefault().date_range.Value.ToString("yyyy-MM-dd")" readonly style="cursor:not-allowed">
+
 
                                                     }
                                                     else
@@ -210,9 +210,9 @@
                                                 @{
                                                     if (p_user.governmentIDs.FirstOrDefault().date_range != null)
                                                     {
-                                                        
-                                                            <input type="date" id="Expiration_date" value="@p_user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("yyyy-MM-dd")" readonly style="cursor:not-allowed">
-                                                        
+
+                                                        <input type="date" id="Expiration_date" value="@p_user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("yyyy-MM-dd")" readonly style="cursor:not-allowed">
+
 
                                                     }
                                                     else
@@ -224,60 +224,106 @@
                                         </div>
                                         <div class="first_input">
                                             <h5>Issued by: </h5>
-                                            
-                                                <input type="number" id="cccd_number" required placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card" readonly style="cursor:not-allowed">
-                                            
+
+                                            <input type="number" id="cccd_number" required placeholder="Issued by" maxlength="12" value="@p_user.governmentIDs.FirstOrDefault().number_card" readonly style="cursor:not-allowed">
+
 
                                             <p class="error error_mess">Please enter all 12 numbers</p>
                                         </div>
                                     </div>
                                     <div class="img_cccd">
                                         <h5>Citizen identity card's image: </h5>
-                                        
-                                            <input type="file" required hidden id="file_upload_left" readonly style="cursor:not-allowed">
-                                        
-                                      
-                                            <button class="img_btn_front" disabled style="cursor : not-allowed">
-                                                @{
-                                                    if (@p_user.governmentIDs.FirstOrDefault().backof_id_card != null)
+
+                                        <input type="file" required hidden id="file_upload_left" readonly style="cursor:not-allowed">
+
+
+                                        <button class="img_btn_front" disabled style="cursor : not-allowed">
+                                            @{
+                                                if (@p_user.governmentIDs.FirstOrDefault().backof_id_card != null)
+                                                {
+                                                    <div class="img_front img"
+                                                         style="background : url(@p_user.governmentIDs.FirstOrDefault().backof_id_card) top center /cover no-repeat"> </div>
+                                                }
+                                                else
+                                                {
+                                                    <i class="fa-solid fa-plus"></i>
+                                                    <div class="img_front"> </div>
+                                                }
+                                            }
+
+                                        </button>
+
+
+
+                                        <input type="file" required hidden id="file_upload_right" readonly style="cursor:not-allowed">
+
+
+
+                                        <button class="img_btn_behind" disabled style="cursor: not-allowed">
+                                            @{
+                                                if (@p_user.governmentIDs.FirstOrDefault().identity_card != null)
+                                                {
+                                                    <div class="img_behind img"
+                                                         style="background : url(@p_user.governmentIDs.FirstOrDefault().identity_card) top center /cover no-repeat"> </div>
+                                                }
+                                                else
+                                                {
+
+                                                    <i class="fa-solid fa-plus"></i>
+                                                    <div class="img_behind"> </div>
+                                                }
+                                            }
+                                            <div class="img_behind">
+
+                                            </div>
+                                        </button>
+
+
+                                    </div>
+                                    <div class="input_cccd_container">
+                                        <div class="first_input input_date">
+                                            <h5>Bank Name: </h5>
+                                            @{
+
+                                                if (p_user.governmentIDs.FirstOrDefault().date_range != null)
+                                                {
+                                                    if (p_user.user_type == 2)
                                                     {
-                                                        <div class="img_front img"
-                                                             style="background : url(@p_user.governmentIDs.FirstOrDefault().backof_id_card) top center /cover no-repeat"> </div>
+                                                        <input type="text" id="bank_name" value="@p_user.governmentIDs.FirstOrDefault().name_bank">
                                                     }
                                                     else
                                                     {
-                                                        <i class="fa-solid fa-plus"></i>
-                                                        <div class="img_front"> </div>
+                                                        <input type="text" id="bank_name" value="@p_user.governmentIDs.FirstOrDefault().name_bank" readonly style="cursor:not-allowed">
                                                     }
+
                                                 }
-
-                                            </button>
-                                        
-
-                                        
-                                            <input type="file" required hidden id="file_upload_right" readonly style="cursor:not-allowed">
-                                        
-                                        
-                                         
-                                            <button class="img_btn_behind" disabled style="cursor: not-allowed">
-                                                @{
-                                                    if (@p_user.governmentIDs.FirstOrDefault().identity_card != null)
+                                                else
+                                                {
+                                                    <input type="text" id="bank_name" required>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="first_input input_date">
+                                            <h5>Bank Number: </h5>
+                                            @{
+                                                if (p_user.governmentIDs.FirstOrDefault().date_range != null)
+                                                {
+                                                    if (p_user.user_type == 2)
                                                     {
-                                                        <div class="img_behind img"
-                                                             style="background : url(@p_user.governmentIDs.FirstOrDefault().identity_card) top center /cover no-repeat"> </div>
+                                                        <input type="number" id="number_bank" value="@p_user.governmentIDs.FirstOrDefault().number_bank">
                                                     }
                                                     else
                                                     {
-
-                                                        <i class="fa-solid fa-plus"></i>
-                                                        <div class="img_behind"> </div>
+                                                        <input type="number" id="number_bank" value="@p_user.governmentIDs.FirstOrDefault().number_bank" readonly style="cursor:not-allowed">
                                                     }
-                                                }
-                                                <div class="img_behind">
 
-                                                </div>
-                                            </button>
-                                        
+                                                }
+                                                else
+                                                {
+                                                    <input type="number" required id="number_bank">
+                                                }
+                                            }
+                                        </div>
 
                                     </div>
                                 </div>

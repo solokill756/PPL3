@@ -509,7 +509,7 @@ namespace PPl3.Areas.User.Controllers
         
         [HttpPost]
         [UserAuthorize(idChucNang = 12)]
-        public JsonResult addUserIDCard(string date_range, string Expiration_date, string cccd_number)
+        public JsonResult addUserIDCard(string date_range, string Expiration_date, string cccd_number , string bank_number, string bank_name)
         {
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
@@ -527,6 +527,14 @@ namespace PPl3.Areas.User.Controllers
             if (cccd_number != null)
             {
                 up.number_card = cccd_number;
+            }
+            if(bank_number != null)
+            {
+                up.number_bank = bank_number;
+            }
+            if(bank_name != null)
+            {
+                up.name_bank = bank_name;  
             }
             db.SaveChanges();
             var userInfor = (db.users.Where(item => item.id == p_user.id).FirstOrDefault());
@@ -601,7 +609,7 @@ namespace PPl3.Areas.User.Controllers
         }
 
         [HttpPost]
-        //[UserAuthorize(idChucNang = 12)]
+       
         public JsonResult addAddressCtc(int country_id, int state_id, int city_id)
         {
             PPL3Entities db = new PPL3Entities();
@@ -635,6 +643,8 @@ namespace PPl3.Areas.User.Controllers
             Session["user"] = userInfor;
             return Json("true", JsonRequestBehavior.AllowGet);
         }
+
+        
 
         // Login and Logout and Sign up
         public ActionResult Login()
@@ -698,8 +708,19 @@ namespace PPl3.Areas.User.Controllers
                         new_notification.created = DateTime.Now;
                         new_notification.un_url = "/user/homeuser/Comment?transation_id=" + item.id;
                         entities.user_notification.Add(new_notification);
+                        
+
+                        user_notification admin_notification = new user_notification();
+                        admin_notification.userid = 20;
+                        admin_notification.content = "Please pay the transation with the id " + item.id;
+                        admin_notification.un_status = 0;
+                        admin_notification.created = DateTime.Now;
+                        admin_notification.un_url = "/admin/homeadmin/GenerateQRCode?bankName=" + item.user1.governmentIDs.FirstOrDefault().name_bank + "&accountNumber" + item.user1.governmentIDs.FirstOrDefault().number_bank + "&amount=" + item.bookings.FirstOrDefault().amount_paid;
+                        entities.user_notification.Add(admin_notification);
+                        
                         item.feedback = 1;
                         entities.SaveChanges();
+
                     }
                 }
                 var id_user = entities.user_personalInfor.Where(item => item.email_address == email_address).FirstOrDefault().userID;
@@ -801,6 +822,17 @@ namespace PPl3.Areas.User.Controllers
                         new_notification.created = DateTime.Now;
                         new_notification.un_url = "/user/homeuser/Comment?transation_id=" + item.id;
                         db.user_notification.Add(new_notification);
+
+                        
+                        user_notification admin_notification = new user_notification();
+                        admin_notification.userid = 20;
+                        admin_notification.content = "Please pay the transation with the id " + item.id; 
+                        admin_notification.un_status = 0;
+                        admin_notification.created = DateTime.Now;
+                        admin_notification.un_url = "/admin/homeadmin/GenerateQRCode?bankName=" + item.user1.governmentIDs.FirstOrDefault().name_bank + "&accountNumber" + item.user1.governmentIDs.FirstOrDefault().number_bank + "&amount=" + item.bookings.FirstOrDefault().amount_paid;
+                        db.user_notification.Add(admin_notification);
+
+
                         item.feedback = 1;
                         db.SaveChanges();
                     }
@@ -1378,14 +1410,14 @@ namespace PPl3.Areas.User.Controllers
             db.SaveChanges();
 
 
-            //user_notification admin_Notification = new user_notification();
-            //admin_Notification.userid = 20;
-            //admin_Notification.created = DateTime.Now;
-            //admin_Notification.content = "The booking with " + find_booking.id + " has been cancelled!";
-            //admin_Notification.un_status = 0;
-            //admin_Notification.un_url = "#";
-            //db.user_notification.Add(user_Notification);
-            //db.SaveChanges();
+            user_notification admin_Notification = new user_notification();
+            admin_Notification.userid = 20;
+            admin_Notification.created = DateTime.Now;
+            admin_Notification.content = "The transation with " + find_booking.transaction_id + " has been cancelled!";
+            admin_Notification.un_status = 0;
+            admin_Notification.un_url = "#";
+            db.user_notification.Add(user_Notification);
+            db.SaveChanges();
 
             string emailHtml = RenderRazorViewToString("cancel", db.transactions.FirstOrDefault(item => item.booking_id == booking_id));
             SendEmail(p_user.user_personalInfor.FirstOrDefault().email_address, "Invoice for Cancel Booking #" + booking_id, emailHtml);

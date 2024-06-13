@@ -144,8 +144,8 @@
     <Property Name="date_range" Type="date" />
     <Property Name="expiration_date" Type="date" />
     <Property Name="number_card" Type="varchar" MaxLength="15" />
-    <Property Name="Account_Number" Type="nvarchar" MaxLength="50" />
-    <Property Name="Bank_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="number_bank" Type="nvarchar" MaxLength="50" />
+    <Property Name="name_bank" Type="nvarchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="guest_type">
     <Key>
@@ -219,7 +219,6 @@
     <Property Name="p_name" Type="nvarchar" MaxLength="255" />
     <Property Name="p_description" Type="text" />
     <Property Name="userId" Type="int" />
-    <Property Name="is_guest_favourite" Type="tinyint" />
     <Property Name="property_type_id" Type="int" />
     <Property Name="room_type_id" Type="int" />
     <Property Name="country_id" Type="int" />
@@ -230,22 +229,15 @@
     <Property Name="bed_count" Type="nvarchar" MaxLength="10" />
     <Property Name="bathroom_count" Type="nvarchar" MaxLength="10" />
     <Property Name="accomodates_count" Type="nvarchar" MaxLength="10" />
-    <Property Name="max_pets" Type="nvarchar" MaxLength="10" />
     <Property Name="availability_type" Type="tinyint" />
     <Property Name="startDate" Type="date" />
     <Property Name="end_date" Type="date" />
     <Property Name="price" Type="decimal" Precision="18" Scale="0" />
-    <Property Name="currency_id" Type="int" />
-    <Property Name="price_type" Type="tinyint" />
-    <Property Name="minimum_stay" Type="nvarchar" MaxLength="5" />
-    <Property Name="minimum_stay_type" Type="tinyint" />
-    <Property Name="refund_type" Type="tinyint" />
-    <Property Name="booking_confirmation_method" Type="tinyint" />
     <Property Name="created" Type="datetime" />
     <Property Name="p_status" Type="tinyint" />
-    <Property Name="ask_for_booking" Type="tinyint" />
     <Property Name="current_pages" Type="int" />
     <Property Name="Date_Post" Type="datetime" />
+    <Property Name="ask_for_booking" Type="bit" />
   </EntityType>
   <EntityType Name="properties_discounts">
     <Key>

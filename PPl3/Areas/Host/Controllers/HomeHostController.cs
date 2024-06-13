@@ -33,7 +33,6 @@ namespace PPl3.Areas.Host.Controllers
 
             public string number_bathrooms{ get; set; }
             public string number_beds { get; set; }
-            public string number_pets { get; set; }
 
             public string[] list_main_amentities { get; set; }
 
@@ -44,7 +43,7 @@ namespace PPl3.Areas.Host.Controllers
 
             public string hotelDescribe { get; set; }
 
-            public string ask_for_booking { get; set; }
+           
 
             public string price { get; set; }
 
@@ -294,7 +293,7 @@ namespace PPl3.Areas.Host.Controllers
             new_hotel.bedroom_count = data.number_bedrooms;
             new_hotel.bathroom_count = data.number_bathrooms;
             new_hotel.accomodates_count = data.number_guest;
-            new_hotel.max_pets = data.number_pets;
+            
             new_hotel.bed_count = data.number_beds;
             if (current_pages >= 12)
             {
@@ -308,9 +307,8 @@ namespace PPl3.Areas.Host.Controllers
                 new_hotel.current_pages = current_pages;
             }
             new_hotel.price = Decimal.Parse(data.price);
-            new_hotel.currency_id = 1;
+            
             new_hotel.created = DateTime.Now;
-           if(data.ask_for_booking != null) new_hotel.ask_for_booking = byte.Parse(data.ask_for_booking);
            if(data.check_in != null) new_hotel.startDate = DateTime.Parse(data.check_in);
            if(data.check_out != null) new_hotel.end_date = DateTime.Parse(data.check_out);
            if(new_hotel.end_date != null && new_hotel.end_date >= DateTime.Now)
@@ -565,11 +563,11 @@ namespace PPl3.Areas.Host.Controllers
             find_hotel.bedroom_count = data.number_bedrooms;
             find_hotel.bathroom_count = data.number_bathrooms;
             find_hotel.accomodates_count = data.number_guest;
-            find_hotel.max_pets = data.number_pets;
+            
             find_hotel.bed_count = data.number_beds;
             if(current_page >= 12)
             {
-                if(!db.Browse_hotel_listings.Any(item => item.property_id == find_hotel.id))
+                if(!db.Browse_hotel_listings.Any(item => item.property_id == find_hotel.id) && find_hotel.p_status == 0)
                 {
                     user_notification user_Notification = new user_notification();
                     user_Notification.userid = p_user.id;
@@ -606,8 +604,8 @@ namespace PPl3.Areas.Host.Controllers
             {
                 find_hotel.price = decimal.Parse(data.price);
             }
-            find_hotel.currency_id = 1;
-            if (data.ask_for_booking != null) find_hotel.ask_for_booking = byte.Parse(data.ask_for_booking);
+            
+            
             if (data.check_in != null) find_hotel.startDate = DateTime.Parse(data.check_in);
             if (data.check_out != null)  find_hotel.end_date = DateTime.Parse(data.check_out);
             if (find_hotel.end_date != null && find_hotel.end_date >= DateTime.Now)
@@ -1063,7 +1061,9 @@ namespace PPl3.Areas.Host.Controllers
             if (p_user.governmentIDs.FirstOrDefault().expiration_date == null) { return false; }
             if (p_user.governmentIDs.FirstOrDefault().number_card == null) { return false; }
             if (p_user.governmentIDs.FirstOrDefault().backof_id_card == null) { return false; }
-            if(p_user.emergency_contact.FirstOrDefault().ec_name == null || p_user.emergency_contact.FirstOrDefault().ec_name.Trim() == "") { return false; }
+            if(p_user.governmentIDs.FirstOrDefault().name_bank == null) { return false; }
+            if (p_user.governmentIDs.FirstOrDefault().number_bank == null) { return false; }
+            if (p_user.emergency_contact.FirstOrDefault().ec_name == null || p_user.emergency_contact.FirstOrDefault().ec_name.Trim() == "") { return false; }
             if (p_user.emergency_contact.FirstOrDefault().relationship == null || p_user.emergency_contact.FirstOrDefault().relationship.Trim() == "") { return false; }
             if (p_user.emergency_contact.FirstOrDefault().ec_language == null || p_user.emergency_contact.FirstOrDefault().ec_language.Trim() == "") { return false; }
             if (p_user.emergency_contact.FirstOrDefault().email == null || p_user.emergency_contact.FirstOrDefault().email.Trim() == "") { return false; }

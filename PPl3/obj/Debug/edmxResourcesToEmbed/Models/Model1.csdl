@@ -168,6 +168,8 @@
     <Property Name="date_range" Type="DateTime" Precision="0" />
     <Property Name="expiration_date" Type="DateTime" Precision="0" />
     <Property Name="number_card" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="number_bank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="name_bank" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="user" Relationship="Self.gid_userID_id_FK" FromRole="governmentID" ToRole="users" />
   </EntityType>
   <EntityType Name="guest_type">
@@ -252,7 +254,6 @@
     <Property Name="p_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
     <Property Name="p_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="userId" Type="Int32" />
-    <Property Name="is_guest_favourite" Type="Byte" />
     <Property Name="property_type_id" Type="Int32" />
     <Property Name="room_type_id" Type="Int32" />
     <Property Name="country_id" Type="Int32" />
@@ -263,20 +264,12 @@
     <Property Name="bed_count" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="bathroom_count" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="accomodates_count" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-    <Property Name="max_pets" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
     <Property Name="availability_type" Type="Byte" />
     <Property Name="startDate" Type="DateTime" Precision="0" />
     <Property Name="end_date" Type="DateTime" Precision="0" />
     <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
-    <Property Name="currency_id" Type="Int32" />
-    <Property Name="price_type" Type="Byte" />
-    <Property Name="minimum_stay" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-    <Property Name="minimum_stay_type" Type="Byte" />
-    <Property Name="refund_type" Type="Byte" />
-    <Property Name="booking_confirmation_method" Type="Byte" />
     <Property Name="created" Type="DateTime" Precision="3" />
     <Property Name="p_status" Type="Byte" />
-    <Property Name="ask_for_booking" Type="Byte" />
     <Property Name="current_pages" Type="Int32" />
     <Property Name="Date_Post" Type="DateTime" Precision="3" />
     <NavigationProperty Name="bookings" Relationship="Self.booking_property_id_id_FK" FromRole="properties" ToRole="bookings" />

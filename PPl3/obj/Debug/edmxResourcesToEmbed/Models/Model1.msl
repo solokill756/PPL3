@@ -157,6 +157,8 @@
           <ScalarProperty Name="date_range" ColumnName="date_range" />
           <ScalarProperty Name="expiration_date" ColumnName="expiration_date" />
           <ScalarProperty Name="number_card" ColumnName="number_card" />
+          <ScalarProperty Name="number_bank" ColumnName="number_bank" />
+          <ScalarProperty Name="name_bank" ColumnName="name_bank" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -238,7 +240,6 @@
           <ScalarProperty Name="p_name" ColumnName="p_name" />
           <ScalarProperty Name="p_description" ColumnName="p_description" />
           <ScalarProperty Name="userId" ColumnName="userId" />
-          <ScalarProperty Name="is_guest_favourite" ColumnName="is_guest_favourite" />
           <ScalarProperty Name="property_type_id" ColumnName="property_type_id" />
           <ScalarProperty Name="room_type_id" ColumnName="room_type_id" />
           <ScalarProperty Name="country_id" ColumnName="country_id" />
@@ -249,20 +250,12 @@
           <ScalarProperty Name="bed_count" ColumnName="bed_count" />
           <ScalarProperty Name="bathroom_count" ColumnName="bathroom_count" />
           <ScalarProperty Name="accomodates_count" ColumnName="accomodates_count" />
-          <ScalarProperty Name="max_pets" ColumnName="max_pets" />
           <ScalarProperty Name="availability_type" ColumnName="availability_type" />
           <ScalarProperty Name="startDate" ColumnName="startDate" />
           <ScalarProperty Name="end_date" ColumnName="end_date" />
           <ScalarProperty Name="price" ColumnName="price" />
-          <ScalarProperty Name="currency_id" ColumnName="currency_id" />
-          <ScalarProperty Name="price_type" ColumnName="price_type" />
-          <ScalarProperty Name="minimum_stay" ColumnName="minimum_stay" />
-          <ScalarProperty Name="minimum_stay_type" ColumnName="minimum_stay_type" />
-          <ScalarProperty Name="refund_type" ColumnName="refund_type" />
-          <ScalarProperty Name="booking_confirmation_method" ColumnName="booking_confirmation_method" />
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="p_status" ColumnName="p_status" />
-          <ScalarProperty Name="ask_for_booking" ColumnName="ask_for_booking" />
           <ScalarProperty Name="current_pages" ColumnName="current_pages" />
           <ScalarProperty Name="Date_Post" ColumnName="Date_Post" />
         </MappingFragment>
