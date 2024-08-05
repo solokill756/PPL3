@@ -15,17 +15,17 @@ The website is built based on the MVC model:
 
 ## website functionality!
 
-<a href="https://www.youtube.com/playlist?list=PLSvCAHoiHC_rqKbcu1ummWVpLTDBNZHH7" target="_blank">
+[<a href="https://www.youtube.com/playlist?list=PLSvCAHoiHC_rqKbcu1ummWVpLTDBNZHH7" target="_blank">
 <img src="http://img.youtube.com/vi/SiGxu2N9ndU/mqdefault.jpg" alt="Watch the series" width="240" height="180" border="10" />
-</a>
+</a>](url)
 
 ## How to install this project
 
-1. clone this project
+[1. clone this project
 2. Set up a local kubernetes cluster - https://askcloudarchitech.com/posts/tutorials/local-kubernetes-startup-script/
 3. Install helm - `brew install helm`
 4. Setup your keys - see the video here - https://www.youtube.com/watch?v=k0L_yR30PqI&list=PLSvCAHoiHC_rqKbcu1ummWVpLTDBNZHH7&index=5
-5. Install with Helm
+5. Install with Helm](url)
 
 ## How to tweak this project for your own uses
 
