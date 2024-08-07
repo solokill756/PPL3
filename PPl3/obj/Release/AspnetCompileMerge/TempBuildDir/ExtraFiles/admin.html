@@ -1,0 +1,1671 @@
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> Responsive Sidebar Menu  | CodingLab </title>
+    <link rel="stylesheet" href="./assets/css/admin.css?v=1">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <style id="img-style">
+     
+     </style>
+    </head>
+   <body>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class="fa-brands fa-think-peaks icon"></i>
+          <div class="logo_name">T|.|N|.|T</div>
+          <i class='bx bx-menu' id="btn" ></i>
+      </div>
+      <ul class="nav-list">
+        <li>
+            <i class='bx bx-search' ></i>
+            <input type="text" placeholder="Search...">
+            <span class="tooltip">Search</span>
+        </li>
+        <li>
+          <a href="#home">
+            <i class='bx bx-grid-alt'></i>
+            <span class="links_name">Home</span>
+          </a>
+            <span class="tooltip">Home</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class='bx bx-user' ></i>
+            <span class="links_name">User</span>
+          </a>
+          <span class="tooltip">User</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class='bx bx-bell'></i>
+            <span class="links_name">Notification</span>
+          </a>
+          <span class="tooltip">Notification</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class='bx bx-pie-chart-alt-2' ></i>
+            <span class="links_name">Analytics</span>
+          </a>
+          <span class="tooltip">Analytics</span>
+        </li>
+        <li>
+          <a href="#centorship">
+            <i class='bx bx-folder' ></i>
+            <span class="links_name">Centorship</span>
+          </a>
+          <span class="tooltip">Centorship</span>
+        </li>
+        
+        <li class="profile">
+            <div class="profile-details">
+              <img src="./assets/img/avatar_user/bd72139a-d08d-4a23-b222-4d22e67fa581.webp" alt="profileImg">
+              <div class="name_job">
+                <div class="name">Prem Shahi</div>
+                <div class="job">Web designer</div>
+              </div>
+            </div>
+            <i class='bx bx-log-out' id="log_out" ></i>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+        <div id="centorship">
+          <div class="text"><i class="fa-solid fa-gauge"></i>Dashboard</div>
+          <div class="container_home">
+            <div class="item">
+              <h2>1500 <i class="fa-solid fa-folder"></i></h2>
+              <div class="tittle">
+                <p>Hotel For Rent</p>
+              </div>
+            </div>
+            <div class="item">
+              <h2>1500 <i class="fa-solid fa-house-chimney-window"></i></h2>
+              <div class="tittle">
+                <p>Hotel For Rent</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="circle-container">
+                <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                    <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                    <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                </svg>
+                <div class="circle-text" id="circleText">0%</div>
+              </div>
+              <div class="tittle">
+                <p>Hotel Owners</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="circle-container">
+                <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                    <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                    <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                </svg>
+                <div class="circle-text" id="circleText">0%</div>
+              </div>
+              <div class="tittle">
+                <p>Hotel For Rents</p>
+              </div>
+            </div>
+          </div>
+          <div class="text">
+            <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
+            <button>Accept All</button>
+            <button>Refuse All</button>
+          </div>
+          <div class="container_list">
+            <div class="list_item list_owner">
+              <table>
+                <thead>
+                  <th></th>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+
+                    <td>
+                      <button class="details_host">Detail</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>  
+            </div>
+            <div class="list_item chart_owner">
+              <div class="chart">
+                <canvas id="myChartofHost"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="text">
+            <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
+            <button>Accept All</button>
+            <button>Refuse All</button>
+          </div>
+          <div class="container_list">
+            <div class="list_item list_hotel">
+              <table>
+                <thead>
+                  <th></th>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+                    <td>
+                      <button class="details_hotel">Detail</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+                    <td>
+                      <button class="details_hotel">Detail</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+                    <td>
+                      <button class="details_hotel">Detail</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <button><i class="fa-solid fa-circle-check"></i></button>
+                    </td>
+                    <td>12/4/2024</td>
+                    <td>Davis Ngo</td>
+
+                    <td>
+                      <button class="details_hotel">Detail</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>  
+            </div>
+            <div class="list_item chart_hotel">
+              <div class="chart">
+                <canvas id="myChartofHotel"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="info_host_detail info_detail center">
+            <div class="container_info container_info_host">
+              <div class="avatar_infor center">
+                <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+              </div>
+              <div class="name_infor center">
+                <h1>Davis Ngo</h1>
+              </div>
+              <div class="infor_box">
+                <div class="item_info">
+                  <div class="info_child phone_number">
+                    <h4><i class="fa-solid fa-phone"></i>Phone Number: </h4>
+                    <span>03526382872</span>
+                  </div>
+                  <div class="info_child cmnd">
+                    <h4><i class="fa-solid fa-address-card"></i>Government ID: </h4>
+                    <span>2/1/2018 - 3/5/2029</span>
+                    <div class="img_cmnd">
+                      <img src="./assets/img/bedroom/cbf87f39-ba7f-4ca5-8eae-2e464e3f8646.webp" alt="">
+                      <img src="./assets/img/bedroom/cbf87f39-ba7f-4ca5-8eae-2e464e3f8646.webp" alt="">
+                    </div>
+                  </div>
+                </div>
+                <div class="item_info">
+                  <div class="info_child address">
+                    <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
+                    <span>Live in Do Luong, Nghe An</span>
+                  </div>
+                  <div class="info_child emergency_contact">
+                    <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
+                    <div class="info_emergency">
+                      <div class="item_emergency">
+                        <span><h5>Name: </h5>Le Dinh Toan</span>
+                        <span><h5>Relation: </h5>Friend</span>
+                        <span><h5>Language: </h5>English</span>
+                      </div>
+                      <div class="item_emergency">
+                        <span><h5>Email: </h5>Le Dinh Toan</span>
+                        <span><h5>Country: </h5>Live in Do Luong, Nghe An</span>
+                        <span>
+                          <h5>Phone Number: </h5>
+                          03452345324
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="corner corner_top_left">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+              <div class="corner corner_top_right">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+              <div class="corner corner_bottom_left">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+              <div class="corner corner_bottom_right">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+              <div class="btn_handle center">
+                <button>Accept</button>
+                <span>|</span>
+                <button>Refuse</button>
+              </div>
+            </div>
+          </div>
+          <div class="info_detail info_hotel_detail center">
+            <div class="container_info container_info_hotel">
+              <div class="img_box">
+                <div class="img_hotel">
+                  <img src="/assets/img/img_product/2b9983af-5542-42e4-b5a3-2867477b53ae.jpg" >
+                  <img src="/assets/img/img_product/39360fe1-e7dc-4858-b1e1-195ab50f912d.jpg" style="top: 31%;">
+                  <img src="/assets/img/img_product/944b9510-945e-47cd-bd7d-bc1b5b94ba4b.webp" style="top: 36%;">
+                  <img src="/assets/img/img_product/87f6662f-1feb-418d-bbe3-cf7079d5495f (1).webp" style="top: 41%;">
+                  <img src="/assets/img/img_product/87f6662f-1feb-418d-bbe3-cf7079d5495f.webp" style="top: 46%;">
+                </div>
+                <div class="btn_zoom">
+                  <button><i class="fa-solid fa-expand"></i></button>
+                </div>
+              </div>
+              <div class="information">
+                <div class="infor_box">
+                  <div class="item_info">
+                    <div class="mg-bt name_hotel">
+                      <h4><i class="fa-solid fa-signature" style="margin-right: 10px;"></i>Name: </h4>
+                      <span>ABC Villa Hotel</span>
+                    </div>
+                    <div class="mg-bt booking_date">
+                      <h4><i class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i>Booking Date: </h4>
+                      <span>1/5/2024 - 5/2/2024</span>
+                    </div>
+                    <div class="mg-bt describes">
+                      <h4><i class="fa-solid fa-droplet" style="margin-right: 10px;"></i>Describes: </h4>
+                      <ul class="box_list">
+                        <li><img src="./Tab1/image-60.png" alt="">HouseBoat</li>
+                        <li><img src="./Tab_2/image-330.png" alt="">Peaceful</li>
+                        <li><img src="./Tab_2/image-340.png" alt="">Unique</li>
+                      </ul>
+                    </div>
+                    <div class="mg-bt type_of">
+                      <h4><i class="fa-solid fa-font-awesome" style="margin-right: 10px;"></i>Type Of: </h4>
+                      <span><img src="/Tab1/image-130.png" alt="">An entire place</span>
+                    </div>
+                    <div class="mg-bt located">
+                      <h4><i class="fa-solid fa-location-dot" style="margin-right: 10px;"></i>Located: </h4>
+                      <span>192, New York City</span>
+                    </div>
+                    <div class="mg-bt basic_about">
+                      <h4><i class="fa-solid fa-house-chimney" style="margin-right: 10px;"></i>Basic About: </h4>
+                      <div class="box_basic">
+                        <div class="item_basic">
+                          <h5>Guest: <span>1</span></h5>
+                          <h5>Bedrooms: <span>2</span></h5>
+                        </div>
+                        <div class="item_basic">
+                          <h5>Beds: <span>3</span></h5>
+                          <h5>Bathrooms: <span>4</span></h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mg-bt confirm_reservations">
+                      <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                      <span><img src="" alt="">Use Instant Book</span>
+                    </div>
+                    
+                  </div>
+                  <div class="item_info">
+                    <div class="mg-bt utilities">
+                      <h4><i class="fa-solid fa-house-signal" style="margin-right: 10px;"></i>Utilities: </h4>
+                      <ul class="box_list box_utilities">
+                        <li><img src="./Tab_2/image-110.png" alt="">Wifi</li>
+                        <li><img src="./Tab_2/image-120.png" alt="">TiVi</li>
+                        <li><img src="./Tab_2/image-210.png" alt="">Pool</li>
+                        <li><img src="./Tab_2/image-260.png" alt="">Firepit</li>
+                        <li><img src="./Tab_2/image-260.png" alt="">Firepit</li>
+                        <li><img src="./Tab_2/image-260.png" alt="">Firepit</li>
+                        <li><img src="./Tab_2/image-260.png" alt="">Firepit</li>
+                        <li><img src="./Tab_2/image-260.png" alt="">Firepit</li>
+                      </ul>
+                    </div>
+                    <div class="mg-bt description">
+                      <h4><i class="fa-solid fa-scroll" style="margin-right: 10px;"></i>Description: </h4>
+                      <div class="mg-bt text_desciption">
+                        <p>ABC Villa Hotel is situated in the best convenient location in An Vien Eco Tourism Area – Nha Trang, we offers a complimentary daily shuttle bus service to downtown based on our fixed schedule and full service facilities that are conducive to relaxation. Just far from the Vinpearl cable car, the Nha Trang tourism port, and other attractions in the area about 5 minutes walking, ABC Villa Hotel is the leading choice for leisure in Nha Trang. 80 guest’s rooms are equipped with private balconies that offer panaromic views of either the mountains or sunsets over the Nha Trang bay. As a full-service hotel, we offer an in-house restaurant, conference and meeting space, private beach and an outdoor swimming pool… We attend to every detail so that your stay is the most comfortable possible with plenty of ease and style.</p>
+                      </div>
+                    </div>
+                    <div class="mg-bt price">
+                      <h4><i class="fa-solid fa-dollar-sign" style="margin-right: 10px;"></i>Price: </h4>
+                      <span>1000$/night</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="btn_handle center">
+                <button>Accept</button>
+                <span>|</span>
+                <button>Refuse</button>
+              </div>
+              </div>
+              <div class="corner corner_top_left">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+              <div class="corner corner_top_right">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+              <div class="corner corner_bottom_left">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+              <div class="corner corner_bottom_right">
+                <i class="fa-solid fa-swatchbook"></i>
+              </div>
+            </div>
+          </div>
+          <div class="info_detail img_zoom_hotel center">
+            <div class="container_info container_img_zoom">
+              <div class="list_img">
+                <img src="/assets/img/img_product/2b9983af-5542-42e4-b5a3-2867477b53ae.jpg" >
+                <img src="/assets/img/img_product/39360fe1-e7dc-4858-b1e1-195ab50f912d.jpg">
+                <img src="/assets/img/img_product/944b9510-945e-47cd-bd7d-bc1b5b94ba4b.webp">
+                <img src="/assets/img/img_product/87f6662f-1feb-418d-bbe3-cf7079d5495f (1).webp">
+                <img src="/assets/img/img_product/87f6662f-1feb-418d-bbe3-cf7079d5495f.webp">
+              </div>
+            </div>
+            <div class="btn_img">
+              <button class="btn_left" style="top: 50%; left: 20%; transform: translateY(-100%);"><i class="fa-solid fa-circle-chevron-left"></i></button>
+              <button class="btn_close" style="bottom: 10%; left: 50%;"><i class="fa-solid fa-xmark"></i></button>
+              <button class="btn_right" style="top: 50%; right: 20%; transform: translateY(-100%) translateY(-50%);"><i class="fa-solid fa-circle-chevron-right"></i></button>
+            </div>
+          </div>
+        </div> 
+        <div id="home" class="active">
+          <div class="text"><i class="fa-solid fa-gauge"></i>Home</div>
+          <div class="container_home">
+            <div class="item">
+              <h2>1500 <i class="fa-solid fa-folder"></i></h2>
+              <div class="tittle">
+                <p>Hotel For Rent</p>
+              </div>
+            </div>
+            <div class="item">
+              <h2>1500 <i class="fa-solid fa-house-chimney-window"></i></h2>
+              <div class="tittle">
+                <p>Hotel For Rent</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="circle-container">
+                <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                    <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                    <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                </svg>
+                <div class="circle-text" id="circleText">0%</div>
+              </div>
+              <div class="tittle">
+                <p>Hotel Owners</p>
+              </div>
+            </div>
+            <div class="item">
+              <div class="circle-container">
+                <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                    <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                    <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                </svg>
+                <div class="circle-text" id="circleText">0%</div>
+              </div>
+              <div class="tittle">
+                <p>Hotel For Rents</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="user">
+          <div class="text"><i class="fa-solid fa-user"></i>User</div>
+          <div class="container_user">
+            <div class="item_user">
+              <div class="number_box">
+                <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                <span>People</span>
+              </div>
+              <div class="search">
+                <button><i class='bx bx-search' ></i></button>
+                <input type="text" placeholder="Search...">
+              </div>
+            </div>
+            <div class="list_item item_user">
+              <table>
+                <thead>
+                  <th></th>
+                  <th>Name</th>
+                  <th>CMND</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>  
+            </div>
+          </div>
+          <div class="text"><i class="fa-solid fa-user"></i>Host</div>
+          <div class="container_user">
+            <div class="item_user">
+              <div class="number_box">
+                <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                <span>People</span>
+              </div>
+              <div class="search">
+                <button><i class='bx bx-search' ></i></button>
+                <input type="text" placeholder="Search...">
+              </div>
+            </div>
+            <div class="list_item item_user">
+              <table>
+                <thead>
+                  <th></th>
+                  <th>Name</th>
+                  <th>CMND</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="text"><i class="fa-solid fa-user"></i>Hotel</div>
+          <div class="container_user">
+            <div class="item_user">
+              <div class="number_box">
+                <h2>1450 <i class="fa-solid fa-user"></i></h2>
+                <span>People</span>
+              </div>
+              <div class="search">
+                <button><i class='bx bx-search' ></i></button>
+                <input type="text" placeholder="Search...">
+              </div>
+            </div>
+            <div class="list_item item_user">
+              <table>
+                <thead>
+                  <th></th>
+                  <th>Name</th>
+                  <th>CMND</th>
+                  <th>Address</th>
+                  <th>Email</th>
+                  <th></th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  <tr>
+                    <td>
+                      <div class="avatar">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                    </td>
+                    <td>Le Dinh Toan</td>
+                    <td>110203830298</td>
+                    <td>192, New York City</td>
+                    <td>toanledinh76@gmail.com</td>
+                    <td>
+                      <button class="details_host">Detail</button>
+                      <button>Delete</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>  
+            </div>
+          </div>
+        </div>
+        <div id="notification">
+          <div class="text"><i class="fa-solid fa-user"></i>Notification</div>
+          <div class="container_notifi">
+            <div class="item_notifi">
+              <div class="tittle">
+                <span>Notification</span>
+              </div>
+              <ul class="list_notifi">
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+                <li>
+                  <div class="logo">
+                    <i class="fa-brands fa-think-peaks"></i>
+                  </div>
+                  <div>
+                    <div class="content_notifi">
+                      <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                    </div>
+                    <div class="time">
+                      <span>10:00:00 15/5/2024</span>
+                    </div>
+                  </div>
+                  <div class="close_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--<div class="item_notifi">
+                <div class="tittle">
+                    <span>Report</span>
+                  </div>
+                  <ul class="list_notifi">
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                        <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                    <li>
+                      <div class="logo">
+                        <img src="./assets/img/avatar_user/421958075_434107809290293_7065993535983171874_n.jpg" alt="">
+                      </div>
+                      <div>
+                        <div class="content_notifi">
+                          <p>Thang nguoi dung nay da bat dau co dau hieu phe da can duoc loai bo</p>
+                        </div>
+                        <div class="time">
+                          <span>10:00:00 15/5/2024</span>
+                        </div>
+                      </div>
+                      <div class="close_btn">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </li>
+                  </ul>
+            </div>-->
+          </div>
+        </div>
+        <!-- new page -->
+        <div id="analytics">
+          <div class="text"><i class="fa-solid fa-gauge"></i>Analytics</div>
+          <div class="container_analytics">
+            <div class="search_analytics">
+              <div class="item_analytics">
+                <input type="text" placeholder="Search..." id="search_company">
+                <button class="btn_search"><i class="fa-solid fa-search"></i></button>
+              </div>
+              <div class="item_analytics">
+                <select id="search_by_revenue" name ="Revenue">
+                  <option value="" selected disabled hidden>Revenue</option>
+                  <option value="service1">Under 10.000$</option>
+                  <option value="service2">10.000$ - 30.000$</option>
+                  <option value="service3">30.000$ - 50.000$</option>
+                  <option value="service4">Over 50.000$</option>
+                </select>
+                <button class="btn_search btn_revenue"><i class="fa-solid fa-search"></i></button>
+              </div>
+              <div class="item_analytics">
+                <select id="arrange">
+                  <option value="" selected disabled hidden>Arrange</option>
+                  <option value="service1">Ascending</option>
+                  <option value="service2">Decrease</option>
+                  <option value="service3">Sorted from a-z</option>
+                </select>
+                <button class="btn_search btn_arrange"><i class="fa-solid fa-search"></i></button>
+              </div>
+              <!-- <div class="item_analytics">
+                <input type="date" placeholder="dd/mm/yyyy" id="search_by_date">
+                <button class="btn_search btn_date"><i class="fa-solid fa-search"></i></button>
+              </div> -->
+            </div> 
+          </div>
+          <div class="container_analytics">
+            <div class="list_hotel_analytics">
+              <div class="list_item item_7">
+                <table>
+                  <thead>
+                    <th>Name Hotel</th>
+                    <th>Name Host</th>
+                    <th>Review</th>
+                    <th>Revenue</th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        ABC Villa Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>40000$</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Le  VAn Do Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>20000$</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Concert Baby Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>30000$</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        New York City Hotel
+                      </td>
+                      <td>Davis Ngo</td>
+                      
+                      <td>
+                        4,5 <i class = "fa-solid fa-star"></i>
+                      </td>
+                      <td>10000$</td>
+                    </tr>
+                  </tbody>
+                </table>  
+              </div>
+              <div class="list_item item_3">
+                <div class="name_hotel_analytics">
+                  <span>New York City Hotel</span>
+                </div>
+                <div class="btn_by_year">
+                  <select name="" id="by_year">
+                    <option value="">2023</option>
+                    <option value="">2022</option>
+                    <option value="">2021</option>
+                    <option value="">2020</option>
+                    <option value="">2019</option>
+                    <option value="">2018</option>
+                  </select>
+                </div>
+                <div class="chart">
+                  <canvas id="chart_analytics_month"></canvas>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          <div class="container_analytics">
+            <div class="list_hotel_analytics">
+              <div class="list_item item_7">
+                <div class="tittle">
+                  <span>Revenue of month</span>
+                </div>
+                <div class="btn_by_year">
+                  <select name="" id="by_year">
+                    <option value="">2023</option>
+                    <option value="">2022</option>
+                    <option value="">2021</option>
+                    <option value="">2020</option>
+                    <option value="">2019</option>
+                    <option value="">2018</option>
+                  </select>
+                </div>
+                <div class="chart">
+                  <canvas id="chart_admin_month"></canvas>
+                </div>
+              </div>
+              <div class="list_item item_3">
+                <div class="tittle">
+                  <span>Revenue of year</span>
+                </div>
+                <!-- <div class="btn_by_year" style="text-align: center;">
+                  <input type="date" name="" id="">
+                </div> -->
+                <div class="chart">
+                  <canvas id="chart_admin_year"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section>
+    <script src="./JS/admin.js"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </body>
+</html>
+  <script>
+    const ctx = document.getElementById('myChartofHost');
+    const ctx1 = document.getElementById('myChartofHotel');
+    const chartAnalytics = document.getElementById('chart_analytics_month');
+    const chartMonth = document.getElementById('chart_admin_month');
+    const chartYear = document.getElementById('chart_admin_year');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+      labels: [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [65, 59, 90, 81, 56, 55, 40, 20, 20, 177, 132, 254],
+        fill: true,
+        backgroundColor: '#11101D',
+        borderColor: 'rgb(255, 99, 132)',
+        pointBackgroundColor: '#11101D',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(255, 99, 132)'
+      }]
+    },
+      options: {
+        scales: {
+          y: {
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+    new Chart(ctx1, {
+      type: 'bar',
+      data: {
+      labels: [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      datasets: [{
+        label: 'My First Dataset',
+        data: [65, 59, 90, 81, 56, 55, 40, 20, 20, 177, 132, 254],
+        fill: true,
+        backgroundColor: '#11101D',
+        borderColor: 'rgb(255, 99, 132)',
+        pointBackgroundColor: '#11101D',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(255, 99, 132)'
+      }]
+    },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+    new Chart(chartAnalytics, {
+      type: 'line',
+      data: {
+        labels: [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40,20, 30, 20, 10, 33],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+    new Chart(chartMonth, {
+      type: 'line',
+      data: {
+        labels: [
+        'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40,20, 30, 20, 10, 33],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+    new Chart(chartYear, {
+      type: 'line',
+      data: {
+        labels: [
+        '2018', '2019', '2020', '2021', '2022', '2023',
+      ],
+        datasets: [{
+          label: 'My First Dataset',
+          data: [65, 59, 80, 81, 56, 55, 40,20, 30, 20, 10, 33],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+        }]
+      },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+</script>

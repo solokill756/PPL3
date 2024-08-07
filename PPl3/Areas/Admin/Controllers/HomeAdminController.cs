@@ -359,7 +359,7 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                           address = (item.user_personalInfor.FirstOrDefault().u_country + ", " ?? "") +
                                      (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") + 
                                      (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
@@ -388,7 +388,7 @@ namespace PPl3.Areas.Admin.Controllers
                            item.passport_code,
                            item.user_profile.FirstOrDefault().user_avatar,
                            item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
+                           address = (item.user_personalInfor.FirstOrDefault().u_country + ", " ?? "") +
                                      (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") +
                                      (item.user_personalInfor.FirstOrDefault().u_city ?? "")
                        }).ToList();
@@ -482,7 +482,7 @@ namespace PPl3.Areas.Admin.Controllers
 }
 
         [AdminAuhorize(idChucNang = 15)]
-        public JsonResult confirm_host(int user_id)
+        public ActionResult confirm_host(int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             browser_becomes_host find_user = db.browser_becomes_host.FirstOrDefault(item => item.user_id == user_id);
@@ -498,38 +498,38 @@ namespace PPl3.Areas.Admin.Controllers
             user_Notification.un_url = "/host/homehost/Listing";
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
-            user find_host = db.users.FirstOrDefault(item => item.id == user_id);
-            string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
-            SendEmail(find_host.user_personalInfor.FirstOrDefault().email_address , "Congrats on becoming a host!" , emailHtml);
+            //user find_host = db.users.FirstOrDefault(item => item.id == user_id);
+            //string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
+            //SendEmail(find_host.user_personalInfor.FirstOrDefault().email_address , "Congrats on becoming a host!" , emailHtml);
             TempData["CheckComfirm"] = 1;
-            var lst = (from item in db.users
-                       where item.is_active == 1 && item.id == user_id
-                       select new
-                       {
-                           item.id,
-                           item.user_personalInfor.FirstOrDefault().legal_name,
-                           item.passport_code,
-                           item.user_profile.FirstOrDefault().user_avatar,
-                           item.user_personalInfor.FirstOrDefault().email_address,
-                           address = (item.user_personalInfor.FirstOrDefault().country_id + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") +
-                                     (item.user_personalInfor.FirstOrDefault().u_city ?? "")
-                       }).ToList();
-            var data = new
-            {
-                phanhoi = "true",
-                id = lst[0].id,
-                user_avatar = lst[0].user_avatar,
-                legal_name = lst[0].legal_name,
-                email_address = lst[0].email_address,
-                address = lst[0].address,
-                passport_code = lst[0].passport_code,
-            };
-            return Json(data, JsonRequestBehavior.AllowGet);
+            //var lst = (from item in db.users
+            //           where item.is_active == 1 && item.id == user_id
+            //           select new
+            //           {
+            //               item.id,
+            //               item.user_personalInfor.FirstOrDefault().legal_name,
+            //               item.passport_code,
+            //               item.user_profile.FirstOrDefault().user_avatar,
+            //               item.user_personalInfor.FirstOrDefault().email_address,
+            //               address = (item.user_personalInfor.FirstOrDefault().u_country + ", " ?? "") +
+            //                         (item.user_personalInfor.FirstOrDefault().u_state + ", " ?? "") +
+            //                         (item.user_personalInfor.FirstOrDefault().u_city ?? "")
+            //           }).ToList();
+            //var data = new
+            //{
+            //    phanhoi = "true",
+            //    id = lst[0].id,
+            //    user_avatar = lst[0].user_avatar,
+            //    legal_name = lst[0].legal_name,
+            //    email_address = lst[0].email_address,
+            //    address = lst[0].address,
+            //    passport_code = lst[0].passport_code,
+            //};
+            return RedirectToAction("index");
         }
         [HttpPost]
         [AdminAuhorize(idChucNang = 15)]
-        public JsonResult host_denied(int user_id)
+        public ActionResult host_denied(int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             browser_becomes_host find_user = db.browser_becomes_host.FirstOrDefault(item => item.user_id == user_id);
@@ -541,15 +541,14 @@ namespace PPl3.Areas.Admin.Controllers
             user_Notification.content = "You have been rejected to become a host";
             user_Notification.un_status = 0;
             user_Notification.un_url = "#";
-            
-            
+            TempData["CheckComfirm"] = 1;
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
-            return Json("true", JsonRequestBehavior.AllowGet);
+            return RedirectToAction("index");
         }
 
         [AdminAuhorize(idChucNang = 16)]
-        public JsonResult confirm_hotel(int hotel_id , int user_id)
+        public ActionResult confirm_hotel(int hotel_id , int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == hotel_id);
@@ -568,15 +567,15 @@ namespace PPl3.Areas.Admin.Controllers
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
             TempData["CheckComfirm"] = 1;
-            property hotel = db.properties.FirstOrDefault(item => item.id == hotel_id);
-            string emailHtml = RenderRazorViewToString("AccpectHotel", hotel);
-            SendEmail(hotel.user.user_personalInfor.FirstOrDefault().email_address, "Your [Room/Hotel] Approval Successful!", emailHtml);
-            return Json("true", JsonRequestBehavior.AllowGet);
+            //property hotel = db.properties.FirstOrDefault(item => item.id == hotel_id);
+            //string emailHtml = RenderRazorViewToString("AccpectHotel", hotel);
+            //SendEmail(hotel.user.user_personalInfor.FirstOrDefault().email_address, "Your [Room/Hotel] Approval Successful!", emailHtml);
+            return RedirectToAction("index");
         }
 
 
         [AdminAuhorize(idChucNang = 16)]
-        public JsonResult hotel_denied(int hotel_id, int user_id)
+        public ActionResult hotel_denied(int hotel_id, int user_id)
         {
             PPL3Entities db = new PPL3Entities();
             Browse_hotel_listings find_hotel = db.Browse_hotel_listings.FirstOrDefault(item => item.property_id == hotel_id);
@@ -589,7 +588,8 @@ namespace PPl3.Areas.Admin.Controllers
             user_Notification.un_url = "#";
             db.user_notification.Add(user_Notification);
             db.SaveChanges();
-            return Json("true", JsonRequestBehavior.AllowGet);
+            TempData["CheckComfirm"] = 1;
+            return RedirectToAction("index");
         }
 
         [AdminAuhorize(idChucNang = 15)]
@@ -620,9 +620,9 @@ namespace PPl3.Areas.Admin.Controllers
                     user_Notification.un_url = "#";
                     db.user_notification.Add(user_Notification);
                     db.SaveChanges();
-                    user find_host = db.users.FirstOrDefault(row => row.id == item.user_id);
-                    string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
-                    SendEmail(find_host.user_personalInfor.FirstOrDefault().email_address, "Congrats on becoming a host!", emailHtml);
+                    //user find_host = db.users.FirstOrDefault(row => row.id == item.user_id);
+                    //string emailHtml = RenderRazorViewToString("AccpectHost", find_host);
+                    //SendEmail(find_host.user_personalInfor.FirstOrDefault().email_address, "Congrats on becoming a host!", emailHtml);
 
                 }
                 foreach (var item in list_host)
@@ -656,9 +656,9 @@ namespace PPl3.Areas.Admin.Controllers
                     user_Notification.un_url = "#";
                     db.user_notification.Add(user_Notification);
                     db.SaveChanges();
-                    property find_hotel = db.properties.FirstOrDefault(row => row.id == item.property_id);
-                    string emailHtml = RenderRazorViewToString("AccpectHotel", find_hotel);
-                    SendEmail(find_hotel.user.user_personalInfor.FirstOrDefault().email_address, "Your [Room/Hotel] Approval Successful!", emailHtml);
+                    //property find_hotel = db.properties.FirstOrDefault(row => row.id == item.property_id);
+                    //string emailHtml = RenderRazorViewToString("AccpectHotel", find_hotel);
+                    //SendEmail(find_hotel.user.user_personalInfor.FirstOrDefault().email_address, "Your [Room/Hotel] Approval Successful!", emailHtml);
                 }
                 foreach (var item in list_hotel)
                 {
@@ -687,6 +687,13 @@ namespace PPl3.Areas.Admin.Controllers
                 foreach (var item in list_host)
                 {
                     db.browser_becomes_host.Remove(item);
+                    user_notification user_Notification = new user_notification();
+                    user_Notification.userid = item.user_id;
+                    user_Notification.created = DateTime.Now;
+                    user_Notification.content = "You have been rejected to become a host";
+                    user_Notification.un_status = 0;
+                    user_Notification.un_url = "#";
+                    db.user_notification.Add(user_Notification);
                 }
                 db.SaveChanges();
                 TempData["CheckComfirm"] = 1;
@@ -706,6 +713,14 @@ namespace PPl3.Areas.Admin.Controllers
 
                 foreach (var item in list_hotel)
                 {
+                    user_notification user_Notification = new user_notification();
+                    user_Notification.userid = item.property.userId;
+                    user_Notification.created = DateTime.Now;
+                    user_Notification.content = "Your hotel does not meet the listing conditions";
+                    user_Notification.un_status = 0;
+                    user_Notification.un_url = "#";
+                    db.user_notification.Add(user_Notification);
+                    db.SaveChanges();
                     db.Browse_hotel_listings.Remove(item);
                 }
                 db.SaveChanges();
@@ -926,7 +941,7 @@ namespace PPl3.Areas.Admin.Controllers
 
             ViewBag.nameBank = bankName;
             ViewBag.accountNumber = accountNumber;
-            ViewBag.Money = amount / 2500000;
+            ViewBag.Money = amount;
             ViewBag.TransactionDescription = transactionDescription;
 
             return View();

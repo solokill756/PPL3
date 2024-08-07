@@ -1128,3 +1128,5 @@ D:\Ubuntu\PPL3\PPl3\obj\Debug\PPl3.csproj.CoreCompileInputs.cache
 D:\Ubuntu\PPL3\PPl3\obj\Debug\PPl3.csproj.CopyComplete
 D:\Ubuntu\PPL3\PPl3\obj\Debug\PPl3.dll
 D:\Ubuntu\PPL3\PPl3\obj\Debug\PPl3.pdb
+D:\WORKSPACE\PPL3\PPl3\bin\BCrypt.Net-Next.dll
+D:\WORKSPACE\PPL3\PPl3\bin\BCrypt.Net-Next.xml

@@ -47,6 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net48\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -569,6 +572,8 @@
     <Content Include="Models\Model1.edmx.diagram">
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\cuthao-001-site1 - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\cuthao-001-site1 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - FTP1.pubxml" />
     <None Include="Properties\PublishProfiles\hosithao-001-site1 - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />

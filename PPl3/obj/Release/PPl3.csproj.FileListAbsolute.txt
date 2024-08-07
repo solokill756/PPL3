@@ -134,3 +134,9 @@ D:\WORKSPACE\PPL3\PPl3\obj\Release\PPl3.csproj.CoreCompileInputs.cache
 D:\WORKSPACE\PPL3\PPl3\obj\Release\PPl3.csproj.CopyComplete
 D:\WORKSPACE\PPL3\PPl3\obj\Release\PPl3.dll
 D:\WORKSPACE\PPL3\PPl3\obj\Release\PPl3.pdb
+D:\WORKSPACE\PPL3\PPl3\bin\BCrypt.Net-Next.dll
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.dll
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.presentation.dll
+D:\WORKSPACE\PPL3\PPl3\bin\BCrypt.Net-Next.xml
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.xml
+D:\WORKSPACE\PPL3\PPl3\bin\zxing.presentation.xml

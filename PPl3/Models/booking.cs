@@ -31,7 +31,6 @@ namespace PPl3.Models
         public Nullable<System.DateTime> cancel_date { get; set; }
         public Nullable<decimal> refund_paid { get; set; }
         public Nullable<int> transaction_id { get; set; }
-        public Nullable<decimal> effective_amount { get; set; }
         public Nullable<System.DateTime> booking_date { get; set; }
         public Nullable<System.DateTime> created { get; set; }
         public Nullable<byte> pay_status { get; set; }

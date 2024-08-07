@@ -9,6 +9,11 @@
     PPl3.Models.user p_user = (PPl3.Models.user)HttpContext.Current.Session["user"];
     int useridcontroller = ViewBag.is_user_id;
     bool checkEdit = true;
+    string imgUser = "";
+    if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+    {
+        imgUser = p_user.user_profile.FirstOrDefault().user_avatar;
+    }
     if(useridcontroller != p_user.id)
     {
         p_user = db.users.Where(item => item.id == useridcontroller).FirstOrDefault();
@@ -67,9 +72,9 @@
                                 countNoti++;
                             }
                         }
-                        @if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+                        @if (imgUser != "")
                         {
-                            <button class="js_menuUser_btn icon_style" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat">
+                            <button class="js_menuUser_btn icon_style" style="background : url(@imgUser) top center /cover no-repeat">
                                 @if (countNoti != 0)
                                 {
                                     <span class="notification_badge">@countNoti</span>
@@ -107,7 +112,7 @@
                             <li><a href="/host/homehost/listing">Manage listings</a></li>
                             <li><a href="/user/homeuser/profile?id=@tmp_user.id">Account</a></li>
                             <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
-                            <li><a href="#">Help Center</a></li>
+                            <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                             <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                         </ul>
                     </div>
@@ -116,7 +121,6 @@
         </div>
     </div>
     <div class="main">
-
         <div id="content">
             <div class="gird wide">
                 <div class="row no-gutter">
@@ -336,26 +340,31 @@
                                     </div>
                                 </div>
 
-                                <div class="ask_guest">
-                                    <div class="tittle">
-                                        <span>Ask @p_user.user_personalInfor.FirstOrDefault().legal_name about</span>
-                                    </div>
-                                    <ul class="interest_list">
-                                        @{
-                                            foreach (var item in p_user.users_interests.ToList())
-                                            {
-                                                <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
-                                            }
-                                        }
-                                        @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
-                                            <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
-                                            <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
-                                            <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
-                                            <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
-                                            <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
-                                            <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
-                                    </ul>
-                                </div>
+                                @{
+                                    if (p_user.users_interests.Count() != 0)
+                                    {
+                                        <div class="ask_guest">
+                                            <div class="tittle">
+                                                <span>Ask @p_user.user_personalInfor.FirstOrDefault().legal_name about</span>
+                                            </div>
+                                            <ul class="interest_list">
+                                                @{
+                                                    foreach (var item in p_user.users_interests.ToList())
+                                                    {
+                                                        <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
+                                                    }
+                                                }
+                                                @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
+                        <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
+                        <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
+                        <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
+                        <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
+                                            </ul>
+                                        </div>
+                                    }
+                                }
                             </div>
                         </div>
                     </div>

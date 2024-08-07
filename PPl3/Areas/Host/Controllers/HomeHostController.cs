@@ -911,7 +911,15 @@ namespace PPl3.Areas.Host.Controllers
                 {
                     if (data[i].month == int.Parse(item.transfer_on.Value.ToString("MM")) && data[i].year == int.Parse(item.transfer_on.Value.ToString("yyyy")))
                     {
-                        data[i].money += (double)item.amount;
+                        if(item.bookings.FirstOrDefault().is_refund == 1)
+                        {
+                            data[i].money += ((double)item.amount - (double)item.bookings.FirstOrDefault().refund_paid);
+                        }
+                        else
+                        {
+                            data[i].money += (double)item.amount;
+                        }
+                        
                         db.transactions.Remove(item);
                     }
                 }
@@ -971,23 +979,53 @@ namespace PPl3.Areas.Host.Controllers
             {
                 if(int.Parse(item.transfer_on.Value.ToString("yyyy")) == int.Parse(DateTime.Now.ToString("yyyy")))
                 {
-                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    if(item.bookings.FirstOrDefault().is_refund == 1)
+                    {
+                        data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money += ((double)item.amount - (double)item.bookings.FirstOrDefault().refund_paid);
+                    }
+                    else
+                    {
+                        data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money += (double)item.amount;
+                    }
+                    
                     data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
                 }
 
                 if(int.Parse(item.transfer_on.Value.ToString("yyyy")) >= mocYear)
                 {
-                    data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].money = (double)item.amount;
+                    if (item.bookings.FirstOrDefault().is_refund == 1)
+                    {
+                        data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].money += ((double)item.amount - (double)item.bookings.FirstOrDefault().refund_paid);
+                    }
+                    else
+                    {
+                        data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].money += (double)item.amount;
+                    }
+                    
                     data[int.Parse(item.transfer_on.Value.ToString("yyyy")) - mocYear].renters++;
                 }
 
                 if(int.Parse(item.transfer_on.Value.ToString("MM")) == int.Parse(currentMonth) && int.Parse(item.transfer_on.Value.ToString("yyyy")) == int.Parse(currentYear))
                 {
                     monthRenter++;
-                    monthRevenue += (double)item.amount;
+                    if(item.bookings.FirstOrDefault().is_refund == 1)
+                    {
+                        monthRevenue += ((double)item.amount - (double)item.bookings.FirstOrDefault().refund_paid);
+                    }
+                    else
+                    {
+                        monthRevenue += (double)item.amount;
+                    }
                 }
                 totalRenter++;
-                totalRevenue += (double)item.amount;
+                if(item.bookings.FirstOrDefault().is_refund ==  1)
+                {
+                    totalRevenue += ((double)item.amount - (double)item.bookings.FirstOrDefault().refund_paid); 
+                }
+                else
+                {
+                    totalRevenue += (double)item.amount;
+                }
             }
             var result = new
             {
@@ -1023,7 +1061,15 @@ namespace PPl3.Areas.Host.Controllers
             {
                 if (int.Parse(item.transfer_on.Value.ToString("yyyy")) == year)
                 {
-                    data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money = (double)item.amount;
+                    if(item.bookings.FirstOrDefault().is_refund == 1)
+                    {
+                        data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money += ((double)item.amount - (double)item.bookings.FirstOrDefault().refund_paid);
+                    }
+                    else
+                    {
+                        data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].money += (double)item.amount;
+                    }
+                    
                     data1[int.Parse(item.transfer_on.Value.ToString("MM")) - 1].renters++;
                 }
             }
@@ -1050,7 +1096,7 @@ namespace PPl3.Areas.Host.Controllers
                 return false;
             }
             //if (p_user.user_personalInfor.FirstOrDefault().facebook_id == null) { return false; }
-            if (p_user.user_personalInfor.FirstOrDefault().country_id == null) { return false; }
+            if (p_user.user_personalInfor.FirstOrDefault().u_country == null) { return false; }
             if (p_user.user_personalInfor.FirstOrDefault().u_state == null) { return false; }
             if (p_user.user_personalInfor.FirstOrDefault().u_city == null) { return false; }
             if (p_user.phone_number.FirstOrDefault().phone == null) { return false; }

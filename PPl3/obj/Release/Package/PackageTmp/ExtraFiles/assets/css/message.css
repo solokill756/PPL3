@@ -11,6 +11,10 @@ html{
     font-family: 'Montserrat', sans-serif;
 }
 
+.main{
+    margin: 15px;
+}
+
 .center{
     display: flex !important;
     justify-content: center;
@@ -329,8 +333,31 @@ html{
 }
 
 .Unread {
-    border : 1px solid red;
-    padding : 5px;
-    margin: 5px 0px;
+    border: 4px solid #007bff;
+    background-color: #e7f1ff;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
+.picture_css {
+    width:300px;
+    height:200px;
+}
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+    .list_message {
+        height: 642px;
+    }
+    .body_mess {
+        height: 615px;
+    }
+    .user_detail {
+        height: 813px;
+    }
+    .tittle h1{
+        display: none;
+    }
 }

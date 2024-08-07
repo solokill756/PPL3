@@ -270,3 +270,14 @@
         transform: rotateY(0deg);
     }
 }
+
+.evaluate_message_btn button {
+    padding: 20px;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+}

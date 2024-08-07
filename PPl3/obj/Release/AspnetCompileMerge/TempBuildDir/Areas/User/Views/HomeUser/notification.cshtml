@@ -91,7 +91,7 @@
                                 <li><a href="/host/homehost/listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
                                 <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
-                                <li><a href="#">Help Center</a></li>
+                                <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
                         </div>
@@ -119,7 +119,7 @@
                                             <div class="notification">
                                                 <p><a href="@item.un_url">@item.content</a></p>
                                                 <div class="time">
-                                                    <span>@item.created.Value.ToString("dd/MM/yyyy")</span>
+                                                    <span>@item.created.Value.ToString("hh:MM:ss")  @item.created.Value.ToString("dd/MM/yyyy")</span>
                                                 </div>
                                             </div>
                                             <div class="remove">
@@ -174,10 +174,10 @@
                 success: function (data) {
                     if (data.success == "true") {
                         console.log(data.success);
-                        $('.notification_badge').text(data.count);
-                        $('.notification_badge').css({
-                            'background-color': 'red'
-                        });
+                        //$('.notification_badge').text(data.count);
+                        //$('.notification_badge').css({
+                        //    'background-color': 'red'
+                        //});
                     }
                 },
                 error: function (xhr, status, error) {

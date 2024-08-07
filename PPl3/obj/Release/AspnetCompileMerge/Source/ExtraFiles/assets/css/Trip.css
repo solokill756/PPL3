@@ -284,3 +284,9 @@ html {
     height: 38px;
     margin-right: 15px;
 }
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+}

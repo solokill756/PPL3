@@ -461,9 +461,9 @@
                                             string city = "";
                                             if (p_user.user_personalInfor != null)
                                             {
-                                                if (p_user.user_personalInfor.FirstOrDefault().country != null)
+                                                if (p_user.user_personalInfor.FirstOrDefault().u_country != null)
                                                 {
-                                                    country = p_user.user_personalInfor.FirstOrDefault().country;
+                                                    country = p_user.user_personalInfor.FirstOrDefault().u_country;
                                                     if (p_user.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
                                                         state = p_user.user_personalInfor.FirstOrDefault().u_state;
@@ -505,7 +505,7 @@
                                             <input type="text" id="district1" placeholder="District" value="@p_user.user_personalInfor.FirstOrDefault().u_state">
                                         </div>
                                         <div class="first_input">
-                                            <input type="text" id="country1" placeholder="Country" value="@p_user.user_personalInfor.FirstOrDefault().country">
+                                            <input type="text" id="country1" placeholder="Country" value="@p_user.user_personalInfor.FirstOrDefault().u_country">
                                         </div>
                                     </div>
                                     @* New code *@
@@ -517,9 +517,9 @@
                                             {
                                                 <select class="form-control"
                                                         id="country" @*disabled style="cursor:not-allowed"*@>
-                                                    @if (p_user.user_personalInfor.FirstOrDefault().country != null)
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().u_country != null)
                                                     {
-                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().country">@p_user.user_personalInfor.FirstOrDefault().country</option>
+                                                        <option value="@p_user.user_personalInfor.FirstOrDefault().u_country">@p_user.user_personalInfor.FirstOrDefault().u_country</option>
                                                     }
                                                     else
                                                     {
@@ -532,9 +532,9 @@
                                             {
                                                 <select class="form-control"
                                                         id="country">
-                                                    @if (p_user.user_personalInfor.FirstOrDefault().country != null)
+                                                    @if (p_user.user_personalInfor.FirstOrDefault().u_country!= null)
                                                         {
-                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().country">@p_user.user_personalInfor.FirstOrDefault().country</option>
+                                                            <option value="@p_user.user_personalInfor.FirstOrDefault().u_country">@p_user.user_personalInfor.FirstOrDefault().u_country</option>
                                                         }
                                                         else
                                                         {

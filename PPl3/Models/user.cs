@@ -37,8 +37,6 @@ namespace PPl3.Models
             this.user_notification = new HashSet<user_notification>();
             this.user_personalInfor = new HashSet<user_personalInfor>();
             this.user_profile = new HashSet<user_profile>();
-            this.user_role = new HashSet<user_role>();
-            this.user_role1 = new HashSet<user_role>();
             this.users_languages = new HashSet<users_languages>();
             this.users_interests = new HashSet<users_interests>();
         }
@@ -96,10 +94,6 @@ namespace PPl3.Models
         public virtual ICollection<user_personalInfor> user_personalInfor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user_profile> user_profile { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user_role> user_role { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<user_role> user_role1 { get; set; }
         public virtual user_type user_type1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<users_languages> users_languages { get; set; }

@@ -25,6 +25,7 @@ using System.Security.Cryptography;
 using System.Web.UI.WebControls;
 using Microsoft.Ajax.Utilities;
 using System.Web.Helpers;
+using System.Web.Management;
 
 namespace PPl3.Areas.User.Controllers
 {
@@ -285,7 +286,7 @@ namespace PPl3.Areas.User.Controllers
             up.user_biography_title = viewModel.user_profile.user_biography_title;
             up.user_birthday = viewModel.user_profile.user_birthday;
             up.user_obsessed_with = viewModel.user_profile.user_obsessed_with;
-            up.user_favourite_song = viewModel.user_profile.user_favourite_song;
+            up.user_favourite_song = viewModel.user_profile.user_favourite_song; 
             up.user_pets = viewModel.user_profile.user_pets;
             up.user_unless_skill = viewModel.user_profile.user_unless_skill;
             up.user_work = viewModel.user_profile.user_work;
@@ -615,7 +616,7 @@ namespace PPl3.Areas.User.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
-            tmpprofile.country_id = db.countries.Where(item => item.id == country_id).FirstOrDefault().ct_name;
+            tmpprofile.u_country = db.countries.Where(item => item.id == country_id).FirstOrDefault().ct_name;
             tmpprofile.u_state = db.states.Where(item => item.id == state_id).FirstOrDefault().state_name;
             tmpprofile.u_city = db.cities.Where(item => item.id == city_id).FirstOrDefault().city_name;
             db.SaveChanges();
@@ -623,7 +624,7 @@ namespace PPl3.Areas.User.Controllers
             Session["user"] = userInfor;
             var data = new
             {
-                country = tmpprofile.country_id,
+                country = tmpprofile.u_country,
                 state = tmpprofile.u_state, city = tmpprofile.u_city,
             };
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -635,7 +636,7 @@ namespace PPl3.Areas.User.Controllers
             PPL3Entities db = new PPL3Entities();
             user p_user = (user)Session["user"];
             user_personalInfor tmpprofile = db.user_personalInfor.Where(item => item.userID == p_user.id).FirstOrDefault();
-            tmpprofile.country_id = country_id;
+            tmpprofile.u_country = country_id;
             tmpprofile.u_state = state_id;
             tmpprofile.u_city = city_id;
             db.SaveChanges();
@@ -700,7 +701,7 @@ namespace PPl3.Areas.User.Controllers
                 entities.SaveChanges();
                 foreach (var item in entities.transactions.ToList())
                 {
-                    if (item.feedback == 0 && item.bookings.FirstOrDefault().check_out_date < DateTime.Now)
+                    if (item.feedback == 0 && item.bookings.FirstOrDefault().check_out_date < DateTime.Now && item.bookings.FirstOrDefault().is_refund == null)
                     {
                         user_notification new_notification = new user_notification();
                         new_notification.userid = item.payer_id;
@@ -709,14 +710,12 @@ namespace PPl3.Areas.User.Controllers
                         new_notification.created = DateTime.Now;
                         new_notification.un_url = "/user/homeuser/Comment?transation_id=" + item.id;
                         entities.user_notification.Add(new_notification);
-                        
-
                         user_notification admin_notification = new user_notification();
                         admin_notification.userid = 20;
                         admin_notification.content = "Please pay the transation with the id " + item.id;
                         admin_notification.un_status = 0;
                         admin_notification.created = DateTime.Now;
-                        admin_notification.un_url = "/admin/homeadmin/GenerateQRCode?bankName=" + item.user1.governmentIDs.FirstOrDefault().name_bank + "&accountNumber" + item.user1.governmentIDs.FirstOrDefault().number_bank + "&amount=" + item.bookings.FirstOrDefault().amount_paid;
+                        admin_notification.un_url = "/admin/homeadmin/GenerateQRCode?bankName=" + item.user1.governmentIDs.FirstOrDefault().name_bank + "&accountNumber=" + item.user1.governmentIDs.FirstOrDefault().number_bank + "&amount=" + item.bookings.FirstOrDefault().amount_paid;
                         entities.user_notification.Add(admin_notification);
                         
                         item.feedback = 1;
@@ -830,7 +829,7 @@ namespace PPl3.Areas.User.Controllers
                         admin_notification.content = "Please pay the transation with the id " + item.id; 
                         admin_notification.un_status = 0;
                         admin_notification.created = DateTime.Now;
-                        admin_notification.un_url = "/admin/homeadmin/GenerateQRCode?bankName=" + item.user1.governmentIDs.FirstOrDefault().name_bank + "&accountNumber" + item.user1.governmentIDs.FirstOrDefault().number_bank + "&amount=" + item.bookings.FirstOrDefault().amount_paid;
+                        admin_notification.un_url = "/admin/homeadmin/GenerateQRCode?bankName=" + item.user1.governmentIDs.FirstOrDefault().name_bank + "&accountNumber=" + item.user1.governmentIDs.FirstOrDefault().number_bank + "&amount=" + item.bookings.FirstOrDefault().amount_paid;
                         db.user_notification.Add(admin_notification);
 
 
@@ -841,6 +840,7 @@ namespace PPl3.Areas.User.Controllers
                 if (model.user_type == null) model.user_type = 2;
                 model.created = DateTime.Now;
                 model.is_active = 1;
+                model.user_password = model.user_password;
                 user_Notification.userid = model.id;
                 user_Notification.created = DateTime.Now;
                 user_Notification.content = "Registration successful! Please complete your profile.";
@@ -1361,8 +1361,8 @@ namespace PPl3.Areas.User.Controllers
             vnpay.AddRequestData("vnp_Command", "pay");
             vnpay.AddRequestData("vnp_TmnCode", vnp_TmnCode);
             vnpay.AddRequestData("vnp_Amount", Price.ToString()); //Số tiền thanh toán. Số tiền không mang các ký tự phân tách thập phân, phần nghìn, ký tự tiền tệ. Để gửi số tiền thanh toán là 100,000 VND (một trăm nghìn VNĐ) thì merchant cần nhân thêm 100 lần (khử phần thập phân), sau đó gửi sang VNPAY là: 10000000
-            vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
-            //vnpay.AddRequestData("vnp_CreateDate", DateTime.UtcNow.ToString("yyyyMMddHHmmss"));
+            //vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CreateDate", DateTime.UtcNow.ToString("yyyyMMddHHmmss"));
             vnpay.AddRequestData("vnp_CurrCode", "VND");
             vnpay.AddRequestData("vnp_IpAddr", Utils.GetIpAddress());
             vnpay.AddRequestData("vnp_Locale", "vn");
@@ -1400,6 +1400,7 @@ namespace PPl3.Areas.User.Controllers
             user_Notification.un_status = 0;
             user_Notification.un_url = "#";
             db.user_notification.Add(user_Notification);
+            db.SaveChanges();
 
             user_notification host_Notification = new user_notification();
             host_Notification.userid = find_booking.transaction.receiver_id;
@@ -1407,7 +1408,7 @@ namespace PPl3.Areas.User.Controllers
             host_Notification.content = "The booking with " + find_booking.id + " has been cancelled!";
             host_Notification.un_status = 0;
             host_Notification.un_url = "#";
-            db.user_notification.Add(user_Notification);
+            db.user_notification.Add(host_Notification);
             db.SaveChanges();
 
 
@@ -1416,8 +1417,8 @@ namespace PPl3.Areas.User.Controllers
             admin_Notification.created = DateTime.Now;
             admin_Notification.content = "The transation with " + find_booking.transaction_id + " has been cancelled!";
             admin_Notification.un_status = 0;
-            admin_Notification.un_url = "#";
-            db.user_notification.Add(user_Notification);
+            admin_Notification.un_url = "/admin/homeadmin/GenerateQRCode?bankName=" + find_booking.transaction.user1.governmentIDs.FirstOrDefault().name_bank + "&accountNumber=" + find_booking.transaction.user1.governmentIDs.FirstOrDefault().number_bank + "&amount=" + find_booking.refund_paid;
+            db.user_notification.Add(admin_Notification);
             db.SaveChanges();
 
             string emailHtml = RenderRazorViewToString("cancel", db.transactions.FirstOrDefault(item => item.booking_id == booking_id));
@@ -1426,6 +1427,13 @@ namespace PPl3.Areas.User.Controllers
             return RedirectToAction("trip");
 
 
+        }
+
+        public ActionResult cancel(int id)
+        {
+            PPL3Entities db = new PPL3Entities();
+            transaction transaction = db.transactions.FirstOrDefault(item => item.id == id);
+            return View(transaction);
         }
 
         // Message 
@@ -1776,10 +1784,13 @@ namespace PPl3.Areas.User.Controllers
         public bool IsPasswordExists(string password , int id)
 
         {
-
+           
             PPL3Entities db = new PPL3Entities();
-
-            return db.users.Any(u => u.user_password == password && u.id == id);
+            foreach(var item in db.users)
+            {
+                if (item.id == id && item.user_password == password) return true;
+            }
+            return false;
 
         }
         public static bool IsCorrectPassportCode(string passportCode)
@@ -1816,7 +1827,23 @@ namespace PPl3.Areas.User.Controllers
             }
             return false;
         }
-        
+
+        //public string HashPassword(string password)
+
+        //{
+
+        //    return BCrypt.Net.BCrypt.HashPassword(password);
+
+        //}
+
+        //public bool VerifyPassword(string password, string hashedPassword)
+
+        //{
+
+        //    return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
+
+        //}
+
 
     }
 }

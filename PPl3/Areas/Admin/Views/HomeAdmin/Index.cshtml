@@ -240,8 +240,8 @@
                 </div>
                 <div class="text">
                     <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
-                    <button onclick="AcceptAll(1)">Accept All</button>
-                    <button onclick="RefuseAll(1)">Refuse All</button>
+                    <button onclick="AcceptAll(1)">Accept The Selected</button>
+                    <button onclick="RefuseAll(1)">Refuse The Selected</button>
                 </div>
                 <div class="container_list">
                     <div class="list_item list_owner">
@@ -278,8 +278,8 @@
                 </div>
                 <div class="text">
                     <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
-                    <button onclick="AcceptAll(2)">Accept All</button>
-                    <button onclick="RefuseAll(2)">Refuse All</button>
+                    <button onclick="AcceptAll(2)">Accept The Selected</button>
+                    <button onclick="RefuseAll(2)">Refuse The Selected</button>
                 </div>
                 <div class="container_list">
                     <div class="list_item list_hotel">
@@ -317,10 +317,10 @@
                 </div>
                 @foreach (var item in host_browsing_list)
                 {
-                    <div class="info_host_detail info_detail center @item.id @item.user_id">
-                        <div class="container_info container_info_host @item.id @item.user_id">
+                    <div class="info_host_detail info_detail center @item.id @item.user_id ">
+                        <div class="container_info container_info_host @item.id @item.user_id overflow-scroll">
                             <div class="avatar_infor center">
-                                <img src="@item.user.user_profile.FirstOrDefault().user_avatar" alt="">
+                                <img src="@item.user.user_profile.FirstOrDefault()?.user_avatar ?? 'default-avatar.png'" alt="">
                             </div>
                             <div class="name_infor center">
                                 <h1>@item.user.user_personalInfor.FirstOrDefault().legal_name</h1>
@@ -350,7 +350,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().u_country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -398,7 +398,7 @@
                     PPl3.Models.property_images[] array_imgs = item.property.property_images.ToArray();
 
                     <div class="info_detail info_hotel_detail center @item.id @item.property_id">
-                        <div class="container_info container_info_hotel @item.id @item.property_id">
+                        <div class="container_info container_info_hotel @item.id @item.property_id overflow-scroll">
                             <div class="img_box">
                                 <div class="img_hotel">
 
@@ -570,8 +570,8 @@
                 </div>
                 <div class="text">
                     <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
-                    <button onclick="AcceptAll(1)">Accept All</button>
-                    <button onclick="RefuseAll(1)">Refuse All</button>
+                    <button onclick="AcceptAll(1)">Accept The Selected</button>
+                    <button onclick="RefuseAll(1)">Refuse The selected</button>
                 </div>
                 <div class="container_list">
                     <div class="list_item list_owner">
@@ -608,8 +608,8 @@
                 </div>
                 <div class="text">
                     <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
-                    <button onclick="AcceptAll(2)">Accept All</button>
-                    <button onclick="RefuseAll(2)">Refuse All</button>
+                    <button onclick="AcceptAll(2)">Accept The Selected</button>
+                    <button onclick="RefuseAll(2)">Refuse The Selected</button>
                 </div>
                 <div class="container_list">
                     <div class="list_item list_hotel">
@@ -648,9 +648,9 @@
                 @foreach (var item in host_browsing_list)
                 {
                     <div class="info_host_detail info_detail center @item.id @item.user_id">
-                        <div class="container_info container_info_host @item.id @item.user_id">
+                        <div class="container_info container_info_host @item.id @item.user_id  overflow-scroll">
                             <div class="avatar_infor center">
-                                <img src="@item.user.user_profile.FirstOrDefault().user_avatar" alt="">
+                                <img src="@item.user.user_profile.FirstOrDefault()?.user_avatar ?? 'default-avatar.png'" alt="">
                             </div>
                             <div class="name_infor center">
                                 <h1>@item.user.user_personalInfor.FirstOrDefault().legal_name</h1>
@@ -673,7 +673,7 @@
                                 <div class="item_info">
                                     <div class="info_child address">
                                         <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
-                                        <span>@item.user.user_personalInfor.FirstOrDefault().country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().u_country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
                                     </div>
                                     <div class="info_child emergency_contact">
                                         <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
@@ -722,7 +722,7 @@
                     PPl3.Models.property_images[] array_imgs = item.property.property_images.ToArray();
 
                     <div class="info_detail info_hotel_detail center @item.id @item.property_id">
-                        <div class="container_info container_info_hotel @item.id @item.property_id">
+                        <div class="container_info container_info_hotel @item.id @item.property_id overflow-scroll">
                             <div class="img_box">
                                 <div class="img_hotel">
 
@@ -995,15 +995,15 @@
                                             }
                                             @{
                                                 string address = "";
-                                                if (tmp.user_personalInfor.FirstOrDefault().country != null)
+                                                if (tmp.user_personalInfor.FirstOrDefault().u_country != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().u_country;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country;
                                                         }
                                                     }
                                                 }
@@ -1079,15 +1079,15 @@
                                             }
                                             @{
                                                 string address = "";
-                                                if (tmp.user_personalInfor.FirstOrDefault().country != null)
+                                                if (tmp.user_personalInfor.FirstOrDefault().u_country != null)
                                                 {
-                                                    address = tmp.user_personalInfor.FirstOrDefault().country;
+                                                    address = tmp.user_personalInfor.FirstOrDefault().u_country;
                                                     if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
                                                     {
-                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country;
                                                         if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
                                                         {
-                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().country;
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country ;
                                                         }
                                                     }
                                                 }
@@ -1841,114 +1841,119 @@
         })
     }
     function confirm_host(user_id) {
-        $.ajax({
-            url: `/admin/homeadmin/confirm_host`,
-            type: "POST",
-            data: { user_id: user_id },
-            success: function (data) {
-                console.log(data.phanhoi);
-                var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
-                var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
-                containerInforHost.classList.add(`animationInfor`)
-                inforHostDetail.classList.remove('openHost');
-                loadData();
-                document.querySelector(`.user_${user_id}`).classList.add('close');
+        window.location.href = `/admin/homeadmin/confirm_host?user_id=${user_id}`;
+        //$.ajax({
+        //    url: `/admin/homeadmin/confirm_host`,
+        //    type: "POST",
+        //    data: { user_id: user_id },
+        //    success: function (data) {
+        //        console.log(data.phanhoi);
+        //        var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
+        //        var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
+        //        containerInforHost.classList.add(`animationInfor`)
+        //        inforHostDetail.classList.remove('openHost');
+        //        loadData();
+        //        document.querySelector(`.user_${user_id}`).classList.add('close');
 
-                let rowHtml = `
-                    <tr id="hostRow-${data.id}">
-                        <td>
-                            <div class="avatar">
-                                <img src="${data.user_avatar}" alt="">
-                            </div>
-                        </td>
-                        <td>${data.legal_name}</td>
-                        <td>${data.passport_code || ''}</td>
-                        <td>${data.address}</td>
-                        <td>${data.email_address}</td>
-                        <td>
-                            <button><a href="/admin/homeadmin/userPersonalProfile?user=${data.id}" target="_blank">Detail</a></button>
-                            <button id="${data.id}" class="delete_Hostbtns">Delete</button>
-                        </td>
-                    </tr>
-                `;
-                document.getElementById('table_host').insertAdjacentHTML('beforeend', rowHtml);
+        //        let rowHtml = `
+        //            <tr id="hostRow-${data.id}">
+        //                <td>
+        //                    <div class="avatar">
+        //                        <img src="${data.user_avatar}" alt="">
+        //                    </div>
+        //                </td>
+        //                <td>${data.legal_name}</td>
+        //                <td>${data.passport_code || ''}</td>
+        //                <td>${data.address}</td>
+        //                <td>${data.email_address}</td>
+        //                <td>
+        //                    <button><a href="/admin/homeadmin/userPersonalProfile?user=${data.id}" target="_blank">Detail</a></button>
+        //                    <button id="${data.id}" class="delete_Hostbtns">Delete</button>
+        //                </td>
+        //            </tr>
+        //        `;
+        //        document.getElementById('table_host').insertAdjacentHTML('beforeend', rowHtml);
 
-                var delHostButtons = document.querySelectorAll('.delete_Hostbtns');
-                delHostButtons.forEach(function (button) {
-                    button.addEventListener('click', function () {
-                        if (button.id == data.id) {
-                            var itemId = button.id;
-                            /*console.log(itemId);*/
-                            DeleteHostUser(itemId);
-                        }
+        //        var delHostButtons = document.querySelectorAll('.delete_Hostbtns');
+        //        delHostButtons.forEach(function (button) {
+        //            button.addEventListener('click', function () {
+        //                if (button.id == data.id) {
+        //                    var itemId = button.id;
+        //                    /*console.log(itemId);*/
+        //                    DeleteHostUser(itemId);
+        //                }
                         
-                    });
-                });
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
+        //            });
+        //        });
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
     }
     function host_denied(user_id) {
-        $.ajax({
-            url: `/admin/homeadmin/host_denied`,
-            type: "POST",
-            data: { user_id: user_id },
-            success: function (data) {
-                console.log(data);
-                var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
-                var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
-                containerInforHost.classList.add(`animationInfor`)
-                inforHostDetail.classList.remove('openHost');
-                document.querySelector(`.user_${user_id}`).classList.add('close');
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
+        //$.ajax({
+        //    url: `/admin/homeadmin/host_denied`,
+        //    type: "POST",
+        //    data: { user_id: user_id },
+        //    success: function (data) {
+        //        //console.log(data);
+        //        //var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
+        //        //var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
+        //        //containerInforHost.classList.add(`animationInfor`)
+        //        //inforHostDetail.classList.remove('openHost');
+        //        //document.querySelector(`.user_${user_id}`).classList.add('close');
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
+        window.location.href = `/admin/homeadmin/host_denied?user_id=${user_id}`;
     }
 
 
-    function confirm_hotel(user_id , property_id) {
-        $.ajax({
-            url: `/admin/homeadmin/confirm_hotel`,
-            type: "POST",
-            data: { user_id: user_id, hotel_id: property_id },
-            success: function (data) {
-                console.log(data);
-                var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`);
-                var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`);
-                containerInforHotel.classList.add(`animationInfor`)
-                inforHotelDetail.classList.remove('openHost');
-                
-                loadData();
-                document.querySelector(`.property_${property_id}`).classList.add('close');
-                
-            },
-            error: function (err) {
-                console.log(err.text);
-            }
-        })
+    function confirm_hotel(user_id, property_id) {
+        window.location.href = `/admin/homeadmin/confirm_hotel?user_id=${user_id}&hotel_id=${property_id}`;
+        //$.ajax({
+        //    url: `/admin/homeadmin/confirm_hotel`,
+        //    type: "POST",
+        //    data: { user_id: user_id, hotel_id: property_id },
+        //    success: function (data) {
+        //        console.log(data);
+        //        var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`);
+        //        var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`);
+        //        containerInforHotel.classList.add(`animationInfor`)
+        //        inforHotelDetail.classList.remove('openHost');
+
+        //        loadData();
+        //        document.querySelector(`.property_${property_id}`).classList.add('close');
+
+        //    },
+        //    error: function (err) {
+        //        console.log(err.text);
+        //    }
+        //})
+        console.log(1);
     }
     function hotel_denied(user_id, property_id) {
-        $.ajax({
-            url: `/admin/homeadmin/hotel_denied`,
-            type: "POST",
-            data: { user_id: user_id, hotel_id: property_id },
-            success: function (data) {
-                console.log(data);
-                var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`);
-                var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`);
-                containerInforHotel.classList.add(`animationInfor`)
-                inforHotelDetail.classList.remove('openHost');
-                document.querySelector(`.property_${property_id}`).classList.add('close');
+        //$.ajax({
+        //    url: `/admin/homeadmin/hotel_denied`,
+        //    type: "POST",
+        //    data: { user_id: user_id, hotel_id: property_id },
+        //    success: function (data) {
+        //        console.log(data);
+        //        var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`);
+        //        var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`);
+        //        containerInforHotel.classList.add(`animationInfor`)
+        //        inforHotelDetail.classList.remove('openHost');
+        //        document.querySelector(`.property_${property_id}`).classList.add('close');
 
-            },
-            error: function (err) {
-                console.log(err);
-            }
-        })
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
+        window.location.href = `/admin/homeadmin/hotel_denied?user_id=${user_id}&hotel_id=${property_id}`;
     }
     function AcceptAll(check) {
         let list_selects, list_id;

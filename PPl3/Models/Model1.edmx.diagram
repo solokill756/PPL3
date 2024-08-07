@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="44f9584fcad9435eb2a414bb33766c01" Name="Diagram1" ZoomLevel="29">
+      <Diagram DiagramId="44f9584fcad9435eb2a414bb33766c01" Name="Diagram1" ZoomLevel="72">
         <EntityTypeShape EntityType="PPL3Model.amenity" Width="1.5" PointX="14.25" PointY="46.25" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.booking_guests" Width="1.5" PointX="13.5" PointY="36.5" IsExpanded="true" />
         <EntityTypeShape EntityType="PPL3Model.booking" Width="1.5" PointX="8.25" PointY="38.25" IsExpanded="true" />
@@ -92,13 +92,12 @@
         <AssociationConnector Association="PPL3Model.unn_userid_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.up_userID_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.upp_userID_id_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="PPL3Model.ur_create_by_id_FK" ManuallyRouted="false" />
-        <AssociationConnector Association="PPL3Model.ur_update_by_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.utur_user_role_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.users_user_type_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.utur_user_type_id_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.ul_userID_id_FK" ManuallyRouted="false" />
         <AssociationConnector Association="PPL3Model.useridddd_id_id_FK" ManuallyRouted="false" />
+        <AssociationConnector Association="PPL3Model.FK_user_role_user_role" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

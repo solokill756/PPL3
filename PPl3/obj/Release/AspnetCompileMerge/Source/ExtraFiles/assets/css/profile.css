@@ -26,6 +26,7 @@ html {
 .information {
     display: flex;
     justify-content: center;
+    flex-wrap:wrap;
 }
 
 .infor_container {
@@ -89,6 +90,7 @@ html {
 .verify_guest {
     display: flex;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
 .verify_container {
@@ -178,11 +180,14 @@ button:hover {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 3px;
+    width:100%;
+    padding-bottom: 10px;
 }
 
 .infor_list li {
+    display: flex;
+    align-items: center;
     list-style: none;
     padding: 10px 0;
     font-size: 16px;
@@ -234,63 +239,74 @@ button:hover {
     margin-bottom: 25px;
 }
 
-    .infor_contact_item span {
-        font-size: 18px;
-        font-weight: 600;
-    }
-
-    .infor_contact_item li {
-        list-style: none;
-        margin: 15px 0;
-    }
-
-        .infor_contact_item li > a {
-            text-decoration: none;
-            color: #000000;
-            cursor: pointer;
-        }
-
-            .infor_contact_item li > a:hover {
-                border-bottom: 1px solid #000;
-            }
-
-/* moble + tablet */
-@media screen and (max-width:739px) {
-    .about_you {
-        display: flex;
-        justify-content: center;
-    }
-
-    .about_container {
-        width: 75%;
-    }
-
-    .verify_container {
-        border: none;
-        width: 80%;
-    }
+.infor_contact_item span {
+    font-size: 18px;
+    font-weight: 600;
 }
 
-/* Mobile */
-@media screen and (max-width: 46.1875em) {
+.infor_contact_item li {
+    list-style: none;
+    margin: 15px 0;
+}
+
+.infor_contact_item li > a {
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+}
+
+.infor_contact_item li > a:hover {
+    border-bottom: 1px solid #000;
 }
 
 /* Tablet */
-@media (min-width: 740px) and (max-width: 1012px) {
-    .about_you {
+@media (min-width: 740px) and (max-width: 1012px){
+    .about_you{
         display: flex;
         justify-content: center;
     }
-
-    .about_container {
+    
+    .about_container{
         width: 55%;
     }
 
-    .verify_container {
-        border: none;
+    .verify_container{
         width: 60%;
     }
 }
+
+@media screen and (max-width: 46.1875em) {
+    .nav_languages{
+        display: none !important;
+    }
+    .about_you{
+        display: flex;
+        justify-content: center;
+    }
+    
+    .about_container{
+        width: 75%;
+    }
+    .about_container h1{
+        text-align: center;
+    }
+    .edit_btn{
+        text-align: center;
+    }
+    .verify_guest{
+        text-align: center;
+    }
+    .interest_list{
+        justify-content: center;
+    }
+    .ask_guest{
+        text-align: center;
+    }
+    #footer{
+        text-align: center;
+    }
+}
+
 
 .icon_style {
     display: inline-block;

@@ -21,16 +21,11 @@ namespace PPl3.Models
         }
     
         public int id { get; set; }
-        public string ur_url { get; set; }
-        public Nullable<System.DateTime> created_at { get; set; }
-        public Nullable<System.DateTime> update_at { get; set; }
-        public Nullable<int> create_by { get; set; }
-        public Nullable<int> update_by { get; set; }
         public string ur_description { get; set; }
     
-        public virtual user user { get; set; }
-        public virtual user user1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<user_type_user_role> user_type_user_role { get; set; }
+        public virtual user_role user_role1 { get; set; }
+        public virtual user_role user_role2 { get; set; }
     }
 }

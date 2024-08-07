@@ -36,7 +36,6 @@
     <Property Name="cancel_date" Type="datetime" />
     <Property Name="refund_paid" Type="decimal" Precision="18" Scale="0" />
     <Property Name="transaction_id" Type="int" />
-    <Property Name="effective_amount" Type="decimal" Precision="18" Scale="0" />
     <Property Name="booking_date" Type="datetime" />
     <Property Name="created" Type="datetime" />
     <Property Name="pay_status" Type="tinyint" />
@@ -361,7 +360,7 @@
     <Property Name="email_address" Type="varchar" MaxLength="255" />
     <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
     <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
-    <Property Name="country_id" Type="nvarchar" MaxLength="50" />
+    <Property Name="u_country" Type="nvarchar" MaxLength="50" />
     <Property Name="street_address" Type="nvarchar" MaxLength="255" />
     <Property Name="u_state" Type="nvarchar" MaxLength="50" />
     <Property Name="u_city" Type="nvarchar" MaxLength="50" />
@@ -394,11 +393,6 @@
       <PropertyRef Name="id" />
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ur_url" Type="nvarchar" MaxLength="255" />
-    <Property Name="created_at" Type="datetime" />
-    <Property Name="update_at" Type="datetime" />
-    <Property Name="create_by" Type="int" />
-    <Property Name="update_by" Type="int" />
     <Property Name="ur_description" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="user_type">
@@ -726,6 +720,18 @@
       </Principal>
       <Dependent Role="transactions">
         <PropertyRef Name="payer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_user_role_user_role">
+    <End Role="user_role" Type="Self.user_role" Multiplicity="1" />
+    <End Role="user_role1" Type="Self.user_role" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="user_role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="user_role1">
+        <PropertyRef Name="id" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -1075,32 +1081,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="ur_create_by_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_role">
-        <PropertyRef Name="create_by" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ur_update_by_id_FK">
-    <End Role="users" Type="Self.users" Multiplicity="0..1" />
-    <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="users">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="user_role">
-        <PropertyRef Name="update_by" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="useridddd_id_id_FK">
     <End Role="users" Type="Self.users" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -1278,6 +1258,10 @@
       <End Role="users" EntitySet="users" />
       <End Role="transactions" EntitySet="transactions" />
     </AssociationSet>
+    <AssociationSet Name="FK_user_role_user_role" Association="Self.FK_user_role_user_role">
+      <End Role="user_role" EntitySet="user_role" />
+      <End Role="user_role1" EntitySet="user_role" />
+    </AssociationSet>
     <AssociationSet Name="gid_userID_id_FK" Association="Self.gid_userID_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="governmentID" EntitySet="governmentID" />
@@ -1385,14 +1369,6 @@
     <AssociationSet Name="upp_userID_id_FK" Association="Self.upp_userID_id_FK">
       <End Role="users" EntitySet="users" />
       <End Role="user_profile" EntitySet="user_profile" />
-    </AssociationSet>
-    <AssociationSet Name="ur_create_by_id_FK" Association="Self.ur_create_by_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="user_role" EntitySet="user_role" />
-    </AssociationSet>
-    <AssociationSet Name="ur_update_by_id_FK" Association="Self.ur_update_by_id_FK">
-      <End Role="users" EntitySet="users" />
-      <End Role="user_role" EntitySet="user_role" />
     </AssociationSet>
     <AssociationSet Name="useridddd_id_id_FK" Association="Self.useridddd_id_id_FK">
       <End Role="users" EntitySet="users" />

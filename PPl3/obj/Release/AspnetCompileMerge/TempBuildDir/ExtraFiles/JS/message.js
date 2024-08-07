@@ -9,6 +9,15 @@ const btnDetail = document.querySelector('.btn_detail button')
 listMess.forEach((mess)=>{
     mess.addEventListener('click', ()=>{
         //Open Mess of user with you
+        listMess.forEach((me) => {
+            if (me.classList.contains('selected')) {
+                me.classList.remove('selected');
+            }
+        })
+        mess.classList.add('selected');
+        if (mess.classList.contains('Unread')) {
+            mess.classList.remove('Unread');
+        }
         var imgUser = mess.firstElementChild.style.background;
         var name = mess.querySelector('.name p').textContent;
         avatar.forEach((avt) =>{

@@ -31,6 +31,7 @@
             }
         }
     }
+    listUserBooking.OrderByDescending(item => item.booking_date);
 }
 
 @{
@@ -314,6 +315,24 @@
                                                     position = 0;
                                                     foreach (var tmp in listUserBooking)
                                                     {
+                                                        if (tmp.is_refund == 1)
+                                                        {
+                                                            position++;
+                                                            <tr>
+                                                                <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
+                                                                <td>@tmp.user.account_name</td>
+                                                                <td>@tmp.property.p_address</td>
+                                                                <td>@tmp.refund_paid$</td>
+                                                                @{
+                                                                    <td>Refund</td>
+                                                                    <td>
+                                                                        <button><a href="/user/homeuser/cancel?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                    </td>
+                                                                }
+
+                                                            </tr>
+
+                                                        }
                                                         position++;
                                                         if (position == 5) { break; }
                                                         <tr>
@@ -330,7 +349,7 @@
                                                                 {
                                                                     <td>Paid</td>
                                                                     <td>
-                                                                        <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                        <button><a href="/admin/homeadmin/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
                                                                     </td>
                                                                 }
                                                             }
@@ -339,45 +358,45 @@
                                                     }
                                                 }
                                                 @*<tr>
-                                                        <td>12/4/2024</td>
-                                                        <td>Davis Ngo</td>
-                                                        <td>192 NewYork City</td>
-                                                        <td>400$</td>
-                                                        <td>Paid</td>
-                                                        <td>
-                                                            <button><a href="">Detail</a></button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12/4/2024</td>
-                                                        <td>Davis Ngo</td>
-                                                        <td>192 NewYork City</td>
-                                                        <td>400$</td>
-                                                        <td>Paid</td>
-                                                        <td>
-                                                            <button><a href="">Detail</a></button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12/4/2024</td>
-                                                        <td>Davis Ngo</td>
-                                                        <td>192 NewYork City</td>
-                                                        <td>400$</td>
-                                                        <td>Paid</td>
-                                                        <td>
-                                                            <button><a href="">Detail</a></button>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>12/4/2024</td>
-                                                        <td>Davis Ngo</td>
-                                                        <td>192 NewYork City</td>
-                                                        <td>400$</td>
-                                                        <td>Paid</td>
-                                                        <td>
-                                                            <button><a href="">Detail</a></button>
-                                                        </td>
-                                                    </tr>*@
+            <td>12/4/2024</td>
+            <td>Davis Ngo</td>
+            <td>192 NewYork City</td>
+            <td>400$</td>
+            <td>Paid</td>
+            <td>
+                <button><a href="">Detail</a></button>
+            </td>
+        </tr>
+        <tr>
+            <td>12/4/2024</td>
+            <td>Davis Ngo</td>
+            <td>192 NewYork City</td>
+            <td>400$</td>
+            <td>Paid</td>
+            <td>
+                <button><a href="">Detail</a></button>
+            </td>
+        </tr>
+        <tr>
+            <td>12/4/2024</td>
+            <td>Davis Ngo</td>
+            <td>192 NewYork City</td>
+            <td>400$</td>
+            <td>Paid</td>
+            <td>
+                <button><a href="">Detail</a></button>
+            </td>
+        </tr>
+        <tr>
+            <td>12/4/2024</td>
+            <td>Davis Ngo</td>
+            <td>192 NewYork City</td>
+            <td>400$</td>
+            <td>Paid</td>
+            <td>
+                <button><a href="">Detail</a></button>
+            </td>
+        </tr>*@
                                             </tbody>
                                         </table>
                                     </div>
@@ -695,15 +714,15 @@
                                                     string address = "";
                                                     if (tmp.user1.user_personalInfor.FirstOrDefault() != null)
                                                     {
-                                                        if (tmp.user1.user_personalInfor.FirstOrDefault().country != null)
+                                                        if (tmp.user1.user_personalInfor.FirstOrDefault().u_country != null)
                                                         {
-                                                            address = tmp.user1.user_personalInfor.FirstOrDefault().country;
+                                                            address = tmp.user1.user_personalInfor.FirstOrDefault().u_country;
                                                             if (tmp.user1.user_personalInfor.FirstOrDefault().u_state != null)
                                                             {
-                                                                address = tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country;
+                                                                address = tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().u_country;
                                                                 if (tmp.user1.user_personalInfor.FirstOrDefault().u_city != null)
                                                                 {
-                                                                    address = tmp.user1.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().country;
+                                                                    address = tmp.user1.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user1.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user1.user_personalInfor.FirstOrDefault().u_country;
                                                                 }
                                                             }
                                                         }
@@ -771,6 +790,24 @@
                                         @{
                                             foreach (var tmp in listUserBooking)
                                             {
+                                                if (tmp.is_refund == 1)
+                                                {
+
+                                                    <tr>
+                                                        <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
+                                                        <td>@tmp.user.account_name</td>
+                                                        <td>@tmp.property.p_address</td>
+                                                        <td>@tmp.refund_paid$</td>
+                                                        @{
+                                                            <td>Refund</td>
+                                                            <td>
+                                                                <button><a href="/user/homeuser/cancel?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                            </td>
+                                                        }
+
+                                                    </tr>
+
+                                                }
                                                 <tr>
                                                     <td>@tmp.booking_date.Value.ToString("dd/MM/yyyy")</td>
                                                     <td>@tmp.user.account_name</td>
@@ -785,7 +822,7 @@
                                                         {
                                                             <td>Paid</td>
                                                             <td>
-                                                                <button><a href="/user/homeuser/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
+                                                                <button><a href="/admin/homeadmin/invoice?id=@tmp.transaction_id" target="_blank">Detail</a></button>
                                                             </td>
                                                         }
                                                     }

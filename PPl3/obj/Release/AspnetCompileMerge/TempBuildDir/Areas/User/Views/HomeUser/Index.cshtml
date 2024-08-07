@@ -63,7 +63,7 @@
             <li><a href="/host/homehost/listing">Manage listings</a></li>
             <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
             <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
-            <li><a href="#">Help Center</a></li>
+            <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
             <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
         </ul>
     </div>
@@ -125,7 +125,7 @@
     {
         if (item.p_status == 1)
         {
-            <div class="col l-3 m-4 c-6 content_container">
+            <div class="col l-3 m-4 c-12 content_container">
                 <div class="content_item content_item_@position">
                     <div class="list_img list_img_@position" onclick="window.location.href='/user/homeuser/Detail?id=@item.id'">
                         @foreach (var pic in item.property_images)
@@ -201,7 +201,7 @@
                         double sum = 0;
                         foreach (var row in item.property_reviews)
                         {
-                            sum = sum + double.Parse(row.overall_rating);
+                            sum = sum + (double)row.overall_rating;
                         }
                         sum = sum / item.property_reviews.ToArray().Length;
 
@@ -239,10 +239,14 @@
                                 <span class="logo_shield"><i class="fa-solid fa-shield"></i></span>
                                 <span class="name_seller">@p_host.user_personalInfor.FirstOrDefault().legal_name</span>
                                 <div class="contact_seller">
-                                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                                    <div class="evaluate_message_btn">
+                                        <button onclick="window.location.href = '/user/homeuser/addFriend?userID=@p_host.id'">Message Host</button>
+                                    </div>
+                                    @*<a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
                                     <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
                                     <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>*@
+
                                 </div>
                                 <div class="page_arrow">
                                     <button class="page_left_1_btn"><i class="fa-solid fa-chevron-left"></i></button>

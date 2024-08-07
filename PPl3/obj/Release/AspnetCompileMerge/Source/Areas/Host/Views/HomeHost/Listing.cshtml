@@ -18,7 +18,7 @@
     <title>T|.|N|.|T</title>
     <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
     <link href="~/ExtraFiles/assets/css/gird.css" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/Listing.css?v=1" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/Listing.css?v=2" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="~/ExtraFiles/assets/css/headerGuest.css?v=1" rel="stylesheet" />
     <style>
@@ -59,14 +59,14 @@
 
 
                     <div class="nav_menu">
-                        <div class="alert_icon">
+                        @*<div class="alert_icon">
                             <button><i class="fa-regular fa-bell"></i></button>
-                        </div>
+                        </div>*@
                         <div class="nav_login">
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
                             @{
                                 int countNoti = 0;
-                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
                                 {
                                     countNoti++;
                                 }
@@ -78,29 +78,39 @@
                                     {
                                         <span class="notification_badge">@countNoti</span>
                                     }
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
                                 </button>
                             }
                             else
                             {
-                                <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
+                        <button class="js_menuUser_btn icon_style" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat">
                                     @*<i class="fa-solid fa-user"></i>*@
                                     @if (countNoti != 0)
                                     {
                                         <span class="notification_badge">@countNoti</span>
                                     }
-                                </button>
+                                    else
+                                    {
+
+                                        <span class="notification_badge" style="background-color:transparent"></span>
+                                    }
+                        </button>
                             }
                         </div>
 
                         <div class="sub_nav sub_nav_user js_sub_nav_user">
                             <ul class="menu_user js_menu_user">
-                                <li class=""><button>Messages</button></li>
+                                <li class=""><a href="/user/homeuser/chatUser">Messages</a></li>
                                 <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
                                 <li><a href="/user/homeuser/index">Switch to guest</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
                                 <li><a href="/user/homeuser/userPersonalProfile">Host Profile</a></li>
                                 <li><a href="/host/homehost/revenue">Revenue</a></li>
-                                <li><a href="#">Help Center</a></li>
+                                <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
                         </div>
@@ -142,7 +152,15 @@
                                                     <div class="in_progress">
                                                         @if (item.p_status == 0)
                                                         {
-                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            if(db.Browse_hotel_listings.Count(row => row.property_id == item.id) > 0) { 
+                                                                <button><i class="fa-solid fa-circle check-room-2" style="color:darkgoldenrod"></i> Pending</button>
+                                                                
+                                                            }
+                                                            else { 
+                                                                <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            
+                                                            }
+                                                            
 
 
                                                         }
@@ -175,7 +193,16 @@
                                                     <div class="in_progress">
                                                         @if (item.p_status == 0)
                                                         {
-                                                            <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                            if (db.Browse_hotel_listings.Count(row => row.property_id == item.id) > 0)
+                                                            {
+                                                                <button><i class="fa-solid fa-circle check-room-2" style="color:darkgoldenrod"></i> Pending</button>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+
+                                                            }
 
 
                                                         }
@@ -271,7 +298,16 @@
                                             }
                                             @if (item.p_status == 0)
                                             {
-                                                <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+                                                if (db.Browse_hotel_listings.Count(row => row.property_id == item.id) > 0)
+                                                {
+                                                    <button><i class="fa-solid fa-circle check-room-2" style="color:darkgoldenrod"></i> Pending</button>
+
+                                                }
+                                                else
+                                                {
+                                                    <button><i class="fa-solid fa-circle check-room-2"></i> Unfinished</button>
+
+                                                }
 
 
                                             }

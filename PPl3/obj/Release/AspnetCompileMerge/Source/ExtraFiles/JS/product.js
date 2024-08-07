@@ -1,4 +1,5 @@
-﻿var menuUserBtns = document.querySelectorAll('.js_menuUser_btn');
+﻿
+var menuUserBtns = document.querySelectorAll('.js_menuUser_btn');
 var subNavGuest = document.querySelector('.js_sub_nav_guest');
 var menuUser = document.querySelector('.js_menu_user');
 const firstHeader = document.querySelector('#first_header');
@@ -343,17 +344,38 @@ if (document.getElementById("checkInDate") != null && document.getElementById("c
             var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); // Chia cho số miliseconds trong một ngày
             console.log(diffDays);
             if (diffDays + 1 >= 10 && discounts.length > 1) {
-                document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[1]) / 100 + "</h2>" + " <p>Night</p>";
+                if (booking_count < 3 && discounts.length > 0) {
+                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100 * (100 - Math.max(discounts[1] , discounts[2])) / 100 * diffDays + "</h2>";
+                }
+                else {
+                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - Math.max(discounts[1], discounts[2])) / 100 * diffDays + "</h2>" ;
+                }
+                
             } else if (diffDays + 1 >= 5 && discounts.length > 2) {
-                document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[2]) / 100 + "</h2>" + " <p>Night</p>";
+                if (booking_count < 3 && discounts.length > 0) {
+                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice  * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100 * (100 - discounts[2]) / 100 * diffDays + "</h2>" ;
+                }
+                else {
+                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[2]) / 100 * diffDays + "</h2>" ;
+                }
+               
+            }
+            else {
+                if (booking_count < 3 && discounts.length > 0) {
+                    document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice * diffDays + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100 * diffDays + "</h2>";
+                }
+                else {
+                    document.querySelector('.money_total').innerHTML = "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * diffDays + "</h2>" ;
+                }
+               
             }
 
         } else {
             document.querySelector(".pay_footer").classList.add("disapear");
             if (booking_count < 3 && discounts.length > 0) {
-                document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100 + "</h2>" + " <p>Night</p>";
+                document.querySelector('.money_total').innerHTML = "<h2 class=\"_1l85cgq\">$" + propertyPrice + "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice * (100 - discounts[0]) / 100  + "</h2>" ;
             }
-            else document.querySelector('.money_total').innerHTML = "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice + "</h2>" + " <p>Night</p>";
+            else document.querySelector('.money_total').innerHTML = "</h2> <h2 class=\"_1y74zjx money_hotel\">$" + propertyPrice + "</h2>" ;
             //payFooterButton.removeEventListener("click", function () {
             //    //window.location.href = '/user/homeuser/payhotel?checkBook=true';
             //});

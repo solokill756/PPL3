@@ -41,7 +41,6 @@
           <Property Name="cancel_date" Type="datetime" />
           <Property Name="refund_paid" Type="decimal" Precision="18" Scale="0" />
           <Property Name="transaction_id" Type="int" />
-          <Property Name="effective_amount" Type="decimal" Precision="18" Scale="0" />
           <Property Name="booking_date" Type="datetime" />
           <Property Name="created" Type="datetime" />
           <Property Name="pay_status" Type="tinyint" />
@@ -366,7 +365,7 @@
           <Property Name="email_address" Type="varchar" MaxLength="255" />
           <Property Name="facebook_id" Type="nvarchar" MaxLength="255" />
           <Property Name="twitter_id" Type="nvarchar" MaxLength="255" />
-          <Property Name="country_id" Type="nvarchar" MaxLength="50" />
+          <Property Name="u_country" Type="nvarchar" MaxLength="50" />
           <Property Name="street_address" Type="nvarchar" MaxLength="255" />
           <Property Name="u_state" Type="nvarchar" MaxLength="50" />
           <Property Name="u_city" Type="nvarchar" MaxLength="50" />
@@ -399,11 +398,6 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ur_url" Type="nvarchar" MaxLength="255" />
-          <Property Name="created_at" Type="datetime" />
-          <Property Name="update_at" Type="datetime" />
-          <Property Name="create_by" Type="int" />
-          <Property Name="update_by" Type="int" />
           <Property Name="ur_description" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="user_type">
@@ -731,6 +725,18 @@
             </Principal>
             <Dependent Role="transactions">
               <PropertyRef Name="payer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_user_role_user_role">
+          <End Role="user_role" Type="Self.user_role" Multiplicity="1" />
+          <End Role="user_role1" Type="Self.user_role" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_role1">
+              <PropertyRef Name="id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1080,32 +1086,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ur_create_by_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_role">
-              <PropertyRef Name="create_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ur_update_by_id_FK">
-          <End Role="users" Type="Self.users" Multiplicity="0..1" />
-          <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_role">
-              <PropertyRef Name="update_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="useridddd_id_id_FK">
           <End Role="users" Type="Self.users" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -1283,6 +1263,10 @@
             <End Role="users" EntitySet="users" />
             <End Role="transactions" EntitySet="transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK_user_role_user_role" Association="Self.FK_user_role_user_role">
+            <End Role="user_role" EntitySet="user_role" />
+            <End Role="user_role1" EntitySet="user_role" />
+          </AssociationSet>
           <AssociationSet Name="gid_userID_id_FK" Association="Self.gid_userID_id_FK">
             <End Role="users" EntitySet="users" />
             <End Role="governmentID" EntitySet="governmentID" />
@@ -1391,14 +1375,6 @@
             <End Role="users" EntitySet="users" />
             <End Role="user_profile" EntitySet="user_profile" />
           </AssociationSet>
-          <AssociationSet Name="ur_create_by_id_FK" Association="Self.ur_create_by_id_FK">
-            <End Role="users" EntitySet="users" />
-            <End Role="user_role" EntitySet="user_role" />
-          </AssociationSet>
-          <AssociationSet Name="ur_update_by_id_FK" Association="Self.ur_update_by_id_FK">
-            <End Role="users" EntitySet="users" />
-            <End Role="user_role" EntitySet="user_role" />
-          </AssociationSet>
           <AssociationSet Name="useridddd_id_id_FK" Association="Self.useridddd_id_id_FK">
             <End Role="users" EntitySet="users" />
             <End Role="users_interests" EntitySet="users_interests" />
@@ -1460,7 +1436,6 @@
           <Property Name="cancel_date" Type="DateTime" Precision="3" />
           <Property Name="refund_paid" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="transaction_id" Type="Int32" />
-          <Property Name="effective_amount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="booking_date" Type="DateTime" Precision="3" />
           <Property Name="created" Type="DateTime" Precision="3" />
           <Property Name="pay_status" Type="Byte" />
@@ -1851,13 +1826,13 @@
           <Property Name="email_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="facebook_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="twitter_id" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="country_id" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="street_address" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="u_state" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="u_city" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="first_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="last_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="user" Relationship="Self.up_userID_id_FK" FromRole="user_personalInfor" ToRole="users" />
+          <Property Name="u_country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="user_profile">
           <Key>
@@ -1886,15 +1861,10 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ur_url" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="created_at" Type="DateTime" Precision="3" />
-          <Property Name="update_at" Type="DateTime" Precision="3" />
-          <Property Name="create_by" Type="Int32" />
-          <Property Name="update_by" Type="Int32" />
           <Property Name="ur_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="user" Relationship="Self.ur_create_by_id_FK" FromRole="user_role" ToRole="users" />
-          <NavigationProperty Name="user1" Relationship="Self.ur_update_by_id_FK" FromRole="user_role" ToRole="users" />
           <NavigationProperty Name="user_type_user_role" Relationship="Self.utur_user_role_id_id_FK" FromRole="user_role" ToRole="user_type_user_role" />
+          <NavigationProperty Name="user_role1" Relationship="PPL3Model.FK_user_role_user_role" FromRole="user_role" ToRole="user_role1" />
+          <NavigationProperty Name="user_role2" Relationship="PPL3Model.FK_user_role_user_role" FromRole="user_role1" ToRole="user_role" />
         </EntityType>
         <EntityType Name="user_type">
           <Key>
@@ -1952,8 +1922,6 @@
           <NavigationProperty Name="user_notification" Relationship="Self.unn_userid_id_FK" FromRole="users" ToRole="user_notification" />
           <NavigationProperty Name="user_personalInfor" Relationship="Self.up_userID_id_FK" FromRole="users" ToRole="user_personalInfor" />
           <NavigationProperty Name="user_profile" Relationship="Self.upp_userID_id_FK" FromRole="users" ToRole="user_profile" />
-          <NavigationProperty Name="user_role" Relationship="Self.ur_create_by_id_FK" FromRole="users" ToRole="user_role" />
-          <NavigationProperty Name="user_role1" Relationship="Self.ur_update_by_id_FK" FromRole="users" ToRole="user_role" />
           <NavigationProperty Name="user_type1" Relationship="Self.users_user_type_id_FK" FromRole="users" ToRole="user_type" />
           <NavigationProperty Name="users_languages" Relationship="Self.ul_userID_id_FK" FromRole="users" ToRole="users_languages" />
           <NavigationProperty Name="users_interests" Relationship="Self.useridddd_id_id_FK" FromRole="users" ToRole="users_interests" />
@@ -2589,32 +2557,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="ur_create_by_id_FK">
-          <End Role="users" Type="Self.user" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_role">
-              <PropertyRef Name="create_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="ur_update_by_id_FK">
-          <End Role="users" Type="Self.user" Multiplicity="0..1" />
-          <End Role="user_role" Type="Self.user_role" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="users">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="user_role">
-              <PropertyRef Name="update_by" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="utur_user_role_id_id_FK">
           <End Role="user_role" Type="Self.user_role" Multiplicity="0..1" />
           <End Role="user_type_user_role" Type="Self.user_type_user_role" Multiplicity="*" />
@@ -2910,14 +2852,6 @@
             <End Role="users" EntitySet="users" />
             <End Role="user_profile" EntitySet="user_profile" />
           </AssociationSet>
-          <AssociationSet Name="ur_create_by_id_FK" Association="Self.ur_create_by_id_FK">
-            <End Role="users" EntitySet="users" />
-            <End Role="user_role" EntitySet="user_role" />
-          </AssociationSet>
-          <AssociationSet Name="ur_update_by_id_FK" Association="Self.ur_update_by_id_FK">
-            <End Role="users" EntitySet="users" />
-            <End Role="user_role" EntitySet="user_role" />
-          </AssociationSet>
           <AssociationSet Name="utur_user_role_id_id_FK" Association="Self.utur_user_role_id_id_FK">
             <End Role="user_role" EntitySet="user_role" />
             <End Role="user_type_user_role" EntitySet="user_type_user_role" />
@@ -2938,7 +2872,23 @@
             <End Role="users" EntitySet="users" />
             <End Role="users_interests" EntitySet="users_interests" />
           </AssociationSet>
+          <AssociationSet Name="FK_user_role_user_role" Association="PPL3Model.FK_user_role_user_role">
+            <End Role="user_role" EntitySet="user_role" />
+            <End Role="user_role1" EntitySet="user_role" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_user_role_user_role">
+          <End Type="PPL3Model.user_role" Role="user_role" Multiplicity="1" />
+          <End Type="PPL3Model.user_role" Role="user_role1" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="user_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_role1">
+              <PropertyRef Name="id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2982,7 +2932,6 @@
                 <ScalarProperty Name="cancel_date" ColumnName="cancel_date" />
                 <ScalarProperty Name="refund_paid" ColumnName="refund_paid" />
                 <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
-                <ScalarProperty Name="effective_amount" ColumnName="effective_amount" />
                 <ScalarProperty Name="booking_date" ColumnName="booking_date" />
                 <ScalarProperty Name="created" ColumnName="created" />
                 <ScalarProperty Name="pay_status" ColumnName="pay_status" />
@@ -3331,13 +3280,13 @@
           <EntitySetMapping Name="user_personalInfor">
             <EntityTypeMapping TypeName="PPL3Model.user_personalInfor">
               <MappingFragment StoreEntitySet="user_personalInfor">
+                <ScalarProperty Name="u_country" ColumnName="u_country" />
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="legal_name" ColumnName="legal_name" />
                 <ScalarProperty Name="email_address" ColumnName="email_address" />
                 <ScalarProperty Name="facebook_id" ColumnName="facebook_id" />
                 <ScalarProperty Name="twitter_id" ColumnName="twitter_id" />
-                <ScalarProperty Name="country_id" ColumnName="country_id" />
                 <ScalarProperty Name="street_address" ColumnName="street_address" />
                 <ScalarProperty Name="u_state" ColumnName="u_state" />
                 <ScalarProperty Name="u_city" ColumnName="u_city" />
@@ -3372,11 +3321,6 @@
             <EntityTypeMapping TypeName="PPL3Model.user_role">
               <MappingFragment StoreEntitySet="user_role">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="ur_url" ColumnName="ur_url" />
-                <ScalarProperty Name="created_at" ColumnName="created_at" />
-                <ScalarProperty Name="update_at" ColumnName="update_at" />
-                <ScalarProperty Name="create_by" ColumnName="create_by" />
-                <ScalarProperty Name="update_by" ColumnName="update_by" />
                 <ScalarProperty Name="ur_description" ColumnName="ur_description" />
               </MappingFragment>
             </EntityTypeMapping>

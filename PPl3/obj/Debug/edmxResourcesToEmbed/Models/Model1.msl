@@ -38,7 +38,6 @@
           <ScalarProperty Name="cancel_date" ColumnName="cancel_date" />
           <ScalarProperty Name="refund_paid" ColumnName="refund_paid" />
           <ScalarProperty Name="transaction_id" ColumnName="transaction_id" />
-          <ScalarProperty Name="effective_amount" ColumnName="effective_amount" />
           <ScalarProperty Name="booking_date" ColumnName="booking_date" />
           <ScalarProperty Name="created" ColumnName="created" />
           <ScalarProperty Name="pay_status" ColumnName="pay_status" />
@@ -387,13 +386,13 @@
     <EntitySetMapping Name="user_personalInfor">
       <EntityTypeMapping TypeName="PPL3Model.user_personalInfor">
         <MappingFragment StoreEntitySet="user_personalInfor">
+          <ScalarProperty Name="u_country" ColumnName="u_country" />
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="userID" ColumnName="userID" />
           <ScalarProperty Name="legal_name" ColumnName="legal_name" />
           <ScalarProperty Name="email_address" ColumnName="email_address" />
           <ScalarProperty Name="facebook_id" ColumnName="facebook_id" />
           <ScalarProperty Name="twitter_id" ColumnName="twitter_id" />
-          <ScalarProperty Name="country_id" ColumnName="country_id" />
           <ScalarProperty Name="street_address" ColumnName="street_address" />
           <ScalarProperty Name="u_state" ColumnName="u_state" />
           <ScalarProperty Name="u_city" ColumnName="u_city" />
@@ -428,11 +427,6 @@
       <EntityTypeMapping TypeName="PPL3Model.user_role">
         <MappingFragment StoreEntitySet="user_role">
           <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="ur_url" ColumnName="ur_url" />
-          <ScalarProperty Name="created_at" ColumnName="created_at" />
-          <ScalarProperty Name="update_at" ColumnName="update_at" />
-          <ScalarProperty Name="create_by" ColumnName="create_by" />
-          <ScalarProperty Name="update_by" ColumnName="update_by" />
           <ScalarProperty Name="ur_description" ColumnName="ur_description" />
         </MappingFragment>
       </EntityTypeMapping>

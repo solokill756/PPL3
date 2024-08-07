@@ -24,6 +24,9 @@
     var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
 
     var discountsJson = serializer.Serialize(discount_values);
+
+    List<PPl3.Models.property_amenities> list_amenity = property.property_amenities.Where(item => item.property_id == property.id && item.amenity.category_id != 44 && item.amenity.category_id != 3).ToList();
+    
 }
 
 <!DOCTYPE html>
@@ -38,7 +41,7 @@
     <link href="~/ExtraFiles/assets/css/style_v1.css?v=4" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/seller_profile.css?v=2" rel="stylesheet" />
     <link href="~/ExtraFiles/assets/css/Sign_Log_v1.css?v=1" rel="stylesheet" />
-    <link href="~/ExtraFiles/assets/css/product.css?v=17" rel="stylesheet" />
+    <link href="~/ExtraFiles/assets/css/product.css?v=20" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -122,8 +125,8 @@
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
                                 <li><a href="/host/HomeHost/Listing">Manage listings</a></li>
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
-                                <li><a href="#">Gift Cards</a></li>
-                                <li><a href="#">Help Center</a></li>
+                             
+                                <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
                         </div>
@@ -192,7 +195,7 @@
                                 double sum = 0;
                                 foreach (var item in property.property_reviews)
                                 {
-                                    sum = sum + double.Parse(item.overall_rating);
+                                    sum = sum + (double)(item.overall_rating);
                                 }
                                 sum = sum / property.property_reviews.ToArray().Length;
                             }
@@ -275,16 +278,32 @@
                             <div class="gird wide">
                                 <div class="row no-gutter room_container">
                                     <div class="col l-12 m-12 c-12 room_tittle">
-                                        <h2>Where you'll sleep</h2>
-                                    </div>
-                                    @foreach (var item in property.property_amenities.Where(row => row.amenity.category_id == 38))
-                                    {
-                                        <div class="col l-4 m-8 c-12">
-                                            <div class="img_bedroom" style="background : url(@item.pa_description) top center /cover no-repeat">
-                                            </div>
-                                            <span>@item.amenity.amenity_name</span>
+                                        <h2>
+                                            User's photo of the hotel
                                            
-                                        </div>
+                                        </h2>
+                                    </div>
+                                    @{
+                                        count = 0;
+
+                                        PPl3.Models.property_amenities[] amenities = db.property_amenities.Where(item => item.amenity.category_id == 44 && property.id == item.property_id).ToArray();
+                                        Random random = new Random();
+                                        List<int> selected = new List<int>();
+                                    }
+                                    @while (count <= 1 && count < amenities.Length)
+                                    {
+                                        i = random.Next(amenities.Length);
+                                        if (!selected.Contains(i))
+                                        {
+                                            <div class="col l-4 m-8 c-12">
+                                                <div class="img_bedroom" style="background : url(@amenities[i].amenity.icon_image) top center /cover no-repeat">
+                                                </div>
+                                                <span>Overview</span>
+
+                                            </div>
+                                            selected.Add(i);
+                                            count++;
+                                        }
 
                                     }
                                 </div>
@@ -317,8 +336,9 @@
                                     <div class="col l-4 m-12 c-12 offer_list">
                                         @{
                                             count = 1;
+                                            
                                         }
-                                        @foreach (var item in property.property_amenities.ToList())
+                                        @foreach (var item in list_amenity)
                                         {
                                             if (count > 3 && count <= 6)
                                             {
@@ -331,7 +351,7 @@
                                         }
                                     </div>
                                     <div class="col l-12 m-12 c-12 show_all">
-                                        <button>Show all @property.property_amenities.ToArray().Length amenities</button>
+                                        <button>Show all @list_amenity.Count()  amenities</button>
                                     </div>
                                 </div>
                             </div>
@@ -390,7 +410,7 @@
                                     <h1>Add dates for prices</h1>
                                 </div>
                                 <div class="pay_body">
-                                    <div class="check_in_out">
+                                    <div class="check_in_out">  
                                         @if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                         {
                                             <div class="check_in check_item">
@@ -401,6 +421,7 @@
                                                 <button id="checkOutButton">Check Out</button>
                                                 <span id="checkOutDate">@db.bookings.Where(item => item.userId == p_user.id && item.property_id == property.id && item.id == booking_id).FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</span>
                                             </div>
+                                            
 
                                         }
                                         else
@@ -413,6 +434,7 @@
                                                 <button id="checkOutButton">Check Out</button>
                                                 <span id="checkOutDate">Add date</span>
                                             </div>
+                                           
                                         }
 
 
@@ -509,8 +531,20 @@
                                         }
                                     </div>
                                 </div>
-                                
-                                @if(property.availability_type == 0) { 
+                                <div class="hotel_discount">
+                                    @foreach (var item in property.properties_discounts)
+                                    {
+                                        <p>@item.discounts_value% @item.discount.descride</p>
+                                    }
+                                    <p>30% booking fee</p>
+                                </div>
+                                @if(p_user.id == property.userId) { 
+                                    <div class="pay_footer" style="display:none">
+                                        <button>Reservation Expires</button>
+                                    </div>
+                                    
+                                }
+                                else if(property.availability_type == 0) { 
                                     <div class="pay_footer disapearForever">
                                         <button>Reservation Expires</button>
                                     </div>
@@ -520,6 +554,12 @@
                                     <div class="pay_footer disapearForever">
                                         <button>Reservations Not Yet Open</button>
                                     </div>
+                                }
+                                else if(booking_id != -1 &&  db.transactions.Count(item => item.booking_id == booking_id) > 0) { 
+                                        <div class="pay_footer">
+                                            <button id="checkAvailabilityButton" onclick="cancelHotel('@booking_id')">Cancel Booking</button>
+                                        </div>
+                                
                                 }
                                 else if (db.bookings.Any(item => item.userId == p_user.id && item.property_id == property.id) && booking_id != -1)
                                 {
@@ -554,29 +594,57 @@
                                         {
                                             if (booking_id != -1)
                                             {
-                                                if (property.price != property.bookings.FirstOrDefault(item => item.id == booking_id).price_per_day)
+
+                                                PPl3.Models.booking find_booking = property.bookings.FirstOrDefault(item => item.id == booking_id);
+                                                TimeSpan difference = (TimeSpan)(find_booking.check_out_date - find_booking.check_in_date);
+
+                                                if (property.price != find_booking.price_per_day)
                                                 {
-                                                    <h2 class="_1l85cgq">$@property.price</h2>
-                                                    <h2 class="_1y74zjx money_hotel">$@property.bookings.FirstOrDefault(item => item.id == booking_id).price_per_day</h2>
+                                                    <h2 class="_1l85cgq">$@(property.price * (decimal)difference.TotalDays)</h2>
+                                                    <h2 class="_1y74zjx money_hotel">$@find_booking.amount_paid</h2>
                                                 }
                                                 else
                                                 {
-                                                    <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                                    <h2 class="_1y74zjx money_hotel">$@(property.price * (decimal)difference.TotalDays)</h2>
                                                 }
-                                                
+
                                             }
-                                            else { 
-                                                <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                            else
+                                            {
+                                                <h2 class="_1y74zjx money_hotel">$@property.price</h2>
+                                                <p>/ 1 Night</p>
                                             }
-                                            
+
                                         }
                                         else
                                         {
-                                            <h2 class="_1l85cgq">$@property.price</h2>
-                                            <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                            if (booking_id != -1)
+                                            {
+
+                                                PPl3.Models.booking find_booking = property.bookings.FirstOrDefault(item => item.id == booking_id);
+                                                TimeSpan difference = (TimeSpan)(find_booking.check_out_date - find_booking.check_in_date);
+
+                                                if (property.price != find_booking.price_per_day)
+                                                {
+                                                    <h2 class="_1l85cgq">$@(property.price * (decimal)difference.TotalDays)</h2>
+                                                    <h2 class="_1y74zjx money_hotel">$@find_booking.amount_paid</h2>
+                                                }
+                                                else
+                                                {
+                                                    <h2 class="_1y74zjx money_hotel">$@(property.price * (decimal)difference.TotalDays)</h2>
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <h2 class="_1l85cgq">$@property.price</h2>
+                                                <h2 class="_1y74zjx money_hotel">$@price_hotel</h2>
+                                                <p>/ 1 Night</p>
+                                            }
+
                                         }
 
-                                        <p>Night</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -590,9 +658,12 @@
                                 <div class="col l-12 m-12 c-12 review_yet">
                                     <h2><i class="fa-regular fa-solid fa-star"></i> @sum · @property.property_reviews.ToArray().Length reviews</h2>
                                 </div>
+                                @{ 
+                                    count = 0;
+                                }
                                 @foreach (var item in property.property_reviews.ToList())
                                 {
-                                    if (item.pr_status == 1)
+                                    if (item.pr_status == 1 && count <= 5)
                                     {
                                         <div class="comment_item_detail comment_user_@item.review_by_user">
                                             <div class="header_comment">
@@ -602,9 +673,9 @@
                                                     <span>@item.user.account_name</span>
                                                     @{
 
-                                                        string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                        string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                        string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                        string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
+                                                        string countryName = item.user.user_personalInfor.FirstOrDefault().u_country ?? "???";
+                                                        string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
                                                     }
                                                     <p>@uCity ,  @uState , @countryName</p>
                                                 </div>
@@ -612,27 +683,52 @@
                                             <div class="time_comment">
                                                 <div class="star_comment">
                                                     @{
-                                                        for (int pos = 1; pos <= (int)double.Parse(item.overall_rating); ++pos)
+                                                        for (int pos = 1; pos <= (int)(item.overall_rating); ++pos)
                                                         {
 
                                                             <i class="fa-regular fa-solid fa-star"></i>
                                                         }
-                                                        for (int pos = (int)double.Parse(item.overall_rating) + 1; pos <= 5; ++pos)
+                                                        for (int pos = (int)(item.overall_rating) + 1; pos <= 5; ++pos)
                                                         {
                                                             <i class="far fa-star gray-star"></i>
                                                         }
                                                     }
 
                                                 </div>
-                                                <span>2 weeks ago</span>
-                                                <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                                @{
+                                                    count = 0;
+
+                                                    if (DateTime.Now.ToString("yyyy") != item.created.Value.ToString("yyyy"))
+                                                    {
+
+                                                        count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(item.created.Value.ToString("yyyy"));
+                                                        <span>@count Years ago</span>
+
+                                                    }
+                                                    else if (DateTime.Now.ToString("MM") != item.created.Value.ToString("MM"))
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(item.created.Value.ToString("MM"));
+                                                        <span>@count Months ago</span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(item.created.Value.ToString("dd"));
+                                                        <span>@count Days ago</span>
+
+                                                    }
+                                                }
+                                                <p>Stay Dates : @item.transaction.bookings.FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.bookings.FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                             </div>
 
                                             <div class="body_comment_detail">
                                                 <p>@item.comment</p>
                                             </div>
                                         </div>
-
+                                        count++;
+                                    }
+                                    else if(count > 5) { 
+                                        break;
                                     }
 
                                 }
@@ -668,14 +764,14 @@
                                                     </div>
                                                     <div class="infor_basics_item">
                                                         @{
-                                                            sum = 0;
+                                                            double sum1 = 0;
                                                             foreach (var item in property.user.host_reviews.ToList())
                                                             {
-                                                                sum = sum + double.Parse(item.rating);
+                                                                sum1 = sum1 + double.Parse(item.rating);
                                                             }
-                                                            sum = sum / property.user.host_reviews.ToArray().Length;
+                                                            sum1 = sum1 / property.user.host_reviews.ToArray().Length;
                                                         }
-                                                        <span>@sum<i class="fa-solid fa-star"></i></span>
+                                                        <span>@sum1<i class="fa-solid fa-star"></i></span>
                                                         <p>Rating</p>
                                                     </div>
                                                     <div class="infor_basic">
@@ -863,14 +959,11 @@
                                 <p>- BedRoom : @property.bedroom_count</p>
                                 <p>- Bed : @property.bed_count</p>
                                 <p>- Accomodates : @property.accomodates_count guests</p>
-                                <p>- Max_pet : @property.max_pets</p>
+                               
                                 <p>- Prices : $@property.price</p>
                                 <p>- Dates Bookings : @property.startDate.Value.ToString("dd/MM/yyyy") - @property.end_date.Value.ToString("dd/MM/yyyy") </p>
                             </div>
-                            <div class="note">
-                                <span>NOTE:</span>
-                                <p>Minimum number of days for hotel rental is @property.minimum_stay days</p>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -885,25 +978,19 @@
                             <h1>What this place offers</h1>
                         </div>
                         <div class="offer_box">
-                            <div class="scenic_view">
-                                <h2>Scenic views</h2>
-                                <ul>
-                                    <li>Mountain view</li>
-                                </ul>
-                            </div>
                             @foreach (var item in db.categories.ToList())
                             {
-                                if (property.property_amenities.Any(row => (row.amenity.category_id == item.id) && (item.id != 1 && item.id != 3)))
+                                if (list_amenity.Any(row => (row.amenity.category_id == item.id)) && item.id != 3 && item.id != 44)
                                 {
                                     <div class="BathRoom_offer @item.id">
                                         <h2>@item.category_name</h2>
                                         <ul class="display_anitimy">
 
-                                            @foreach (var antime in property.property_amenities.Where(row => (row.amenity.category_id == item.id)).ToList())
+                                            @foreach (var antime in list_amenity.Where(row => (row.amenity.category_id == item.id)).ToList())
                                             {
 
                                                 <li>
-                                                    <i style="background : url(@antime.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i> @antime.amenity.amenity_name
+                                                    <i style="background : url(@antime.amenity.icon_image) top center /cover no-repeat" class="icon_style"></i>@antime.amenity.amenity_name
                                                 </li>
 
                                             }
@@ -924,7 +1011,8 @@
                 <div class="row no-gutter">
                     <div class="col l-o-2 l-8 m-o-1 m-10 c-o-1 c-10 comment_detail_container">
                         <div class="comment_detail_tittle">
-                            <h2><i class="fa-regular fa-solid fa-star"></i> 4.84 · 55 reviews</h2>
+                           
+                            <h2><i class="fa-regular fa-solid fa-star"></i> @sum1 · @db.property_reviews.ToArray().Length reviews</h2>
                         </div>
                         <div class="comment_box">
                             @foreach (var item in property.property_reviews.ToList())
@@ -938,9 +1026,9 @@
                                                 <span>@item.user.account_name</span>
                                                 @{
 
-                                                    string uState = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().state_name ?? "???";
-                                                    string countryName = item.user.user_personalInfor.FirstOrDefault()?.country.ct_name ?? "???";
-                                                    string uCity = item.user.user_personalInfor.FirstOrDefault()?.country.states.FirstOrDefault().cities.FirstOrDefault().city_name ?? "???";
+                                                    string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
+                                                    string countryName = item.user.user_personalInfor.FirstOrDefault().u_country ?? "???";
+                                                    string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
 
                                                 }
                                                 <p>@uCity ,  @uState , @countryName</p>
@@ -949,20 +1037,43 @@
                                         <div class="time_comment">
                                             <div class="star_comment">
                                                 @{
-                                                    for (int pos = 1; pos <= (int)double.Parse(item.overall_rating); ++pos)
+                                                    for (int pos = 1; pos <= (int)item.overall_rating; ++pos)
                                                     {
 
                                                         <i class="fa-regular fa-solid fa-star"></i>
                                                     }
-                                                    for (int pos = (int)double.Parse(item.overall_rating) + 1; pos <= 5; ++pos)
+                                                    for (int pos = (int)item.overall_rating + 1; pos <= 5; ++pos)
                                                     {
                                                         <i class="far fa-star gray-star"></i>
                                                     }
                                                 }
 
                                             </div>
-                                            <span>2 weeks ago</span>
-                                            <p>Stay Dates : @item.transaction.booking.check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.booking.check_out_date.Value.ToString("dd/MM/yyyy")</p>
+                                            @{
+                                                count = 0;
+
+                                                if (DateTime.Now.ToString("yyyy") != item.created.Value.ToString("yyyy"))
+                                                {
+
+                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(item.created.Value.ToString("yyyy"));
+                                                    <span>@count Years ago</span>
+                                                    
+                                                }
+                                                else if (DateTime.Now.ToString("MM") != item.created.Value.ToString("MM"))
+                                                {
+                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(item.created.Value.ToString("MM"));
+                                                    <span>@count Months ago</span>
+                                                    
+                                                }
+                                                else
+                                                {
+                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(item.created.Value.ToString("dd"));
+                                                    <span>@count Days ago</span>
+                                                  
+                                                }
+                                            }
+                                            
+                                            <p>Stay Dates : @item.transaction.bookings.FirstOrDefault().check_in_date.Value.ToString("dd/MM/yyyy") - @item.transaction.bookings.FirstOrDefault().check_out_date.Value.ToString("dd/MM/yyyy")</p>
                                         </div>
 
                                         <div class="body_comment_detail">
@@ -981,7 +1092,7 @@
         </div>
     </div>
     <script src="~/ExtraFiles/JS/showAll.js?v=1"></script>
-    <script src="~/ExtraFiles/JS/product.js?v=8"></script>
+    <script src="~/ExtraFiles/JS/product.js?v=11"></script>
     @*<script src="~/ExtraFiles/JS/calendar.js?v=2"></script>*@
 
 </body>
@@ -990,14 +1101,15 @@
 <script src="~/Scripts/jquery-3.7.1.js"></script>
 <script src="~/Scripts/jquery-3.7.1.min.js"></script>
 <script>
-    var priceHotel = $('.money_hotel').text();
-    priceHotel = priceHotel.substring(1, priceHotel.length);
+
     var discounts = JSON.parse('@Html.Raw(discountsJson)');
     var propertyPrice = @Json.Encode(property.price);
     var booking_count = @Json.Encode(property.bookings.ToArray().Length);
     console.log(discounts);
-    console.log(priceHotel);
-    function booking(hotelId , hotelGuest) {
+    /*console.log(priceHotel);*/
+    function booking(hotelId, hotelGuest) {
+        var priceHotel = $('.money_hotel').text();
+        priceHotel = priceHotel.substring(1, priceHotel.length);
         $(document).ready(function () {
             function isValidDate(dateString) {
                 var regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -1074,7 +1186,9 @@
     }
 
 
-    function FixBookingHotel(bookingId, id , hotelGuest) {
+    function FixBookingHotel(bookingId, id, hotelGuest) {
+        var priceHotel = $('.money_hotel').text();
+        priceHotel = priceHotel.substring(1, priceHotel.length);
           $(document).ready(function () {
         function isValidDate(dateString) {
             var regEx = /^\d{4}-\d{2}-\d{2}$/;
@@ -1149,6 +1263,12 @@
         }
           })
 
+    }
+
+    function cancelHotel(booking_id) {
+        if (confirm('If you cancel this trip, you will only be compensated 30% of the amount paid! Are you sure you want to cancel?')) {
+            window.location.href = `/user/homeuser/cancelHotel?booking_id=${booking_id}`;
+        }
     }
 </script>
 
@@ -1230,18 +1350,18 @@
                                     checkIn.html(`0${day.text()}/0${month + 1}/${year}`);
                                 }
                             }
-                            let daysBeforeCheckIn = calendar.find('.calendar-days div');
-                            for (let j = 0; j < i; j++) {
-                                daysBeforeCheckIn.eq(j).addClass('before-check-in');
-                            }
-                            for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
-                                daysBeforeCheckIn.eq(j).addClass('before-check-in');
-                            }
+                            //let daysBeforeCheckIn = calendar.find('.calendar-days div');
+                            //for (let j = 0; j < i; j++) {
+                            //    daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                            //}
+                            //for (let j = i + 10; j <= days_of_month[month] + first_day.getDay() - 1; j++) {
+                            //    daysBeforeCheckIn.eq(j).addClass('before-check-in');
+                            //}
                         } else if (currentDay == 2) {
                             dayCheckOut = parseInt(day.text());
                             monthCheckOut = month + 1;
                             yearCheckOut = year;
-                            if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && (dayCheckOut - dayCheckIn) <= 10)) {
+                            if ((yearCheckIn <= yearCheckOut && monthCheckIn < monthCheckOut) || (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut && dayCheckIn < dayCheckOut) && (yearCheckIn <= yearCheckOut && monthCheckIn == monthCheckOut)) {
                                 day.addClass('curr-date');
                                 if (month + 1 >= 10) {
                                     if (day.text() >= 10) {

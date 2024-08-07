@@ -1,0 +1,378 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model PPl3.Models.transaction
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <meta name="x-apple-disable-message-reformatting">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="telephone=no" name="format-detection">
+    <link rel="stylesheet" type="text/css" href="~/ExtraFiles/assets/css/invoice.css">
+    <title>New Template</title>
+
+</head>
+<body class="body" style="width:100%;height:100%;padding:0;Margin:0">
+    <div dir="ltr" class="es-wrapper-color" lang="en" style="background-color:#F6F6F6">
+        <!--[if gte mso 9]>
+            <v:background xmlns:v="urn:schemas-microsoft-com:vml" fill="t">
+                <v:fill type="tile" color="#f6f6f6"></v:fill>
+            </v:background>
+        <![endif]-->
+        <table class="es-wrapper" width="100%" cellspacing="0" cellpadding="0" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;padding:0;Margin:0;width:100%;height:100%;background-repeat:repeat;background-position:center top;background-color:#F6F6F6">
+            <tr>
+                <td valign="top" style="padding:0;Margin:0">
+                    <table class="es-footer" cellspacing="0" cellpadding="0" align="center" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;width:100%;table-layout:fixed !important;background-color:transparent;background-repeat:repeat;background-position:center top">
+                        <tr>
+                            <td align="center" style="padding:0;Margin:0">
+                                <table class="es-footer-body" cellspacing="0" cellpadding="0" bgcolor="#ffffff" align="center" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;background-color:#FFFFFF;width:600px">
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0;padding-top:20px;padding-right:20px;padding-left:20px">
+                                            <!--[if mso]><table style="width:560px" cellpadding="0" cellspacing="0"><tr><td style="width:367px" valign="top"><![endif]-->
+                                            <table cellpadding="0" cellspacing="0" class="es-left" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td class="es-m-p10b" align="left" style="padding:0;Margin:0;width:367px">
+                                                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                                            <tr>
+                                                                @{ 
+                                                                    string roomtype = "";
+                                                                    string hotelname = "";
+                                                                    roomtype = Model.property.property_type.pt_name;
+                                                                    hotelname = Model.property.p_name;
+                                                                }
+                                                                <td align="left" class="es-text-2610" style="padding:0;Margin:0"><h1 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:25px;font-style:normal;font-weight:normal;line-height:38px !important;color:#e74b47"><strong>Booking Confirmation </strong></h1><h1 style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:25px;font-style:normal;font-weight:normal;line-height:38px !important;color:#e74b47"><strong>@roomtype</strong> - <strong>@hotelname</strong><br></h1></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:20px"></td><td style="width:173px" valign="top"><![endif]-->
+                                            <table cellpadding="0" cellspacing="0" class="es-right" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:173px">
+                                                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                                            <tr>
+                                                                <td align="center" style="padding:0;Margin:0;font-size:0px"><a target="_blank" href="http://hosithao-001-site1.btempurl.com/home/index" style="mso-line-height-rule:exactly;text-decoration:underline;color:#2CB543;font-size:14px"><img class="img-6577" src="https://ehlenjx.stripocdn.email/content/guids/CABINET_261f9ca65b507b1895320f679dbcf657870c470f2f23aea88f765d1ed7bbda1c/images/screenshot_20240509_175544.png" alt="" style="display:block;font-size:14px;border:0;outline:none;text-decoration:none" width="173"></a></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="es-m-p0" align="left" style="padding:20px;Margin:0">
+                                            <table cellpadding="0" cellspacing="0" width="100%" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                                <tr>
+                                                    <td class="es-m-p35b" align="center" valign="top" style="padding:0;Margin:0;padding-top:20px;padding-bottom:30px;width:560px">
+                                                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                                            <tr>
+                                                                <td align="center" class="es-text-2889" style="padding:0;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:38px;letter-spacing:0;color:#333333;font-size:25px"><strong>Payment Receipt</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>Trans. Date, Time</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>@Model.transfer_on.Value.ToString("dd/MM/yyyy") @Model.transfer_on.Value.ToString("HH:mm")</em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>Transaction ID</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>@Model.id</em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>Transaction location</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>Website TNT</em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>Transaction summary</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>Payment Confirmation</em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>Passport Code</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                @if (Model?.user?.passport_code != null)
+                                                                {
+                                                                    
+                                                                    <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@Model.user.passport_code<em></em></p></td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>No passport code<em></em></p></td>
+                                                                    @*<td style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>No passport code<em></em></td>*@
+                                                                }
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>-Transaction amount</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@Model.amount$<em></em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>-Transaction fee</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                @{ 
+                                                                    double site_fees = 0;
+                                                                    if(Model.site_fees != null)
+                                                                    {
+                                                                        site_fees = (double)Model.site_fees;
+                                                                    }
+                                                                }
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>@site_fees$</em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>-Days of stay</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                               
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em>@Model.bookings.First().check_in_date.Value.ToString("dd/MM/yyyy") - @Model.bookings.First().check_out_date.Value.ToString("dd/M/yyyy")</em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:0;Margin:0">
+                                            <!--[if mso]><table style="width:600px" cellpadding="0"
+                                            cellspacing="0"><tr><td style="width:298px" valign="top"><![endif]-->
+                                            <table class="es-left" cellspacing="0" cellpadding="0" align="left" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:left">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:298px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><strong>-Payment amount</strong></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td><td style="width:302px" valign="top"><![endif]-->
+                                            <table class="es-right" cellspacing="0" cellpadding="0" align="right" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;float:right">
+                                                <tr>
+                                                    <td align="left" style="padding:0;Margin:0;width:302px">
+                                                        <table width="100%" cellspacing="0" cellpadding="0" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px;border-left:1px solid #333333;border-right:1px solid #333333;border-top:1px solid #333333;border-bottom:1px solid #333333" role="presentation">
+                                                            <tr>
+                                                                @{ 
+                                                                    double tong = (double)Model.amount + site_fees;
+                                                                }
+                                                                <td align="left" style="padding:5px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px"><em></em>@tong$<em></em></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table><!--[if mso]></td></tr></table><![endif]-->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left" style="padding:20px;Margin:0">
+                                            <table cellpadding="0" cellspacing="0" width="100%" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                                <tr>
+                                                    <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
+                                                        <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
+                                                            <tr>
+                                                                <td align="center" class="es-text-2630" style="padding:10px;Margin:0"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:30px;letter-spacing:0;color:#e74b47;font-size:20px"><i>Thank you for using our service!</i></p></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

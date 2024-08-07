@@ -9,6 +9,7 @@
     int pos = 0;
     string tmpBD;
     PPl3.Models.user_profile profile = new PPl3.Models.user_profile();
+    profile = p_user.user_profile.FirstOrDefault();
     
 }
 
@@ -17,7 +18,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="~/ExtraFiles/assets/css/editProfile.css?v=3">
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/editProfile.css?v=4">
     <link rel="stylesheet" href="~/ExtraFiles/assets/css/gird.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -138,7 +139,7 @@
                             <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
                             @{
                                 int countNoti = 0;
-                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 1).ToList())
+                                foreach (var item in db.user_notification.Where(tmp => tmp.userid == p_user.id && tmp.un_status == 0).ToList())
                                 {
                                     countNoti++;
                                 }
@@ -168,7 +169,7 @@
                             else
                             {
 
-                                <span class="notification_badge" style="background-color:transparent"</span>
+                                <span class="notification_badge" style="background-color:transparent"></span>
                             }
                         </button>
                             }
@@ -180,11 +181,10 @@
                                 <li class=""><a href="/user/homeuser/notification">Notifications</a></li>
                                 <li class=""><a href="/user/homeuser/trip">Trip</a></li>
                                 <li class=""><a href="/user/homeuser/wishlist">Wishlist</a></li>
-                                <li><a href="Content">Manage listings</a></li>
+                               
                                 <li><a href="/user/homeuser/profile?id=@p_user.id">Account</a></li>
                                 <li><a href="/host/homehost/listing">Manage listings</a></li>
-                                <li><a href="/user/homeuser/profile">Account</a></li>
-                                <li><a href="#">Help Center</a></li>
+                                <li><a href="mailto:tnthotel2004@gmail.com">Help Center</a></li>
                                 <li class="user_log_out"><a href="/user/homeuser/Logout">Log out</a></li>
                             </ul>
                         </div>
@@ -399,12 +399,12 @@
                                     </div>
                                 </div>
                                 <div class="container">
-                                    @foreach (var item in p_user.bookings.ToList())
+                                    @foreach (var item in p_user.transactions.GroupBy(t => t.property_id).Select(group => group.First()).ToList())
                                     {
                                         <div class="place"
                                              style="background : url(@item.property.property_images.FirstOrDefault().pi_image) top center /cover no-repeat"
                                              onclick="window.location.href = '/user/homeuser/detail?id=@item.property_id'">
-                                            <p>@item.booking_date.Value.ToString("yyyy")</p>
+                                            <p>@item.bookings.FirstOrDefault().booking_date.Value.ToString("yyyy")</p>
                                         </div>
                                     }
 

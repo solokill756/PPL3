@@ -674,7 +674,7 @@
                                                     @{
 
                                                         string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
-                                                        string countryName = item.user.user_personalInfor.FirstOrDefault().country ?? "???";
+                                                        string countryName = item.user.user_personalInfor.FirstOrDefault().u_country ?? "???";
                                                         string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
                                                     }
                                                     <p>@uCity ,  @uState , @countryName</p>
@@ -1012,7 +1012,7 @@
                     <div class="col l-o-2 l-8 m-o-1 m-10 c-o-1 c-10 comment_detail_container">
                         <div class="comment_detail_tittle">
                            
-                            <h2><i class="fa-regular fa-solid fa-star"></i> @sum · @db.property_reviews.ToArray().Length reviews</h2>
+                            <h2><i class="fa-regular fa-solid fa-star"></i> @sum1 · @db.property_reviews.ToArray().Length reviews</h2>
                         </div>
                         <div class="comment_box">
                             @foreach (var item in property.property_reviews.ToList())
@@ -1027,7 +1027,7 @@
                                                 @{
 
                                                     string uState = item.user.user_personalInfor.FirstOrDefault().u_state ?? "???";
-                                                    string countryName = item.user.user_personalInfor.FirstOrDefault().country ?? "???";
+                                                    string countryName = item.user.user_personalInfor.FirstOrDefault().u_country ?? "???";
                                                     string uCity = item.user.user_personalInfor.FirstOrDefault().u_city ?? "???";
 
                                                 }

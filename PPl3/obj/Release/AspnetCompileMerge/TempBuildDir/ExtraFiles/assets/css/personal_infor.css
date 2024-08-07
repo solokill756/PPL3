@@ -141,6 +141,42 @@ html {
     margin-top: 20px;
 }
 
+
+/* css in the .address */
+
+.btn_change{
+    text-align: center;
+    margin-bottom: 20px;
+    transform: translateX(-20px);
+}
+
+.btn_change button{
+    font-size: 18px;
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    color: #8a8a8a;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn_change button>i{
+    margin-right: 10px;
+}
+
+.btn_change button:hover{
+    color: #fff;
+    background-color: #000;
+}
+
+.btn_clicked{
+    color: #fff !important;
+    border: 1px solid #000 !important;
+    background-color: #000 !important;
+}
+
+
 .two_input {
     display: flex;
     margin-bottom: 15px;
@@ -228,4 +264,17 @@ html {
     display: none;
     color: #ff385c;
     margin-bottom: 10px;
+}
+
+@media screen and (max-width: 46.1875em){
+    .nav_languages{
+        display: none !important;
+    }
+    .img_cccd button {
+        width: 100%;
+        height: 200px;
+    }
+    #footer{
+        text-align: center;
+    }
 }

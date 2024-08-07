@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="https://seeklogo.com/images/A/airbnb-logo-1D03C48906-seeklogo.com.png">
+    <link rel="stylesheet" href="./assets/css/gird.css">
+    <link rel="stylesheet" href="./assets/css/notification.css">
+    <link rel="stylesheet" href="./assets/css/headerGuest.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Notification</title>
+</head>
+<body>
+    <div class="main">
+        <div id="header">
+            <div class="gird wide">
+                <div class="row no-gutter nav">
+                    <div class="nav_logo">
+                        <div class="nav_logo">
+                            <a href="index.html" class="logo_link">
+                                <i class="fa-brands fa-think-peaks" style="color: #ff385c;"></i>
+                                <h1>T|.|N|.|T</h1>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="nav_menu">
+                        <div class="nav_languages">
+                            <a href="">Switch To Hosting</a>
+                            <button><i class="fa-solid fa-globe"></i></button>
+                        </div>
+                        <div class="nav_login">
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-bars"></i></button>
+                            <button class="js_menuUser_btn"><i class="fa-solid fa-user"></i></i></button>
+                        </div>
+                    
+                        <div class="sub_nav sub_nav_user js_sub_nav_user">
+                            <ul class="menu_user js_menu_user">
+                                <li class=""><button>Messages</button></li>
+                                <li class=""><button>Notifications</button></li>
+                                <li class=""><button>Trips</button></li>
+                                <li class=""><button>Wishlist</button></li>
+                                <li><a href="#">Manage listings</a></li>
+                                <li><a href="#">Account</a></li>
+                                <li><a href="#">Gift Cards</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Log out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="gird wide">
+                <div class="row no-gutter">
+                    <div class="container">
+                        <div class="col l-8 m-10 c-12">
+                            <ul class="notifications_list">
+                                <div class="tittle">
+                                    <h1>Notification</h1>
+                                </div>
+                                <li>
+                                    <div class="logo">
+                                        <i class="fa-brands fa-think-peaks"></i>
+                                    </div>
+                                    <div class="notification">
+                                        <p>Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</p>
+                                        <div class="time">
+                                            <span>May 6, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="remove">
+                                        <button><i class="fa-solid fa-close"></i></button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="logo">
+                                        <i class="fa-brands fa-think-peaks"></i>
+                                    </div>
+                                    <div class="notification">
+                                        <p>Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</p>
+                                        <div class="time">
+                                            <span>May 6, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="remove">
+                                        <button><i class="fa-solid fa-close"></i></button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="logo">
+                                        <i class="fa-brands fa-think-peaks"></i>
+                                    </div>
+                                    <div class="notification">
+                                        <p>Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</p>
+                                        <div class="time">
+                                            <span>May 6, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="remove">
+                                        <button><i class="fa-solid fa-close"></i></button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="logo">
+                                        <i class="fa-brands fa-think-peaks"></i>
+                                    </div>
+                                    <div class="notification">
+                                        <p>Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</p>
+                                        <div class="time">
+                                            <span>May 6, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="remove">
+                                        <button><i class="fa-solid fa-close"></i></button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="logo">
+                                        <i class="fa-brands fa-think-peaks"></i>
+                                    </div>
+                                    <div class="notification">
+                                        <p>Please confirm your email address by accessing the link we sent you via email. If you do not receive the email, please re-register your email account or change another email. Sincerely thank.</p>
+                                        <div class="time">
+                                            <span>May 6, 2024</span>
+                                        </div>
+                                    </div>
+                                    <div class="remove">
+                                        <button><i class="fa-solid fa-close"></i></button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./JS/menuGuest.js"></script>
+    <script>
+        const removeBtns = document.querySelectorAll('.remove button')
+        removeBtns.forEach((btn)=>{
+            btn.addEventListener('click', ()=>{
+                var remove = btn.parentNode;
+                var notification = remove.parentNode;
+                notification.style.display = 'none'
+            })
+        })
+    </script>
+</body>
+</html>

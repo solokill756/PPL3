@@ -373,3 +373,23 @@ html {
     color: #000;
 }
 }
+
+@media screen and (max-width:63.9375em) {
+    .search input{
+        width: 345px;
+    }
+}
+@media screen and (max-width: 46.1875em) {
+    .layout_btn {
+        display: none;
+    }
+    .search input {
+        width: 195px;
+    }
+}
+
+@media screen and (max-width: 1366px) and (min-width: 1024px) {
+    .search input {
+        width: 345px;
+    }
+}

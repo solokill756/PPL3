@@ -3,16 +3,2624 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
+@{
+    PPl3.Models.PPL3Entities db = new PPl3.Models.PPL3Entities();
+    List<PPl3.Models.browser_becomes_host> host_browsing_list = db.browser_becomes_host.ToList();
+    List<PPl3.Models.Browse_hotel_listings> property_browing_list = db.Browse_hotel_listings.ToList();
+    // Đảm bảo rằng tổng số lượng người dùng không phải là 0 trước khi thực hiện phép chia
+    int totalUsers = db.users.Count();
+    int totalProperties = db.properties.Count();
 
-<html>
+    decimal host_rate = 0;
+    decimal hotel_rate = 0;
+
+    if (totalUsers > 0)
+    {
+        host_rate = (decimal)db.users.Where(item => item.user_type == 3).Count() / totalUsers * 100;
+    }
+
+    if (totalProperties > 0)
+    {
+        hotel_rate = (decimal)db.properties.Where(item => item.p_status == 1).Count() / totalProperties * 100;
+    }
+    List<PPl3.Models.user> lstUser = db.users.Where(item => item.user_type != 1 && item.is_active == 1).ToList();
+    List<PPl3.Models.user> lstHost = db.users.Where(item => item.user_type == 3 && item.is_active == 1).ToList();
+    List<PPl3.Models.property> lstHotel = db.properties.Where(item => item.p_status == 1).ToList();
+
+    double sum_revenue = 0;
+    double sum_star = 0;
+    List<int> selected_year = new List<int>();
+
+}
+
+<!DOCTYPE html>
+<!-- Created by CodingLab |www.youtube.com/CodingLabYT-->
+<html lang="en" dir="ltr">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <meta charset="UTF-8">
+    <title> Responsive Sidebar Menu  | CodingLab </title>
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZf3I4TkruOraYvnm7WbRSU3qYV2Lkj3_0w3wfgQrApnsvo-yspjafW8P57Demy0zgf6U&usqp=CAU">
+    <link href="~/ExtraFiles/assets/css/admin.css?v=9" rel="stylesheet" />
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="~/ExtraFiles/assets/css/profile.css?v=5">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style id="img-style">
+    </style>
+    <style>
+
+
+        :root {
+            --gray-color: hsla(0, 0%, 80%, 1);
+            --black-color: #000000;
+        }
+
+        .mod {
+            DISPLAY: FLEX;
+            position: fixed;
+            top: 0;
+            LEFT: 0;
+            RIGHT: 0;
+            BOTTOM: 0;
+            /* height: 100vh; */
+            /* width: 100vw; */
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 9999;
+        }
+
+        .mod__inner {
+            width: 70%;
+            height: 540px;
+            position: relative;
+            /* top: 12%; */
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .mod__header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--black-color);
+            color: white;
+        }
+
+        .mod__body {
+            padding: 15px;
+            overflow-y: scroll;
+            max-height: 650px;
+        }
+
+            .mod__body h2 {
+                color: var(--black-color);
+            }
+
+        .hide {
+            display: none;
+        }
+
+        .check-item {
+            list-style: none;
+            padding: 5px;
+        }
+
+            .check-item input[type="checkbox"] {
+                display: inline-block;
+                margin-right: 10px;
+            }
+
+            .check-item label {
+                display: inline-block;
+                vertical-align: middle;
+            }
+    </style>
 </head>
 <body>
-    <div> 
-        <h1>Đây là trang của Admin</h1>
+    <div class="sidebar">
+        <div class="logo-details">
+            <i class="fa-brands fa-think-peaks icon"></i>
+            <div class="logo_name">T|.|N|.|T</div>
+            <i class='bx bx-menu' id="btn"></i>
+        </div>
+        <ul class="nav-list" style="">
+            <li>
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Search...">
+                <span class="tooltip">Search</span>
+            </li>
+            <li>
+                <a href="#home">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="links_name">Home</span>
+                </a>
+                <span class="tooltip">Home</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-user'></i>
+                    <span class="links_name">User</span>
+                </a>
+                <span class="tooltip">User</span>
+            </li>
+            <li>
+                @if(@db.user_notification.Where(item => item.userid == 20 && item.un_status == 0).ToArray().Length > 0) { 
+                    <span class="position-absolute top-0 start-50  badge rounded-pill bg-danger notification_bell">
+                        @db.user_notification.Where(item => item.userid == 20 && item.un_status == 0).ToArray().Length
+                    </span>
+                } 
+                else { 
+                    <span class="position-absolute top-0 start-50  badge rounded-pill bg-danger notification_bell"></span>
+                }
+                <a onclick="readNotification()">
+
+                    <i class='bx bx-bell'></i>
+
+                    <span class="links_name">Notification</span>
+                </a>
+                <span class="tooltip">Notification</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="links_name">Analytics</span>
+                </a>
+                <span class="tooltip">Analytics</span>
+            </li>
+            <li>
+
+                <a href="#centorship">
+                    <i class='bx bx-folder'></i>
+                    <span class="links_name">Centorship</span>
+                </a>
+                <span class="tooltip">Centorship</span>
+            </li>
+
+            <li class="profile">
+                <div class="profile-details">
+                    <img src="https://banner2.cleanpng.com/20190716/gxo/kisspng-user-profile-computer-icons-system-administrator-i-5d2dbe8f6be133.6663683015632789914419.jpg" alt="profileImg">
+                    <div class="name_job">
+                        <div class="name">Admin</div>
+                        <div class="job">Web Management</div>
+                    </div>
+                </div>
+                <i class='bx bx-log-out' id="log_out" onclick="window.location.href='/admin/homeadmin/logout'"></i>
+            </li>
+        </ul>
     </div>
+    <section class="home-section">
+        @if (ViewBag.CheckComfirm == 1)
+        {
+            <div id="centorship" class="active">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Dashboard</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text">
+                    <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
+                    <button onclick="AcceptAll(1)">Accept The Selected</button>
+                    <button onclick="RefuseAll(1)">Refuse The Selected</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_owner">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in host_browsing_list)
+                                {
+                                    <tr class="user_@item.user_id">
+                                        <td>
+                                            <button class="@item.user_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                        <td>
+                                            <button class="details_host @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item chart_owner">
+                        <div class="chart">
+                            <canvas id="myChartofHost"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="text">
+                    <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
+                    <button onclick="AcceptAll(2)">Accept The Selected</button>
+                    <button onclick="RefuseAll(2)">Refuse The Selected</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_hotel">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in property_browing_list)
+                                {
+                                    <tr class="property_@item.property_id">
+                                        <td>
+                                            <button class="@item.property.userId @item.property_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.property.p_name</td>
+                                        <td>
+                                            <button class="details_hotel @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item chart_hotel">
+                        <div class="chart">
+                            <canvas id="myChartofHotel"></canvas>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in host_browsing_list)
+                {
+                    <div class="info_host_detail info_detail center @item.id @item.user_id ">
+                        <div class="container_info container_info_host @item.id @item.user_id overflow-scroll">
+                            <div class="avatar_infor center">
+                                <img src="@item.user.user_profile.FirstOrDefault()?.user_avatar ?? 'default-avatar.png'" alt="">
+                            </div>
+                            <div class="name_infor center">
+                                <h1>@item.user.user_personalInfor.FirstOrDefault().legal_name</h1>
+                            </div>
+                            <div class="infor_box">
+                                <div class="item_info">
+                                    <div class="info_child phone_number">
+                                        <h4><i class="fa-solid fa-phone"></i>Phone Number: </h4>
+                                        <span>@item.user.phone_number.FirstOrDefault().phone</span>
+                                    </div>
+                                    <div class="info_child cmnd">
+                                        <h4><i class="fa-solid fa-address-card"></i>Government ID: </h4>
+                                        <span>@item.user.governmentIDs.FirstOrDefault().date_range.Value.ToString("dd/MM/yyyy") - @item.user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("dd/MM/yyyy")</span>
+                                        <div class="img_cmnd">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().identity_card" alt="">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().backof_id_card" alt="">
+                                        </div>
+                                    </div>
+
+                                    @*<div class="mg-bt confirm_reservations">
+                                            <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                            <span><img src="" alt="">Use Instant Book</span>
+                                        </div>*@
+
+
+                                </div>
+                                <div class="item_info">
+                                    <div class="info_child address">
+                                        <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().u_country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
+                                    </div>
+                                    <div class="info_child emergency_contact">
+                                        <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
+                                        <div class="info_emergency">
+                                            <div class="item_emergency">
+                                                <span><h5>Name: </h5>@item.user.emergency_contact.FirstOrDefault().ec_name</span>
+                                                <span><h5>Relation: </h5>@item.user.emergency_contact.FirstOrDefault().relationship</span>
+                                                <span><h5>Language: </h5>@item.user.emergency_contact.FirstOrDefault().ec_language</span>
+                                            </div>
+                                            <div class="item_emergency">
+                                                <span><h5>Email: </h5>@item.user.emergency_contact.FirstOrDefault().email</span>
+                                                <span><h5>Country: </h5>@item.user.emergency_contact.FirstOrDefault().country</span>
+                                                <span>
+                                                    <h5>Phone Number: </h5>
+                                                    @item.user.emergency_contact.FirstOrDefault().phone_number
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="btn_handle center">
+                                <button onclick="confirm_host('@item.user_id')">Accept</button>
+                                <span>|</span>
+                                <button onclick="host_denied('@item.user_id')">Refuse</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                @foreach (var item in property_browing_list)
+                {
+
+                    PPl3.Models.property_images[] array_imgs = item.property.property_images.ToArray();
+
+                    <div class="info_detail info_hotel_detail center @item.id @item.property_id">
+                        <div class="container_info container_info_hotel @item.id @item.property_id overflow-scroll">
+                            <div class="img_box">
+                                <div class="img_hotel">
+
+                                    <img src="@array_imgs[0].pi_image">
+                                    <img src="@array_imgs[1].pi_image" style="top: 31%;">
+                                    <img src="@array_imgs[2].pi_image" style="top: 36%;">
+                                    <img src="@array_imgs[3].pi_image" style="top: 41%;">
+                                    <img src="@array_imgs[4].pi_image" style="top: 46%;">
+                                </div>
+                                <div class="btn_zoom">
+                                    <button><i class="fa-solid fa-expand"></i></button>
+                                </div>
+                            </div>
+                            <div class="information">
+                                <div class="infor_box">
+                                    <div class="item_info">
+                                        <div class="mg-bt name_hotel">
+                                            <h4><i class="fa-solid fa-signature" style="margin-right: 10px;"></i>Name: </h4>
+                                            <span>@item.property.p_name</span>
+                                        </div>
+                                        <div class="mg-bt booking_date">
+                                            <h4><i class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i>Booking Date: </h4>
+                                            <span>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                        <div class="mg-bt describes">
+                                            <h4><i class="fa-solid fa-droplet" style="margin-right: 10px;"></i>Describes: </h4>
+                                            <ul class="box_list">
+                                                @foreach (var amenity in item.property.property_amenities)
+                                                {
+                                                    <li><img src="@amenity.amenity.icon_image" alt="">@amenity.amenity.amenity_name</li>
+                                                }
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt type_of">
+                                            <h4><i class="fa-solid fa-font-awesome" style="margin-right: 10px;"></i>Type Of: </h4>
+                                            <span><img src="@item.property.property_type.icon_image" alt="">@item.property.room_type.rt_name</span>
+                                        </div>
+                                        <div class="mg-bt located">
+                                            <h4><i class="fa-solid fa-location-dot" style="margin-right: 10px;"></i>Located: </h4>
+                                            <span>Country : @item.property.country.ct_name - State : @item.property.state.state_name - City : @item.property.city.city_name - Address : @item.property.p_address</span>
+                                        </div>
+                                        <div class="mg-bt basic_about">
+                                            <h4><i class="fa-solid fa-house-chimney" style="margin-right: 10px;"></i>Basic About: </h4>
+                                            <div class="box_basic">
+                                                <div class="item_basic">
+                                                    <h5>Guest: <span>@item.property.accomodates_count</span></h5>
+                                                    <h5>Bedrooms: <span>@item.property.bedroom_count</span></h5>
+                                                </div>
+                                                <div class="item_basic">
+                                                    <h5>Beds: <span>@item.property.bed_count</span></h5>
+                                                    <h5>Bathrooms: <span>@item.property.bathroom_count</span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="mg-bt confirm_reservations">
+                    <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                    <span><img src="" alt="">Use Instant Book</span>
+                </div>*@
+
+                                    </div>
+                                    <div class="item_info">
+                                        <div class="mg-bt utilities">
+                                            <h4><i class="fa-solid fa-house-signal" style="margin-right: 10px;"></i>Utilities: </h4>
+                                            <ul class="box_list box_utilities">
+                                                @foreach (var row in item.property.property_amenities.Where(x => x.amenity.category_id == 3))
+                                                {
+                                                    <li><img src="@row.amenity.icon_image" alt="">@row.amenity.amenity_name</li>
+
+                                                }
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt description">
+                                            <h4><i class="fa-solid fa-scroll" style="margin-right: 10px;"></i>Description: </h4>
+                                            <div class="mg-bt text_desciption">
+                                                <p>@item.property.p_description</p>
+                                            </div>
+                                        </div>
+                                        <div class="mg-bt price">
+                                            <h4><i class="fa-solid fa-dollar-sign" style="margin-right: 10px;"></i>Price: </h4>
+                                            <span>@item.property.price$/night</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="btn_handle center">
+                                    <button onclick="confirm_hotel('@item.property.userId' , '@item.property_id')">Accept</button>
+                                    <span>|</span>
+                                    <button onclick="hotel_denied('@item.property.userId' , '@item.property_id')">Refuse</button>
+                                </div>
+                            </div>
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info_detail img_zoom_hotel center">
+                        <div class="container_info container_img_zoom">
+                            <div class="list_img">
+                                <img src="@array_imgs[0].pi_image">
+                                <img src="@array_imgs[1].pi_image">
+                                <img src="@array_imgs[2].pi_image">
+                                <img src="@array_imgs[3].pi_image">
+                                <img src="@array_imgs[4].pi_image">
+                            </div>
+                        </div>
+                        <div class="btn_img">
+                            <button class="btn_left" style="top: 50%; left: 20%; transform: translateY(-100%);"><i class="fa-solid fa-circle-chevron-left"></i></button>
+                            <button class="btn_close" style="bottom: 10%; left: 50%;"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn_right" style="top: 50%; right: 20%; transform: translateY(-100%) translateY(-50%);"><i class="fa-solid fa-circle-chevron-right"></i></button>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+        else
+        {
+            <div id="centorship">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Dashboard</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text">
+                    <p><i class="fa-solid fa-elevator"></i>Host Owners</p>
+                    <button onclick="AcceptAll(1)">Accept The Selected</button>
+                    <button onclick="RefuseAll(1)">Refuse The selected</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_owner">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in host_browsing_list)
+                                {
+                                    <tr class="user_@item.user_id">
+                                        <td>
+                                            <button class="@item.user_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                        <td>
+                                            <button class="details_host @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item chart_owner">
+                        <div class="chart">
+                            <canvas id="myChartofHost"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="text">
+                    <p><i class="fa-solid fa-hotel"></i>Hotel For Rent</p>
+                    <button onclick="AcceptAll(2)">Accept The Selected</button>
+                    <button onclick="RefuseAll(2)">Refuse The Selected</button>
+                </div>
+                <div class="container_list">
+                    <div class="list_item list_hotel">
+                        <table>
+                            <thead>
+                            <th></th>
+                            <th>Date</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in property_browing_list)
+                                {
+                                    <tr class="property_@item.property_id">
+                                        <td>
+                                            <button class="@item.property.userId @item.property_id"><i class="fa-solid fa-circle-check"></i></button>
+                                        </td>
+                                        <td>@item.Date.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.property.p_name</td>
+                                        <td>
+                                            <button class="details_hotel @item.id">Detail</button>
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item chart_hotel">
+                        <div class="chart">
+                            <canvas id="myChartofHotel"></canvas>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in host_browsing_list)
+                {
+                    <div class="info_host_detail info_detail center @item.id @item.user_id">
+                        <div class="container_info container_info_host @item.id @item.user_id  overflow-scroll">
+                            <div class="avatar_infor center">
+                                <img src="@item.user.user_profile.FirstOrDefault()?.user_avatar ?? 'default-avatar.png'" alt="">
+                            </div>
+                            <div class="name_infor center">
+                                <h1>@item.user.user_personalInfor.FirstOrDefault().legal_name</h1>
+                            </div>
+                            <div class="infor_box">
+                                <div class="item_info">
+                                    <div class="info_child phone_number">
+                                        <h4><i class="fa-solid fa-phone"></i>Phone Number: </h4>
+                                        <span>@item.user.phone_number.FirstOrDefault().phone</span>
+                                    </div>
+                                    <div class="info_child cmnd">
+                                        <h4><i class="fa-solid fa-address-card"></i>Government ID: </h4>
+                                        <span>@item.user.governmentIDs.FirstOrDefault().date_range.Value.ToString("dd/MM/yyyy") - @item.user.governmentIDs.FirstOrDefault().expiration_date.Value.ToString("dd/MM/yyyy")</span>
+                                        <div class="img_cmnd">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().identity_card" alt="">
+                                            <img src="@item.user.governmentIDs.FirstOrDefault().backof_id_card" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item_info">
+                                    <div class="info_child address">
+                                        <h4><i class="fa-solid fa-location-dot"></i>Address: </h4>
+                                        <span>@item.user.user_personalInfor.FirstOrDefault().u_country - @item.user.user_personalInfor.FirstOrDefault().u_state - @item.user.user_personalInfor.FirstOrDefault().u_city</span>
+                                    </div>
+                                    <div class="info_child emergency_contact">
+                                        <h4><i class="fa-solid fa-kit-medical"></i>Emergency Contact: </h4>
+                                        <div class="info_emergency">
+                                            <div class="item_emergency">
+                                                <span><h5>Name: </h5>@item.user.emergency_contact.FirstOrDefault().ec_name</span>
+                                                <span><h5>Relation: </h5>@item.user.emergency_contact.FirstOrDefault().relationship</span>
+                                                <span><h5>Language: </h5>@item.user.emergency_contact.FirstOrDefault().ec_language</span>
+                                            </div>
+                                            <div class="item_emergency">
+                                                <span><h5>Email: </h5>@item.user.emergency_contact.FirstOrDefault().email</span>
+                                                <span><h5>Country: </h5>@item.user.emergency_contact.FirstOrDefault().country</span>
+                                                <span>
+                                                    <h5>Phone Number: </h5>
+                                                    @item.user.emergency_contact.FirstOrDefault().phone_number
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="btn_handle center">
+                                <button onclick="confirm_host('@item.user_id')">Accept</button>
+                                <span>|</span>
+                                <button onclick="host_denied('@item.user_id')">Refuse</button>
+                            </div>
+                        </div>
+             
+                    </div>
+                }
+                @foreach (var item in property_browing_list)
+                {
+
+                    PPl3.Models.property_images[] array_imgs = item.property.property_images.ToArray();
+
+                    <div class="info_detail info_hotel_detail center @item.id @item.property_id">
+                        <div class="container_info container_info_hotel @item.id @item.property_id overflow-scroll">
+                            <div class="img_box">
+                                <div class="img_hotel">
+
+                                    <img src="@array_imgs[0].pi_image">
+                                    <img src="@array_imgs[1].pi_image" style="top: 31%;">
+                                    <img src="@array_imgs[2].pi_image" style="top: 36%;">
+                                    <img src="@array_imgs[3].pi_image" style="top: 41%;">
+                                    <img src="@array_imgs[4].pi_image" style="top: 46%;">
+                                </div>
+                                <div class="btn_zoom">
+                                    <button><i class="fa-solid fa-expand"></i></button>
+                                </div>
+                            </div>
+                            <div class="information">
+                                <div class="infor_box">
+                                    <div class="item_info">
+                                        <div class="mg-bt name_hotel">
+                                            <h4><i class="fa-solid fa-signature" style="margin-right: 10px;"></i>Name: </h4>
+                                            <span>@item.property.p_name</span>
+                                        </div>
+                                        <div class="mg-bt booking_date">
+                                            <h4><i class="fa-solid fa-calendar-day" style="margin-right: 10px;"></i>Booking Date: </h4>
+                                            <span>@item.property.startDate.Value.ToString("dd/MM/yyyy") - @item.property.end_date.Value.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                        <div class="mg-bt describes">
+                                            <h4><i class="fa-solid fa-droplet" style="margin-right: 10px;"></i>Describes: </h4>
+                                            <ul class="box_list">
+                                                @foreach (var amenity in item.property.property_amenities)
+                                                {
+                                                    <li><img src="@amenity.amenity.icon_image" alt="">@amenity.amenity.amenity_name</li>
+                                                }
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt type_of">
+                                            <h4><i class="fa-solid fa-font-awesome" style="margin-right: 10px;"></i>Type Of: </h4>
+                                            <span><img src="@item.property.property_type.icon_image" alt="">@item.property.room_type.rt_name</span>
+                                        </div>
+                                        <div class="mg-bt located">
+                                            <h4><i class="fa-solid fa-location-dot" style="margin-right: 10px;"></i>Located: </h4>
+                                            <span>Country : @item.property.country.ct_name - State : @item.property.state.state_name - City : @item.property.city.city_name - Address : @item.property.p_address</span>
+                                        </div>
+                                        <div class="mg-bt basic_about">
+                                            <h4><i class="fa-solid fa-house-chimney" style="margin-right: 10px;"></i>Basic About: </h4>
+                                            <div class="box_basic">
+                                                <div class="item_basic">
+                                                    <h5>Guest: <span>@item.property.accomodates_count</span></h5>
+                                                    <h5>Bedrooms: <span>@item.property.bedroom_count</span></h5>
+                                                </div>
+                                                <div class="item_basic">
+                                                    <h5>Beds: <span>@item.property.bed_count</span></h5>
+                                                    <h5>Bathrooms: <span>@item.property.bathroom_count</span></h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="mg-bt confirm_reservations">
+                                                <h4><i class="fa-solid fa-house-circle-check" style="margin-right: 10px;"></i>Confirm Reservations: </h4>
+                                                <span><img src="" alt="">Use Instant Book</span>
+                                            </div>*@
+
+                                    </div>
+                                    <div class="item_info">
+                                        <div class="mg-bt utilities">
+                                            <h4><i class="fa-solid fa-house-signal" style="margin-right: 10px;"></i>Utilities: </h4>
+                                            <ul class="box_list box_utilities">
+                                                @foreach (var row in item.property.property_amenities.Where(x => x.amenity.category_id == 3))
+                                                {
+                                                    <li><img src="@row.amenity.icon_image" alt="">@row.amenity.amenity_name</li>
+
+                                                }
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="mg-bt description">
+                                            <h4><i class="fa-solid fa-scroll" style="margin-right: 10px;"></i>Description: </h4>
+                                            <div class="mg-bt text_desciption">
+                                                <p>@item.property.p_description</p>
+                                            </div>
+                                        </div>
+                                        <div class="mg-bt price">
+                                            <h4><i class="fa-solid fa-dollar-sign" style="margin-right: 10px;"></i>Price: </h4>
+                                            <span>@item.property.price$/night</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="btn_handle center">
+                                    <button onclick="confirm_hotel('@item.property.userId', '@item.property_id')">Accept</button>
+                                    <span>|</span>
+                                    <button onclick="hotel_denied('@item.property.userId' , '@item.property_id')">Refuse</button>
+                                </div>
+                            </div>
+                            
+                            <div class="corner corner_top_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_top_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_left">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                            <div class="corner corner_bottom_right">
+                                <i class="fa-solid fa-swatchbook"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info_detail img_zoom_hotel center">
+                        <div class="container_info container_img_zoom">
+                            <div class="list_img">
+                                <img src="@array_imgs[0].pi_image">
+                                <img src="@array_imgs[1].pi_image">
+                                <img src="@array_imgs[2].pi_image">
+                                <img src="@array_imgs[3].pi_image">
+                                <img src="@array_imgs[4].pi_image">
+                            </div>
+                        </div>
+                        <div class="btn_img">
+                            <button class="btn_left" style="top: 50%; left: 20%; transform: translateY(-100%);"><i class="fa-solid fa-circle-chevron-left"></i></button>
+                            <button class="btn_close" style="bottom: 10%; left: 50%;"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn_right" style="top: 50%; right: 20%; transform: translateY(-100%) translateY(-50%);"><i class="fa-solid fa-circle-chevron-right"></i></button>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        }
+        @if (ViewBag.CheckComfirm == 1)
+        {
+            <div id="home">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Home</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div id="home" class="active">
+                <div class="text"><i class="fa-solid fa-gauge"></i>Home</div>
+                <div class="container_home">
+                    <div class="item">
+                        <h2>@db.properties.Where(item => item.p_status == 1).Count() <i class="fa-solid fa-folder"></i></h2>
+                        <div class="tittle">
+                            <p>Number of hotels posted</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>@db.users.Where(item => item.user_type == 3).Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <div class="tittle">
+                            <p>number of hosts</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Hotel rate</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="circle-container">
+                            <svg class="circle-svg" width="200" height="200" viewBox="0 0 200 200">
+                                <circle class="circle-background" cx="100" cy="100" r="90"></circle>
+                                <circle class="circle-progress" cx="100" cy="100" r="90"></circle>
+                            </svg>
+                            <div class="circle-text" id="circleText">0%</div>
+                        </div>
+                        <div class="tittle">
+                            <p>Host rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div id="user">
+            <div class="text"><i class="fa-solid fa-user"></i>User</div>
+            <div class="container_user">
+                <div class="item_user">
+                    <div class="number_box">
+                        <h2 id="userCount">@lstUser.Count() <i class="fa-solid fa-user"></i></h2>
+                        <span>People</span>
+                    </div>
+                    <div class="search">
+                        <button id="btn_search_user"><i class='bx bx-search'></i></button>
+                        <input id="search_user" type="text" placeholder="Search..." value="">
+                    </div>
+                </div>
+                <div class="list_item item_user">
+                    <table>
+                        <thead>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Passport</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th></th>
+                        </thead>
+                        <tbody id="user_table">
+                            @{
+                                if (lstUser != null)
+                                {
+                                    foreach (var tmp in lstUser.ToList())
+                                    {
+                                        <tr id="userRow-@tmp.id">
+                                            <td>
+                                                <div class="avatar">
+                                                    @{
+                                                        if (tmp.user_profile.FirstOrDefault() != null && tmp.user_profile.FirstOrDefault().user_avatar != null)
+                                                        {
+                                                            <img src="@tmp.user_profile.FirstOrDefault().user_avatar" alt="">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="">
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>@tmp.account_name</td>
+                                            @{
+                                                if (tmp.passport_code != null)
+                                                {
+                                                    <td>@tmp.passport_code</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+                                            @{
+                                                string address = "";
+                                                if (tmp.user_personalInfor.FirstOrDefault().u_country != null)
+                                                {
+                                                    address = tmp.user_personalInfor.FirstOrDefault().u_country;
+                                                    if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
+                                                    {
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country;
+                                                        if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
+                                                        {
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            <td>@address</td>
+                                            <td>@tmp.user_personalInfor.FirstOrDefault().email_address</td>
+                                            <td>
+                                                <button id="@tmp.id" class="details_user">Detail</button>
+                                                <button id="@tmp.id" class="delete_btns">Delete</button>
+                                            </td>
+                                        </tr>
+
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="text"><i class="fa-solid fa-user"></i>Host</div>
+            <div class="container_user">
+                <div class="item_user">
+                    <div class="number_box">
+                        <h2 id="hostCount">@lstHost.Count() <i class="fa-solid fa-user"></i></h2>
+                        <span>People</span>
+                    </div>
+                    <div class="search">
+                        <button id="btn_search_host"><i class='bx bx-search'></i></button>
+                        <input id="search_host" type="text" placeholder="Search..." value="">
+                    </div>
+                </div>
+                <div class="list_item item_user">
+                    <table>
+                        <thead>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Passport</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th></th>
+                        </thead>
+                        <tbody id="table_host">
+                            @{
+                                if (lstHost != null)
+                                {
+                                    foreach (var tmp in lstHost.ToList())
+                                    {
+                                        <tr id="hostRow-@tmp.id">
+                                            <td>
+                                                <div class="avatar">
+                                                    @{
+                                                        if (tmp.user_profile.FirstOrDefault() != null && tmp.user_profile.FirstOrDefault().user_avatar != null)
+                                                        {
+                                                            <img src="@tmp.user_profile.FirstOrDefault().user_avatar" alt="">
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src="https://cdn-icons-png.flaticon.com/512/552/552721.png" alt="">
+                                                        }
+                                                    }
+                                                </div>
+                                            </td>
+                                            <td>@tmp.user_personalInfor.FirstOrDefault().legal_name</td>
+                                            @{
+                                                if (tmp.passport_code != null)
+                                                {
+                                                    <td>@tmp.passport_code</td>
+                                                }
+                                                else
+                                                {
+                                                    <td></td>
+                                                }
+                                            }
+                                            @{
+                                                string address = "";
+                                                if (tmp.user_personalInfor.FirstOrDefault().u_country != null)
+                                                {
+                                                    address = tmp.user_personalInfor.FirstOrDefault().u_country;
+                                                    if (tmp.user_personalInfor.FirstOrDefault().u_state != null)
+                                                    {
+                                                        address = tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country;
+                                                        if (tmp.user_personalInfor.FirstOrDefault().u_city != null)
+                                                        {
+                                                            address = tmp.user_personalInfor.FirstOrDefault().u_city + ", " + tmp.user_personalInfor.FirstOrDefault().u_state + ", " + tmp.user_personalInfor.FirstOrDefault().u_country ;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            <td>@address</td>
+                                            <td>@tmp.user_personalInfor.FirstOrDefault().email_address</td>
+                                            <td>
+                                                <button><a href="/admin/homeadmin/userPersonalProfile?user=@tmp.id" target="_blank" style="text-decoration:none; color:white">Detail</a></button>
+                                                <button id="@tmp.id" class="delete_Hostbtns">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="text"><i class="fa-solid fa-user"></i>Hotel</div>
+            <div class="container_user">
+                <div class="item_user">
+                    <div class="number_box">
+                        <h2 id="hotelCount">@lstHotel.Count() <i class="fa-solid fa-house-chimney-window"></i></h2>
+                        <span>Hotel</span>
+                    </div>
+                    <div class="search">
+                        <button id="btn_search_hotel"><i class='bx bx-search'></i></button>
+                        <input id="search_hotel" type="text" placeholder="Search..." value="">
+                    </div>
+                </div>
+                <div class="list_item item_user">
+                    <table>
+                        <thead>
+                        <th>Hotel Id</th>
+                        <th>Name</th>
+                        <th>Host</th>
+                        <th>Address</th>
+                        <th>Email</th>
+                        <th>Day post</th>
+                        <th></th>
+                        </thead>
+                        <tbody id="table_hotel">
+                            @{
+                                if (lstHotel != null)
+                                {
+                                    foreach (var tmp in lstHotel)
+                                    {
+                                        <tr id="hotelRow-@tmp.id">
+                                            <td>
+                                                @tmp.id
+                                            </td>
+                                            <td>@tmp.p_name</td>
+                                            <td>@tmp.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                            @{
+                                                string address = "";
+                                                if (tmp.country_id != null)
+                                                {
+                                                    address = tmp.country.ct_name;
+                                                    if (tmp.state_id != null)
+                                                    {
+                                                        address = tmp.state.state_name + ", " + tmp.country.ct_name;
+                                                        if (tmp.city_id != null)
+                                                        {
+                                                            address = tmp.city.city_name + ", " + tmp.state.state_name + ", " + tmp.country.ct_name;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            <td>@address</td>
+                                            <td>@tmp.user.user_personalInfor.FirstOrDefault().email_address</td>
+                                            <td>@tmp.Date_Post.Value.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                @{
+                                                    string hotelid = "hotel_" + tmp.id.ToString();
+                                                }
+                                                <button><a href="/admin/homeadmin/revenue?user=@tmp.userId" target="_blank" style="text-decoration:none; color:white">Detail</a></button>
+                                                <button id="@tmp.id" class="delete_Hotelbtns">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="notification">
+            <div class="text"><i class="fa-solid fa-user"></i>Notification</div>
+            <div class="container_notifi">
+                <div class="item_notifi">
+                    <div class="tittle" style="width : 265px">
+                        <span>Request</span>
+                    </div>
+                    <ul class="list_notifi">
+                        @foreach (var item in db.user_notification.OrderByDescending(row => row.created))
+                        {
+                            if (item.userid == 20 && !(item.content.Contains("pay")))
+                            {
+                                <li onclick="window.location.href = '@item.un_url'" target ="_blank">
+                                    <div class="logo">
+                                        <i class="fa-brands fa-think-peaks"></i>
+                                    </div>
+                                    <div>
+                                        <div class="content_notifi">
+                                            <p>@item.content</p>
+                                        </div>
+                                        <div class="time">
+                                            <span>@item.created.Value.ToString("hh:MM:tt") @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                    </div>
+                                    <div class="close_btn" onclick="deleteNotification('@item.id')">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </div>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="item_notifi">
+                    <div class="tittle" style="width : 265px">
+                        <span>Payment</span>
+                    </div>
+                    <ul class="list_notifi">
+                        @foreach (var item in db.user_notification.OrderByDescending(row => row.created))
+                        {
+                            if (item.userid == 20 && (item.content.Contains("pay")))
+                            {
+                                <li onclick="window.location.href = '@item.un_url'" target="_blank">
+                                    <div class="logo">
+                                        <i class="fa-brands fa-think-peaks"></i>
+                                    </div>
+                                    <div>
+                                        <div class="content_notifi">
+                                            <p>@item.content</p>
+                                        </div>
+                                        <div class="time">
+                                            <span>@item.created.Value.ToString("hh:MM:tt") @item.created.Value.ToString("dd/MM/yyyy")</span>
+                                        </div>
+                                    </div>
+                                    <div class="close_btn" onclick="deleteNotification('@item.id')">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </div>
+                                </li>
+
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div id="analytics">
+            <div class="text"><i class="fa-solid fa-gauge"></i>Analytics</div>
+            <div class="container_analytics">
+                <div class="search_analytics">
+                    <div class="item_analytics">
+                        <input type="text" placeholder="Search..." id="search_company">
+                        <button class="btn_search"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                    <div class="item_analytics">
+                        <select id="search_by_revenue" name="Revenue">
+                            <option value="" selected disabled hidden>Revenue</option>
+                            <option value="service1">Under 10.000$</option>
+                            <option value="service2">10.000$ - 30.000$</option>
+                            <option value="service3">30.000$ - 50.000$</option>
+                            <option value="service4">Over 50.000$</option>
+                        </select>
+                        <button class="btn_search btn_revenue"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                    <div class="item_analytics">
+                        <select id="arrange">
+                            <option value="" selected disabled hidden>Arrange</option>
+                            <option value="service1">Ascending</option>
+                            <option value="service2">Decrease</option>
+                            <option value="service3">Sorted from a-z</option>
+                        </select>
+                        <button class="btn_search btn_arrange"><i class="fa-solid fa-search"></i></button>
+                    </div>
+                    <!-- <div class="item_analytics">
+                      <input type="date" placeholder="dd/mm/yyyy" id="search_by_date">
+                      <button class="btn_search btn_date"><i class="fa-solid fa-search"></i></button>
+                    </div> -->
+                </div>
+            </div>
+            <div class="container_analytics">
+                <div class="list_hotel_analytics">
+                    <div class="list_item item_7">
+                        <table>
+                            <thead>
+                            <th>Name Hotel</th>
+                            <th>Name Host</th>
+                            <th>Review</th>
+                            <th>Revenue</th>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in db.properties.Where(item => item.p_status == 1))
+                                {
+                                    sum_revenue = 0;
+                                    sum_star = 0;
+                                    foreach (var row in db.transactions)
+                                    {
+                                        if (row.property_id == item.id)
+                                        {
+                                            sum_revenue = sum_revenue + (double)row.amount;
+                                        }
+                                    }
+                                    foreach (var row in db.property_reviews)
+                                    {
+                                        if (row.property_id == item.id)
+                                        {
+                                            sum_star = sum_star + (double)row.overall_rating;
+                                        }
+                                    }
+                                    sum_star = sum_star / db.property_reviews.ToArray().Length;
+                                    <tr class="hotel_@item.id hotel">
+                                        <td>
+                                            @item.p_name
+                                        </td>
+                                        <td>@item.user.user_personalInfor.FirstOrDefault().legal_name</td>
+                                        <td>
+                                            @sum_star <i class="fa-solid fa-star"></i>
+                                        </td>
+                                        <td>@sum_revenue$</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="list_item item_3">
+                        <div class="name_hotel_analytics">
+                            <span>Hotel Revenue Statistics</span>
+                        </div>
+                        <div class="btn_by_year">
+                            <select name="" id="by_year_hotel">
+                                @foreach (var item in db.transactions.ToList().OrderByDescending(item => item.transfer_on.Value.Year))
+                                {
+                                    if (!selected_year.Contains(item.transfer_on.Value.Year))
+                                    {
+                                        <option value="@item.transfer_on.Value.Year">@item.transfer_on.Value.Year</option>
+
+                                        selected_year.Add(item.transfer_on.Value.Year);
+                                    }
+
+
+                                }
+
+                            </select>
+                        </div>
+                        <div class="chart">
+                            <canvas id="chart_analytics_month"></canvas>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="container_analytics">
+                <div class="list_hotel_analytics">
+                    <div class="list_item item_7">
+                        <div class="tittle" style="width:204px">
+                            <span>Revenue of month</span>
+                        </div>
+                        <div class="btn_by_year">
+                            <select name="" id="by_year_admin" style="margin-bottom: 30px">
+                                @{
+                                    selected_year = new List<int>();
+                                }
+                                @foreach (var item in db.transactions.ToList().OrderByDescending(item => item.transfer_on.Value.Year))
+                                {
+                                    if (!selected_year.Contains(item.transfer_on.Value.Year))
+                                    {
+                                        <option value="@item.transfer_on.Value.Year">@item.transfer_on.Value.Year</option>
+
+                                        selected_year.Add(item.transfer_on.Value.Year);
+                                    }
+
+
+                                }
+                            </select>
+                        </div>
+                        <div class="chart">
+                            <canvas id="chart_admin_month"></canvas>
+                        </div>
+                    </div>
+                    <div class="list_item item_3">
+                        <div class="tittle" style="width:204px">
+                            <span>Revenue of year</span>
+                        </div>
+                        <!-- <div class="btn_by_year" style="text-align: center;">
+                          <input type="date" name="" id="">
+                        </div> -->
+                        <div class="chart">
+                            <canvas id="chart_admin_year"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    @{
+        if (db.users != null)
+        {
+            string tmpBD = "";
+            int count = 0;
+            double sum = 0;
+            int pos = 0;
+            foreach (var tmp in db.users.Where(item => item.user_type != 1).ToList())
+            {
+                var p_user = tmp;
+                bool is_host = false;
+                if (p_user.user_type == 3)
+                { is_host = true; }
+                string name = p_user.account_name;
+                if (p_user.user_personalInfor.FirstOrDefault().legal_name != null)
+                {
+                    name = p_user.user_personalInfor.FirstOrDefault().legal_name;
+                }
+                <div id="myModal-@tmp.id" class="mod hide">
+                    <div class="mod__inner">
+                        <div class="mod__header">
+                            <p>Detail</p>
+                            <i class="far fa-window-close close-modal" data-modal-id="@tmp.id"></i>
+                        </div>
+                        <div class="mod__body">
+                            @{
+                                if (p_user.user_profile.FirstOrDefault() != null)
+                                {
+                                    <div id="content">
+                                        <div class="gird wide">
+                                            <div class="row no-gutter">
+                                                <div class="col l-4 m-12 c-12">
+                                                    <div class="information">
+                                                        <div class="infor_container">
+                                                            <div class="review_guest">
+                                                                @{
+                                                                    if (p_user.user_profile.FirstOrDefault() != null && p_user.user_profile.FirstOrDefault().user_avatar != null)
+                                                                    {
+
+                                                                        <div class="avatar" style="background : url(@p_user.user_profile.FirstOrDefault().user_avatar) top center /cover no-repeat; width: 160px; height:160px">
+                                                                            <i class="fa-solid fa-shield"></i>
+                                                                        </div>
+
+
+
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="avatar" style="background: url(https://cdn-icons-png.flaticon.com/512/552/552721.png) top center /cover no-repeat; width: 160px; height: 160px ">
+                                                                            <i class="fa-solid fa-shield"></i>
+                                                                        </div>
+                                                                    }
+                                                                }
+                                                                <h2>@p_user.user_personalInfor.FirstOrDefault().legal_name</h2>
+                                                                @{
+                                                                    if (is_host)
+                                                                    {
+                                                                        <p>Host</p>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <p>Guest</p>
+                                                                    }
+                                                                }
+                                                            </div>
+                                                            <div class="infor_basics">
+                                                                @{
+                                                                    if (is_host)
+                                                                    {
+                                                                        <div class="infor_basics_item">
+                                                                            <span>@p_user.host_reviews.ToArray().Length</span>
+                                                                            <p>Review</p>
+                                                                        </div>
+                                                                        <div class="infor_basics_item">
+                                                                            @{
+                                                                                sum = 0;
+                                                                                foreach (var item in p_user.host_reviews.ToList())
+                                                                                {
+                                                                                    sum = sum + double.Parse(item.rating);
+                                                                                }
+                                                                                if (p_user.host_reviews.ToArray().Length != 0)
+                                                                                { sum = sum / p_user.host_reviews.ToArray().Length; }
+                                                                                else { sum = 0; }
+                                                                            }
+                                                                            <span>@sum<i class="fa-solid fa-star"></i></span>
+                                                                            <p>Rating</p>
+                                                                        </div>
+                                                                        <div class="infor_basic">
+                                                                            @{
+                                                                                count = 0;
+
+                                                                                if (DateTime.Now.ToString("yyyy") != p_user.day_become_host.Value.ToString("yyyy"))
+                                                                                {
+
+                                                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(p_user.day_become_host.Value.ToString("yyyy"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Years hosting</p>
+                                                                                }
+                                                                                else if (DateTime.Now.ToString("MM") != p_user.day_become_host.Value.ToString("MM"))
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(p_user.day_become_host.Value.ToString("MM"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Months hosting</p>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(p_user.day_become_host.Value.ToString("dd"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Days hosting</p>
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div class="infor_basics_item">
+                                                                            @{
+                                                                                count = 0;
+                                                                                count = p_user.property_reviews.Where(item => item.review_by_user == p_user.id).ToArray().Length;
+                                                                                count += p_user.host_reviews.Where(item => (item.review_by_user == p_user.id)).ToArray().Length;
+                                                                            }
+                                                                            <span>@count</span>
+                                                                            <p>Comment</p>
+                                                                        </div>
+                                                                        <div class="infor_basics_item">
+                                                                            <span><i class="fa-solid fa-star"></i></span>
+                                                                            <p>Newbie</p>
+                                                                        </div>
+                                                                        <div class="infor_basic">
+
+                                                                            @{
+                                                                                count = 0;
+                                                                                if (DateTime.Now.ToString("yyyy") != p_user.created.Value.ToString("yyyy"))
+                                                                                {
+
+                                                                                    count = int.Parse(DateTime.Now.ToString("yyyy")) - int.Parse(p_user.created.Value.ToString("yyyy"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Years on Airbnb</p>
+                                                                                }
+                                                                                else if (DateTime.Now.ToString("MM") != p_user.created.Value.ToString("MM"))
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("MM")) - int.Parse(p_user.created.Value.ToString("MM"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Months on Airbnb</p>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    count = int.Parse(DateTime.Now.ToString("dd")) - int.Parse(p_user.created.Value.ToString("dd"));
+                                                                                    <span>@count</span>
+                                                                                    <p>Days on Airbnb</p>
+                                                                                }
+                                                                            }
+                                                                        </div>
+                                                                    }
+                                                                }
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="verify_guest">
+                                                            <div class="verify_container">
+                                                                <div class="confirmed_information">
+                                                                    <div class="tittle">
+                                                                        <span>@name's confirmed information</span>
+                                                                    </div>
+                                                                    <ul class="confirmed_list">
+                                                                        <li><i class="fa-solid fa-check"></i>@p_user.user_personalInfor.FirstOrDefault().email_address</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="col l-o-1 l-7 m-12 c-12">
+                                                    <div class="about_you">
+                                                        <div class="about_container">
+                                                            <h1>About @name</h1>
+                                                            <div class="edit_btn">
+                                                            </div>
+                                                            <div class="about_content">
+                                                                <div class="infor_box">
+                                                                    <ul class="infor_list">
+                                                                        <li><i class="fa-solid fa-briefcase"></i>My work: @p_user.user_profile.FirstOrDefault().user_work</li>
+                                                                        <li><i class="fa-solid fa-earth-europe"></i>Lives in @p_user.user_profile.FirstOrDefault().user_address</li>
+                                                                        @{
+                                                                            tmpBD = "";
+                                                                            if (p_user.user_profile.FirstOrDefault().user_birthday != null)
+                                                                            {
+                                                                                tmpBD = p_user.user_profile.FirstOrDefault().user_birthday.Value.ToString("yyyy-MM-dd");
+                                                                            }
+                                                                        }
+                                                                        <li><i class="fa-solid fa-golf-ball-tee"></i>BirthDay: @tmpBD</li>
+                                                                        <li><i class="fa-regular fa-heart"></i>I'm obsessed with: @p_user.user_profile.FirstOrDefault().user_obsessed_with</li>
+                                                                        <li><i class="fa-solid fa-wand-magic-sparkles"></i>Most useless skill: @p_user.user_profile.FirstOrDefault().user_unless_skill</li>
+                                                                        <li><i class="fa-regular fa-clock"></i>I spend too much time: @p_user.user_profile.FirstOrDefault().user_time_spend</li>
+                                                                    </ul>
+                                                                    <ul class="infor_list">
+                                                                        <li><i class="fa-solid fa-graduation-cap"></i>Where I went to school: @p_user.user_profile.FirstOrDefault().user_school</li>
+                                                                        @{
+                                                                            tmpBD = "";
+                                                                            pos = 0;
+                                                                            foreach (var item in p_user.users_languages.ToList())
+                                                                            {
+                                                                                if (pos == 0)
+                                                                                {
+                                                                                    tmpBD = tmpBD + item.listLanguage.language_name;
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    tmpBD = tmpBD + ", " + item.listLanguage.language_name;
+                                                                                }
+                                                                                pos++;
+                                                                            }
+                                                                        }
+                                                                        <li><i class="fa-solid fa-globe"></i>Speaks @tmpBD</li>
+                                                                        <li><i class="fa-solid fa-music"></i>Favorite song in high school: @p_user.user_profile.FirstOrDefault().user_favourite_song</li>
+                                                                        <li><i class="fa-regular fa-lightbulb"></i>Fun fact: @p_user.user_profile.FirstOrDefault().user_fun_fact</li>
+                                                                        <li><i class="fa-solid fa-book-open"></i>My biography title: @p_user.user_profile.FirstOrDefault().user_biography_title</li>
+                                                                        <li><i class="fa-solid fa-paw"></i>Pets: @p_user.user_profile.FirstOrDefault().user_pets</li>
+                                                                        <video src=""></video>
+                                                                    </ul>
+                                                                </div>
+                                                                <div class="about_text">
+                                                                    <p>@p_user.user_profile.FirstOrDefault().user_about</p>
+                                                                </div>
+                                                            </div>
+
+                                                            @{
+                                                                if (p_user.users_interests.Count() != 0)
+                                                                {
+                                                                    <div class="ask_guest">
+                                                                        <div class="tittle">
+                                                                            <span>Ask @p_user.user_personalInfor.FirstOrDefault().legal_name about</span>
+                                                                        </div>
+                                                                        <ul class="interest_list">
+                                                                            @{
+                                                                                foreach (var item in p_user.users_interests.ToList())
+                                                                                {
+                                                                                    <li><button><i class="@item.interest.icon"></i>@item.interest.interest_name</button></li>
+                                                                                }
+                                                                            }
+                                                                            @*<li><button><i class="fa-solid fa-paw"></i>Animals</button></li>
+                        <li><button><i class="fa-solid fa-utensils"></i>Cooking</button></li>
+                        <li><button><i class="fa-solid fa-bowl-rice"></i>Food</button></li>
+                        <li><button><i class="fa-solid fa-person-hiking"></i>Outdoors</button></li>
+                        <li><button><i class="fa-solid fa-gamepad"></i>Video Games</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Books</button></li>
+                        <li><button><i class="fa-solid fa-book-bookmark"></i>Museums</button></li>*@
+                                                                        </ul>
+                                                                    </div>
+                                                                }
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <h2>User chua lam profile</h2>
+                                }
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    }
+
+    <script src="~/ExtraFiles/JS/admin.js?v=8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 </body>
 </html>
+<script>
+    const ctx = document.getElementById('myChartofHost');
+    const ctx1 = document.getElementById('myChartofHotel');
+    var data_host = @Html.Raw(Json.Encode(ViewBag.data_hosts));
+    var data_hotel = @Html.Raw(Json.Encode(ViewBag.data_hotels));
+    var host_rate = @Html.Raw(Json.Encode(host_rate));
+    var hotel_rate = @Html.Raw(Json.Encode(hotel_rate));
+    const chartAnalytics = document.getElementById('chart_analytics_month');
+    const chartMonth = document.getElementById('chart_admin_month');
+    const chartYear = document.getElementById('chart_admin_year');
+    console.log(hotel_rate + " " + host_rate);
+    animateCircleProgress(parseFloat(host_rate), parseFloat(hotel_rate), 1000);
+    let list_each_month_host = [];
+    let list_each_month_hotel = [];
+    data_host.split(",").forEach((item) => {
+        list_each_month_host.push(parseInt(item));
+    });
+    data_hotel.split(",").forEach((item) => {
+        list_each_month_hotel.push(parseInt(item));
+    });
+    console.log(list_each_month_host);
+
+   var numberHostChart =  new Chart(ctx, {
+      type: 'bar',
+      data: {
+      labels: [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      datasets: [{
+          label: 'Number of people who become hosts',
+          data: list_each_month_host,
+        fill: true,
+        backgroundColor: '#11101D',
+        borderColor: 'rgb(255, 99, 132)',
+        pointBackgroundColor: '#11101D',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(255, 99, 132)'
+      }]
+    },
+      options: {
+        scales: {
+          y: {
+            reponsive: true,
+          }
+        }
+      }
+    });
+
+   var numberHotelChart =  new Chart(ctx1, {
+      type: 'bar',
+      data: {
+      labels: [
+      'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+      ],
+      datasets: [{
+          label: 'Number of hotels successfully approved',
+          data: list_each_month_hotel,
+        fill: true,
+        backgroundColor: '#11101D',
+        borderColor: 'rgb(255, 99, 132)',
+        pointBackgroundColor: '#11101D',
+        pointBorderColor: '#fff',
+        pointHoverBackgroundColor: '#fff',
+        pointHoverBorderColor: 'rgb(255, 99, 132)'
+      }]
+    },
+      options: {
+        scales: {
+          y:{
+            reponsive: true,
+          }
+        }
+      }
+    });
+    var hotel_chart =  new Chart(chartAnalytics, {
+        type: 'line',
+        data: {
+            labels: [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+            ],
+            datasets: [{
+                label: "Hotel Revenue Statistics",
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    reponsive: true,
+                }
+            }
+        }
+    });
+
+    var admin_month_revenue = new Chart(chartMonth, {
+        type: 'line',
+        data: {
+            labels: [
+                'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'
+            ],
+            datasets: [{
+                label: 'Admin income statistics',
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    reponsive: true,
+                }
+            }
+        }
+    });
+
+    var admin_year_revenue = new Chart(chartYear, {
+        type: 'line',
+        data: {
+            labels: @Html.Raw(Json.Encode(selected_year.OrderBy(item => item).ToArray())),
+            datasets: [{
+                label: 'Admin income statistics',
+
+                fill: false,
+                borderColor: 'rgb(75, 192, 192)',
+                tension: 0.1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    reponsive: true,
+                }
+            }
+        }
+    });
+</script>
+<script src="~/Scripts/jquery-3.7.1.js"></script>
+<script src="~/Scripts/jquery-3.7.1.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+
+    // CentorShip
+    function loadData() {
+        $.ajax({
+            url: `/admin/homeadmin/loadData`,
+            type: "GET",
+            success: function (data) {
+                console.log(data);
+                var container_homes = document.querySelector('.container_home').querySelectorAll('.item');
+                container_homes[0].querySelector('h2').textContent = data.number_hotel;
+                container_homes[1].querySelector('h2').textContent = data.number_host;
+                animateCircleProgress(data.host_rate, data.hotel_rate, 1000);
+                // Cập nhật dữ liệu của biểu đồ
+                numberHostChart.data.datasets[0].data = data.list_host;
+
+                // Gọi phương thức update() để cập nhật biểu đồ
+                numberHostChart.update();
+
+                // Cập nhật dữ liệu của biểu đồ
+                numberHotelChart.data.datasets[0].data = data.list_hotel;
+
+                // Gọi phương thức update() để cập nhật biểu đồ
+                numberHotelChart.update();
+                 
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+    function confirm_host(user_id) {
+        window.location.href = `/admin/homeadmin/confirm_host?user_id=${user_id}`;
+        //$.ajax({
+        //    url: `/admin/homeadmin/confirm_host`,
+        //    type: "POST",
+        //    data: { user_id: user_id },
+        //    success: function (data) {
+        //        console.log(data.phanhoi);
+        //        var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
+        //        var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
+        //        containerInforHost.classList.add(`animationInfor`)
+        //        inforHostDetail.classList.remove('openHost');
+        //        loadData();
+        //        document.querySelector(`.user_${user_id}`).classList.add('close');
+
+        //        let rowHtml = `
+        //            <tr id="hostRow-${data.id}">
+        //                <td>
+        //                    <div class="avatar">
+        //                        <img src="${data.user_avatar}" alt="">
+        //                    </div>
+        //                </td>
+        //                <td>${data.legal_name}</td>
+        //                <td>${data.passport_code || ''}</td>
+        //                <td>${data.address}</td>
+        //                <td>${data.email_address}</td>
+        //                <td>
+        //                    <button><a href="/admin/homeadmin/userPersonalProfile?user=${data.id}" target="_blank">Detail</a></button>
+        //                    <button id="${data.id}" class="delete_Hostbtns">Delete</button>
+        //                </td>
+        //            </tr>
+        //        `;
+        //        document.getElementById('table_host').insertAdjacentHTML('beforeend', rowHtml);
+
+        //        var delHostButtons = document.querySelectorAll('.delete_Hostbtns');
+        //        delHostButtons.forEach(function (button) {
+        //            button.addEventListener('click', function () {
+        //                if (button.id == data.id) {
+        //                    var itemId = button.id;
+        //                    /*console.log(itemId);*/
+        //                    DeleteHostUser(itemId);
+        //                }
+                        
+        //            });
+        //        });
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
+    }
+    function host_denied(user_id) {
+        //$.ajax({
+        //    url: `/admin/homeadmin/host_denied`,
+        //    type: "POST",
+        //    data: { user_id: user_id },
+        //    success: function (data) {
+        //        //console.log(data);
+        //        //var inforHostDetail = document.querySelector(`.info_host_detail[class*="${user_id}"]`)
+        //        //var containerInforHost = document.querySelector(`.container_info_host[class*="${user_id}"]`)
+        //        //containerInforHost.classList.add(`animationInfor`)
+        //        //inforHostDetail.classList.remove('openHost');
+        //        //document.querySelector(`.user_${user_id}`).classList.add('close');
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
+        window.location.href = `/admin/homeadmin/host_denied?user_id=${user_id}`;
+    }
+
+
+    function confirm_hotel(user_id, property_id) {
+        window.location.href = `/admin/homeadmin/confirm_hotel?user_id=${user_id}&hotel_id=${property_id}`;
+        //$.ajax({
+        //    url: `/admin/homeadmin/confirm_hotel`,
+        //    type: "POST",
+        //    data: { user_id: user_id, hotel_id: property_id },
+        //    success: function (data) {
+        //        console.log(data);
+        //        var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`);
+        //        var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`);
+        //        containerInforHotel.classList.add(`animationInfor`)
+        //        inforHotelDetail.classList.remove('openHost');
+
+        //        loadData();
+        //        document.querySelector(`.property_${property_id}`).classList.add('close');
+
+        //    },
+        //    error: function (err) {
+        //        console.log(err.text);
+        //    }
+        //})
+        console.log(1);
+    }
+    function hotel_denied(user_id, property_id) {
+        //$.ajax({
+        //    url: `/admin/homeadmin/hotel_denied`,
+        //    type: "POST",
+        //    data: { user_id: user_id, hotel_id: property_id },
+        //    success: function (data) {
+        //        console.log(data);
+        //        var inforHotelDetail = document.querySelector(`.info_hotel_detail[class*="${property_id}"]`);
+        //        var containerInforHotel = document.querySelector(`.container_info_hotel[class*="${property_id}"]`);
+        //        containerInforHotel.classList.add(`animationInfor`)
+        //        inforHotelDetail.classList.remove('openHost');
+        //        document.querySelector(`.property_${property_id}`).classList.add('close');
+
+        //    },
+        //    error: function (err) {
+        //        console.log(err);
+        //    }
+        //})
+        window.location.href = `/admin/homeadmin/hotel_denied?user_id=${user_id}&hotel_id=${property_id}`;
+    }
+    function AcceptAll(check) {
+        let list_selects, list_id;
+        list_id = [];
+
+        if (check == 1) {
+            list_selects = document.querySelector('.list_item.list_owner').querySelectorAll('.ticked');
+
+            list_selects.forEach((item) => {
+                let id = item.classList.value.split(" ")[0];
+
+                list_id.push(id);
+            });
+            console.log(1);
+        } else {
+            list_selects = document.querySelector('.list_item.list_hotel').querySelectorAll('.ticked');
+
+            list_selects.forEach((item) => {
+                let hotel_id = item.classList.value.split(" ")[1];
+                list_id.push(hotel_id);
+            });
+        }
+        console.log(list_id);
+        let encodedListId = list_id.join(",");
+        window.location.href = `/admin/homeadmin/ComfirmAll?ids=${encodedListId}&check=${check}`;
+    }
+    function RefuseAll(check) {
+        let list_selects, list_id;
+
+        if (check == 1) {
+            list_selects = document.querySelector('.list_item.list_owner').querySelectorAll('.ticked');
+            list_id = [];  // Initialize an empty array
+            list_selects.forEach((item) => {
+                let id = item.classList.value.split(" ")[0];
+                list_id.push(id);
+            });
+        } else {
+            list_selects = document.querySelector('.list_item.list_hotel').querySelectorAll('.ticked');
+            list_id = [];  // Initialize an empty array
+            list_selects.forEach((item) => {
+                let hotel_id = item.classList.value.split(" ")[1];
+                list_id.push(hotel_id);
+            });
+        }
+
+        let encodedListId = list_id.join(",");
+        window.location.href = `/admin/homeadmin/ComfirmAll?ids=${encodedListId}&check=${check}`;
+    }
+
+</script>
+<script>
+    var modals = document.querySelectorAll('.mod');
+    var closeIcons = document.querySelectorAll('.close-modal');
+
+    closeIcons.forEach(function (icon) {
+        icon.addEventListener('click', function () {
+            var modalId = icon.dataset.modalId;
+            var modal = document.getElementById('myModal-' + modalId);
+            modal.classList.add('hide');
+        });
+    });
+
+    function toggleMod(e) {
+        var modal = e.currentTarget;
+        modal.classList.toggle('hide');
+    }
+
+    modals.forEach(function (mod) {
+        mod.addEventListener('click', function (e) {
+            if (e.target === mod) {
+                toggleMod(e);
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.details_user');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var userId = button.id;
+                /*console.log("Button clicked for user ID:", userId);*/
+
+                var modalId = 'myModal-' + userId;
+                var modal = document.getElementById(modalId);
+
+
+                if (modal) {
+                    modal.classList.remove('hide');
+                }
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var DTHostbuttons = document.querySelectorAll('.details_host');
+        DTHostbuttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var userId = button.id;
+                /*console.log("Button clicked for user ID:", userId);*/
+
+                var modalId = 'myModal-' + userId;
+                var modal = document.getElementById(modalId);
+
+                if (modal) {
+                    modal.classList.remove('hide');
+                }
+            });
+        });
+
+    });
+
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.details_user');
+        buttons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var userId = button.id;
+                /*console.log(userId);*/
+
+                var modalId = 'myModal-' + userId;
+                var modal = document.getElementById(modalId);
+
+
+                if (modal) {
+                    modal.classList.remove('hide');
+                }
+            });
+        });
+    });
+
+    function DeleteUser(id) {
+        var row = $('#userRow-' + id);
+        if (confirm('Are you sure delete this user?')) {
+            $.ajax({
+                url: '/admin/homeadmin/DeleteUser',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (response) {
+                    if (response.phanhoi == "true") {
+                        console.log(response);
+                        row.remove();
+                        var userCountElem = $('#userCount');
+                        var userCount = parseInt(userCountElem.text()) - 1;
+                        userCountElem.html(userCount + ' <i class="fa-solid fa-user"></i>');
+
+                        var hotelCountElem = $('#hotelCount');
+                        var hotelCount = parseInt(hotelCountElem.text()) - response.delprop.length;
+                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window"></i>');
+
+                        response.delprop.forEach(function (hotelId) {
+                            $('#hotelRow-' + hotelId).remove();
+                        });
+                    }
+                    else {
+                        console.log(response.phanhoi);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    function DeleteHostUser(id) {
+        var row = $('#hostRow-' + id);
+        if (confirm('Are you sure delete this user?')) {
+            $.ajax({
+                url: '/admin/homeadmin/DeleteHost',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (response) {
+                    if (response.phanhoi == "true") {
+                        
+                        /*console.log(response);*/
+                        loadData();
+                        row.remove();
+                        var hostCountElem = $('#hostCount');
+                        var hostCount = parseInt(hostCountElem.text()) - 1;
+                        hostCountElem.html(hostCount + ' <i class="fa-solid fa-user"></i>');
+
+                        var hotelCountElem = $('#hotelCount');
+                        var hotelCount = parseInt(hotelCountElem.text()) - response.delprop.length;
+                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window"></i>');
+
+                        response.delprop.forEach(function (hotelId) {
+                            $('#hotelRow-' + hotelId).remove();
+                        });
+                    }
+                    else {
+                        console.log(response.phanhoi);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    function DeleteHotel(id) {
+        var row = $('#hotelRow-' + id);
+        if (confirm('Are you sure delete this hotel?')) {
+            $.ajax({
+                url: '/admin/homeadmin/DeleteHotel',
+                type: 'POST',
+                dataType: 'json',
+                data: { id: id },
+                success: function (response) {
+                    if (response == "true") {
+                        loadData();
+                        console.log(response);
+                        row.remove();
+                        var hotelCountElem = $('#hotelCount');
+                        var hotelCount = parseInt(hotelCountElem.text()) - 1;
+                        hotelCountElem.html(hotelCount + ' <i class="fa-solid fa-house-chimney-window"></i>');
+                    }
+                    else {
+                        console.log(response);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    console.log('Status:', status);
+                    console.log('Error:', error);
+                    console.log('Response:', xhr.responseText);
+                }
+            });
+        }
+    }
+
+    var deleteButtons = document.querySelectorAll('.delete_btns');
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var itemId = button.id;
+            /*console.log(itemId);*/
+            DeleteUser(itemId);
+        });
+    });
+
+    var deleteHostButtons = document.querySelectorAll('.delete_Hostbtns');
+    deleteHostButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var itemId = button.id;
+            /*console.log(itemId);*/
+            DeleteHostUser(itemId);
+        });
+    });
+
+    var deleteHotelButtons = document.querySelectorAll('.delete_Hotelbtns');
+    deleteHotelButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            var itemId = button.id;
+            /*console.log(itemId);*/
+            DeleteHotel(itemId);
+        });
+    });
+
+    // Analytics solution
+    AdminRevenueByEM();
+    AdminRevenueEY();
+
+
+    function SearchHotel() {
+        var search_text = $('#search_company').val();
+        console.log(search_text);
+        $.ajax({
+            url: "/admin/homeadmin/SearchHotel",
+            type: "POST",
+            dataType: "json",
+            data: { search: search_text },
+            success: function (response) {
+                console.log(response);
+
+                document.querySelectorAll('.list_item.item_7 .hotel').forEach(function (element) {
+                    if (response.indexOf(parseInt(element.classList.value.split(" ")[0].split("_")[1])) != -1) {
+                        if (element.classList.contains("disapear")) {
+                            element.classList.remove("disapear");
+                        }
+                    }
+                    else {
+                        element.classList.add("disapear");
+                    }
+                })
+                console.log("true");
+
+
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+    function HotelRevenueStatistics(id) {
+        const selectedValue = document.querySelector('#by_year_hotel').value;
+        $.ajax({
+            url: '/admin/homeadmin/HotelRevenue',
+            type: 'POST',
+            dataType: 'json',
+            data: { id: id, year: selectedValue },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics , 1);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        });
+    }
+
+    function HotelRevenueByYear(year, id) {
+
+        $.ajax({
+            url: "/admin/homeadmin/HotelRevenue",
+            type: "POST",
+            dataType: 'json',
+            data: { id : id , year : year },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics , 1);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+    function AdminRevenueByEM() {
+        const selectedValue = document.querySelector('#by_year_admin').value;
+        $.ajax({
+            url: "/admin/homeadmin/AdminRevenue",
+            type: "POST",
+            data: { year: selectedValue },
+            dataType: "json",
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+
+                updateChartData(data_statics , 2);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+
+    function AdminRevenueByYear(year) {
+
+        $.ajax({
+            url: "/admin/homeadmin/AdminRevenue",
+            type: "POST",
+            dataType: 'json',
+            data: { year: year },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics, 2);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+    function AdminRevenueEY() {
+        $.ajax({
+            url: "/admin/homeadmin/AdminRevenueEY",
+            type: "POST",
+            dataType: "json",
+            data: { list_year: @Html.Raw(Json.Encode(selected_year)) },
+            success: function (response) {
+                data_statics = response.split(",");
+                console.log("true");
+                console.log(data_statics);
+                updateChartData(data_statics, 3);
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+
+    // notification
+
+
+    function readNotification() {
+        $.ajax({
+            url: '/admin/homeadmin/readNotification',
+            type: "GET",
+            success: function (response) {
+                console.log(response);
+                document.querySelector('.notification_bell').textContent = '';
+
+
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+        
+        
+    }
+
+    function deleteNotification(id) {
+        $.ajax({
+            url: '/admin/homeadmin/deleteNotification',
+            type: "POST",
+            dataType: "json",
+            data: {id : id},
+            success: function (response) {
+                console.log(response);
+               
+
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+                console.log('Status:', status);
+                console.log('Error:', error);
+                console.log('Response:', xhr.responseText);
+            }
+        })
+    }
+
+
+
+
+
+
+    function search(key) {
+        var data = {
+            key: key,
+        };
+        $.ajax({
+            url: '/admin/homeadmin/searchUser',
+            type: 'GET',
+            dataType: 'json',
+            data: data,
+            success: function (response) {
+                if (response.phanhoi == "true") {
+                    console.log(response.phanhoi);
+                    document.getElementById('user_table').innerHTML = '';
+
+                    $.each(response.lst, function (index, value) {
+                        if (value.user_avatar == null) {
+                            value.user_avatar = 'https://cdn-icons-png.flaticon.com/512/552/552721.png';
+                        }
+                        console.log(value.id);
+                        let rowHtml = `
+                            <tr id="userRow-${value.id}">
+                                <td>
+                                    <div class="avatar">
+                                        <img src="${value.user_avatar}" alt="">
+                                    </div>
+                                </td>
+                                <td>${value.account_name}</td>
+                                <td>${value.passport_code || ''}</td>
+                                <td>${value.address}</td>
+                                <td>${value.email_address}</td>
+                                <td>
+                                    <button id="${value.id}" class="details_user">Detail</button>
+                                    <button id="${value.id}" class="delete_btns">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                        document.getElementById('user_table').insertAdjacentHTML('beforeend', rowHtml);
+
+                    });
+                    var detailButtons = document.querySelectorAll('.details_user');
+                    detailButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var userId = button.id;
+                            var modalId = 'myModal-' + userId;
+                            var modal = document.getElementById(modalId);
+
+                            if (modal) {
+                                modal.classList.remove('hide');
+                            }
+                        });
+                    });
+
+                    var delButtons = document.querySelectorAll('.delete_btns');
+                    delButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var itemId = button.id;
+                            DeleteUser(itemId);
+                        });
+                    });
+                }
+                else {
+                    console.log(response.phanhoi);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function searchHost(key) {
+        var data = {
+            key: key,
+        };
+        $.ajax({
+            url: '/admin/homeadmin/searchHost',
+            type: 'GET',
+            dataType: 'json',
+            data: data,
+            success: function (response) {
+                if (response.phanhoi == "true") {
+                    document.getElementById('table_host').innerHTML = '';
+                    console.log(response.phanhoi);
+                    $.each(response.lst, function (index, value) {
+
+                        if (value.user_avatar == null) {
+                            value.user_avatar = 'https://cdn-icons-png.flaticon.com/512/552/552721.png';
+                        }
+                        console.log(value.id);
+                        let rowHtml = `
+                            <tr id="hostRow-${value.id}">
+                                <td>
+                                    <div class="avatar">
+                                        <img src="${value.user_avatar}" alt="">
+                                    </div>
+                                </td>
+                                <td>${value.legal_name}</td>
+                                <td>${value.passport_code || ''}</td>
+                                <td>${value.address}</td>
+                                <td>${value.email_address}</td>
+                                <td>
+                                    <button><a href="/admin/homeadmin/userPersonalProfile?user=${value.id}" target="_blank">Detail</a></button>
+                                    <button id="${value.id}" class="delete_Hostbtns">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                        document.getElementById('table_host').insertAdjacentHTML('beforeend', rowHtml);
+
+                    });
+                    var delHostButtons = document.querySelectorAll('.delete_Hostbtns');
+                    delHostButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var itemId = button.id;
+                            /*console.log(itemId);*/
+                            DeleteHostUser(itemId);
+                        });
+                    });
+                }
+                else {
+                    console.log(response.phanhoi);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    function convertJsonDate(jsonDate) {
+        if (jsonDate && jsonDate.length > 0) {
+            var timestamp = parseInt(jsonDate.replace("/Date(", "").replace(")/", ""));
+            var date = new Date(timestamp);
+            var dateString = ('0' + date.getDate()).slice(-2) + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + date.getFullYear();
+            return dateString;
+        }
+        return null;
+    }
+
+    function searchHotel(key) {
+        var data = {
+            key: key,
+        };
+        $.ajax({
+            url: '/admin/homeadmin/searchHotel',
+            type: 'GET',
+            dataType: 'json',
+            data: data,
+            success: function (response) {
+                if (response.phanhoi == "true") {
+                    document.getElementById('table_hotel').innerHTML = '';
+                    console.log(response.phanhoi);
+                    $.each(response.lst, function (index, value) {
+                        console.log(value.id);
+                        var date = convertJsonDate(value.Date_Post);
+                        var rowHtml = `
+                            <tr id="hotelRow-${value.id}">
+                                <td>${value.id}</td>
+                                <td>${value.p_name}</td>
+                                <td>${value.legal_name}</td>
+                                <td>${value.address}</td>
+                                <td>${value.email_address}</td>
+                                <td>${date}</td>
+                                <td>
+                                    <button><a href="/admin/homeadmin/revenue?user=${value.userId}" target="_blank">Detail</a></button>
+                                    <button id="${value.id}" class="delete_Hotelbtns">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+
+                        document.getElementById('table_hotel').insertAdjacentHTML('beforeend', rowHtml);
+
+                    });
+                    var delHotelButtons = document.querySelectorAll('.delete_Hotelbtns');
+                    delHotelButtons.forEach(function (button) {
+                        button.addEventListener('click', function () {
+                            var itemId = button.id;
+                            /*console.log(itemId);*/
+                            DeleteHotel(itemId);
+                        });
+                    });
+                }
+                else {
+                    console.log(response.phanhoi);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error(error);
+            }
+        });
+    }
+
+    const searchUserBtn = document.getElementById('btn_search_user');
+    searchUserBtn.addEventListener('click', () => {
+        var key = document.getElementById('search_user').value;
+        search(key);
+    });
+
+    const searchHostBtn = document.getElementById('btn_search_host');
+    searchHostBtn.addEventListener('click', () => {
+        var key = document.getElementById('search_host').value;
+        searchHost(key);
+    });
+
+    const searchHotelBtn = document.getElementById('btn_search_hotel');
+    searchHotelBtn.addEventListener('click', () => {
+        var key = document.getElementById('search_hotel').value;
+        searchHotel(key);
+    });
+
+</script>

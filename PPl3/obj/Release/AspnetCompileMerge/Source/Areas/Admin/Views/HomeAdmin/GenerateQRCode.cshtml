@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Generate QR Code";
+    var qrCodeImage = ViewBag.QRCodeImage as string;
+    var bankName = ViewBag.nameBank;
+    var accountNumber = ViewBag.accountNumber;
+    var money = ViewBag.Money;
+}
+
+<h2>Bank Payment</h2>
+<h3>Bank Name : @bankName</h3>
+<h3>Account Number : @accountNumber</h3>
+<h3>Money : @money$</h3>
