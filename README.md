@@ -31,4 +31,4 @@ This tutorial is till ongoing. The automation of the helm chart repo has not bee
 
 ## Like this project?
 
-If you are feeling generous, buy me a coffee! - https://www.buymeacoffee.com/askcloudtech
+If you are feeling generous, buy me a coffee!
