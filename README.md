@@ -17,6 +17,18 @@ The website is built based on the MVC model:
 
 <a href="http://cuthao-001-site1.ltempurl.com/" target="_blank">Link Demo</a>
 
+- Account to open the website: 
+  + User Name: 11189200
+  + Password: 60-dayfreetrial
+- Borrower account for functional testing:
+  + Gmail: hohuethu@gmail.com
+  + Password: 123456
+- Account to try host features:
+  + Gmail: hosithao1622004@gmail.com
+  + Password: 123456
+- Account to try administrator function:
+  + Gmail : admin@gmail.com
+  + Password: 123456
 ## How to tweak this project for your own uses
 
 Since this is an example project, I'd encourage you to clone and rename this project to use for your own puposes. It's a good starter boilerplate
