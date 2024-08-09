@@ -29,6 +29,11 @@ The website is built based on the MVC model:
 - Account to try administrator function:
   + Gmail : admin@gmail.com
   + Password: 123456
+- Virtual payment account :
+  + Bank name : NCB
+  + card number : 9704198526191432198
+  + Account name : NGUYEN VAN A
+  + Release date : 07/15
 ## How to tweak this project for your own uses
 
 Since this is an example project, I'd encourage you to clone and rename this project to use for your own puposes. It's a good starter boilerplate
