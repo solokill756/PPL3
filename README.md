@@ -34,6 +34,12 @@ The website is built based on the MVC model:
   + card number : 9704198526191432198
   + Account name : NGUYEN VAN A
   + Release date : 07/15
+
+##Note: 
+
+When creating a new account, it may take some time for the verification code to arrive in Gmail, so please be patient. Thank you very much.
+
+
 ## How to tweak this project for your own uses
 
 Since this is an example project, I'd encourage you to clone and rename this project to use for your own puposes. It's a good starter boilerplate
