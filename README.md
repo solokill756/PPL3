@@ -35,7 +35,7 @@ The website is built based on the MVC model:
   + Account name : NGUYEN VAN A
   + Release date : 07/15
 
-##Note: 
+## Note: 
 
 When creating a new account, it may take some time for the verification code to arrive in Gmail, so please be patient. Thank you very much.
 
